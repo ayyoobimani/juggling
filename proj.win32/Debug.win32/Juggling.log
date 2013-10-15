@@ -1,0 +1,32 @@
+﻿Build started 10/15/2013 9:34:40 AM.
+     1>Project "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Juggling.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\cocos2dx" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\cocos2dx\include" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\cocos2dx\kazmath\include" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\cocos2dx\platform\win32" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\cocos2dx\platform\third_party\win32" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\cocos2dx\platform\third_party\win32\OGLES" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\external" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\external\chipmunk\include\chipmunk" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\CocosDenshion\include" /I"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\extensions" /I..\Classes /I.. /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USE_MATH_DEFINES /D GL_GLEXT_PROTOTYPES /D CC_ENABLE_CHIPMUNK_INTEGRATION=1 /D COCOS2D_DEBUG=1 /D _CRT_SECURE_NO_WARNINGS /D _SCL_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug.win32\\" /Fd"Debug.win32\vc110.pdb" /Gd /TP /wd4267 /wd4251 /wd4244 /analyze- /errorReport:prompt ..\Classes\AppDelegate.cpp ..\Classes\JG_Ball.cpp ..\Classes\JG_Main_Game.cpp ..\Classes\JG_Main_Menu.cpp
+         JG_Main_Menu.cpp
+         JG_Main_Game.cpp
+         JG_Ball.cpp
+         AppDelegate.cpp
+         Generating Code...
+       PreLinkEvent:
+         if not exist "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\" mkdir "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\"
+         xcopy /Y /Q "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\..\..\..\external\libwebsockets\win32\lib\*.*" "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\"
+         :VCEnd
+         2 File(s) copied
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\Juggling.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\\" libExtensions.lib libcocos2d.lib libCocosDenshion.lib opengl32.lib glew32.lib libBox2d.lib libchipmunk.lib libcurl_imp.lib pthreadVCE2.lib websockets.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\Juggling.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\Juggling.lib" /MACHINE:X86 /SAFESEH Debug.win32\AppDelegate.obj
+         Debug.win32\JG_Ball.obj
+         Debug.win32\JG_Main_Game.obj
+         Debug.win32\JG_Main_Menu.obj
+         Debug.win32\main.obj
+         "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\libcocos2d.lib"
+         "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\libCocosDenshion.lib"
+         "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\libExtensions.lib"
+         "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\libBox2D.lib"
+         "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\libchipmunk.lib"
+     1>AppDelegate.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+         Juggling.vcxproj -> C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Debug.win32\Juggling.exe
+     1>Done Building Project "C:\cocos2d-x-2.2.0\projects\Juggling\proj.win32\Juggling.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:11.64

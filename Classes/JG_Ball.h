@@ -1,5 +1,5 @@
 #pragma once
-#include "c:\cocos2d-x-2.2.0\cocos2dx\sprite_nodes\ccsprite.h"
+#include "sprite_nodes\ccsprite.h"
 
 using namespace cocos2d;
 class JG_Ball :

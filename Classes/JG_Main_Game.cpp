@@ -30,6 +30,8 @@ bool JG_Main_Game::init()
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
+	CCLOG("salam");
+
     
     return true;
 }

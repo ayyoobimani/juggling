@@ -1,13 +1,23 @@
 #include "JG_Ball.h"
 #define COCOS2D_DEBUG 1
 
+float JG_Ball::minSpeed;
+
 JG_Ball::JG_Ball(void)
 {
-	speed = 100;
+	tempDraw = NULL;
+
 
 	// for let the ball fall
 	moveMode = EMove_Curve;
 
+	tempDraw = JG_TempLineContainer::create();
+//	this->addChild(tempDraw);
+	//CCDirector::sharedDirector()->getRunningScene()->addChild(tempDraw);
+	tempDraw->retain();
+	
+
+	tempDraw->setPosition(0,0);
 
 	this->schedule(schedule_selector(JG_Ball::update));
 }
@@ -17,22 +27,44 @@ JG_Ball::~JG_Ball(void)
 {
 }
 
-JG_Ball* JG_Ball::createWithFileName(const char * pszFileName,CCPoint initialPos) {        JG_Ball * ball = new JG_Ball();	if (ball && ball->initWithFile(pszFileName)) {		ball->autorelease();		ball->setPosition(initialPos);		ball->curve_X0 = ball->getPositionX();		ball->curve_Y0 = ball->getPositionY();		ball->curve_Rad = CC_DEGREES_TO_RADIANS(135); 		ball->curve_TotalTime = 0;		return ball;	}	CC_SAFE_DELETE(ball);	return NULL;}
-
-void JG_Ball::MoveStaight(float force, float x, float y)
+JG_Ball* JG_Ball::createWithFileName(const char * pszFileName,CCPoint initialPos) 
 {
-	moveMode = EMove_Straight;
-	straight_Dir = (x-getPositionX())/abs(x-getPositionX()) ;
+    
+    JG_Ball * ball = new JG_Ball();
+	if (ball && ball->initWithFile(pszFileName))
+	{
+		ball->autorelease();
+		ball->setPosition(initialPos);
+		ball->curve_X0 = ball->getPositionX();
+		ball->curve_Y0 = ball->getPositionY();
+		ball->curve_Rad = CC_DEGREES_TO_RADIANS(-90); 
+		ball->curve_TotalTime = 0;
+		ball->speed = 0;
+		return ball;
+	}
+	CC_SAFE_DELETE(ball);
+	return NULL;
 }
 
-void JG_Ball::MoveCurve(float force, float x ,float y)
+
+void JG_Ball::MoveStaight(float force, CCPoint destination)
+{
+	moveMode = EMove_Straight;
+	speed = minSpeed;
+	straight_Dir = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
+}
+
+void JG_Ball::MoveCurve(float force,CCPoint destinaion)
 {
 	
 	moveMode=EMove_Curve;
-	curve_TotalTime=0;
-	curve_X0 = getPositionX();
-	curve_Y0 = getPositionY();
-	curve_Rad = asinf(x * GRAVITY / pow(speed,2) )/2;
+	speed = minSpeed;
+	float temp = (destinaion.x-getPositionX()) * GRAVITY / pow(speed,2);
+	curve_Rad = asinf((destinaion.x-getPositionX()) * GRAVITY / pow(speed,2))/2;
+
+	if(abs(CC_RADIANS_TO_DEGREES(curve_Rad))<45)
+		curve_Rad=CC_DEGREES_TO_RADIANS(90)- curve_Rad;
+	CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
 	if (abs(curve_Rad)>90 )
 	{
 		/********** for getting an NULL error ******/
@@ -49,17 +81,39 @@ void JG_Ball::MoveCurve(float force, float x ,float y)
 void JG_Ball::update(float dt)
 {
 	
+
+	//TODO: clean up the code
+	//TODO: check performance
 	
 	if (moveMode==EMove_Curve)
 	{
-		float X1,Y1 ;
-		curve_TotalTime+=dt;
-		float sin = sinf(curve_Rad);
-		X1 = speed * dt  * cosf(curve_Rad) +getPositionX() ;
+		float newX,newY;
+		float speedY,speedX;
+		speedX = speed * cosf(curve_Rad);
+		speedY = speed * sinf(curve_Rad);
+		
+		
 		//CCLOG("deg is %f ",cosf(curve_Rad) ) ;
-		Y1 = -(GRAVITY * pow(dt,2))/2 + speed*dt * sinf (curve_Rad) +getPositionY() ;
+		speedX = speedX;
+		speedY = -GRAVITY* dt + speedY;
+
+		newX = speedX * dt + getPositionX();
+		newY = speedY * dt + getPositionY();
+		speed = sqrt(pow(speedY,2)+pow(speedX,2));
+
+		float deg1 = CC_RADIANS_TO_DEGREES(curve_Rad) ;
+		curve_Rad =CC_DEGREES_TO_RADIANS(180* speedY/abs(speedY))+ atan(speedY/speedX);
+		float deg2 = CC_RADIANS_TO_DEGREES(curve_Rad) ;
+		//CCLOG("speedY %f",speed);
+		
 		//Y1  =getPositionY();
-		setPosition(ccp(X1,Y1));
+		//X1 = getPositionX();
+		setPosition(ccp(newX,newY));
+		CCDrawNode ccnode;
+		ccColor4F color;
+		color.b = 255;
+		if(tempDraw)
+			tempDraw->setPosition(newX,newY);
 	}
 	else if(moveMode==EMove_Straight)
 	{
@@ -69,5 +123,35 @@ void JG_Ball::update(float dt)
 	{
 		// not possible
 	}
+
+
+	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > CCDirector::sharedDirector()->getWinSize().width + 20)
+	{
+		tempReset();
+	}
    
+}
+
+void JG_Ball::tempReset()
+{
+	setPosition(ccp(40,200));
+
+	moveMode = EMove_Curve;
+	curve_Rad = 0;
+	curve_Rad = CC_DEGREES_TO_RADIANS(-90); 
+	//TODO: why speed 0 is not working
+	speed = 10;
+
+
+}
+
+
+void JG_Ball::SetInitialTouchPosition(CCPoint newTouchPos)
+{
+	touchPosition = newTouchPos;
+}
+
+CCPoint JG_Ball::GetInitialTouchPosition()
+{
+	return touchPosition;
 }

@@ -1,16 +1,18 @@
 #pragma once
 #include "sprite_nodes\CCSprite.h"
 #include "actions\CCActionInterval.h"
+#include "JG_TempLineContainer.h"
 #include "cocos2d.h"
 
 
 using namespace cocos2d;
 
-#define GRAVITY -100
+#define GRAVITY 300
 
 
 
-enum MoveMode
+
+enum EMoveMode
 {
 	EMove_Curve, EMove_Straight
 };
@@ -22,6 +24,8 @@ public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
 
+	static float minSpeed;
+	static float maxSpeed;
 	float speed;
 
 	float curve_TotalTime ;
@@ -29,25 +33,32 @@ public:
 	float curve_Rad;
 	float straight_Dir;
 
+	JG_TempLineContainer * tempDraw;
 	CCPoint touchPosition;
 
 	// determine the movement mode of the ball
-	MoveMode moveMode;
+	EMoveMode moveMode;
 
+	//TODO: change the name
 	static JG_Ball* createWithFileName(const char * pszFileName,CCPoint initialPos);
 
-	void MoveCurve(float force,float x, float y);
-	void MoveStaight(float force, float x , float y);
+	void MoveCurve(float force,CCPoint destination);
+	void MoveStaight(float force, CCPoint destination);
 	void update(float dt);
+	void tempReset();
 
-	//TODO: move them to .cpp
-	CCPoint GetInitialTouchPosition()
+
+	CCPoint GetInitialTouchPosition();
+
+	void SetInitialTouchPosition(CCPoint newTouchPos);
+	//TODO: implement this
+	static void CalculateSpeedBoundriesBaseOnLength(float x)
 	{
-		return touchPosition;
-	}
-	void SetInitialTouchPosition(CCPoint newTouchPos)
-	{
-		touchPosition = newTouchPos;
+		minSpeed = 400;
 	}
 };
+
+
+
+
 

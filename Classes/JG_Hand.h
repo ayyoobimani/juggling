@@ -16,6 +16,9 @@ public:
 		return radius;
 	}
 
+	//TODO: change the name
+	static JG_Hand* createWithFileName(const char * pszFileName,CCPoint initialPos);
+
 	 CREATE_FUNC(JG_Hand);
 };
 

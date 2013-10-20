@@ -8,7 +8,7 @@
 
 using namespace cocos2d;
 
-#define GRAVITY 300
+#define GRAVITY 400
 
 enum EDirection
 {

@@ -246,3 +246,9 @@ bool JG_Main_Game::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 {
 	return point1.getDistance(point2)<radius;
 }
+
+
+void JG_Main_Game::TestTouch()
+{
+
+}

@@ -2,7 +2,7 @@
 
 JG_Hand::JG_Hand()
 {
-	radius = 32;
+	radius = 40;
 }
 
 JG_Hand::~JG_Hand()

@@ -59,6 +59,8 @@ public:
     
     // implement the "static node()" method manually
     CREATE_FUNC(JG_Main_Game);
+
+	void TestTouch();
 };
 
 #endif // __MainGame_SCENE_H__

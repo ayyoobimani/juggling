@@ -32,31 +32,15 @@ bool JG_Main_Game::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	screenSize = CCDirector::sharedDirector()->getWinSize();
 
-	CCSprite * backGround = CCSprite::create("HelloWorld.png");
+	CCSprite * backGround = CCSprite::create("background.png");
 
-
-	
 	backGround->setPosition(ccp(screenSize.x/2,screenSize.y/2));
 	this->addChild(backGround);
 
-	JG_Ball::CalculateSpeedBoundriesBaseOnLength(10);
 
-	// initing  one ball for test
-	ballsArray=CCArray::create(JG_Ball::createWithFileName("ball.png",ccp(40,100)),NULL);
-	ballsArray->retain();
 
-	for( int i = 0 ; i<ballsArray->count();i++)
-	{
-		this->addChild((CCNode*)ballsArray->objectAtIndex(i),6);
-	}
-	
-	//TODO: give them sprite
-	rightHand = JG_Hand::createWithFileName("hand.png",ccp(screenSize.x-40,40));
-	//rightHand->setAnchorPoint(ccp(rightHand->getTextureRect().getMidX(),rightHand->getTextureRect().getMidY()));
-	leftHand = JG_Hand::createWithFileName("hand.png",ccp(40,40));
-	//leftHand->setAnchorPoint(ccp(leftHand->getTextureRect().getMidX(),leftHand->getTextureRect().getMidY()));
-	CCLog(" left hand position is %f", leftHand->getPosition().x);
-	CCLog(" right hand position is %f", rightHand->getPosition().x);
+	rightHand = JG_Hand::createWithFileName("RightHand.png",ccp(screenSize.x-50,40));
+	leftHand = JG_Hand::createWithFileName("LeftHand.png",ccp(50,40));
 
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
@@ -64,6 +48,21 @@ bool JG_Main_Game::init()
 	{
 		this->addChild((CCNode*)handsArray->objectAtIndex(i),2);
 	}
+
+
+
+	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
+
+	// initing  one ball for test
+	ballsArray=CCArray::create(JG_Ball::createWithFileName("ball.png",ccp(leftHand->getPositionX(),200)),NULL);
+	ballsArray->retain();
+
+	for( int i = 0 ; i<ballsArray->count();i++)
+	{
+		this->addChild((CCNode*)ballsArray->objectAtIndex(i),6);
+	}
+	
+
 
 	currentBall = NULL;
 	currentHand = NULL;
@@ -170,44 +169,61 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 		if(directionDeg>45&& directionDeg<135)
 		{
 			//direction up
-			if(currentHand==leftHand)
+			if (currentBall->GetBallDirection() != EDir_Up)
 			{
-				currentBall->MoveCurve(1,rightHand->getPosition());
-				bDirIsSet = true;
+				if(currentHand==leftHand)
+				{
+					currentBall->setPosition(currentHand->getPosition());
+					currentBall->MoveCurve(1,rightHand->getPosition());
+					bDirIsSet = true;
 				
-			}
-			else if (currentHand==rightHand)
-			{
-				currentBall->MoveCurve(1,leftHand->getPosition());
-				bDirIsSet = true;
+				}
+				else if (currentHand==rightHand)
+				{
+					currentBall->setPosition(currentHand->getPosition());
+					currentBall->MoveCurve(1,leftHand->getPosition());
+					bDirIsSet = true;
+				}
 			}
 		
 		}
 		else if(directionDeg>135&&directionDeg<225)
 		{
 			//direction left
-			if(currentHand==leftHand)
+			if (currentBall->GetBallDirection() == EDir_Up)
 			{
-				//invalid
+				
+				if(currentHand==leftHand)
+				{
+					//invalid
+				}
+				else if (currentHand==rightHand)
+				{
+					currentBall->setPosition(currentHand->getPosition());
+					currentBall->MoveStaight(1,leftHand->getPosition());
+					bDirIsSet = true;
+				}
+
 			}
-			else if (currentHand==rightHand)
-			{
-				currentBall->MoveStaight(1,leftHand->getPosition());
-				bDirIsSet = true;
-			}
+
 		}
 		else if(directionDeg>315||directionDeg<45)
 		{
 			//direction right
-			if(currentHand==leftHand)
+
+			if (currentBall->GetBallDirection() == EDir_Up)
 			{
-				currentBall->MoveStaight(1,rightHand->getPosition());
-				bDirIsSet = true;
-			}
-			else if (currentHand==rightHand)
-			{
-				//invalid
+				if(currentHand==leftHand)
+				{
+					currentBall->setPosition(currentHand->getPosition());
+					currentBall->MoveStaight(1,rightHand->getPosition());
+					bDirIsSet = true;
+				}
+				else if (currentHand==rightHand)
+				{
+					//invalid
 			
+				}
 			}
 		}
 		else

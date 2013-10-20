@@ -1,6 +1,7 @@
 #include "JG_Ball.h"
 #define COCOS2D_DEBUG 1
 
+
 float JG_Ball::minSpeed;
 
 JG_Ball::JG_Ball(void)
@@ -10,7 +11,7 @@ JG_Ball::JG_Ball(void)
 
 	// for let the ball fall
 	moveMode = EMove_Curve;
-
+	ballDirection = EDir_Up;
 	tempDraw = JG_TempLineContainer::create();
 //	this->addChild(tempDraw);
 	//CCDirector::sharedDirector()->getRunningScene()->addChild(tempDraw);
@@ -18,6 +19,8 @@ JG_Ball::JG_Ball(void)
 	
 
 	tempDraw->setPosition(0,0);
+	action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
+	runAction(action_Rotate);
 
 	this->schedule(schedule_selector(JG_Ball::update));
 }
@@ -37,6 +40,7 @@ JG_Ball* JG_Ball::createWithFileName(const char * pszFileName,CCPoint initialPos
 		ball->setPosition(initialPos);
 		ball->curve_X0 = ball->getPositionX();
 		ball->curve_Y0 = ball->getPositionY();
+		ball->tempInitialPosition = initialPos;
 		ball->curve_Rad = CC_DEGREES_TO_RADIANS(-90); 
 		ball->curve_TotalTime = 0;
 		ball->speed = 0;
@@ -52,13 +56,19 @@ void JG_Ball::MoveStaight(float force, CCPoint destination)
 	moveMode = EMove_Straight;
 	speed = minSpeed;
 	straight_Dir = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
+
+	if(straight_Dir>0)
+		ballDirection = EDir_Right;
+	else
+		ballDirection = EDir_Left;
 }
 
 void JG_Ball::MoveCurve(float force,CCPoint destinaion)
 {
 	
 	moveMode=EMove_Curve;
-	speed = minSpeed;
+	ballDirection = EDir_Up;
+	speed = minSpeed + minSpeed *CCRANDOM_0_1()/2   ;
 	
 	curve_Rad = asinf((destinaion.x-getPositionX()) * GRAVITY / pow(speed,2))/2;
 
@@ -89,6 +99,7 @@ void JG_Ball::update(float dt)
 		speedX = speed * cosf(curve_Rad);
 		speedY = speed * sinf(curve_Rad);
 		//CCLOG("here is it");
+		float temp = CC_RADIANS_TO_DEGREES(curve_Rad);
 		
 		//CCLOG("deg is %f ",cosf(curve_Rad) ) ;
 		speedX = speedX;
@@ -96,21 +107,23 @@ void JG_Ball::update(float dt)
 
 		newX = speedX * dt + getPositionX();
 		newY = speedY * dt + getPositionY();
+		//CCLog("speedy is %f", speedY);
 		speed = sqrt(pow(speedY,2)+pow(speedX,2));
 
 		float deg1 = CC_RADIANS_TO_DEGREES(curve_Rad) ;
-		curve_Rad =CC_DEGREES_TO_RADIANS(180* speedY/abs(speedY))+ atan(speedY/speedX);
+
+		//**************** TODO: find a better soloution *************/
+		if(speedX >= 0)
+			curve_Rad = atan(speedY/speedX);
+		else
+			curve_Rad =CC_DEGREES_TO_RADIANS(180)+ atan(speedY/speedX);
+		/**************************************************************/
+
+
 		float deg2 = CC_RADIANS_TO_DEGREES(curve_Rad) ;
-		//CCLOG("speedY %f",speed);
+		//CCLOG("UPdate: CurveRad is  %f",deg2);
 		
-		//Y1  =getPositionY();
-		//X1 = getPositionX();
 		setPosition(ccp(newX,newY));
-		CCDrawNode ccnode;
-		ccColor4F color;
-		color.b = 255;
-		if(tempDraw)
-			tempDraw->setPosition(newX,newY);
 	}
 	else if(moveMode==EMove_Straight)
 	{
@@ -131,10 +144,11 @@ void JG_Ball::update(float dt)
 
 void JG_Ball::tempReset()
 {
-	setPosition(ccp(40,200));
-
+	setPosition(tempInitialPosition);
+	CCLog("Temp reset");
 	moveMode = EMove_Curve;
 	curve_Rad = 0;
+	ballDirection = EDir_Up;
 	curve_Rad = CC_DEGREES_TO_RADIANS(-90); 
 	//TODO: why speed 0 is not working
 	speed = 10;

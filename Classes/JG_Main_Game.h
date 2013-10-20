@@ -9,6 +9,7 @@
 using namespace cocos2d;
 
 
+
 class JG_Main_Game : public cocos2d::CCLayer
 {
 	JG_Hand* leftHand;

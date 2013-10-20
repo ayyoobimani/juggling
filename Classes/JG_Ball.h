@@ -5,12 +5,15 @@
 #include "cocos2d.h"
 
 
+
 using namespace cocos2d;
 
 #define GRAVITY 300
 
-
-
+enum EDirection
+{
+	EDir_Left, EDir_Right, EDir_Up, EDir_Down
+};
 
 enum EMoveMode
 {
@@ -27,11 +30,17 @@ public:
 	static float minSpeed;
 	static float maxSpeed;
 	float speed;
+	
+	EDirection ballDirection;
 
 	float curve_TotalTime ;
 	float curve_Y0,curve_X0;
 	float curve_Rad;
 	float straight_Dir;
+
+	CCPoint tempInitialPosition;
+
+	CCRepeatForever* action_Rotate;
 
 	JG_TempLineContainer * tempDraw;
 	CCPoint touchPosition;
@@ -46,15 +55,20 @@ public:
 	void MoveStaight(float force, CCPoint destination);
 	void update(float dt);
 	void tempReset();
+	EDirection GetBallDirection()
+	{
+		return ballDirection;
+	}
 
 
 	CCPoint GetInitialTouchPosition();
 
 	void SetInitialTouchPosition(CCPoint newTouchPos);
 	//TODO: implement this
-	static void CalculateSpeedBoundriesBaseOnLength(float x)
+	static void CalculateSpeedBoundriesBaseOnLength(float deltaX)
 	{
-		minSpeed = 400;
+		// there is a tolerance for now
+		minSpeed = sqrt( GRAVITY * abs(deltaX));
 	}
 };
 

@@ -19,7 +19,7 @@ enum EMoveMode
 {
 	EMove_Curve, EMove_Straight
 };
-
+/*! \A class for handling ball */
 class JG_Ball :
 	public CCSprite
 {
@@ -49,12 +49,16 @@ public:
 	EMoveMode moveMode;
 
 	//TODO: change the name
+	/*! Creating ball in a specific position */
 	static JG_Ball* createWithFileName(const char * pszFileName,CCPoint initialPos);
-
+	/*! Initial the curve movement variables */
 	void MoveCurve(float force,CCPoint destination);
+	/*! Initial the straight movement variables */
 	void MoveStaight(float force, CCPoint destination);
+	/*! Handles the movement based on the current mode */
 	void update(float dt);
 	void tempReset();
+	/*! get the direction of ball */
 	EDirection GetBallDirection()
 	{
 		return ballDirection;
@@ -65,6 +69,7 @@ public:
 
 	void SetInitialTouchPosition(CCPoint newTouchPos);
 	//TODO: implement this
+	/*! Calculate the minimum Speed , based on the distance of handes */
 	static void CalculateSpeedBoundriesBaseOnLength(float deltaX)
 	{
 		// there is a tolerance for now

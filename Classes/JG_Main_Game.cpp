@@ -213,6 +213,7 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 		else
 		{
 			//invalid
+			CCLOG("invalid is here, direction up");
 		}
 	}
 }

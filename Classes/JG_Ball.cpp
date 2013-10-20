@@ -88,7 +88,7 @@ void JG_Ball::update(float dt)
 		float speedY,speedX;
 		speedX = speed * cosf(curve_Rad);
 		speedY = speed * sinf(curve_Rad);
-		
+		//CCLOG("here is it");
 		
 		//CCLOG("deg is %f ",cosf(curve_Rad) ) ;
 		speedX = speedX;

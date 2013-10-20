@@ -1,3 +1,4 @@
+//Program by : Sina Ghazizadeh
 #ifndef __MainGame_SCENE_H__
 #define __MainGame_SCENE_H__
 
@@ -60,3 +61,5 @@ public:
 };
 
 #endif // __MainGame_SCENE_H__
+
+

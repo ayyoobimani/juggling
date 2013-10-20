@@ -59,20 +59,17 @@ void JG_Ball::MoveCurve(float force,CCPoint destinaion)
 	
 	moveMode=EMove_Curve;
 	speed = minSpeed;
-	float temp = (destinaion.x-getPositionX()) * GRAVITY / pow(speed,2);
+	
 	curve_Rad = asinf((destinaion.x-getPositionX()) * GRAVITY / pow(speed,2))/2;
 
+	float temp = CC_RADIANS_TO_DEGREES(curve_Rad);
+
 	if(abs(CC_RADIANS_TO_DEGREES(curve_Rad))<45)
-		curve_Rad=CC_DEGREES_TO_RADIANS(90)- curve_Rad;
+		curve_Rad = (curve_Rad/abs(curve_Rad)) *CC_DEGREES_TO_RADIANS(90)- curve_Rad;
+	
+	if(curve_Rad<0)
+		curve_Rad = CC_DEGREES_TO_RADIANS(180) + curve_Rad;
 	CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
-	if (abs(curve_Rad)>90 )
-	{
-		/********** for getting an NULL error ******/
-		JG_Ball * ball;
-		ball->getActionByTag(2);
-		/*******************************************/
-		return ;
-	}
 	// bayad begim age sor@ kamtar azin bashe che etefaghi biyofte :| 
 
 

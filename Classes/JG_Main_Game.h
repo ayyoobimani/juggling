@@ -39,9 +39,10 @@ public:
 	virtual void ccTouchesMoved(CCSet* pTouches, CCEvent* event);
 	/*! Handles the end of the touch */
 	virtual void ccTouchesEnded(CCSet* pTouches, CCEvent* event);
+	//update function
+	void update(float dt);
 
-
-	//checks whether distance of the two point are lesser than radius or not
+	/*!checks whether distance of the two point are lesser than radius or not*/
 	//TODO: find a better name
 	bool ArePointsColliding (CCPoint point1,CCPoint point2,float radius);
 
@@ -63,6 +64,7 @@ public:
     CREATE_FUNC(JG_Main_Game);
 
 	void TestTouch();
+
 };
 
 #endif // __MainGame_SCENE_H__

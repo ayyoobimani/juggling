@@ -11,7 +11,8 @@ JG_Ball::JG_Ball(void)
 
 	// for let the ball fall
 	moveMode = EMove_Curve;
-	ballDirection = EDir_Up;
+	ballThrowDirection = EDir_RightHandToUp;
+	tempInitialThrowDirection = ballThrowDirection;
 	tempDraw = JG_TempLineContainer::create();
 //	this->addChild(tempDraw);
 	//CCDirector::sharedDirector()->getRunningScene()->addChild(tempDraw);
@@ -58,16 +59,21 @@ void JG_Ball::MoveStaight(float force, CCPoint destination)
 	straight_Dir = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
 
 	if(straight_Dir>0)
-		ballDirection = EDir_Right;
+		ballThrowDirection = EDir_LeftHandToRight;
 	else
-		ballDirection = EDir_Left;
+		ballThrowDirection = EDir_RighHandtToLeft;
 }
 
 void JG_Ball::MoveCurve(float force,CCPoint destinaion)
 {
 	
 	moveMode=EMove_Curve;
-	ballDirection = EDir_Up;
+	//to determine direction of the ball
+	if (ballThrowDirection==EDir_LeftHandToRight)
+		ballThrowDirection=EDir_RightHandToUp;
+	else if(ballThrowDirection==EDir_RighHandtToLeft)
+		ballThrowDirection=EDir_LeftHandToUp;
+	
 	speed = minSpeed + minSpeed *CCRANDOM_0_1()/2   ;
 	
 	curve_Rad = asinf((destinaion.x-getPositionX()) * GRAVITY / pow(speed,2))/2;
@@ -148,7 +154,7 @@ void JG_Ball::tempReset()
 	CCLog("Temp reset");
 	moveMode = EMove_Curve;
 	curve_Rad = 0;
-	ballDirection = EDir_Up;
+	ballThrowDirection = tempInitialThrowDirection;
 	curve_Rad = CC_DEGREES_TO_RADIANS(-90); 
 	//TODO: why speed 0 is not working
 	speed = 10;

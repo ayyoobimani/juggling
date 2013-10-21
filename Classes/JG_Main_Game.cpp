@@ -32,6 +32,10 @@ bool JG_Main_Game::init()
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	screenSize = CCDirector::sharedDirector()->getWinSize();
 
+	//call update for every frame
+	this->schedule(schedule_selector(JG_Main_Game::update));
+
+
 	CCSprite * backGround = CCSprite::create("background.png");
 
 	backGround->setPosition(ccp(screenSize.x/2,screenSize.y/2));
@@ -104,13 +108,13 @@ void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 	CCTouch* touch;
 	CCPoint tap;
 
-	CCLog(" right hand position is %f", rightHand->getPosition().x);
+	//CCLog(" right hand position is %f", rightHand->getPosition().x);
 	for( i = pTouches->begin(); i != pTouches->end(); i++) 
 	{
 		touch = (CCTouch*) (*i);
 		if(touch) 
 		{
-			CCLOG(" touch pos is %f " , touch->getLocation().y);
+			//CCLOG(" touch pos is %f " , touch->getLocation().x);
 			//******************* delete me later *******************/
 			//currentBall = (JG_Ball*) ballsArray->randomObject();
 			//currentHand = rightHand;
@@ -163,22 +167,23 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 		if(directionRad<0)
 			directionRad+= CC_DEGREES_TO_RADIANS(360);
 		/*****************************************************************************/
-		CCLOG("touch dir is %f" , CC_RADIANS_TO_DEGREES(directionRad)); 
+		//CCLOG("touch dir is %f" , CC_RADIANS_TO_DEGREES(directionRad)); 
 		float directionDeg = CC_RADIANS_TO_DEGREES(directionRad);
 		//direction
 		if(directionDeg>45&& directionDeg<135)
 		{
 			//direction up
-			if (currentBall->GetBallDirection() != EDir_Up)
+			if (currentBall->GetBallDirection() != EDir_LeftHandToUp && currentBall->GetBallDirection()!=EDir_RightHandToUp)
 			{
-				if(currentHand==leftHand)
+				if(currentHand==leftHand && currentBall->GetBallDirection()==EDir_RighHandtToLeft)
 				{
+					
 					currentBall->setPosition(currentHand->getPosition());
 					currentBall->MoveCurve(1,rightHand->getPosition());
 					bDirIsSet = true;
 				
 				}
-				else if (currentHand==rightHand)
+				else if (currentHand==rightHand && currentBall->GetBallDirection()==EDir_LeftHandToRight)
 				{
 					currentBall->setPosition(currentHand->getPosition());
 					currentBall->MoveCurve(1,leftHand->getPosition());
@@ -190,7 +195,7 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 		else if(directionDeg>135&&directionDeg<225)
 		{
 			//direction left
-			if (currentBall->GetBallDirection() == EDir_Up)
+			if (currentBall->GetBallDirection() == EDir_LeftHandToUp)
 			{
 				
 				if(currentHand==leftHand)
@@ -211,7 +216,7 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 		{
 			//direction right
 
-			if (currentBall->GetBallDirection() == EDir_Up)
+			if (currentBall->GetBallDirection() == EDir_RightHandToUp)
 			{
 				if(currentHand==leftHand)
 				{
@@ -229,7 +234,7 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 		else
 		{
 			//invalid
-			CCLOG("invalid is here, direction up");
+			//CCLOG("invalid is here, direction up");
 		}
 	}
 }
@@ -250,5 +255,54 @@ bool JG_Main_Game::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 
 void JG_Main_Game::TestTouch()
 {
+	CCTouch* testTouch;
+	testTouch = new CCTouch();
+	float randomX;
+	float randomY;
+	CCPoint testPoint;
+	
+	if (CCRANDOM_0_1()>0.5)
+	{
+		randomX=leftHand->getPositionX();
+		randomY=leftHand->getPositionY();
+	}
+	else
+	{
+		randomX=rightHand->getPositionX();
+		randomY=rightHand->getPositionY();
+	}
+	
+	
+	testPoint.setPoint(randomX,randomY);
+	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
+	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
+	CCPoint temp = testTouch->getLocation();
+	
+	CCSet* testTouchSet= CCSet::create();
+	testTouchSet->addObject(testTouch);
+
+	ccTouchesBegan(testTouchSet,NULL);
+
+	//test_touch_move
+	randomX=CCRANDOM_0_1()*screenSize.x;
+	randomY=CCRANDOM_0_1()*screenSize.y;
+	
+	testPoint.setPoint(randomX,randomY);
+	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
+
+	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
+	
+	
+	
+	ccTouchesMoved(testTouchSet,NULL);
+	ccTouchesEnded(NULL,NULL);
+	
+	
+	
+
+}
+void JG_Main_Game::update(float dt)
+{
+	TestTouch();
 }

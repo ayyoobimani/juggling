@@ -4,15 +4,15 @@
 #include "JG_TempLineContainer.h"
 #include "cocos2d.h"
 
-
+//TODO: to set initial direction when ball is creating in init function
 
 using namespace cocos2d;
 
 #define GRAVITY 400
 
-enum EDirection
+enum EThrowDirection
 {
-	EDir_Left, EDir_Right, EDir_Up, EDir_Down
+	EDir_LeftHandToRight, EDir_RighHandtToLeft, EDir_LeftHandToUp, EDir_RightHandToUp
 };
 
 enum EMoveMode
@@ -31,7 +31,7 @@ public:
 	static float maxSpeed;
 	float speed;
 	
-	EDirection ballDirection;
+	EThrowDirection ballThrowDirection;
 
 	float curve_TotalTime ;
 	float curve_Y0,curve_X0;
@@ -39,6 +39,7 @@ public:
 	float straight_Dir;
 
 	CCPoint tempInitialPosition;
+	EThrowDirection tempInitialThrowDirection;
 
 	CCRepeatForever* action_Rotate;
 
@@ -59,9 +60,9 @@ public:
 	void update(float dt);
 	void tempReset();
 	/*! get the direction of ball */
-	EDirection GetBallDirection()
+	EThrowDirection GetBallDirection()
 	{
-		return ballDirection;
+		return ballThrowDirection;
 	}
 
 

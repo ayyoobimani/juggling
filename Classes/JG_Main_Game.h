@@ -39,7 +39,7 @@ public:
 	virtual void ccTouchesMoved(CCSet* pTouches, CCEvent* event);
 	/*! Handles the end of the touch */
 	virtual void ccTouchesEnded(CCSet* pTouches, CCEvent* event);
-	//update function
+	/*! update function */
 	void update(float dt);
 
 	/*!checks whether distance of the two point are lesser than radius or not*/
@@ -62,7 +62,7 @@ public:
     
     // implement the "static node()" method manually
     CREATE_FUNC(JG_Main_Game);
-
+	/*! a function to test touch */
 	void TestTouch();
 
 };

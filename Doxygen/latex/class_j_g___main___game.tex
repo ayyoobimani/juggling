@@ -1,0 +1,114 @@
+\hypertarget{class_j_g___main___game}{\section{J\-G\-\_\-\-Main\-\_\-\-Game Class Reference}
+\label{class_j_g___main___game}\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+}
+
+
+{\ttfamily \#include $<$J\-G\-\_\-\-Main\-\_\-\-Game.\-h$>$}
+
+Inheritance diagram for J\-G\-\_\-\-Main\-\_\-\-Game\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_j_g___main___game}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{class_j_g___main___game_a9022437f7d1240ef8991b0e6c19e08ec}{init} ()
+\item 
+virtual void \hyperlink{class_j_g___main___game_ab4c6f1d5f85c480f1f6cd357a66cfd55}{cc\-Touches\-Began} (C\-C\-Set $\ast$p\-Touches, C\-C\-Event $\ast$event)
+\item 
+virtual void \hyperlink{class_j_g___main___game_a1a99f1b88de06e8882925c744be3cb91}{cc\-Touches\-Moved} (C\-C\-Set $\ast$p\-Touches, C\-C\-Event $\ast$event)
+\item 
+virtual void \hyperlink{class_j_g___main___game_ab9f945eff20cd58d54742828519bb6c7}{cc\-Touches\-Ended} (C\-C\-Set $\ast$p\-Touches, C\-C\-Event $\ast$event)
+\item 
+void \hyperlink{class_j_g___main___game_a1438760d9db28d5410b5fac68a70aa77}{update} (float dt)
+\item 
+bool \hyperlink{class_j_g___main___game_a92d55b1498b07adf8f83e67f71b1c7d0}{Are\-Points\-Colliding} (C\-C\-Point point1, C\-C\-Point point2, float radius)
+\item 
+\hypertarget{class_j_g___main___game_ae3825c2f0b5ead18bf4a7b5c8632ac9f}{void {\bfseries menu\-Close\-Callback} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___main___game_ae3825c2f0b5ead18bf4a7b5c8632ac9f}
+
+\item 
+\hypertarget{class_j_g___main___game_af2739df486e18c008097b3e070c91ec0}{void {\bfseries menu\-Pause\-Call\-Back} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___main___game_af2739df486e18c008097b3e070c91ec0}
+
+\item 
+\hypertarget{class_j_g___main___game_a702c39bc1dd589208b2ca832e77d5d82}{float {\bfseries get\-Sign} (float num)}\label{class_j_g___main___game_a702c39bc1dd589208b2ca832e77d5d82}
+
+\item 
+\hypertarget{class_j_g___main___game_ab9b82a7809e11b3ec224e53e06882779}{{\bfseries C\-R\-E\-A\-T\-E\-\_\-\-F\-U\-N\-C} (\hyperlink{class_j_g___main___game}{J\-G\-\_\-\-Main\-\_\-\-Game})}\label{class_j_g___main___game_ab9b82a7809e11b3ec224e53e06882779}
+
+\item 
+void \hyperlink{class_j_g___main___game_a270e423f2d88ef6c8b7151e4305f8bb5}{Test\-Touch} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___main___game_aacf1b844ebba39f8d75959b592557f26}{static cocos2d\-::\-C\-C\-Scene $\ast$ {\bfseries scene} ()}\label{class_j_g___main___game_aacf1b844ebba39f8d75959b592557f26}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The main class for controlling the game 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_j_g___main___game_a92d55b1498b07adf8f83e67f71b1c7d0}{\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}!Are\-Points\-Colliding@{Are\-Points\-Colliding}}
+\index{Are\-Points\-Colliding@{Are\-Points\-Colliding}!JG_Main_Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+\subsubsection[{Are\-Points\-Colliding}]{\setlength{\rightskip}{0pt plus 5cm}bool J\-G\-\_\-\-Main\-\_\-\-Game\-::\-Are\-Points\-Colliding (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Point}]{point1, }
+\item[{C\-C\-Point}]{point2, }
+\item[{float}]{radius}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___main___game_a92d55b1498b07adf8f83e67f71b1c7d0}
+checks whether distance of the two point are lesser than radius or not \hypertarget{class_j_g___main___game_ab4c6f1d5f85c480f1f6cd357a66cfd55}{\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}!cc\-Touches\-Began@{cc\-Touches\-Began}}
+\index{cc\-Touches\-Began@{cc\-Touches\-Began}!JG_Main_Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+\subsubsection[{cc\-Touches\-Began}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Main\-\_\-\-Game\-::cc\-Touches\-Began (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Set $\ast$}]{p\-Touches, }
+\item[{C\-C\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___main___game_ab4c6f1d5f85c480f1f6cd357a66cfd55}
+Handles the beginning of the touch \hypertarget{class_j_g___main___game_ab9f945eff20cd58d54742828519bb6c7}{\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}!cc\-Touches\-Ended@{cc\-Touches\-Ended}}
+\index{cc\-Touches\-Ended@{cc\-Touches\-Ended}!JG_Main_Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+\subsubsection[{cc\-Touches\-Ended}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Main\-\_\-\-Game\-::cc\-Touches\-Ended (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Set $\ast$}]{p\-Touches, }
+\item[{C\-C\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___main___game_ab9f945eff20cd58d54742828519bb6c7}
+Handles the end of the touch \hypertarget{class_j_g___main___game_a1a99f1b88de06e8882925c744be3cb91}{\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}!cc\-Touches\-Moved@{cc\-Touches\-Moved}}
+\index{cc\-Touches\-Moved@{cc\-Touches\-Moved}!JG_Main_Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+\subsubsection[{cc\-Touches\-Moved}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Main\-\_\-\-Game\-::cc\-Touches\-Moved (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Set $\ast$}]{p\-Touches, }
+\item[{C\-C\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___main___game_a1a99f1b88de06e8882925c744be3cb91}
+Handles the movement of the touch \hypertarget{class_j_g___main___game_a9022437f7d1240ef8991b0e6c19e08ec}{\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}!init@{init}}
+\index{init@{init}!JG_Main_Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool J\-G\-\_\-\-Main\-\_\-\-Game\-::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___main___game_a9022437f7d1240ef8991b0e6c19e08ec}
+Initial the game state \hypertarget{class_j_g___main___game_a270e423f2d88ef6c8b7151e4305f8bb5}{\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}!Test\-Touch@{Test\-Touch}}
+\index{Test\-Touch@{Test\-Touch}!JG_Main_Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+\subsubsection[{Test\-Touch}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Main\-\_\-\-Game\-::\-Test\-Touch (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___main___game_a270e423f2d88ef6c8b7151e4305f8bb5}
+a function to test touch \hypertarget{class_j_g___main___game_a1438760d9db28d5410b5fac68a70aa77}{\index{J\-G\-\_\-\-Main\-\_\-\-Game@{J\-G\-\_\-\-Main\-\_\-\-Game}!update@{update}}
+\index{update@{update}!JG_Main_Game@{J\-G\-\_\-\-Main\-\_\-\-Game}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Main\-\_\-\-Game\-::update (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___main___game_a1438760d9db28d5410b5fac68a70aa77}
+update function 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+J\-G\-\_\-\-Main\-\_\-\-Game.\-h\item 
+J\-G\-\_\-\-Main\-\_\-\-Game.\-cpp\end{DoxyCompactItemize}

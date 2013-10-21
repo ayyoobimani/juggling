@@ -1,0 +1,148 @@
+\hypertarget{class_j_g___ball}{\section{J\-G\-\_\-\-Ball Class Reference}
+\label{class_j_g___ball}\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}}
+}
+
+
+{\ttfamily \#include $<$J\-G\-\_\-\-Ball.\-h$>$}
+
+Inheritance diagram for J\-G\-\_\-\-Ball\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_j_g___ball}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_j_g___ball_a601eda0b1aaf9d4c8fdd31d36234a6c1}{Move\-Curve} (float force, C\-C\-Point destination)
+\item 
+void \hyperlink{class_j_g___ball_afa347dae4a20695cf506375b798cb2f3}{Move\-Staight} (float force, C\-C\-Point destination)
+\item 
+void \hyperlink{class_j_g___ball_a21c06d1a10aa8fdcc3d8e63a82f221fe}{update} (float dt)
+\item 
+\hypertarget{class_j_g___ball_adb4350ed0da24e5499c3402bc322f559}{void {\bfseries temp\-Reset} ()}\label{class_j_g___ball_adb4350ed0da24e5499c3402bc322f559}
+
+\item 
+E\-Throw\-Direction \hyperlink{class_j_g___ball_a94843b91ab6f8cddbb2b90de6daeb531}{Get\-Ball\-Direction} ()
+\item 
+\hypertarget{class_j_g___ball_a0ad42506b43718f14ccb45f163d92999}{C\-C\-Point {\bfseries Get\-Initial\-Touch\-Position} ()}\label{class_j_g___ball_a0ad42506b43718f14ccb45f163d92999}
+
+\item 
+\hypertarget{class_j_g___ball_a628e6f457315f1af9d9638834dff91e0}{void {\bfseries Set\-Initial\-Touch\-Position} (C\-C\-Point new\-Touch\-Pos)}\label{class_j_g___ball_a628e6f457315f1af9d9638834dff91e0}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ \hyperlink{class_j_g___ball_a12279a500446c9516026d3f52fee87eb}{create\-With\-File\-Name} (const char $\ast$psz\-File\-Name, C\-C\-Point initial\-Pos)
+\item 
+static void \hyperlink{class_j_g___ball_a8023f3c38c257dd4430a5a01c519a289}{Calculate\-Speed\-Boundries\-Base\-On\-Length} (float delta\-X)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___ball_ad4aa2855022e5315addf40ef73ee6972}{float {\bfseries speed}}\label{class_j_g___ball_ad4aa2855022e5315addf40ef73ee6972}
+
+\item 
+\hypertarget{class_j_g___ball_a743ed73473f38e9466f305c3f8efe995}{E\-Throw\-Direction {\bfseries ball\-Throw\-Direction}}\label{class_j_g___ball_a743ed73473f38e9466f305c3f8efe995}
+
+\item 
+\hypertarget{class_j_g___ball_af0bd7eeacc5d8f094d921663843b5179}{float {\bfseries curve\-\_\-\-Total\-Time}}\label{class_j_g___ball_af0bd7eeacc5d8f094d921663843b5179}
+
+\item 
+\hypertarget{class_j_g___ball_a681ecc9587d2d8d857f656d19d297ef8}{float {\bfseries curve\-\_\-\-Y0}}\label{class_j_g___ball_a681ecc9587d2d8d857f656d19d297ef8}
+
+\item 
+\hypertarget{class_j_g___ball_a8dcbff9b6d7f9f8737b3421f26c699e7}{float {\bfseries curve\-\_\-\-X0}}\label{class_j_g___ball_a8dcbff9b6d7f9f8737b3421f26c699e7}
+
+\item 
+\hypertarget{class_j_g___ball_a32222cd24992fff289361884db472b23}{float {\bfseries curve\-\_\-\-Rad}}\label{class_j_g___ball_a32222cd24992fff289361884db472b23}
+
+\item 
+\hypertarget{class_j_g___ball_a399ae1fb026df3759d3616c7b74eecaa}{float {\bfseries straight\-\_\-\-Dir}}\label{class_j_g___ball_a399ae1fb026df3759d3616c7b74eecaa}
+
+\item 
+\hypertarget{class_j_g___ball_a2cab0645b2eb4374fbfde0b0399c0e72}{C\-C\-Point {\bfseries temp\-Initial\-Position}}\label{class_j_g___ball_a2cab0645b2eb4374fbfde0b0399c0e72}
+
+\item 
+\hypertarget{class_j_g___ball_a358259dea815fa262327e0af48a6af3c}{E\-Throw\-Direction {\bfseries temp\-Initial\-Throw\-Direction}}\label{class_j_g___ball_a358259dea815fa262327e0af48a6af3c}
+
+\item 
+\hypertarget{class_j_g___ball_a602558390080ce6d8cdfcfdbc09f7b12}{C\-C\-Repeat\-Forever $\ast$ {\bfseries action\-\_\-\-Rotate}}\label{class_j_g___ball_a602558390080ce6d8cdfcfdbc09f7b12}
+
+\item 
+\hypertarget{class_j_g___ball_aa0fc27312d724fcf2324e87844a99cb8}{\hyperlink{class_j_g___temp_line_container}{J\-G\-\_\-\-Temp\-Line\-Container} $\ast$ {\bfseries temp\-Draw}}\label{class_j_g___ball_aa0fc27312d724fcf2324e87844a99cb8}
+
+\item 
+\hypertarget{class_j_g___ball_aacc0e044d12a3fe88d03b54f8c800626}{C\-C\-Point {\bfseries touch\-Position}}\label{class_j_g___ball_aacc0e044d12a3fe88d03b54f8c800626}
+
+\item 
+\hypertarget{class_j_g___ball_a0ad0f2f4b8d03d63c879544111a24506}{E\-Move\-Mode {\bfseries move\-Mode}}\label{class_j_g___ball_a0ad0f2f4b8d03d63c879544111a24506}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___ball_a0e5845ccdb93030b567b796f6266e517}{static float {\bfseries min\-Speed}}\label{class_j_g___ball_a0e5845ccdb93030b567b796f6266e517}
+
+\item 
+\hypertarget{class_j_g___ball_ad830251662cdf8443962aef638ffefcc}{static float {\bfseries max\-Speed}}\label{class_j_g___ball_ad830251662cdf8443962aef638ffefcc}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+class for handling ball 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_j_g___ball_a8023f3c38c257dd4430a5a01c519a289}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Calculate\-Speed\-Boundries\-Base\-On\-Length@{Calculate\-Speed\-Boundries\-Base\-On\-Length}}
+\index{Calculate\-Speed\-Boundries\-Base\-On\-Length@{Calculate\-Speed\-Boundries\-Base\-On\-Length}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Calculate\-Speed\-Boundries\-Base\-On\-Length}]{\setlength{\rightskip}{0pt plus 5cm}static void J\-G\-\_\-\-Ball\-::\-Calculate\-Speed\-Boundries\-Base\-On\-Length (
+\begin{DoxyParamCaption}
+\item[{float}]{delta\-X}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{class_j_g___ball_a8023f3c38c257dd4430a5a01c519a289}
+Calculate the minimum Speed , based on the distance of handes \hypertarget{class_j_g___ball_a12279a500446c9516026d3f52fee87eb}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!create\-With\-File\-Name@{create\-With\-File\-Name}}
+\index{create\-With\-File\-Name@{create\-With\-File\-Name}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{create\-With\-File\-Name}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\-G\-\_\-\-Ball} $\ast$ J\-G\-\_\-\-Ball\-::create\-With\-File\-Name (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{psz\-File\-Name, }
+\item[{C\-C\-Point}]{initial\-Pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___ball_a12279a500446c9516026d3f52fee87eb}
+Creating ball in a specific position \hypertarget{class_j_g___ball_a94843b91ab6f8cddbb2b90de6daeb531}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Ball\-Direction@{Get\-Ball\-Direction}}
+\index{Get\-Ball\-Direction@{Get\-Ball\-Direction}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Ball\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}E\-Throw\-Direction J\-G\-\_\-\-Ball\-::\-Get\-Ball\-Direction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_j_g___ball_a94843b91ab6f8cddbb2b90de6daeb531}
+get the direction of ball \hypertarget{class_j_g___ball_a601eda0b1aaf9d4c8fdd31d36234a6c1}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Move\-Curve@{Move\-Curve}}
+\index{Move\-Curve@{Move\-Curve}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Move\-Curve}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Move\-Curve (
+\begin{DoxyParamCaption}
+\item[{float}]{force, }
+\item[{C\-C\-Point}]{destination}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a601eda0b1aaf9d4c8fdd31d36234a6c1}
+Initial the curve movement variables \hypertarget{class_j_g___ball_afa347dae4a20695cf506375b798cb2f3}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Move\-Staight@{Move\-Staight}}
+\index{Move\-Staight@{Move\-Staight}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Move\-Staight}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Move\-Staight (
+\begin{DoxyParamCaption}
+\item[{float}]{force, }
+\item[{C\-C\-Point}]{destination}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_afa347dae4a20695cf506375b798cb2f3}
+Initial the straight movement variables \hypertarget{class_j_g___ball_a21c06d1a10aa8fdcc3d8e63a82f221fe}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!update@{update}}
+\index{update@{update}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::update (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a21c06d1a10aa8fdcc3d8e63a82f221fe}
+Handles the movement based on the current mode 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+J\-G\-\_\-\-Ball.\-h\item 
+J\-G\-\_\-\-Ball.\-cpp\end{DoxyCompactItemize}

@@ -18,11 +18,12 @@ class JG_Main_Game : public cocos2d::CCLayer
 	JG_Hand* currentHand;
 
 	CCArray* ballsArray;
-	
 	JG_Ball* currentBall;
 
 	CCPoint screenSize ;
 
+	/* this is temporary: each ball that is touched must have a flag that determines whether
+		the direction of the ball is set or not. ( used in ccTouchesMoved) */
 	bool bDirIsSet;
 
 public:
@@ -35,10 +36,13 @@ public:
 
 	/*! Handles the beginning of the touch */
 	virtual void ccTouchesBegan(CCSet* pTouches, CCEvent* event);
+
 	/*! Handles the movement of the touch */
 	virtual void ccTouchesMoved(CCSet* pTouches, CCEvent* event);
+
 	/*! Handles the end of the touch */
 	virtual void ccTouchesEnded(CCSet* pTouches, CCEvent* event);
+
 	/*! update function */
 	void update(float dt);
 

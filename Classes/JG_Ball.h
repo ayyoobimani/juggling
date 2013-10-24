@@ -1,10 +1,9 @@
 #pragma once
 #include "sprite_nodes\CCSprite.h"
 #include "actions\CCActionInterval.h"
-#include "JG_TempLineContainer.h"
 #include "cocos2d.h"
 
-//TODO: to set initial direction when ball is creating in init function
+
 
 using namespace cocos2d;
 
@@ -19,7 +18,8 @@ enum EMoveMode
 {
 	EMove_Curve, EMove_Straight
 };
-/*! \A class for handling ball */
+
+/*! The main class for handling ball movement */
 class JG_Ball :
 	public CCSprite
 {
@@ -29,51 +29,56 @@ public:
 
 	static float minSpeed;
 	static float maxSpeed;
-	float speed;
+	float currentSpeed;
 	
 	EThrowDirection ballThrowDirection;
 
-	float curve_TotalTime ;
-	float curve_Y0,curve_X0;
+	/*! radians of falling in EMove_Curve */
 	float curve_Rad;
+
+	/*! direction of movement in EMove_Straight */
 	float straight_Dir;
 
+	CCString ballTexture;
+
+	/*! temporary storing Initial state for TempReset function */
 	CCPoint tempInitialPosition;
 	EThrowDirection tempInitialThrowDirection;
 
+	/*! temporary rotation action */
 	CCRepeatForever* action_Rotate;
 
-	JG_TempLineContainer * tempDraw;
-	CCPoint touchPosition;
-
-	// determine the movement mode of the ball
+	/*!  The movement mode of the ball */
 	EMoveMode moveMode;
 
-	//TODO: change the name
-	/*! Creating ball in a specific position */
-	static JG_Ball* createWithFileName(const char * pszFileName,CCPoint initialPos);
+	/*! Stores the touch potsion when ball is touched for first time.
+	    This is used for determining the direction of throw (touch) */
+	CCPoint InitialTouchPosition;
+
+	/*! Creating ball in a specific position and specific direction */
+	static JG_Ball* CreateBall(CCPoint initialPos,EThrowDirection initialDirection);
+
 	/*! Initial the curve movement variables */
 	void MoveCurve(float force,CCPoint destination);
+
 	/*! Initial the straight movement variables */
 	void MoveStaight(float force, CCPoint destination);
+
 	/*! Handles the movement based on the current mode */
 	void update(float dt);
-	void tempReset();
-	/*! get the direction of ball */
-	EThrowDirection GetBallDirection()
-	{
-		return ballThrowDirection;
-	}
 
+	/*! temporary reset the ball to it's initial postion when it is out of view */
+	void TempReset();
+
+	/*! get the direction of ball */
+	EThrowDirection GetBallDirection();
 
 	CCPoint GetInitialTouchPosition();
-
 	void SetInitialTouchPosition(CCPoint newTouchPos);
-	//TODO: implement this
+
 	/*! Calculate the minimum Speed , based on the distance of handes */
 	static void CalculateSpeedBoundriesBaseOnLength(float deltaX)
 	{
-		// there is a tolerance for now
 		minSpeed = sqrt( GRAVITY * abs(deltaX));
 	}
 };

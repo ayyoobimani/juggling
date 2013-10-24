@@ -36,13 +36,16 @@ bool JG_Main_Game::init()
 	this->schedule(schedule_selector(JG_Main_Game::update));
 
 
+	/*********************** Background **************************/
 	CCSprite * backGround = CCSprite::create("background.png");
 
 	backGround->setPosition(ccp(screenSize.x/2,screenSize.y/2));
 	this->addChild(backGround);
+	/************************* /Background *************************/
 
 
 
+	/************************** Hands ***********************************/
 	rightHand = JG_Hand::createWithFileName("RightHand.png",ccp(screenSize.x-50,40));
 	leftHand = JG_Hand::createWithFileName("LeftHand.png",ccp(50,40));
 
@@ -52,27 +55,28 @@ bool JG_Main_Game::init()
 	{
 		this->addChild((CCNode*)handsArray->objectAtIndex(i),2);
 	}
+	/*************************** /Hands *************************************/
 
 
-
+	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
 
 	// initing  one ball for test
-	ballsArray=CCArray::create(JG_Ball::createWithFileName("ball.png",ccp(leftHand->getPositionX(),200)),NULL);
+	ballsArray=CCArray::create(JG_Ball::CreateBall(ccp(leftHand->getPositionX(),200),EDir_RightHandToUp),NULL);
 	ballsArray->retain();
 
 	for( int i = 0 ; i<ballsArray->count();i++)
 	{
 		this->addChild((CCNode*)ballsArray->objectAtIndex(i),6);
 	}
-	
+
+	/******************************** /Balls ************************************/
 
 
 	currentBall = NULL;
 	currentHand = NULL;
 	bDirIsSet = false;
 	
-
 
 
 	this->setTouchEnabled(true);
@@ -100,7 +104,9 @@ void JG_Main_Game::menuPauseCallBack(CCObject* pSender)
 		CCDirector::sharedDirector()->resume();
 }
 
-
+/* This function first iterate through touches to find with wich hand they are colliding.
+	Then for each hand that is touch, finds wich ball is colliding with it.
+*/
 void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 {
 	//TODO: implement this for multi touch
@@ -108,19 +114,11 @@ void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 	CCTouch* touch;
 	CCPoint tap;
 
-	//CCLog(" right hand position is %f", rightHand->getPosition().x);
 	for( i = pTouches->begin(); i != pTouches->end(); i++) 
 	{
 		touch = (CCTouch*) (*i);
 		if(touch) 
 		{
-			//CCLOG(" touch pos is %f " , touch->getLocation().x);
-			//******************* delete me later *******************/
-			//currentBall = (JG_Ball*) ballsArray->randomObject();
-			//currentHand = rightHand;
-			//currentBall->SetInitialTouchPosition(touch->getLocation());
-			//return;
-			/*******************************************************/
 			JG_Hand * tempHand;
 			tap = touch->getLocation();
 			for(int j = 0 ; j< handsArray->count();j++)
@@ -147,29 +145,38 @@ void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		}
 	}// end of touch looping
 }
-						
+	
+
+//TODO: implement for multi touch
+//TODO: clean up and make it more modular
 void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 {
 	
 	if(currentBall==NULL || currentHand == NULL)
 		return;
 
+	// if direction is not yet set for the ball. ( for now we only have one ball)
 	if(!bDirIsSet)
 	{
-		CCPoint directionBorder=(((CCTouch*) pTouches->anyObject())->getLocation())-currentBall->GetInitialTouchPosition();
 
+		// find direction based on ball's initialTouchPosition and current touch position
+		CCPoint direction=(((CCTouch*) pTouches->anyObject())->getLocation())-currentBall->GetInitialTouchPosition();
+
+
+		// calculate the direction in Radian
 		//********************* TODO: find a better soloution for this ****************/
-		float directionRad = atan(directionBorder.y/directionBorder.x);
-		//CCLOG("atan is %f" , CC_RADIANS_TO_DEGREES(directionRad));
-		if(getSign(directionBorder.x)<0 )
+		float directionRad = atan(direction.y/direction.x);
+		if(getSign(direction.x)<0 )
 			directionRad+= CC_DEGREES_TO_RADIANS(180);
 
 		if(directionRad<0)
 			directionRad+= CC_DEGREES_TO_RADIANS(360);
 		/*****************************************************************************/
-		//CCLOG("touch dir is %f" , CC_RADIANS_TO_DEGREES(directionRad)); 
+
+
 		float directionDeg = CC_RADIANS_TO_DEGREES(directionRad);
-		//direction
+
+		/************************* Checking Direction Validation **************************/
 		if(directionDeg>45&& directionDeg<135)
 		{
 			//direction up
@@ -236,10 +243,12 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 			//invalid
 			//CCLOG("invalid is here, direction up");
 		}
+		/************************* /Checking Direction Validation **************************/
+
 	}
 }
 
-
+// for now just reset everything
 void JG_Main_Game::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 {
 	currentBall = NULL;
@@ -304,5 +313,5 @@ void JG_Main_Game::TestTouch()
 }
 void JG_Main_Game::update(float dt)
 {
-	TestTouch();
+	//TestTouch();
 }

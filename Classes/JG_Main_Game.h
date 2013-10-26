@@ -9,22 +9,33 @@
 using namespace cocos2d;
 
 
+// define how many touches can be supported at the same time
+#define TOUCH_COUNT 2
+
+struct STouchInfo
+{
+	CCTouch * touch;
+	JG_Hand * hand;
+	JG_Ball * ball;
+	bool bIsDirectionSet;
+};
+
 /*! The main class for controlling the game */
 class JG_Main_Game : public cocos2d::CCLayer
 {
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
 	CCArray* handsArray;
-	JG_Hand* currentHand;
+	//JG_Hand* currentHand;
 
 	CCArray* ballsArray;
-	JG_Ball* currentBall;
+	//JG_Ball* currentBall;
 
 	CCPoint screenSize ;
 
-	/* this is temporary: each ball that is touched must have a flag that determines whether
-		the direction of the ball is set or not. ( used in ccTouchesMoved) */
-	bool bDirIsSet;
+	// store touch infos. 
+	STouchInfo touchInfos[TOUCH_COUNT];
+
 
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -50,6 +61,12 @@ public:
 	//TODO: find a better name
 	bool ArePointsColliding (CCPoint point1,CCPoint point2,float radius);
 
+	// Set an empy touchinfo with new infos
+	void SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball);
+	// Reset an touchinfo with the given index in touchInfos
+	void ResetTouchInfo( int index);
+	// Set Direction For Ball for the give index in touchInfos. return whether direction was valid or not 
+	bool SetTouchDirectionForBall(int index);
 	
     
     // a selector callback
@@ -66,8 +83,10 @@ public:
     
     // implement the "static node()" method manually
     CREATE_FUNC(JG_Main_Game);
-	/*! a function to test touch */
-	void TestTouch();
+	/*! a function to test single touch */
+	void TestSingleTouch();
+	/*! a function to test single touch */
+	void TestMultiTouch();
 
 };
 

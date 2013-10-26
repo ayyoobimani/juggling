@@ -62,7 +62,9 @@ bool JG_Main_Game::init()
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
 
 	// initing  one ball for test
-	ballsArray=CCArray::create(JG_Ball::CreateBall(ccp(leftHand->getPositionX(),200),EDir_RightHandToUp),NULL);
+	ballsArray=CCArray::create(JG_Ball::CreateBall(ccp(leftHand->getPositionX(),200),EDir_RightHandToUp),
+		JG_Ball::CreateBall(ccp(leftHand->getPositionX(),300),EDir_RightHandToUp),
+		NULL);
 	ballsArray->retain();
 
 	for( int i = 0 ; i<ballsArray->count();i++)
@@ -73,10 +75,14 @@ bool JG_Main_Game::init()
 	/******************************** /Balls ************************************/
 
 
-	currentBall = NULL;
-	currentHand = NULL;
-	bDirIsSet = false;
-	
+	for( int i = 0 ; i< TOUCH_COUNT ; i++)
+	{
+		touchInfos[i].ball = NULL;
+		touchInfos[i].hand = NULL;
+		touchInfos[i].touch = NULL;
+		touchInfos[i].bIsDirectionSet = false;
+	}
+
 
 
 	this->setTouchEnabled(true);
@@ -127,16 +133,15 @@ void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 				//Checking if tap is colliding with any of hands
 				if(ArePointsColliding(tap,tempHand->getPosition(),tempHand->GetRadius()))
 				{
-					currentHand=((JG_Hand*)handsArray->objectAtIndex(j));
-					JG_Ball *testBall;
+					JG_Ball *tempBall;
 					//cheking if hand is colliding with a ball
 					for (int k=0 ; k<ballsArray->count() ; k++)
 					{
-						testBall=(JG_Ball *) ballsArray->objectAtIndex(k);
-						if(ArePointsColliding(testBall->getPosition(),currentHand->getPosition(),currentHand->GetRadius()))
+						tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
+						if(ArePointsColliding(tempBall->getPosition(),tempHand->getPosition(),tempHand->GetRadius()))
 						{
-							currentBall=(JG_Ball *) ballsArray->objectAtIndex(k);
-							currentBall->SetInitialTouchPosition(currentBall->getPosition());
+							SetTouchInfo(touch,tempHand,tempBall);
+							tempBall->SetInitialTouchPosition(tempBall->getPosition());
 						
 						}// end of ball collision cheking
 					}// end of ball looping
@@ -151,109 +156,143 @@ void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 //TODO: clean up and make it more modular
 void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 {
-	
-	if(currentBall==NULL || currentHand == NULL)
-		return;
-
-	// if direction is not yet set for the ball. ( for now we only have one ball)
-	if(!bDirIsSet)
+	CCTouch* touch;
+	for( CCSetIterator i = pTouches->begin(); i != pTouches->end(); i++)
 	{
-
-		// find direction based on ball's initialTouchPosition and current touch position
-		CCPoint direction=(((CCTouch*) pTouches->anyObject())->getLocation())-currentBall->GetInitialTouchPosition();
-
-
-		// calculate the direction in Radian
-		//********************* TODO: find a better soloution for this ****************/
-		float directionRad = atan(direction.y/direction.x);
-		if(getSign(direction.x)<0 )
-			directionRad+= CC_DEGREES_TO_RADIANS(180);
-
-		if(directionRad<0)
-			directionRad+= CC_DEGREES_TO_RADIANS(360);
-		/*****************************************************************************/
-
-
-		float directionDeg = CC_RADIANS_TO_DEGREES(directionRad);
-
-		/************************* Checking Direction Validation **************************/
-		if(directionDeg>45&& directionDeg<135)
+		touch = (CCTouch *) (*i);
+		if(touch!=NULL)
 		{
-			//direction up
-			if (currentBall->GetBallDirection() != EDir_LeftHandToUp && currentBall->GetBallDirection()!=EDir_RightHandToUp)
+			for(int j = 0 ; j < TOUCH_COUNT; j++)
 			{
-				if(currentHand==leftHand && currentBall->GetBallDirection()==EDir_RighHandtToLeft)
+				if(touchInfos[j].touch== touch)
 				{
-					
-					currentBall->setPosition(currentHand->getPosition());
-					currentBall->MoveCurve(1,rightHand->getPosition());
-					bDirIsSet = true;
-				
-				}
-				else if (currentHand==rightHand && currentBall->GetBallDirection()==EDir_LeftHandToRight)
-				{
-					currentBall->setPosition(currentHand->getPosition());
-					currentBall->MoveCurve(1,leftHand->getPosition());
-					bDirIsSet = true;
-				}
-			}
-		
-		}
-		else if(directionDeg>135&&directionDeg<225)
-		{
-			//direction left
-			if (currentBall->GetBallDirection() == EDir_LeftHandToUp)
-			{
-				
-				if(currentHand==leftHand)
-				{
-					//invalid
-				}
-				else if (currentHand==rightHand)
-				{
-					currentBall->setPosition(currentHand->getPosition());
-					currentBall->MoveStaight(1,leftHand->getPosition());
-					bDirIsSet = true;
-				}
+					if(!touchInfos[j].bIsDirectionSet)
+						touchInfos[j].bIsDirectionSet = SetTouchDirectionForBall(j);
 
-			}
-
-		}
-		else if(directionDeg>315||directionDeg<45)
-		{
-			//direction right
-
-			if (currentBall->GetBallDirection() == EDir_RightHandToUp)
-			{
-				if(currentHand==leftHand)
-				{
-					currentBall->setPosition(currentHand->getPosition());
-					currentBall->MoveStaight(1,rightHand->getPosition());
-					bDirIsSet = true;
-				}
-				else if (currentHand==rightHand)
-				{
-					//invalid
-			
 				}
 			}
 		}
-		else
-		{
-			//invalid
-			//CCLOG("invalid is here, direction up");
-		}
-		/************************* /Checking Direction Validation **************************/
-
 	}
+
+}
+
+
+bool JG_Main_Game::SetTouchDirectionForBall(int index)
+{
+	JG_Ball* currentBall = touchInfos[index].ball;
+	JG_Hand* currentHand = touchInfos[index].hand;
+	// find direction based on ball's initialTouchPosition and current touch position
+	CCPoint direction=(touchInfos[index].touch->getLocation()- currentBall->GetInitialTouchPosition());
+
+
+	// calculate the direction in Radian
+	//********************* TODO: find a better soloution for this ****************/
+	float directionRad = atan(direction.y/direction.x);
+	if(getSign(direction.x)<0 )
+		directionRad+= CC_DEGREES_TO_RADIANS(180);
+
+	if(directionRad<0)
+		directionRad+= CC_DEGREES_TO_RADIANS(360);
+	/*****************************************************************************/
+
+
+	float directionDeg = CC_RADIANS_TO_DEGREES(directionRad);
+
+	//NOTE: anything that is not mentioned if "if"s is not valid
+	/************************* Checking Direction Validation **************************/
+	//direction up
+	if(directionDeg>45&& directionDeg<135)
+	{
+		if (currentBall->GetBallDirection() != EDir_LeftHandToUp && currentBall->GetBallDirection()!=EDir_RightHandToUp)
+		{
+			if(currentHand==leftHand && currentBall->GetBallDirection()==EDir_RighHandtToLeft)
+			{
+					
+				currentBall->setPosition(currentHand->getPosition());
+				currentBall->MoveCurve(1,rightHand->getPosition());
+				return true;
+			}
+			else if (currentHand==rightHand && currentBall->GetBallDirection()==EDir_LeftHandToRight)
+			{
+				currentBall->setPosition(currentHand->getPosition());
+				currentBall->MoveCurve(1,leftHand->getPosition());
+				return true;
+			}
+		}
+		
+	}
+	//direction left
+	else if(directionDeg>135&&directionDeg<225)
+	{	
+		if (currentBall->GetBallDirection() == EDir_LeftHandToUp)
+		{
+			if (currentHand==rightHand)
+			{
+				currentBall->setPosition(currentHand->getPosition());
+				currentBall->MoveStaight(1,leftHand->getPosition());
+				return true;
+			}
+		}
+	}
+	//direction right
+	else if(directionDeg>315||directionDeg<45)
+	{	
+		if (currentBall->GetBallDirection() == EDir_RightHandToUp)
+		{
+			if(currentHand==leftHand)
+			{
+				currentBall->setPosition(currentHand->getPosition());
+				currentBall->MoveStaight(1,rightHand->getPosition());
+				return true;
+			}
+		}
+	}
+	/************************* /Checking Direction Validation **************************/
+	return false;
+
 }
 
 // for now just reset everything
 void JG_Main_Game::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 {
-	currentBall = NULL;
-	currentHand = NULL;
-	bDirIsSet = false;
+	CCTouch * touch;
+	for( CCSetIterator i = pTouches->begin(); i != pTouches->end(); i++) 
+	{
+		touch =  (CCTouch*) (*i);
+		if(touch!=NULL)
+		{
+			for( int j = 0 ; j<TOUCH_COUNT ; j++)
+			{
+				if(touchInfos[j].touch == touch)
+				{
+					ResetTouchInfo(j);
+					break;
+				}
+			}
+		}
+	}
+}
+
+void JG_Main_Game::SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball)
+{
+	for(int i = 0 ; i<TOUCH_COUNT ; i++)
+	{
+		if(touchInfos[i].touch==NULL)
+		{
+			touchInfos[i].touch = touch;
+			touchInfos[i].hand = hand;
+			touchInfos[i].ball = ball;
+			touchInfos[i].bIsDirectionSet = false;
+		}
+	}
+}
+
+void JG_Main_Game::ResetTouchInfo(int index)
+{
+	touchInfos[index].touch = NULL;
+	touchInfos[index].hand = NULL;
+	touchInfos[index].ball = NULL;
+	touchInfos[index].bIsDirectionSet = false;
 }
 
 bool JG_Main_Game::ArePointsColliding(CCPoint point1,CCPoint point2,float radius)
@@ -262,7 +301,7 @@ bool JG_Main_Game::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 }
 
 
-void JG_Main_Game::TestTouch()
+void JG_Main_Game::TestSingleTouch()
 {
 	CCTouch* testTouch;
 	testTouch = new CCTouch();
@@ -305,7 +344,16 @@ void JG_Main_Game::TestTouch()
 	
 	
 	ccTouchesMoved(testTouchSet,NULL);
-	ccTouchesEnded(NULL,NULL);
+	ccTouchesEnded(testTouchSet,NULL);
+	
+	
+	
+
+}
+
+void JG_Main_Game::TestMultiTouch()
+{
+	//TODO: implement TestMultiTouch
 	
 	
 	
@@ -313,5 +361,5 @@ void JG_Main_Game::TestTouch()
 }
 void JG_Main_Game::update(float dt)
 {
-	//TestTouch();
+	TestSingleTouch();
 }

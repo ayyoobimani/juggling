@@ -3,6 +3,7 @@
 
 
 float JG_Ball::minSpeed;
+float JG_Ball::maxSpeed;
 
 JG_Ball::JG_Ball(void)
 {
@@ -24,7 +25,7 @@ JG_Ball::~JG_Ball(void)
 {
 }
 
-JG_Ball* JG_Ball::CreateBall(CCPoint initialPos, EThrowDirection initialDirection) 
+JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirection initialDirection) 
 {
     
     JG_Ball * ball = new JG_Ball();
@@ -34,6 +35,7 @@ JG_Ball* JG_Ball::CreateBall(CCPoint initialPos, EThrowDirection initialDirectio
 		ball->setPosition(initialPos);
 		ball->ballThrowDirection = initialDirection;
 		ball->ballScore = 20;
+		ball->mainGame = game;
 
 		/********** temporary store the initial state for tempReset function *********/
 		ball->tempInitialThrowDirection = initialDirection;
@@ -46,50 +48,66 @@ JG_Ball* JG_Ball::CreateBall(CCPoint initialPos, EThrowDirection initialDirectio
 	return NULL;
 }
 
-
-void JG_Ball::MoveStaight(float force, CCPoint destination)
+void JG_Ball::Throw(float force, CCPoint destination)
 {
-	moveMode = EMove_Straight;
-	currentSpeed = minSpeed;
+	// Note: the order is important 
+	DetermineNewThrowDirection();	
+	DetermineNewMoveMode();
+	DetermineNewSpeedByForce(force);
 
-	straight_Dir = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
+	CCLog(" Throw",0);
 
-	if(straight_Dir>0)
-		ballThrowDirection = EDir_LeftHandToRight;
-	else
-		ballThrowDirection = EDir_RighHandtToLeft;
+	MoveDirX = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
+
+	if(moveMode == EMove_Curve)
+	{
+		curve_Rad = asinf((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+
+		/* because there are two radians the have the same range (they can both reach the 
+			destination in same time), we choose the bigger one for better curve.
+			we can throw the ball with 30 deg and 60 deg and they will reach the destination
+			but we choose the 60 deg.
+			*/
+		if(abs(CC_RADIANS_TO_DEGREES(curve_Rad))<45)
+			curve_Rad = (curve_Rad/abs(curve_Rad)) *CC_DEGREES_TO_RADIANS(90)- curve_Rad;
+	
+		/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
+		if(curve_Rad<0)
+			curve_Rad = CC_DEGREES_TO_RADIANS(180) + curve_Rad;
+		CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
+	}
+
+	
+
+
 }
 
-void JG_Ball::MoveCurve(float force,CCPoint destinaion)
+void JG_Ball::DetermineNewSpeedByForce(float force)
 {
-	
-	moveMode=EMove_Curve;
+	currentSpeed = clampf(minSpeed * force,minSpeed,maxSpeed);
+}
 
-	//determine direction of the ball
+void JG_Ball::DetermineNewThrowDirection()
+{
 	if (ballThrowDirection==EDir_LeftHandToRight)
 		ballThrowDirection=EDir_RightHandToUp;
 	else if(ballThrowDirection==EDir_RighHandtToLeft)
 		ballThrowDirection=EDir_LeftHandToUp;
-	
-	currentSpeed = minSpeed + minSpeed *CCRANDOM_0_1()/2   ;
-	
-	
-	curve_Rad = asinf((destinaion.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
-
-	/* because there are two radians the have the same range (they can both reach the 
-		destination in same time), we choose the bigger one for better curve.
-		we can throw the ball with 30 deg and 60 deg and they will reach the destination
-		but we choose the 60 deg.
-		*/
-	if(abs(CC_RADIANS_TO_DEGREES(curve_Rad))<45)
-		curve_Rad = (curve_Rad/abs(curve_Rad)) *CC_DEGREES_TO_RADIANS(90)- curve_Rad;
-	
-	/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
-	if(curve_Rad<0)
-		curve_Rad = CC_DEGREES_TO_RADIANS(180) + curve_Rad;
-	CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
+	else if( ballThrowDirection== EDir_RightHandToUp)
+		ballThrowDirection=EDir_LeftHandToRight;
+	else //if ( ballThrowDirection== EDir_LeftHandToUp)
+		ballThrowDirection= EDir_RightHandToUp;
 
 }
+
+void JG_Ball::DetermineNewMoveMode()
+{
+	if(moveMode==EMove_Straight)
+		moveMode = EMove_Curve;
+	else //if(moveMode == EMove_Curve)
+		moveMode = EMove_Straight;
+}
+
 
 void JG_Ball::update(float dt)
 {
@@ -100,37 +118,36 @@ void JG_Ball::update(float dt)
 	
 	if (moveMode==EMove_Curve)
 	{
-		float newX,newY;
-		float speedY,speedX;
 
-		speedX = currentSpeed * cosf(curve_Rad);
-		speedY = currentSpeed * sinf(curve_Rad);
+
+		tempSpeedX = currentSpeed * cosf(curve_Rad);
+		tempSpeedY = currentSpeed * sinf(curve_Rad);
 
 		// calculate new speeds
-		speedX = speedX;
-		speedY = -GRAVITY* dt + speedY;
+		tempSpeedX = tempSpeedX;
+		tempSpeedY = -GRAVITY* dt + tempSpeedY;
 
 		// calculat new positions based on new speeds
-		newX = speedX * dt + getPositionX();
-		newY = speedY * dt + getPositionY();
+		tempNewX = tempSpeedX * dt + getPositionX();
+		tempNewY = tempSpeedY * dt + getPositionY();
 
 		// calculate the total speed based on new speeds on each direction
-		currentSpeed = sqrt(pow(speedY,2)+pow(speedX,2));
+		currentSpeed = sqrt(pow(tempSpeedY,2)+pow(tempSpeedX,2));
 
 		// calculate new curve_Rad (falling radian) base on new speeds on each direction
 		//**************** TODO: find a better soloution *************/
-		if(speedX >= 0)
-			curve_Rad = atan(speedY/speedX);
+		if(tempSpeedX >= 0)
+			curve_Rad = atan(tempSpeedY/tempSpeedX);
 		else
-			curve_Rad =CC_DEGREES_TO_RADIANS(180)+ atan(speedY/speedX);
+			curve_Rad =CC_DEGREES_TO_RADIANS(180)+ atan(tempSpeedY/tempSpeedX);
 		/**************************************************************/	
 
-		setPosition(ccp(newX,newY));
+		setPosition(ccp(tempNewX,tempNewY));
 	}
 	else if(moveMode==EMove_Straight)
 	{
 		//just changing X based on speed and direction 
-		setPosition(ccp(getPositionX()+ straight_Dir *(currentSpeed* dt),getPositionY()));
+		setPosition(ccp(getPositionX()+ MoveDirX *(currentSpeed* dt),getPositionY()));
 	}
 	else
 	{
@@ -139,7 +156,7 @@ void JG_Ball::update(float dt)
 
 
 	// temporary for reseting ball
-	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > CCDirector::sharedDirector()->getWinSize().width + 20)
+	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.x + 20)
 	{
 		OutOfScreen();
 	}
@@ -148,21 +165,19 @@ void JG_Ball::update(float dt)
 
 void JG_Ball::OutOfScreen()
 {
-
+	mainGame->BallLost(this);
 	TempReset();
 }
 void JG_Ball::TempReset()
 {
 	setPosition(tempInitialPosition);
-	CCLog("Temp reset");
+	//CCLog("Temp reset");
 	moveMode = EMove_Curve;
 	curve_Rad = 0;
 	ballThrowDirection = tempInitialThrowDirection;
 	curve_Rad = CC_DEGREES_TO_RADIANS(0); 
 	//TODO: why speed 0 is not working
 	currentSpeed = 0;
-
-
 }
 
 

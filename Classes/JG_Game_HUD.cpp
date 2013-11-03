@@ -35,10 +35,14 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 
 	lifeDrawPacing = lifeTexture->getContentSizeInPixels().width + 2;
 
-	scoreFont =CCLabelBMFont::create ("0", "fonts/font.fnt", mainGame->screenSize.y * 0.3f);
-	scoreFont->setPosition(mainGame->screenSize+ ccp(-60, -15 ));
-	this->addChild(scoreFont);
+	scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt", mainGame->screenSize.y * 0.3f);
+	scoreLabel->setPosition(mainGame->screenSize+ ccp(-60, -20 ));
+	this->addChild(scoreLabel);
 
+	ScoreGainAnimation = CCSequence::create(
+		CCEaseInOut::create(CCScaleTo::create(0.3,2,2),0.5)
+		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
+	ScoreGainAnimation->retain();
 	return true;
 
 }
@@ -52,7 +56,6 @@ void JG_Game_HUD::draw()
 	if(mainGame!=NULL)
 	{
 		DrawLife();
-		DrawScore();
 	}
 }
 
@@ -64,7 +67,8 @@ void JG_Game_HUD::DrawLife()
 	}
 }
 
-void JG_Game_HUD::DrawScore()
+void JG_Game_HUD::UpdateScore()
 {
-	scoreFont->setString(CCString::createWithFormat("%i", mainGame->score)->getCString());
+	scoreLabel->setString(CCString::createWithFormat("%i", mainGame->score)->getCString());
+	scoreLabel->runAction((CCAction *)ScoreGainAnimation->copy());
 }

@@ -6,6 +6,7 @@
 #include "textures\CCTextureCache.h"
 #include "label_nodes\CCLabelBMFont.h"
 
+
 using namespace cocos2d;
 
 class JG_Game_Main;
@@ -16,21 +17,24 @@ class JG_Game_HUD :
 {
 	JG_Game_Main * mainGame;
 public:
-
-
-	static JG_Game_HUD* create(JG_Game_Main* game);
-
-	CCPoint lifeDrawPosition;
-	int lifeDrawPacing;
-
-	CCTexture2D * lifeTexture;
-	CCLabelBMFont * scoreFont;
 	JG_Game_HUD(void);
 	~JG_Game_HUD(void);
-
+	static JG_Game_HUD* create(JG_Game_Main* game);
 	bool init(JG_Game_Main* game);
+
+	
+	CCPoint lifeDrawPosition;
+	int lifeDrawPacing;
+	CCTexture2D * lifeTexture;
+		
+
+	CCLabelBMFont * scoreLabel;
+	CCFiniteTimeAction* ScoreGainAnimation;
+	
+
+	
 	void draw();
 	void DrawLife();
-	void DrawScore();
+	void UpdateScore();
 };
 

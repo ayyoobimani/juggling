@@ -67,9 +67,9 @@ bool JG_Game_Main::init()
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
 
 	// initing  one ball for test
-	ballsArray=CCArray::create(JG_Ball::CreateBall(ccp(leftHand->getPositionX(),200),EDir_RightHandToUp),
-		JG_Ball::CreateBall(ccp(leftHand->getPositionX(),300),EDir_RightHandToUp),
-		NULL);
+	ballsArray=CCArray::create(JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),200),EDir_RightHandToUp)
+		,JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),300),EDir_RightHandToUp)
+		,NULL);
 	ballsArray->retain();
 
 	for( int i = 0 ; i<ballsArray->count();i++)
@@ -96,26 +96,13 @@ bool JG_Game_Main::init()
     return true;
 }
 
-
-void JG_Game_Main::menuCloseCallback(CCObject* pSender)
+void JG_Game_Main::update(float dt)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-    CCDirector::sharedDirector()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
+
+	//TestSingleTouch();
 }
 
-void JG_Game_Main::menuPauseCallBack(CCObject* pSender)
-{
-	if(!CCDirector::sharedDirector()->isPaused())
-		CCDirector::sharedDirector()->pause();
-	else
-		CCDirector::sharedDirector()->resume();
-}
+
 
 /* This function first iterate through touches to find with wich hand they are colliding.
 	Then for each hand that is touch, finds wich ball is colliding with it.
@@ -216,14 +203,14 @@ bool JG_Game_Main::SetTouchDirectionForBall(int index)
 			{
 					
 				currentBall->setPosition(currentHand->getPosition());
-				currentBall->MoveCurve(1,rightHand->getPosition());
+				currentBall->Throw(1,rightHand->getPosition());
 				AddScore(currentBall->GetBallScore());
 				return true;
 			}
 			else if (currentHand==rightHand && currentBall->GetBallDirection()==EDir_LeftHandToRight)
 			{
 				currentBall->setPosition(currentHand->getPosition());
-				currentBall->MoveCurve(1,leftHand->getPosition());
+				currentBall->Throw(1,leftHand->getPosition());
 				AddScore(currentBall->GetBallScore());
 
 				return true;
@@ -239,7 +226,7 @@ bool JG_Game_Main::SetTouchDirectionForBall(int index)
 			if (currentHand==rightHand)
 			{
 				currentBall->setPosition(currentHand->getPosition());
-				currentBall->MoveStaight(1,leftHand->getPosition());
+				currentBall->Throw(1,leftHand->getPosition());
 				AddScore(currentBall->GetBallScore());
 
 				return true;
@@ -254,7 +241,7 @@ bool JG_Game_Main::SetTouchDirectionForBall(int index)
 			if(currentHand==leftHand)
 			{
 				currentBall->setPosition(currentHand->getPosition());
-				currentBall->MoveStaight(1,rightHand->getPosition());
+				currentBall->Throw(1,rightHand->getPosition());
 				AddScore(currentBall->GetBallScore());
 
 				return true;
@@ -315,6 +302,55 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 }
 
 
+
+void JG_Game_Main::BallLost(JG_Ball* lostBall)
+{
+	CCLog("BallLOst",0);
+	DecrementLifeCount();
+}
+
+int JG_Game_Main::GetScore()
+{
+	return score;
+}
+void JG_Game_Main::SetScore( int newScore)
+{
+	score = newScore;
+}
+
+void JG_Game_Main::AddScore(int amount)
+{
+
+	score+= amount;
+
+	gameHUD->UpdateScore();
+
+}
+void JG_Game_Main::ReduceScore(int amount)
+{
+	score-= amount;
+}
+
+int JG_Game_Main::GetLifeCount()
+{
+	return lifeCount;
+}
+
+void JG_Game_Main::SetLifeCount( int newLifeCount)
+{
+	lifeCount = newLifeCount;
+}
+
+void JG_Game_Main::DecrementLifeCount()
+{
+	--lifeCount;
+}
+
+void JG_Game_Main::IncrementLifeCount()
+{
+	++lifeCount;
+}
+
 void JG_Game_Main::TestSingleTouch()
 {
 	CCTouch* testTouch;
@@ -373,53 +409,25 @@ void JG_Game_Main::TestMultiTouch()
 	
 
 }
-void JG_Game_Main::update(float dt)
+
+
+
+void JG_Game_Main::menuCloseCallback(CCObject* pSender)
 {
-	gameHUD->draw();
-	//TestSingleTouch();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+#else
+    CCDirector::sharedDirector()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
+#endif
 }
 
-
-void JG_Game_Main::BallLost(JG_Ball* lostBall)
+void JG_Game_Main::menuPauseCallBack(CCObject* pSender)
 {
-
-}
-
-int JG_Game_Main::GetScore()
-{
-	return score;
-}
-void JG_Game_Main::SetScore( int newScore)
-{
-	score = newScore;
-}
-
-void JG_Game_Main::AddScore(int amount)
-{
-	score+= amount;
-
-}
-void JG_Game_Main::ReduceScore(int amount)
-{
-	score-= amount;
-}
-
-int JG_Game_Main::GetLifeCount()
-{
-	return lifeCount;
-}
-
-void JG_Game_Main::SetLifeCount( int newLifeCount)
-{
-	lifeCount = newLifeCount;
-}
-
-void JG_Game_Main::DecrementLifeCount()
-{
-	--lifeCount;
-}
-
-void JG_Game_Main::IncrementLifeCount()
-{
-	++lifeCount;
+	if(!CCDirector::sharedDirector()->isPaused())
+		CCDirector::sharedDirector()->pause();
+	else
+		CCDirector::sharedDirector()->resume();
 }

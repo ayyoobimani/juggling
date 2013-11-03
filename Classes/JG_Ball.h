@@ -30,6 +30,14 @@ class JG_Ball :
 
 	JG_Game_Main* mainGame;
 
+	/******************* temporary variables ****************/
+	/*this are the variables that are used in high frequency functions
+		instead of creating them each time, here we to it once (for performance */
+
+	float tempNewX,tempNewY;
+	float tempSpeedY,tempSpeedX;
+	/****************** /temporary variables ****************/
+
 public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
@@ -47,9 +55,9 @@ public:
 
 	/*! radians of falling in EMove_Curve */
 	float curve_Rad;
+	/*! movement direction in X (-1 or 1) */
+	float MoveDirX;
 
-	/*! direction of movement in EMove_Straight */
-	float straight_Dir;
 
 	CCString ballTexture;
 
@@ -68,16 +76,18 @@ public:
 	CCPoint InitialTouchPosition;
 
 	/*! Creating ball in a specific position and specific direction */
-	static JG_Ball* CreateBall(CCPoint initialPos,EThrowDirection initialDirection);
+	static JG_Ball* CreateBall(JG_Game_Main* game,CCPoint initialPos,EThrowDirection initialDirection);
 
-	/*! Initial the curve movement variables */
-	void MoveCurve(float force,CCPoint destination);
+	/*! Initial Throw movement variables */
+	void Throw(float force,CCPoint destination);
 
-	/*! Initial the straight movement variables */
-	void MoveStaight(float force, CCPoint destination);
 
 	/*! Handles the movement based on the current mode */
 	void update(float dt);
+
+	void DetermineNewSpeedByForce(float force);
+	void DetermineNewThrowDirection();
+	void DetermineNewMoveMode();
 
 	/*! temporary reset the ball to it's initial postion when it is out of view */
 	void TempReset();
@@ -92,6 +102,8 @@ public:
 	static void CalculateSpeedBoundriesBaseOnLength(float deltaX)
 	{
 		minSpeed = sqrt( GRAVITY * abs(deltaX));
+		//TODO: calculate maxSpeed
+		maxSpeed = 800;
 	}
 };
 

@@ -32,11 +32,8 @@ class JG_Game_Main : public cocos2d::CCLayer
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
 	CCArray* handsArray;
-	//JG_Hand* currentHand;
 
 	CCArray* ballsArray;
-
-	
 
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
@@ -66,12 +63,9 @@ public:
 	void DecrementLifeCount();
 	void IncrementLifeCount();
 	
-
-
 	/**************** /game rule methods *************/
 
 	CCPoint screenSize ;
-
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     /*! Initial the game state */
@@ -99,6 +93,7 @@ public:
 	// Set an empy touchinfo with new infos
 	void SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball);
 	// Reset an touchinfo with the given index in touchInfos
+
 	void ResetTouchInfo( int index);
 	// Set Direction For Ball for the give index in touchInfos. return whether direction was valid or not 
 	bool SetTouchDirectionForBall(int index);

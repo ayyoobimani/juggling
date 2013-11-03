@@ -1,11 +1,14 @@
 #pragma once
 #include "sprite_nodes\CCSprite.h"
+#include "JG_Game_Main.h"
 #include "actions\CCActionInterval.h"
 #include "cocos2d.h"
 
 
 
 using namespace cocos2d;
+
+class JG_Game_Main;
 
 #define GRAVITY 400
 
@@ -23,9 +26,18 @@ enum EMoveMode
 class JG_Ball :
 	public CCSprite
 {
+	int ballScore;
+
+	JG_Game_Main* mainGame;
+
 public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
+
+	int GetBallScore(){return ballScore;}
+
+	void OutOfScreen();
+
 
 	static float minSpeed;
 	static float maxSpeed;

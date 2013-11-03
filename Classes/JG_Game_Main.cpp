@@ -1,15 +1,15 @@
-#include "JG_Main_Game.h"
+#include "JG_Game_Main.h"
 
 
 USING_NS_CC;
 
-CCScene* JG_Main_Game::scene()
+CCScene* JG_Game_Main::scene()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
-    JG_Main_Game *layer = JG_Main_Game::create();
+    JG_Game_Main *layer = JG_Game_Main::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -19,7 +19,7 @@ CCScene* JG_Main_Game::scene()
 }
 
 // on "init" you need to initialize your instance
-bool JG_Main_Game::init()
+bool JG_Game_Main::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -33,14 +33,19 @@ bool JG_Main_Game::init()
 	screenSize = CCDirector::sharedDirector()->getWinSize();
 
 	//call update for every frame
-	this->schedule(schedule_selector(JG_Main_Game::update));
+	this->schedule(schedule_selector(JG_Game_Main::update));
 
+
+	gameHUD = JG_Game_HUD::create(this);
+	gameHUD->retain();
+	this->addChild(gameHUD,100);
+	//gameHUD->draw();
 
 	/*********************** Background **************************/
 	CCSprite * backGround = CCSprite::create("background.png");
 
 	backGround->setPosition(ccp(screenSize.x/2,screenSize.y/2));
-	this->addChild(backGround);
+	this->addChild(backGround,-100);
 	/************************* /Background *************************/
 
 
@@ -84,13 +89,15 @@ bool JG_Main_Game::init()
 	}
 
 
+	SetLifeCount(MAX_LIFE_COUNT);
+	SetScore(0);
 
 	this->setTouchEnabled(true);
     return true;
 }
 
 
-void JG_Main_Game::menuCloseCallback(CCObject* pSender)
+void JG_Game_Main::menuCloseCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
@@ -102,7 +109,7 @@ void JG_Main_Game::menuCloseCallback(CCObject* pSender)
 #endif
 }
 
-void JG_Main_Game::menuPauseCallBack(CCObject* pSender)
+void JG_Game_Main::menuPauseCallBack(CCObject* pSender)
 {
 	if(!CCDirector::sharedDirector()->isPaused())
 		CCDirector::sharedDirector()->pause();
@@ -113,7 +120,7 @@ void JG_Main_Game::menuPauseCallBack(CCObject* pSender)
 /* This function first iterate through touches to find with wich hand they are colliding.
 	Then for each hand that is touch, finds wich ball is colliding with it.
 */
-void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
+void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 {
 	//TODO: implement this for multi touch
 	CCSetIterator i;
@@ -154,7 +161,7 @@ void JG_Main_Game::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 
 //TODO: implement for multi touch
 //TODO: clean up and make it more modular
-void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
+void JG_Game_Main::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 {
 	CCTouch* touch;
 	for( CCSetIterator i = pTouches->begin(); i != pTouches->end(); i++)
@@ -177,7 +184,7 @@ void JG_Main_Game::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 }
 
 
-bool JG_Main_Game::SetTouchDirectionForBall(int index)
+bool JG_Game_Main::SetTouchDirectionForBall(int index)
 {
 	JG_Ball* currentBall = touchInfos[index].ball;
 	JG_Hand* currentHand = touchInfos[index].hand;
@@ -210,12 +217,15 @@ bool JG_Main_Game::SetTouchDirectionForBall(int index)
 					
 				currentBall->setPosition(currentHand->getPosition());
 				currentBall->MoveCurve(1,rightHand->getPosition());
+				AddScore(currentBall->GetBallScore());
 				return true;
 			}
 			else if (currentHand==rightHand && currentBall->GetBallDirection()==EDir_LeftHandToRight)
 			{
 				currentBall->setPosition(currentHand->getPosition());
 				currentBall->MoveCurve(1,leftHand->getPosition());
+				AddScore(currentBall->GetBallScore());
+
 				return true;
 			}
 		}
@@ -230,6 +240,8 @@ bool JG_Main_Game::SetTouchDirectionForBall(int index)
 			{
 				currentBall->setPosition(currentHand->getPosition());
 				currentBall->MoveStaight(1,leftHand->getPosition());
+				AddScore(currentBall->GetBallScore());
+
 				return true;
 			}
 		}
@@ -243,6 +255,8 @@ bool JG_Main_Game::SetTouchDirectionForBall(int index)
 			{
 				currentBall->setPosition(currentHand->getPosition());
 				currentBall->MoveStaight(1,rightHand->getPosition());
+				AddScore(currentBall->GetBallScore());
+
 				return true;
 			}
 		}
@@ -253,7 +267,7 @@ bool JG_Main_Game::SetTouchDirectionForBall(int index)
 }
 
 // for now just reset everything
-void JG_Main_Game::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
+void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 {
 	CCTouch * touch;
 	for( CCSetIterator i = pTouches->begin(); i != pTouches->end(); i++) 
@@ -273,7 +287,7 @@ void JG_Main_Game::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 	}
 }
 
-void JG_Main_Game::SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball)
+void JG_Game_Main::SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball)
 {
 	for(int i = 0 ; i<TOUCH_COUNT ; i++)
 	{
@@ -287,7 +301,7 @@ void JG_Main_Game::SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball)
 	}
 }
 
-void JG_Main_Game::ResetTouchInfo(int index)
+void JG_Game_Main::ResetTouchInfo(int index)
 {
 	touchInfos[index].touch = NULL;
 	touchInfos[index].hand = NULL;
@@ -295,13 +309,13 @@ void JG_Main_Game::ResetTouchInfo(int index)
 	touchInfos[index].bIsDirectionSet = false;
 }
 
-bool JG_Main_Game::ArePointsColliding(CCPoint point1,CCPoint point2,float radius)
+bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius)
 {
 	return point1.getDistance(point2)<radius;
 }
 
 
-void JG_Main_Game::TestSingleTouch()
+void JG_Game_Main::TestSingleTouch()
 {
 	CCTouch* testTouch;
 	testTouch = new CCTouch();
@@ -351,7 +365,7 @@ void JG_Main_Game::TestSingleTouch()
 
 }
 
-void JG_Main_Game::TestMultiTouch()
+void JG_Game_Main::TestMultiTouch()
 {
 	//TODO: implement TestMultiTouch
 	
@@ -359,7 +373,53 @@ void JG_Main_Game::TestMultiTouch()
 	
 
 }
-void JG_Main_Game::update(float dt)
+void JG_Game_Main::update(float dt)
 {
-	TestSingleTouch();
+	gameHUD->draw();
+	//TestSingleTouch();
+}
+
+
+void JG_Game_Main::BallLost(JG_Ball* lostBall)
+{
+
+}
+
+int JG_Game_Main::GetScore()
+{
+	return score;
+}
+void JG_Game_Main::SetScore( int newScore)
+{
+	score = newScore;
+}
+
+void JG_Game_Main::AddScore(int amount)
+{
+	score+= amount;
+
+}
+void JG_Game_Main::ReduceScore(int amount)
+{
+	score-= amount;
+}
+
+int JG_Game_Main::GetLifeCount()
+{
+	return lifeCount;
+}
+
+void JG_Game_Main::SetLifeCount( int newLifeCount)
+{
+	lifeCount = newLifeCount;
+}
+
+void JG_Game_Main::DecrementLifeCount()
+{
+	--lifeCount;
+}
+
+void JG_Game_Main::IncrementLifeCount()
+{
+	++lifeCount;
 }

@@ -2,7 +2,7 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-#include "JG_Main_Game.h"
+#include "JG_Game_Main.h"
 
 /**
 @brief    The cocos2d Application.

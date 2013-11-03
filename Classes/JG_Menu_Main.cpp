@@ -1,14 +1,14 @@
-#include "JG_Main_Menu.h"
+#include "JG_Menu_Main.h"
 
 USING_NS_CC;
 
-CCScene* JG_Main_Menu::scene()
+CCScene* JG_Menu_Main::scene()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
-    JG_Main_Menu *layer = JG_Main_Menu::create();
+    JG_Menu_Main *layer = JG_Menu_Main::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -18,7 +18,7 @@ CCScene* JG_Main_Menu::scene()
 }
 
 // on "init" you need to initialize your instance
-bool JG_Main_Menu::init()
+bool JG_Menu_Main::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -35,7 +35,7 @@ bool JG_Main_Menu::init()
 }
 
 
-void JG_Main_Menu::menuCloseCallback(CCObject* pSender)
+void JG_Menu_Main::menuCloseCallback(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
@@ -47,10 +47,11 @@ void JG_Main_Menu::menuCloseCallback(CCObject* pSender)
 #endif
 }
 
-void JG_Main_Menu::menuPauseCallBack(CCObject* pSender)
+void JG_Menu_Main::menuPauseCallBack(CCObject* pSender)
 {
 	if(!CCDirector::sharedDirector()->isPaused())
 		CCDirector::sharedDirector()->pause();
 	else
 		CCDirector::sharedDirector()->resume();
 }
+

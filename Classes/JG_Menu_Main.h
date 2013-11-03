@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-class JG_Main_Menu : public cocos2d::CCLayer
+class JG_Menu_Main : public cocos2d::CCLayer
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -18,7 +18,7 @@ public:
 	void menuPauseCallBack(CCObject* pSender);
     
     // implement the "static node()" method manually
-    CREATE_FUNC(JG_Main_Menu);
+    CREATE_FUNC(JG_Menu_Main);
 };
 
 #endif // __MainMenu_SCENE_H__

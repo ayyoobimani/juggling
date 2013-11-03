@@ -33,6 +33,7 @@ JG_Ball* JG_Ball::CreateBall(CCPoint initialPos, EThrowDirection initialDirectio
 		ball->autorelease();
 		ball->setPosition(initialPos);
 		ball->ballThrowDirection = initialDirection;
+		ball->ballScore = 20;
 
 		/********** temporary store the initial state for tempReset function *********/
 		ball->tempInitialThrowDirection = initialDirection;
@@ -140,11 +141,16 @@ void JG_Ball::update(float dt)
 	// temporary for reseting ball
 	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > CCDirector::sharedDirector()->getWinSize().width + 20)
 	{
-		TempReset();
+		OutOfScreen();
 	}
    
 }
 
+void JG_Ball::OutOfScreen()
+{
+
+	TempReset();
+}
 void JG_Ball::TempReset()
 {
 	setPosition(tempInitialPosition);

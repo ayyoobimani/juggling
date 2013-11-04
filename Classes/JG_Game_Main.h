@@ -15,9 +15,11 @@ class JG_Ball;
 
 // define how many touches can be supported at the same time
 #define TOUCH_COUNT 2
+
 #define MAX_LIFE_COUNT 5
 #define MAX_TOUCH_DURATOIN 0.25f
 #define THROW_FORCE_BASE 100
+
 
 struct STouchInfo
 {
@@ -119,6 +121,10 @@ public:
 
 	void menuPauseCallBack(CCObject* pSender);
 
+	/* handles ball removing */
+	void RemoveBallFromScreen(JG_Ball* ball);
+	
+	void AddBallToScreen();
 	inline float getSign(float num)
 	{
 		return num/abs(num);
@@ -132,6 +138,8 @@ public:
 	void TestSingleTouch();
 	/*! a function to test single touch */
 	void TestMultiTouch();
+
+	void EndGame();
 
 };
 

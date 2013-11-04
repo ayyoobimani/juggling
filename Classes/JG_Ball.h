@@ -11,6 +11,7 @@ using namespace cocos2d;
 class JG_Game_Main;
 
 #define GRAVITY 400
+#define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(75))
 
 enum EThrowDirection
 {
@@ -105,7 +106,7 @@ public:
 	{
 		minSpeed = sqrt( GRAVITY * abs(deltaX));
 		//TODO: calculate maxSpeed
-		maxSpeed = 800;
+		maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
 	}
 };
 

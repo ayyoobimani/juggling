@@ -343,7 +343,7 @@ void JG_Game_Main::BallLost(JG_Ball* lostBall)
 	CCLog("BallLOst",0);
 	RemoveBallFromScreen(lostBall);
 	DecrementLifeCount();
-	if(lifeCount>=0)
+	if(lifeCount>0)
 		AddBallToScreen();
 	
 	
@@ -383,7 +383,7 @@ void JG_Game_Main::SetLifeCount( int newLifeCount)
 void JG_Game_Main::DecrementLifeCount()
 {
 	--lifeCount;
-	if(lifeCount<0)
+	if(lifeCount<=0)
 		EndGame();
 }
 

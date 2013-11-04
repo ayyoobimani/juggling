@@ -25,7 +25,8 @@ public:
 	
 	CCPoint lifeDrawPosition;
 	int lifeDrawPacing;
-	CCTexture2D * lifeTexture;
+	CCTexture2D * lifeTexture_Active;
+	CCTexture2D * lifeTexture_Diactive;
 		
 
 	CCLabelBMFont * scoreLabel;

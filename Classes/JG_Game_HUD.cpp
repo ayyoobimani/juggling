@@ -27,13 +27,16 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 {
 	mainGame=game;
 
-	lifeTexture =CCTextureCache::sharedTextureCache()->addImage("heart.png");
-	lifeTexture->retain();
+	lifeTexture_Active =CCTextureCache::sharedTextureCache()->addImage("heart_active.png");
+	lifeTexture_Active->retain();
+
+	lifeTexture_Diactive = CCTextureCache::sharedTextureCache()->addImage("heart_deactive.png");
+	lifeTexture_Diactive->retain();
 
 	lifeDrawPosition = ccp(10
-		,game->screenSize.y-(lifeTexture->getContentSizeInPixels().height +10 ));
+		,game->screenSize.y-(lifeTexture_Active->getContentSizeInPixels().height +10 ));
 
-	lifeDrawPacing = lifeTexture->getContentSizeInPixels().width + 2;
+	lifeDrawPacing = lifeTexture_Active->getContentSizeInPixels().width + 2;
 
 	scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt", mainGame->screenSize.y * 0.3f);
 	scoreLabel->setPosition(mainGame->screenSize+ ccp(-60, -20 ));
@@ -61,10 +64,16 @@ void JG_Game_HUD::draw()
 
 void JG_Game_HUD::DrawLife()
 {
-	for(int i = 0 ; i< mainGame->lifeCount ; ++i)
+	int i;
+	for(i = 0 ; i< mainGame->lifeCount ; ++i)
 	{
-		lifeTexture->drawAtPoint(lifeDrawPosition+ ccp(i*lifeDrawPacing,0));
+		lifeTexture_Active->drawAtPoint(lifeDrawPosition+ ccp(i*lifeDrawPacing,0));
 	}
+	for( i ; i<MAX_LIFE_COUNT; ++i)
+	{
+		lifeTexture_Diactive->drawAtPoint(lifeDrawPosition+ ccp(i*lifeDrawPacing,0));
+	}
+	
 }
 
 void JG_Game_HUD::UpdateScore()

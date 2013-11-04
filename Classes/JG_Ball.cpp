@@ -11,18 +11,20 @@ JG_Ball::JG_Ball(void)
 
 	moveMode = EMove_Curve;
 	curve_Rad = 0;
+	currentSpeed = 0;
+	//tempInitialPosition = ccp(50,50);
 	
 	// give a simple rotation to ball
 	action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
 	runAction(action_Rotate);
 
-	// activating update function 
-	this->schedule(schedule_selector(JG_Ball::update));
 }
 
 
 JG_Ball::~JG_Ball(void)
 {
+	CCLOG("Ball DELETE " , 0);
+	this->unscheduleUpdate();
 }
 
 JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirection initialDirection) 
@@ -32,7 +34,8 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 	if (ball && ball->initWithFile(ball->ballTexture.getCString()))
 	{
 		ball->autorelease();
-		ball->setPosition(initialPos);
+		ball->setPosition(game->getPosition() + initialPos);
+		CCPoint wtf=  ball->getPosition();
 		ball->ballThrowDirection = initialDirection;
 		ball->ballScore = 20;
 		ball->mainGame = game;
@@ -41,6 +44,11 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		ball->tempInitialThrowDirection = initialDirection;
 		ball->tempInitialPosition = initialPos;
 		/*****************************************************************************/
+
+		
+		// activating update function 
+		//ball->schedule(schedule_selector(JG_Ball::update));
+		ball->scheduleUpdate();
 
 		return ball;
 	}
@@ -115,7 +123,7 @@ void JG_Ball::update(float dt)
 
 	//TODO: clean up the code
 	//TODO: check performance
-	
+	//CCLog("update " ,0);
 	if (moveMode==EMove_Curve)
 	{
 
@@ -165,13 +173,17 @@ void JG_Ball::update(float dt)
 
 void JG_Ball::OutOfScreen()
 {
+
+	CCPoint wtf = this->getPosition();
 	mainGame->BallLost(this);
-	TempReset();
 }
+
+
 void JG_Ball::TempReset()
 {
-	setPosition(tempInitialPosition);
 	//CCLog("Temp reset");
+	setPosition(tempInitialPosition);
+	
 	moveMode = EMove_Curve;
 	curve_Rad = 0;
 	ballThrowDirection = tempInitialThrowDirection;
@@ -195,3 +207,4 @@ EThrowDirection JG_Ball::GetBallDirection()
 {
 	return ballThrowDirection;
 }
+

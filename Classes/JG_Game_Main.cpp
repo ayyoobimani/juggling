@@ -68,13 +68,14 @@ bool JG_Game_Main::init()
 
 	// initing  one ball for test
 	ballsArray=CCArray::create(JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),200),EDir_RightHandToUp)
-		,JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),300),EDir_RightHandToUp)
+		/*,JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),300),EDir_RightHandToUp)*/
 		,NULL);
 	ballsArray->retain();
 
 	for( int i = 0 ; i<ballsArray->count();i++)
 	{
 		this->addChild((CCNode*)ballsArray->objectAtIndex(i),6);
+
 	}
 
 	/******************************** /Balls ************************************/
@@ -306,7 +307,12 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 void JG_Game_Main::BallLost(JG_Ball* lostBall)
 {
 	CCLog("BallLOst",0);
+	RemoveBallFromScreen(lostBall);
 	DecrementLifeCount();
+	if(lifeCount>=0)
+		AddBallToScreen();
+	
+	
 }
 
 int JG_Game_Main::GetScore()
@@ -344,6 +350,8 @@ void JG_Game_Main::SetLifeCount( int newLifeCount)
 void JG_Game_Main::DecrementLifeCount()
 {
 	--lifeCount;
+	if(lifeCount<0)
+		EndGame();
 }
 
 void JG_Game_Main::IncrementLifeCount()
@@ -410,6 +418,35 @@ void JG_Game_Main::TestMultiTouch()
 
 }
 
+void JG_Game_Main::EndGame()
+{
+	JG_Ball* tempBall;
+	int temp = ballsArray->count();
+
+	while(ballsArray->count()>0)
+	{
+		RemoveBallFromScreen((JG_Ball*)ballsArray->randomObject());
+	}
+
+	//ballsArray->autorelease();
+
+}
+
+void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
+{
+	
+	ballsArray->removeObject(ball,false);
+	removeChild(ball,true);
+	CC_SAFE_RELEASE(ball);
+}
+
+void JG_Game_Main::AddBallToScreen()
+{
+	JG_Ball * newBall = JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),100+ CCRANDOM_0_1() *200),EDir_RightHandToUp);
+	this->addChild(newBall,6);
+	ballsArray->addObject(newBall);
+
+}
 
 
 void JG_Game_Main::menuCloseCallback(CCObject* pSender)

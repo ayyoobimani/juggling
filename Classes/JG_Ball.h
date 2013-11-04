@@ -92,6 +92,8 @@ public:
 	/*! temporary reset the ball to it's initial postion when it is out of view */
 	void TempReset();
 
+
+
 	/*! get the direction of ball */
 	EThrowDirection GetBallDirection();
 

@@ -68,7 +68,7 @@ bool JG_Game_Main::init()
 
 	// initing  one ball for test
 	ballsArray=CCArray::create(JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),200),EDir_RightHandToUp)
-		,JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),300),EDir_RightHandToUp)
+		/*,JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),300),EDir_RightHandToUp)*/
 		,NULL);
 	ballsArray->retain();
 
@@ -85,7 +85,7 @@ bool JG_Game_Main::init()
 		touchInfos[i].ball = NULL;
 		touchInfos[i].hand = NULL;
 		touchInfos[i].touch = NULL;
-		touchInfos[i].bIsDirectionSet = false;
+		touchInfos[i].bIsDirValid = false;
 	}
 
 
@@ -98,18 +98,41 @@ bool JG_Game_Main::init()
 
 void JG_Game_Main::update(float dt)
 {
-
+	BallTouchHandler_CheckTime(dt);
 	//TestSingleTouch();
 }
-
-
 
 /* This function first iterate through touches to find with wich hand they are colliding.
 	Then for each hand that is touch, finds wich ball is colliding with it.
 */
+void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
+{
+	CCPoint tap = touch->getLocation();
+	JG_Hand * currentHand;
+	for(int j = 0 ; j< handsArray->count();j++)
+			{
+				currentHand = (JG_Hand*)handsArray->objectAtIndex(j);
+				//Checking if tap is colliding with any of hands
+				if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
+				{
+					JG_Ball *tempBall;
+					//cheking if hand is colliding with a ball
+					for (int k=0 ; k<ballsArray->count() ; k++)
+					{
+						tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
+						if(ArePointsColliding(tempBall->getPosition(),currentHand->getPosition(),currentHand->GetRadius()))
+						{
+							SetTouchInfo(touch,currentHand,tempBall);
+							
+						
+						}// end of ball collision cheking
+					}// end of ball looping
+				}// end of hand collision checking
+			}// end of hand looping	
+}
+
 void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 {
-	//TODO: implement this for multi touch
 	CCSetIterator i;
 	CCTouch* touch;
 	CCPoint tap;
@@ -119,35 +142,27 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		touch = (CCTouch*) (*i);
 		if(touch) 
 		{
-			JG_Hand * tempHand;
-			tap = touch->getLocation();
-			for(int j = 0 ; j< handsArray->count();j++)
-			{
-				tempHand = (JG_Hand*)handsArray->objectAtIndex(j);
-				//Checking if tap is colliding with any of hands
-				if(ArePointsColliding(tap,tempHand->getPosition(),tempHand->GetRadius()))
-				{
-					JG_Ball *tempBall;
-					//cheking if hand is colliding with a ball
-					for (int k=0 ; k<ballsArray->count() ; k++)
-					{
-						tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
-						if(ArePointsColliding(tempBall->getPosition(),tempHand->getPosition(),tempHand->GetRadius()))
-						{
-							SetTouchInfo(touch,tempHand,tempBall);
-							tempBall->SetInitialTouchPosition(tempBall->getPosition());
-						
-						}// end of ball collision cheking
-					}// end of ball looping
-				}// end of hand collision checking
-			}// end of hand looping
+			BallTouchHandler_Init(touch);
 		}
-	}// end of touch looping
+	}
 }
-	
 
-//TODO: implement for multi touch
-//TODO: clean up and make it more modular
+void JG_Game_Main::BallTouchHandler_CheckDirection(unsigned int index)
+{
+	if(!touchInfos[index].bIsDirValid)
+	{
+		touchInfos[index].bIsDirValid = SetTouchDirectionForBall(index);
+	}
+	else
+	{
+		touchInfos[index].bIsDirValid = SetTouchDirectionForBall(index);
+		if(!touchInfos[index].bIsDirValid)
+		{
+			BallTouchHandler_End(index);
+		}
+	}
+}
+
 void JG_Game_Main::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 {
 	CCTouch* touch;
@@ -160,24 +175,20 @@ void JG_Game_Main::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
 			{
 				if(touchInfos[j].touch== touch)
 				{
-					if(!touchInfos[j].bIsDirectionSet)
-						touchInfos[j].bIsDirectionSet = SetTouchDirectionForBall(j);
-
+					BallTouchHandler_CheckDirection(j);
 				}
 			}
 		}
 	}
-
 }
 
-
+//TODO: clean up and make it more modular
 bool JG_Game_Main::SetTouchDirectionForBall(int index)
 {
 	JG_Ball* currentBall = touchInfos[index].ball;
 	JG_Hand* currentHand = touchInfos[index].hand;
 	// find direction based on ball's initialTouchPosition and current touch position
 	CCPoint direction=(touchInfos[index].touch->getLocation()- currentBall->GetInitialTouchPosition());
-
 
 	// calculate the direction in Radian
 	//********************* TODO: find a better soloution for this ****************/
@@ -201,22 +212,13 @@ bool JG_Game_Main::SetTouchDirectionForBall(int index)
 		{
 			if(currentHand==leftHand && currentBall->GetBallDirection()==EDir_RighHandtToLeft)
 			{
-					
-				currentBall->setPosition(currentHand->getPosition());
-				currentBall->Throw(1,rightHand->getPosition());
-				AddScore(currentBall->GetBallScore());
 				return true;
 			}
 			else if (currentHand==rightHand && currentBall->GetBallDirection()==EDir_LeftHandToRight)
 			{
-				currentBall->setPosition(currentHand->getPosition());
-				currentBall->Throw(1,leftHand->getPosition());
-				AddScore(currentBall->GetBallScore());
-
 				return true;
 			}
 		}
-		
 	}
 	//direction left
 	else if(directionDeg>135&&directionDeg<225)
@@ -225,10 +227,6 @@ bool JG_Game_Main::SetTouchDirectionForBall(int index)
 		{
 			if (currentHand==rightHand)
 			{
-				currentBall->setPosition(currentHand->getPosition());
-				currentBall->Throw(1,leftHand->getPosition());
-				AddScore(currentBall->GetBallScore());
-
 				return true;
 			}
 		}
@@ -240,17 +238,50 @@ bool JG_Game_Main::SetTouchDirectionForBall(int index)
 		{
 			if(currentHand==leftHand)
 			{
-				currentBall->setPosition(currentHand->getPosition());
-				currentBall->Throw(1,rightHand->getPosition());
-				AddScore(currentBall->GetBallScore());
-
 				return true;
 			}
 		}
 	}
 	/************************* /Checking Direction Validation **************************/
 	return false;
+}
 
+void JG_Game_Main::BallTouchHandler_CheckTime(float dt)
+{
+	for (int i=0; i <TOUCH_COUNT;i++)
+	{
+		if(touchInfos[i].touch!=NULL)
+		{
+			touchInfos[i].remainingTime-=dt;
+			if (touchInfos[i].remainingTime<0)
+			{
+				BallTouchHandler_End(i);
+			}
+		}
+	}
+}
+void JG_Game_Main::BallTouchHandler_End(unsigned int index)
+{
+	if(!touchInfos[index].bIsDirValid)
+	{
+		ResetTouchInfo(index);
+		return;
+	}
+	JG_Hand * destHand;
+
+	touchInfos[index].ball->setPosition(touchInfos[index].hand->getPosition());
+	if(touchInfos[index].hand==leftHand)
+		destHand=rightHand;	
+	else
+		destHand=leftHand;
+	touchInfos[index].ball->Throw(CalculateThrowForce(index),destHand->getPosition());
+	AddScore(touchInfos[index].ball->GetBallScore());
+	
+	ResetTouchInfo(index);
+}
+float JG_Game_Main::CalculateThrowForce(unsigned int index)
+{
+	return touchInfos[index].initialTimePosition.getDistance(touchInfos[index].touch->getLocation())/THROW_FORCE_BASE;
 }
 
 // for now just reset everything
@@ -266,7 +297,7 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 			{
 				if(touchInfos[j].touch == touch)
 				{
-					ResetTouchInfo(j);
+					BallTouchHandler_End(j);
 					break;
 				}
 			}
@@ -280,10 +311,15 @@ void JG_Game_Main::SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball)
 	{
 		if(touchInfos[i].touch==NULL)
 		{
+			ball->SetInitialTouchPosition(ball->getPosition());
+
 			touchInfos[i].touch = touch;
 			touchInfos[i].hand = hand;
 			touchInfos[i].ball = ball;
-			touchInfos[i].bIsDirectionSet = false;
+			touchInfos[i].bIsDirValid = false;
+			touchInfos[i].remainingTime=MAX_TOUCH_DURATOIN;
+			touchInfos[i].initialTimePosition=touch->getLocation();
+			return;
 		}
 	}
 }
@@ -293,15 +329,13 @@ void JG_Game_Main::ResetTouchInfo(int index)
 	touchInfos[index].touch = NULL;
 	touchInfos[index].hand = NULL;
 	touchInfos[index].ball = NULL;
-	touchInfos[index].bIsDirectionSet = false;
+	touchInfos[index].bIsDirValid = false;
 }
 
 bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius)
 {
 	return point1.getDistance(point2)<radius;
 }
-
-
 
 void JG_Game_Main::BallLost(JG_Ball* lostBall)
 {
@@ -322,7 +356,6 @@ void JG_Game_Main::AddScore(int amount)
 {
 
 	score+= amount;
-
 	gameHUD->UpdateScore();
 
 }
@@ -391,14 +424,9 @@ void JG_Game_Main::TestSingleTouch()
 
 	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
 	
-	
-	
 	ccTouchesMoved(testTouchSet,NULL);
 	ccTouchesEnded(testTouchSet,NULL);
 	
-	
-	
-
 }
 
 void JG_Game_Main::TestMultiTouch()

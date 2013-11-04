@@ -15,15 +15,19 @@ class JG_Ball;
 
 // define how many touches can be supported at the same time
 #define TOUCH_COUNT 2
-
 #define MAX_LIFE_COUNT 5
+#define MAX_TOUCH_DURATOIN 0.25f
+#define THROW_FORCE_BASE 100
 
 struct STouchInfo
 {
 	CCTouch * touch;
 	JG_Hand * hand;
 	JG_Ball * ball;
-	bool bIsDirectionSet;
+	bool bIsDirValid;
+	float remainingTime;
+	CCPoint initialTimePosition;
+	
 };
 
 /*! The main class for controlling the game */
@@ -39,7 +43,6 @@ class JG_Game_Main : public cocos2d::CCLayer
 	STouchInfo touchInfos[TOUCH_COUNT];
 
 	JG_Game_HUD * gameHUD;
-
 
 public:
 
@@ -82,6 +85,18 @@ public:
 
 	/*! Handles the end of the touch */
 	virtual void ccTouchesEnded(CCSet* pTouches, CCEvent* event);
+
+
+	/*! defined to handle initiation of touch */
+	void BallTouchHandler_Init(CCTouch* touch);
+	/*! check direction of the ball */
+	void BallTouchHandler_CheckDirection(unsigned int index);
+	/*! handling the throwing of the ball */
+	void BallTouchHandler_End(unsigned int index);
+	/*! it handle the time player hold his touch on the screen */
+	void BallTouchHandler_CheckTime(float dt);
+	/*! to calculate the force of the touch */
+	float CalculateThrowForce(unsigned int index);
 
 	/*! update function */
 	void update(float dt);

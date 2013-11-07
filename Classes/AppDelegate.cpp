@@ -3,6 +3,7 @@
 
 USING_NS_CC;
 
+
 AppDelegate::AppDelegate() {
 
 }
@@ -18,6 +19,34 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     pDirector->setOpenGLView(pEGLView);
 	
+	pEGLView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, kResolutionExactFit);
+
+    CCSize frameSize = pEGLView->getFrameSize();
+
+    // In this demo, we select resource according to the frame's height.
+    // If the resource size is different from design resolution size, you need to set contentScaleFactor.
+    // We use the ratio of resource's height to the height of design resolution,
+    // this can make sure that the resource's height could fit for the height of design resolution.
+
+    // if the frame's height is larger than the height of medium resource size, select large resource.
+   if (frameSize.height > mediumResource.size.height)
+    { 
+    //    searchPath.push_back(largeResource.directory);
+        pDirector->setContentScaleFactor(largeResource.size.height/designResolutionSize.height);
+    }
+    // if the frame's height is larger than the height of small resource size, select medium resource.
+    else if (frameSize.height > smallResource.size.height)
+    { 
+      //  searchPath.push_back(mediumResource.directory);
+        pDirector->setContentScaleFactor(mediumResource.size.height/designResolutionSize.height);
+    }
+    // if the frame's height is smaller than the height of medium resource size, select small resource.
+    else
+    { 
+        //searchPath.push_back(smallResource.directory);
+        pDirector->setContentScaleFactor(smallResource.size.height/designResolutionSize.height);
+    }
+	CCDirector::sharedDirector()->setContentScaleFactor(1.f); 
     // turn on display FPS
     pDirector->setDisplayStats(true);
 	//pEGLView->setDesignResolutionSize(400,300,kResolutionExactFit);

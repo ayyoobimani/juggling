@@ -73,20 +73,19 @@ bool JG_Game_Main::init()
 void JG_Game_Main::InitGame()
 {
 	
+
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
 
 	// initing  one ball for test
-	ballsArray=CCArray::create(JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),200),EDir_RightHandToUp)
-		/*,JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),300),EDir_RightHandToUp)*/
-		,NULL);
+	ballsArray=CCArray::create();
 	ballsArray->retain();
 
-	for( int i = 0 ; i<ballsArray->count();i++)
-	{
-		this->addChild((CCNode*)ballsArray->objectAtIndex(i),6);
 
-	}
+
+	//TempAddBall(0);
+	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),2.5,3,1);
+	
 
 	/******************************** /Balls ************************************/
 
@@ -104,6 +103,11 @@ void JG_Game_Main::InitGame()
 	SetScore(0);
 }
 
+void JG_Game_Main::TempAddBall(float dt)
+{
+	AddBallToScreen();
+		
+}
 void JG_Game_Main::update(float dt)
 {
 	BallTouchHandler_CheckTime(dt);
@@ -523,7 +527,7 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 
 void JG_Game_Main::AddBallToScreen()
 {
-	JG_Ball * newBall = JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),100+ CCRANDOM_0_1() *200),EDir_RightHandToUp);
+	JG_Ball * newBall = JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),200+ CCRANDOM_0_1() *200),EDir_RightHandToUp);
 	this->addChild(newBall,6);
 	ballsArray->addObject(newBall);
 

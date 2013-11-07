@@ -153,6 +153,10 @@ public:
 	void ResumeGame(CCObject* pSender);
 	void ResetGame(CCObject* pSender);
 
+	void TempAddBall(float time);
+
+	
+
 
 };
 

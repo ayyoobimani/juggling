@@ -363,6 +363,7 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 void JG_Game_Main::BallLost(JG_Ball* lostBall)
 {
 	CCLog("BallLOst",0);
+	ResetTouchInfoByBall(lostBall);
 	RemoveBallFromScreen(lostBall);
 	DecrementLifeCount();
 	if(lifeCount>0)

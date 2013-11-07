@@ -29,6 +29,8 @@ struct STouchInfo
 	bool bIsDirValid;
 	float remainingTime;
 	CCPoint initialTimePosition;
+
+	
 	
 };
 
@@ -45,6 +47,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	STouchInfo touchInfos[TOUCH_COUNT];
 
 	JG_Game_HUD * gameHUD;
+
 
 public:
 
@@ -73,8 +76,10 @@ public:
 	CCPoint screenSize ;
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-    /*! Initial the game state */
 	virtual bool init();  
+
+    /*! Initial the game state */
+	void InitGame();
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::CCScene* scene();
@@ -123,6 +128,8 @@ public:
 
 	/* handles ball removing */
 	void RemoveBallFromScreen(JG_Ball* ball);
+
+	void RemoveAllBallsFromScreen();
 	
 	void AddBallToScreen();
 	inline float getSign(float num)
@@ -140,6 +147,12 @@ public:
 	void TestMultiTouch();
 
 	void EndGame();
+
+	void PauseGame(CCObject* pSender);
+	void ExitGame(CCObject* pSender);
+	void ResumeGame(CCObject* pSender);
+	void ResetGame(CCObject* pSender);
+
 
 };
 

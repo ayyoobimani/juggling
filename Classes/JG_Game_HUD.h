@@ -17,10 +17,27 @@ class JG_Game_HUD :
 {
 	JG_Game_Main * mainGame;
 public:
+	
+	CCSprite* gameResetSprite_On;
+	CCSprite* gameResetSprite_Off;
+
+
+
+
+	CCMenuItemSprite* pauseButton;
+	CCMenuItemSprite* resetButton;
+	CCMenuItemSprite* resumeButton;
+	CCMenuItemSprite* exitButton;
+
+	CCMenu* gameMenu;
+
+
 	JG_Game_HUD(void);
 	~JG_Game_HUD(void);
 	static JG_Game_HUD* create(JG_Game_Main* game);
 	bool init(JG_Game_Main* game);
+
+	void Init_PauseMenu();
 
 	
 	CCPoint lifeDrawPosition;
@@ -32,7 +49,7 @@ public:
 	CCLabelBMFont * scoreLabel;
 	CCFiniteTimeAction* ScoreGainAnimation;
 	
-
+	void SetPauseScreen(bool bShow);
 	
 	void draw();
 	void DrawLife();

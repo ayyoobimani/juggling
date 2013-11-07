@@ -38,6 +38,7 @@ bool JG_Game_Main::init()
 
 	gameHUD = JG_Game_HUD::create(this);
 	gameHUD->retain();
+	gameHUD->setPosition(CCPointZero);
 	this->addChild(gameHUD,100);
 	//gameHUD->draw();
 
@@ -63,6 +64,15 @@ bool JG_Game_Main::init()
 	/*************************** /Hands *************************************/
 
 
+	InitGame();
+
+	this->setTouchEnabled(true);
+    return true;
+}
+
+void JG_Game_Main::InitGame()
+{
+	
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
 
@@ -92,9 +102,6 @@ bool JG_Game_Main::init()
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
-
-	this->setTouchEnabled(true);
-    return true;
 }
 
 void JG_Game_Main::update(float dt)
@@ -356,6 +363,8 @@ int JG_Game_Main::GetScore()
 void JG_Game_Main::SetScore( int newScore)
 {
 	score = newScore;
+	gameHUD->UpdateScore();
+
 }
 
 void JG_Game_Main::AddScore(int amount)
@@ -368,6 +377,7 @@ void JG_Game_Main::AddScore(int amount)
 void JG_Game_Main::ReduceScore(int amount)
 {
 	score-= amount;
+	gameHUD->UpdateScore();
 }
 
 int JG_Game_Main::GetLifeCount()
@@ -446,7 +456,50 @@ void JG_Game_Main::TestMultiTouch()
 
 }
 
+
+
+void JG_Game_Main::PauseGame(CCObject* pSender)
+{
+	gameHUD->SetPauseScreen(true);
+	CCDirector::sharedDirector()->pause();
+}
+
+void JG_Game_Main::ExitGame(CCObject* pSender)
+{
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+	#else
+		CCDirector::sharedDirector()->end();
+	#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		exit(0);
+	#endif
+	#endif
+}
+
+void JG_Game_Main::ResumeGame(CCObject* pSender)
+{
+	CCDirector::sharedDirector()->resume();
+	gameHUD->SetPauseScreen(false);
+}
+
+void JG_Game_Main::ResetGame(CCObject* pSender)
+{
+	RemoveAllBallsFromScreen();
+	InitGame();
+	ResumeGame(pSender);
+}
+
 void JG_Game_Main::EndGame()
+{
+
+//	CCTimer::timerWithTarget( this,SEL_CallFuncO(JG_Game_Main::RestartGame),2);
+	//CCTimer::timerWithTarget(
+
+	//ballsArray->autorelease();
+
+}
+
+void JG_Game_Main::RemoveAllBallsFromScreen()
 {
 	JG_Ball* tempBall;
 	int temp = ballsArray->count();
@@ -455,8 +508,6 @@ void JG_Game_Main::EndGame()
 	{
 		RemoveBallFromScreen((JG_Ball*)ballsArray->randomObject());
 	}
-
-	//ballsArray->autorelease();
 
 }
 
@@ -467,6 +518,8 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 	removeChild(ball,true);
 	CC_SAFE_RELEASE(ball);
 }
+
+
 
 void JG_Game_Main::AddBallToScreen()
 {

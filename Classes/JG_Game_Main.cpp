@@ -343,6 +343,17 @@ void JG_Game_Main::ResetTouchInfo(int index)
 	touchInfos[index].ball = NULL;
 	touchInfos[index].bIsDirValid = false;
 }
+void JG_Game_Main::ResetTouchInfoByBall(JG_Ball* ball)
+{
+	for (int i=0;i<TOUCH_COUNT;i++)
+	{
+		if (touchInfos[i].ball==ball)
+		{
+			ResetTouchInfo(i);
+			return;
+		}
+	}
+}
 
 bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius)
 {

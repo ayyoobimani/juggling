@@ -117,6 +117,7 @@ public:
 	// Reset an touchinfo with the given index in touchInfos
 
 	void ResetTouchInfo( int index);
+	void ResetTouchInfoByBall(JG_Ball* ball);
 	// Set Direction For Ball for the give index in touchInfos. return whether direction was valid or not 
 	bool SetTouchDirectionForBall(int index);
 	

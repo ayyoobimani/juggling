@@ -93,6 +93,8 @@ void JG_Ball::Throw(float force, CCPoint destination)
 void JG_Ball::DetermineNewSpeedByForce(float force)
 {
 	currentSpeed = clampf(minSpeed * force,minSpeed,maxSpeed);
+	if(moveMode == EMove_Straight)
+		currentSpeed = minSpeed ;
 }
 
 void JG_Ball::DetermineNewThrowDirection()
@@ -178,18 +180,18 @@ void JG_Ball::OutOfScreen()
 	mainGame->BallLost(this);
 }
 
-
-void JG_Ball::TempReset()
-{
-	//CCLog("Temp reset");
-	setPosition(tempInitialPosition);
-	
-	moveMode = EMove_Curve;
-	curve_Rad = 0;
-	ballThrowDirection = tempInitialThrowDirection;
-	curve_Rad = CC_DEGREES_TO_RADIANS(0); 
-	currentSpeed = 0;
-}
+//
+//void JG_Ball::TempReset()
+//{
+//	//CCLog("Temp reset");
+//	setPosition(tempInitialPosition);
+//	
+//	moveMode = EMove_Curve;
+//	curve_Rad = 0;
+//	ballThrowDirection = tempInitialThrowDirection;
+//	curve_Rad = CC_DEGREES_TO_RADIANS(0); 
+//	currentSpeed = 0;
+//}
 
 
 void JG_Ball::SetInitialTouchPosition(CCPoint newTouchPos)

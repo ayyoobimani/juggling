@@ -91,7 +91,7 @@ public:
 	void DetermineNewMoveMode();
 
 	/*! temporary reset the ball to it's initial postion when it is out of view */
-	void TempReset();
+	//void TempReset();
 
 
 

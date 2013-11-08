@@ -164,7 +164,7 @@ void JG_Ball::update(float dt)
 
 
 	// temporary for reseting ball
-	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.x + 20)
+	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
 	{
 		OutOfScreen();
 	}
@@ -188,7 +188,6 @@ void JG_Ball::TempReset()
 	curve_Rad = 0;
 	ballThrowDirection = tempInitialThrowDirection;
 	curve_Rad = CC_DEGREES_TO_RADIANS(0); 
-	//TODO: why speed 0 is not working
 	currentSpeed = 0;
 }
 

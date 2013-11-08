@@ -33,13 +33,13 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 	lifeTexture_Diactive = CCTextureCache::sharedTextureCache()->addImage("heart_deactive.png");
 	lifeTexture_Diactive->retain();
 
-	lifeDrawPosition = ccp(10
-		,game->screenSize.y-(lifeTexture_Active->getContentSizeInPixels().height +10 ));
+	lifeDrawPosition = ccp(game->screenSize.width * 0.05
+		,game->screenSize.height-(lifeTexture_Active->getContentSizeInPixels().height * 1.1 ));
 
 	lifeDrawPacing = lifeTexture_Active->getContentSizeInPixels().width + 2;
 
-	scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt", mainGame->screenSize.y * 0.3f);
-	scoreLabel->setPosition(mainGame->screenSize+ ccp(-60, -60 ));
+	scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt", mainGame->screenSize.height * 0.3f);
+	scoreLabel->setPosition(ccp(mainGame->screenSize.width * 0.85 ,mainGame->screenSize.height * 0.80) );
 	this->addChild(scoreLabel);
 
 	ScoreGainAnimation = CCSequence::create(
@@ -66,26 +66,26 @@ void JG_Game_HUD::Init_PauseMenu()
 		 ,mainGame
 		,menu_selector(JG_Game_Main::PauseGame));
 	pauseButton->retain();
-	pauseButton->setPosition(mainGame->screenSize+ ccp(-60, -20 ));
+	pauseButton->setPosition(ccp(mainGame->screenSize.width * 0.85 ,mainGame->screenSize.height * 0.90) );
 
 	resumeButton = CCMenuItemSprite::create(CCSprite::create("Resume_Normal.png"),CCSprite::create("Resume_Selected.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ResumeGame));
 	resumeButton->retain();
-	resumeButton->setPosition(mainGame->screenSize/2 + ccp(0,40));
+	resumeButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.7));
 
 	resetButton = CCMenuItemSprite::create(CCSprite::create("Reset_Normal.png"),CCSprite::create("Reset_Selected.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ResetGame));
 	resetButton->retain();
-	resetButton->setPosition(mainGame->screenSize/2 + ccp(0,0));
+	resetButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.5));
 
 
 	exitButton = CCMenuItemSprite::create(CCSprite::create("Exit_Normal.png"),CCSprite::create("Exit_Selected.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ExitGame));
 	exitButton->retain();
-	exitButton->setPosition(mainGame->screenSize/2 + ccp(0,-40));
+	exitButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.3));
 
 
 	

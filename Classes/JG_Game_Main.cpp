@@ -3,6 +3,7 @@
 
 USING_NS_CC;
 
+
 CCScene* JG_Game_Main::scene()
 {
     // 'scene' is an autorelease object
@@ -45,21 +46,21 @@ bool JG_Game_Main::init()
 	/*********************** Background **************************/
 	CCSprite * backGround = CCSprite::create("background.png");
 
-	backGround->setPosition(ccp(screenSize.x/2,screenSize.y/2));
+	backGround->setPosition(ccp(screenSize.width/2,screenSize.height/2));
 	this->addChild(backGround,-100);
 	/************************* /Background *************************/
 
 
 
 	/************************** Hands ***********************************/
-	rightHand = JG_Hand::createWithFileName("RightHand.png",ccp(screenSize.x-50,40));
-	leftHand = JG_Hand::createWithFileName("LeftHand.png",ccp(50,40));
+	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"RightHand.png");
+	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"LeftHand.png");
 
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
 	for( int i = 0 ; i<handsArray->count();i++)
 	{
-		this->addChild((CCNode*)handsArray->objectAtIndex(i),2);
+		this->addChild((CCNode*)handsArray->objectAtIndex(i));
 	}
 	/*************************** /Hands *************************************/
 
@@ -450,8 +451,8 @@ void JG_Game_Main::TestSingleTouch()
 	ccTouchesBegan(testTouchSet,NULL);
 
 	//test_touch_move
-	randomX=CCRANDOM_0_1()*screenSize.x;
-	randomY=CCRANDOM_0_1()*screenSize.y;
+	randomX=CCRANDOM_0_1()*screenSize.width;
+	randomY=CCRANDOM_0_1()*screenSize.height;
 	
 	testPoint.setPoint(randomX,randomY);
 	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
@@ -539,7 +540,7 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 
 void JG_Game_Main::AddBallToScreen()
 {
-	JG_Ball * newBall = JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),200+ CCRANDOM_0_1() *200),EDir_RightHandToUp);
+	JG_Ball * newBall = JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5),EDir_RightHandToUp);
 	this->addChild(newBall,6);
 	ballsArray->addObject(newBall);
 

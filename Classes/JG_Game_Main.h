@@ -11,6 +11,7 @@ using namespace cocos2d;
 
 class JG_Game_HUD;
 class JG_Ball;
+class JG_Hand;
 
 
 // define how many touches can be supported at the same time
@@ -18,7 +19,8 @@ class JG_Ball;
 
 #define MAX_LIFE_COUNT 5
 #define MAX_TOUCH_DURATOIN 0.25f
-#define THROW_FORCE_BASE 100
+// throw force is relative to screen height
+#define THROW_FORCE_BASE 1
 
 
 struct STouchInfo
@@ -48,6 +50,9 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	JG_Game_HUD * gameHUD;
 
+	
+
+
 
 public:
 
@@ -73,10 +78,12 @@ public:
 	
 	/**************** /game rule methods *************/
 
-	CCPoint screenSize ;
+	CCSize screenSize ;
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
+
+
 
     /*! Initial the game state */
 	void InitGame();
@@ -137,6 +144,9 @@ public:
 	{
 		return num/abs(num);
 	}
+
+
+	
 
 
     

@@ -513,10 +513,35 @@ void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
 
 void JG_Game_Main::TestMultiTouch_MovementTouchGen(float dt)
 {
-	for (int i=0;i<TestMultiTouchesSet->count();i++)
+	float randomX;
+	float randomY;
+	CCTouch* touch;
+	
+	for(CCSetIterator i = TestMultiTouchesSet->begin(); i != TestMultiTouchesSet->end(); i++) 
 	{
-		ccTouchesMoved(TestMultiTouchesSet*[i],NULL);
+		touch = (CCTouch *) (*i);
+		CCPoint temp=touch->getLocation();
+		randomX=temp.x;
+		randomY=temp.y;
+		//generating random locaiton
+		randomX+= CCRANDOM_0_1() *10;
+		randomY+= CCRANDOM_0_1() *10;
+
+		touch->setTouchInfo(1,randomX,randomY);
+
+	
 	}
+	ccTouchesMoved(TestMultiTouchesSet,NULL);
+
+}
+void JG_Game_Main::TestMultiTouch_EndGen(float dt)
+{
+	int TempIndex=CCRANDOM_0_1()* TestMultiTouchesSet->count();
+	CCSet* temp=CCSet::create();
+	temp->addObject((CCTouch*)TestMultiTouchesSet->anyObject());
+
+	ccTouchesEnded(temp,NULL);
+
 }
 
 void JG_Game_Main::PauseGame(CCObject* pSender)

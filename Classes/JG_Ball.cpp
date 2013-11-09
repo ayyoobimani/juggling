@@ -83,8 +83,11 @@ void JG_Ball::Throw(float force, CCPoint destination)
 		/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
 		if(curve_Rad<0)
 			curve_Rad = CC_DEGREES_TO_RADIANS(180) + curve_Rad;
+
 		CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
 
+		curve_Rad = CC_DEGREES_TO_RADIANS(135);
+		mainGame->gameHUD->debugLabel->setString("");
 		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curve_Rad))->getCString());
 	}
 

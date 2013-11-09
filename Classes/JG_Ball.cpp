@@ -69,7 +69,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 	if(moveMode == EMove_Curve)
 	{
-		curve_Rad = asinf((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+		curve_Rad = asin((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
 		
 
 		/* because there are two radians the have the same range (they can both reach the 
@@ -136,8 +136,8 @@ void JG_Ball::update(float dt)
 	{
 
 
-		tempSpeedX = currentSpeed * cosf(curve_Rad);
-		tempSpeedY = currentSpeed * sinf(curve_Rad);
+		tempSpeedX = currentSpeed * cos(curve_Rad);
+		tempSpeedY = currentSpeed * sin(curve_Rad);
 
 		// calculate new speeds
 		tempSpeedX = tempSpeedX;

@@ -52,8 +52,6 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	
 
-
-
 public:
 
 	JG_Game_HUD * gameHUD;
@@ -157,7 +155,12 @@ public:
 	/*! a function to test single touch */
 	void TestSingleTouch();
 	/*! a function to test single touch */
+	CCSet* TestMultiTouchesSet;
+	
 	void TestMultiTouch();
+	void TestMultiTouch_InitiTouchGen(float dt=0);
+	void TestMultiTouch_MovementTouchGen(float dt=0);
+	void TestMultiTouch_EndGen(float dt=0);
 
 	void EndGame();
 

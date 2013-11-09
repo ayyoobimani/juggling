@@ -1,7 +1,6 @@
 #include "JG_Ball.h"
 #define COCOS2D_DEBUG 1
 
-
 float JG_Ball::minSpeed;
 float JG_Ball::maxSpeed;
 
@@ -69,7 +68,10 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 	if(moveMode == EMove_Curve)
 	{
-		curve_Rad = asinf((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+		
+		curve_Rad = asin((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+		mainGame->gameHUD->debugLabel->setString("");
+		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",(destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))->getCString());
 		
 
 		/* because there are two radians the have the same range (they can both reach the 
@@ -83,9 +85,12 @@ void JG_Ball::Throw(float force, CCPoint destination)
 		/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
 		if(curve_Rad<0)
 			curve_Rad = CC_DEGREES_TO_RADIANS(180) + curve_Rad;
+
 		CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
 
-		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curve_Rad))->getCString());
+		//curve_Rad = CC_DEGREES_TO_RADIANS(135);
+		//mainGame->gameHUD->debugLabel->setString("");
+		//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curve_Rad))->getCString());
 	}
 
 	
@@ -101,6 +106,7 @@ void JG_Ball::DetermineNewSpeedByForce(float force)
 	// for test on andorid
 	if(currentSpeed> maxSpeed)
 		currentSpeed = maxSpeed;
+
 }
 
 void JG_Ball::DetermineNewThrowDirection()
@@ -136,8 +142,8 @@ void JG_Ball::update(float dt)
 	{
 
 
-		tempSpeedX = currentSpeed * cosf(curve_Rad);
-		tempSpeedY = currentSpeed * sinf(curve_Rad);
+		tempSpeedX = currentSpeed * cos(curve_Rad);
+		tempSpeedY = currentSpeed * sin(curve_Rad);
 
 		// calculate new speeds
 		tempSpeedX = tempSpeedX;

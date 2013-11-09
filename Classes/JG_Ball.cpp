@@ -95,6 +95,9 @@ void JG_Ball::DetermineNewSpeedByForce(float force)
 	currentSpeed = clampf(minSpeed * force,minSpeed,maxSpeed);
 	if(moveMode == EMove_Straight)
 		currentSpeed = minSpeed ;
+	// for test on andorid
+	if(currentSpeed> maxSpeed)
+		currentSpeed = maxSpeed;
 }
 
 void JG_Ball::DetermineNewThrowDirection()

@@ -70,6 +70,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	if(moveMode == EMove_Curve)
 	{
 		curve_Rad = asinf((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+		
 
 		/* because there are two radians the have the same range (they can both reach the 
 			destination in same time), we choose the bigger one for better curve.
@@ -83,6 +84,8 @@ void JG_Ball::Throw(float force, CCPoint destination)
 		if(curve_Rad<0)
 			curve_Rad = CC_DEGREES_TO_RADIANS(180) + curve_Rad;
 		CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
+
+		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curve_Rad))->getCString());
 	}
 
 	

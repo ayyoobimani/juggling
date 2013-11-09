@@ -4,7 +4,7 @@
 #include "actions\CCActionInterval.h"
 #include "cocos2d.h"
 
-
+#define ARCSIN(__ANGLE__) (__ANGLE__ + 0.5 * pow(__ANGLE__,3)/3 + 3/8 * pow(__ANGLE__,5)/5 + 15/ 48 * pow(__ANGLE__,7)/7)
 
 using namespace cocos2d;
 
@@ -104,7 +104,8 @@ public:
 	/*! Calculate the minimum Speed , based on the distance of handes */
 	static void CalculateSpeedBoundriesBaseOnLength(float deltaX)
 	{
-		minSpeed = sqrt( GRAVITY * abs(deltaX));
+		//TODO: wtf +2 needed
+		minSpeed = sqrt( GRAVITY * abs(deltaX))+ 2;
 		//TODO: calculate maxSpeed
 		maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
 	}

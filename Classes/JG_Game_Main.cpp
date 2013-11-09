@@ -295,7 +295,7 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 }
 float JG_Game_Main::CalculateThrowForce(unsigned int index)
 {
-	return touchInfos[index].initialTimePosition.getDistance(touchInfos[index].touch->getLocation())/THROW_FORCE_BASE;
+	return touchInfos[index].initialTimePosition.getDistance(touchInfos[index].touch->getLocation())/(THROW_FORCE_BASE * screenSize.height);
 }
 
 // for now just reset everything

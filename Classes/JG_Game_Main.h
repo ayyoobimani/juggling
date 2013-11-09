@@ -20,7 +20,7 @@ class JG_Hand;
 #define MAX_LIFE_COUNT 5
 #define MAX_TOUCH_DURATOIN 0.25f
 // throw force is relative to screen height
-#define THROW_FORCE_BASE 1
+#define THROW_FORCE_BASE 0.7
 
 
 struct STouchInfo

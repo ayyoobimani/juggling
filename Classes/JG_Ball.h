@@ -104,7 +104,8 @@ public:
 	/*! Calculate the minimum Speed , based on the distance of handes */
 	static void CalculateSpeedBoundriesBaseOnLength(float deltaX)
 	{
-		minSpeed = sqrt( GRAVITY * abs(deltaX));
+		//TODO: wtf +2 needed
+		minSpeed = sqrt( GRAVITY * abs(deltaX))+ 2;
 		//TODO: calculate maxSpeed
 		maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
 	}

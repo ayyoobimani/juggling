@@ -47,6 +47,8 @@ public:
 		
 
 	CCLabelBMFont * scoreLabel;
+
+	CCLabelTTF* debugLabel;
 	CCFiniteTimeAction* ScoreGainAnimation;
 	
 	void SetPauseScreen(bool bShow);

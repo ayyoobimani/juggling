@@ -47,6 +47,11 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
 	ScoreGainAnimation->retain();
 
+	debugLabel = CCLabelTTF::create();
+	this->addChild(debugLabel);
+	debugLabel->setScale(3);
+	debugLabel->setColor(ccBLACK);
+	debugLabel->setPosition( mainGame->screenSize * 0.7);
 
 	Init_PauseMenu();
 

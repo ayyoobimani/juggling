@@ -467,13 +467,57 @@ void JG_Game_Main::TestSingleTouch()
 void JG_Game_Main::TestMultiTouch()
 {
 	//TODO: implement TestMultiTouch
-	
+
+	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen));
 	
 	
 
 }
 
+void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
+{
+	CCTouch* testTouch;
+	testTouch = new CCTouch();
+	float randomX;
+	float randomY;
+	CCPoint testPoint;
+	
+	if (CCRANDOM_0_1()>0.5)
+	{
+		randomX=leftHand->getPositionX();
+		randomY=leftHand->getPositionY();
+	}
+	else
+	{
+		randomX=rightHand->getPositionX();
+		randomY=rightHand->getPositionY();
+	}
+	
+	testPoint.setPoint(randomX,randomY);
+	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
+	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
+	CCPoint temp = testTouch->getLocation();
+	
+	CCSet* testTouchSet= CCSet::create();
+	testTouchSet->addObject(testTouch);
+
+	ccTouchesBegan(testTouchSet,NULL);
+	TestMultiTouchesSet=CCSet::create();
+	TestMultiTouchesSet->addObject(testTouch);
+	
+	
+	schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.5,1,0);
+
+}
+
+void JG_Game_Main::TestMultiTouch_MovementTouchGen(float dt)
+{
+	for (int i=0;i<TestMultiTouchesSet->count();i++)
+	{
+		ccTouchesMoved(TestMultiTouchesSet*[i],NULL);
+	}
+}
 
 void JG_Game_Main::PauseGame(CCObject* pSender)
 {

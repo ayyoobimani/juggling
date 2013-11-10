@@ -91,8 +91,8 @@ void JG_Ball::Throw(float force, CCPoint destination)
 		CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
 
 		//curve_Rad = CC_DEGREES_TO_RADIANS(135);
-		mainGame->gameHUD->debugLabel->setString("");
-		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curve_Rad))->getCString());
+		//mainGame->gameHUD->debugLabel->setString("");
+		//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curve_Rad))->getCString());
 	}
 
 	
@@ -226,6 +226,8 @@ EThrowDirection JG_Ball::GetBallDirection()
 }
 float JG_Ball::TaylorFormulaCalculate(float angle)
 {
-	return angle + 0.5 * pow(angle,3)/3 + 3/8 * pow(angle,5)/5 + 15/ 48 * pow(angle,7)/7 ;
+	float ffs=angle + 0.5 * pow(angle,3)/3 + 3/8 * pow(angle,5)/5 + 15/ 48 * pow(angle,7)/7 ;;
+	mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("%f,%f",angle,ffs)->getCString());
+	return ffs;
 }
 

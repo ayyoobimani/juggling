@@ -49,10 +49,10 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 
 	debugLabel = CCLabelTTF::create();
 	this->addChild(debugLabel);
-	debugLabel->setScale(3);
+	debugLabel->setScale(2);
 	debugLabel->setColor(ccBLACK);
 	debugLabel->setPosition( mainGame->screenSize * 0.7);
-	debugLabel->setString(CCString::createWithFormat("%f", pow(20,10))->getCString());
+	
 
 	Init_PauseMenu();
 

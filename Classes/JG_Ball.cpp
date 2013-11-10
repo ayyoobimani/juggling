@@ -69,8 +69,8 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	if(moveMode == EMove_Curve)
 	{
 		
-		//curve_Rad = ARCSIN((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
-		curve_Rad = asin((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+		curve_Rad = ARCSIN((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+		//curve_Rad = asin((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
 		
 		//mainGame->gameHUD->debugLabel->setString("");
 		//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",(destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))->getCString());

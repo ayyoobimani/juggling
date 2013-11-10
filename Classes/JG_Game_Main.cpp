@@ -472,9 +472,8 @@ void JG_Game_Main::TestMultiTouch()
 	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen));
 	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_MovementTouchGen));
 	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_EndGen));
-	
-	
 
+	
 }
 
 void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)

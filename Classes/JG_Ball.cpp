@@ -69,7 +69,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	if(moveMode == EMove_Curve)
 	{
 		
-		curve_Rad = ARCSIN((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
+		curve_Rad =TaylorFormulaCalculate((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
 		//curve_Rad = asin((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
 		
 		//mainGame->gameHUD->debugLabel->setString("");
@@ -223,5 +223,9 @@ CCPoint JG_Ball::GetInitialTouchPosition()
 EThrowDirection JG_Ball::GetBallDirection()
 {
 	return ballThrowDirection;
+}
+float JG_Ball::TaylorFormulaCalculate(float angle)
+{
+	return angle + 0.5 * pow(angle,3)/3 + 3/8 * pow(angle,5)/5 + 15/ 48 * pow(angle,7)/7 ;
 }
 

@@ -109,6 +109,9 @@ public:
 		//TODO: calculate maxSpeed
 		maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
 	}
+
+	//taylor formula
+	float TaylorFormulaCalculate(float angle);
 };
 
 

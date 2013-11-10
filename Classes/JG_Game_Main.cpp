@@ -469,7 +469,8 @@ void JG_Game_Main::TestMultiTouch()
 	//TODO: implement TestMultiTouch
 
 	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen));
-	
+	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_MovementTouchGen));
+	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_EndGen));
 	
 
 }
@@ -526,12 +527,13 @@ void JG_Game_Main::TestMultiTouch_MovementTouchGen(float dt)
 		//generating random locaiton
 		randomX+= CCRANDOM_0_1() *10;
 		randomY+= CCRANDOM_0_1() *10;
-
-		touch->setTouchInfo(1,randomX,randomY);
+		if (touch!=NULL)
+			touch->setTouchInfo(1,randomX,randomY);
 
 	
 	}
 	ccTouchesMoved(TestMultiTouchesSet,NULL);
+	schedule(schedule_selector(JG_Game_Main::TestMultiTouch_MovementTouchGen),CCRANDOM_0_1()*0.5,1,0);
 
 }
 void JG_Game_Main::TestMultiTouch_EndGen(float dt)
@@ -541,6 +543,7 @@ void JG_Game_Main::TestMultiTouch_EndGen(float dt)
 	temp->addObject((CCTouch*)TestMultiTouchesSet->anyObject());
 
 	ccTouchesEnded(temp,NULL);
+	schedule(schedule_selector(JG_Game_Main::TestMultiTouch_EndGen),CCRANDOM_0_1()*0.5,1,0);
 
 }
 

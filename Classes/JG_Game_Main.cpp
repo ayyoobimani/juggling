@@ -113,6 +113,7 @@ void JG_Game_Main::update(float dt)
 {
 	BallTouchHandler_CheckTime(dt);
 	//TestSingleTouch();
+	TestMultiTouch();
 }
 
 /* This function first iterate through touches to find with wich hand they are colliding.

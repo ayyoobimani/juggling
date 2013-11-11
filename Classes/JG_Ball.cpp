@@ -73,7 +73,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 		//curve_Rad = asin((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
 		
 		mainGame->gameHUD->debugLabel->setString("");
-		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",curve_Rad)->getCString());
+		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());
 		
 
 		/* because there are two radians the have the same range (they can both reach the 
@@ -81,8 +81,12 @@ void JG_Ball::Throw(float force, CCPoint destination)
 			we can throw the ball with 30 deg and 60 deg and they will reach the destination
 			but we choose the 60 deg.
 			*/
-		if(abs(CC_RADIANS_TO_DEGREES(curve_Rad))<45)
-			curve_Rad = (curve_Rad/abs(curve_Rad)) *CC_DEGREES_TO_RADIANS(90)- curve_Rad;
+		//if(abs(CC_RADIANS_TO_DEGREES(curve_Rad))<45)
+			//curve_Rad = (curve_Rad/abs(curve_Rad)) *CC_DEGREES_TO_RADIANS(90)- curve_Rad;
+		//TODO : Do it for reverse direction
+		if( CC_RADIANS_TO_DEGREES(curve_Rad)>-45)
+			curve_Rad = CC_DEGREES_TO_RADIANS(-90) - curve_Rad;
+
 	
 		/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
 		if(curve_Rad<0)
@@ -102,7 +106,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 void JG_Ball::DetermineNewSpeedByForce(float force)
 {
-	currentSpeed = clampf(minSpeed * force,minSpeed,maxSpeed);
+	currentSpeed = clampf(minSpeed/2 + minSpeed * force,minSpeed,maxSpeed);
 	if(moveMode == EMove_Straight)
 		currentSpeed = minSpeed ;
 	// for test on andorid
@@ -227,7 +231,7 @@ EThrowDirection JG_Ball::GetBallDirection()
 float JG_Ball::TaylorFormulaCalculate(float angle)
 {
 	float ffs=angle + 0.5 * pow(angle,3)/3 + 3/8 * pow(angle,5)/5 + 15/ 48 * pow(angle,7)/7 ;;
-	mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("%f,%f",angle,ffs)->getCString());
+	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("%f,%f",angle,ffs)->getCString());
 	return ffs;
 }
 

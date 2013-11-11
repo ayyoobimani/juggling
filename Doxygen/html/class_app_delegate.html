@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,11 +88,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">AppDelegate Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>The cocos2d Application.  
- <a href="class_app_delegate.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="_app_delegate_8h_source.html">AppDelegate.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for AppDelegate:</div>
 <div class="dyncontent">
@@ -114,10 +109,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac4d653e3f74a91efef5f2def58fe3108"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function be called when the application enter foreground.  <a href="#ac4d653e3f74a91efef5f2def58fe3108">More...</a><br/></td></tr>
 <tr class="separator:ac4d653e3f74a91efef5f2def58fe3108"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The cocos2d Application. </p>
-<p>The reason for implement as private inheritance is to hide some interface call by CCDirector. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a17cb09777419781698324e0415bffd3a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +207,7 @@ false Initialize failed, app terminate. </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 21 2013 13:40:41 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 11 2013 14:26:54 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

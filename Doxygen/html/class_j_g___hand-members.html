@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,15 +89,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>This is the complete list of members for <a class="el" href="class_j_g___hand.html">JG_Hand</a>, including all inherited members.</p>
 <table class="directory">
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>CREATE_FUNC</b>(JG_Hand) (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>createWithFileName</b>(const char *pszFileName, CCPoint initialPos) (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>CreateHand</b>(JG_Game_Main *game, CCPoint initialPos, const char *handSprite) (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>GetRadius</b>() (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>JG_Hand</b>(void) (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>radius</b> (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~JG_Hand</b>(void) (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>mainGame</b> (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>radius</b> (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>~JG_Hand</b>(void) (defined in <a class="el" href="class_j_g___hand.html">JG_Hand</a>)</td><td class="entry"><a class="el" href="class_j_g___hand.html">JG_Hand</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 21 2013 13:40:41 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 11 2013 14:26:54 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

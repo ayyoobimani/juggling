@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -110,12 +110,15 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>GetRadius</b> ()</td
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af1e8c1afe129641193dc4f459ea3da62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1e8c1afe129641193dc4f459ea3da62"></a>
-static <a class="el" href="class_j_g___hand.html">JG_Hand</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>createWithFileName</b> (const char *pszFileName, CCPoint initialPos)</td></tr>
-<tr class="separator:af1e8c1afe129641193dc4f459ea3da62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9154307d939ba402a3412a6ff9909247"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9154307d939ba402a3412a6ff9909247"></a>
+static <a class="el" href="class_j_g___hand.html">JG_Hand</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>CreateHand</b> (<a class="el" href="class_j_g___game___main.html">JG_Game_Main</a> *game, CCPoint initialPos, const char *handSprite)</td></tr>
+<tr class="separator:a9154307d939ba402a3412a6ff9909247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:aaec58a973d275eddd40311f14177461b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaec58a973d275eddd40311f14177461b"></a>
+<a class="el" href="class_j_g___game___main.html">JG_Game_Main</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>mainGame</b></td></tr>
+<tr class="separator:aaec58a973d275eddd40311f14177461b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbebb5b5f2b897af0fa566477c817c96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abbebb5b5f2b897af0fa566477c817c96"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>radius</b></td></tr>
 <tr class="separator:abbebb5b5f2b897af0fa566477c817c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,7 +130,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>radius</b></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 21 2013 13:40:41 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 11 2013 14:26:54 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

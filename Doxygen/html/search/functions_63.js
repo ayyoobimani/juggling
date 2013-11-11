@@ -1,8 +1,9 @@
 var searchData=
 [
   ['calculatespeedboundriesbaseonlength',['CalculateSpeedBoundriesBaseOnLength',['../class_j_g___ball.html#a8023f3c38c257dd4430a5a01c519a289',1,'JG_Ball']]],
-  ['cctouchesbegan',['ccTouchesBegan',['../class_j_g___main___game.html#ab4c6f1d5f85c480f1f6cd357a66cfd55',1,'JG_Main_Game']]],
-  ['cctouchesended',['ccTouchesEnded',['../class_j_g___main___game.html#ab9f945eff20cd58d54742828519bb6c7',1,'JG_Main_Game']]],
-  ['cctouchesmoved',['ccTouchesMoved',['../class_j_g___main___game.html#a1a99f1b88de06e8882925c744be3cb91',1,'JG_Main_Game']]],
-  ['createwithfilename',['createWithFileName',['../class_j_g___ball.html#a12279a500446c9516026d3f52fee87eb',1,'JG_Ball']]]
+  ['calculatethrowforce',['CalculateThrowForce',['../class_j_g___game___main.html#a3b28b2a51aeaa909d6fb95471103bb72',1,'JG_Game_Main']]],
+  ['cctouchesbegan',['ccTouchesBegan',['../class_j_g___game___main.html#a9c8aac91fd97b7a88da7819b8ead4206',1,'JG_Game_Main']]],
+  ['cctouchesended',['ccTouchesEnded',['../class_j_g___game___main.html#a0bc1f108b8a56226cfe84ce9d28d56b4',1,'JG_Game_Main']]],
+  ['cctouchesmoved',['ccTouchesMoved',['../class_j_g___game___main.html#ad3ecad4bd190ff37f5b6ba1da9fbe16c',1,'JG_Game_Main']]],
+  ['createball',['CreateBall',['../class_j_g___ball.html#a7847a2c4fbfcf37d6e23b526d05c2f0e',1,'JG_Ball']]]
 ];

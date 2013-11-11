@@ -20,7 +20,7 @@ class JG_Hand;
 #define MAX_LIFE_COUNT 5
 #define MAX_TOUCH_DURATOIN 0.25f
 // throw force is relative to screen height
-#define THROW_FORCE_BASE 0.7
+#define THROW_FORCE_BASE 0.5
 
 
 struct STouchInfo
@@ -65,15 +65,21 @@ public:
 
 	/*! this method is called when a ball is lost ( for now when it is out of screen ) */
 	void BallLost(JG_Ball* lostBall);
-
+/*! Return player Score */
 	int GetScore();
+	/*! Set player Score to a new value */
 	void SetScore( int newScore);
+	/*! Add a value to player score */
 	void AddScore(int amount);
+	/*! Reduce a value from player Score */
 	void ReduceScore(int amount);
-
+/*! Return The life count of player */
 	int GetLifeCount();
+	/*! Set the life count of player*/
 	void SetLifeCount( int newLifeCount);
+	/*! Decrement the life count of player */
 	void DecrementLifeCount();
+	/*! Increment the life count of player */
 	void IncrementLifeCount();
 	
 	/**************** /game rule methods *************/
@@ -119,13 +125,14 @@ public:
 	//TODO: find a better name
 	bool ArePointsColliding (CCPoint point1,CCPoint point2,float radius);
 
-	// Set an empy touchinfo with new infos
+	
+	/*! Set an empty touchinfo with a new info*/
 	void SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball);
-	// Reset an touchinfo with the given index in touchInfos
-
+	/*! Reset an touchinfo with the given index in touchInfos */
 	void ResetTouchInfo( int index);
+	/*! Reset an touchinfo with the given ball in touchInfos */
 	void ResetTouchInfoByBall(JG_Ball* ball);
-	// Set Direction For Ball for the give index in touchInfos. return whether direction was valid or not 
+	/*! Set Direction For Ball for the give index in touchInfos. return whether direction was valid or not */
 	bool SetTouchDirectionForBall(int index);
 	
     
@@ -134,12 +141,13 @@ public:
 
 	void menuPauseCallBack(CCObject* pSender);
 
-	/* handles ball removing */
+	/*! handles ball removing */
 	void RemoveBallFromScreen(JG_Ball* ball);
-
+	/*! Remove all balls from screen */
 	void RemoveAllBallsFromScreen();
-	
+	/*! Adding new ball to screen */
 	void AddBallToScreen();
+	
 	inline float getSign(float num)
 	{
 		return num/abs(num);
@@ -156,19 +164,25 @@ public:
 	void TestSingleTouch();
 	/*! a function to test single touch */
 	CCSet* TestMultiTouchesSet;
-	
+	/*! Testing MultiTouch Handling */
 	void TestMultiTouch();
+	/*! Initial phase of multi touch testing */
 	void TestMultiTouch_InitiTouchGen(float dt=0);
+	/*! Movement phase of multi touch testing */
 	void TestMultiTouch_MovementTouchGen(float dt=0);
+	/*! End phase of multi touch testing */
 	void TestMultiTouch_EndGen(float dt=0);
-
+	/*! End of the game */
 	void EndGame();
-
+	/*! Pausing the game */
 	void PauseGame(CCObject* pSender);
+	/*! Exit the game */
 	void ExitGame(CCObject* pSender);
+	/*! Resuming the game */
 	void ResumeGame(CCObject* pSender);
+	/*! Reseting the game */
 	void ResetGame(CCObject* pSender);
-
+	
 	void TempAddBall(float time);
 
 	

@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,31 +86,43 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  _APP_DELEGATE_H_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;cocos2d.h&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;JG_Main_Game.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;JG_Game_Main.h&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_app_delegate.html">   12</a></span>&#160;<span class="keyword">class  </span><a class="code" href="class_app_delegate.html">AppDelegate</a> : <span class="keyword">private</span> cocos2d::CCApplication</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="class_app_delegate.html">AppDelegate</a>();</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_app_delegate.html">AppDelegate</a>();</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_app_delegate.html#a68cbaed49edf7581dc59a09d5062fff3">applicationDidFinishLaunching</a>();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_app_delegate.html#a17cb09777419781698324e0415bffd3a">applicationDidEnterBackground</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_app_delegate.html#ac4d653e3f74a91efef5f2def58fe3108">applicationWillEnterForeground</a>();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif // _APP_DELEGATE_H_</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor"></span></div>
-<div class="ttc" id="class_app_delegate_html_a17cb09777419781698324e0415bffd3a"><div class="ttname"><a href="class_app_delegate.html#a17cb09777419781698324e0415bffd3a">AppDelegate::applicationDidEnterBackground</a></div><div class="ttdeci">virtual void applicationDidEnterBackground()</div><div class="ttdoc">The function be called when the application enter background. </div><div class="ttdef"><b>Definition:</b> AppDelegate.cpp:40</div></div>
-<div class="ttc" id="class_app_delegate_html_a68cbaed49edf7581dc59a09d5062fff3"><div class="ttname"><a href="class_app_delegate.html#a68cbaed49edf7581dc59a09d5062fff3">AppDelegate::applicationDidFinishLaunching</a></div><div class="ttdeci">virtual bool applicationDidFinishLaunching()</div><div class="ttdoc">Implement CCDirector and CCScene init code here. </div><div class="ttdef"><b>Definition:</b> AppDelegate.cpp:14</div></div>
-<div class="ttc" id="class_app_delegate_html"><div class="ttname"><a href="class_app_delegate.html">AppDelegate</a></div><div class="ttdoc">The cocos2d Application. </div><div class="ttdef"><b>Definition:</b> AppDelegate.h:12</div></div>
-<div class="ttc" id="class_app_delegate_html_ac4d653e3f74a91efef5f2def58fe3108"><div class="ttname"><a href="class_app_delegate.html#ac4d653e3f74a91efef5f2def58fe3108">AppDelegate::applicationWillEnterForeground</a></div><div class="ttdeci">virtual void applicationWillEnterForeground()</div><div class="ttdoc">The function be called when the application enter foreground. </div><div class="ttdef"><b>Definition:</b> AppDelegate.cpp:48</div></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="structtag_resource.html">   12</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structtag_resource.html">tagResource</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;     cocos2d::CCSize size;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;     <span class="keywordtype">char</span> directory[100];</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; }<a class="code" href="structtag_resource.html">Resource</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">static</span> <a class="code" href="structtag_resource.html">Resource</a> smallResource  =  { cocos2d::CCSizeMake(480, 320),   <span class="stringliteral">&quot;iphone&quot;</span> };</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">static</span> <a class="code" href="structtag_resource.html">Resource</a> mediumResource =  { cocos2d::CCSizeMake(1024, 768),  <span class="stringliteral">&quot;ipad&quot;</span>   };</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">static</span> <a class="code" href="structtag_resource.html">Resource</a> largeResource  =  { cocos2d::CCSizeMake(2048, 1536), <span class="stringliteral">&quot;ipadhd&quot;</span> };</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">static</span> cocos2d::CCSize designResolutionSize = cocos2d::CCSizeMake(480, 320);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="class_app_delegate.html">   23</a></span>&#160;<span class="keyword">class  </span><a class="code" href="class_app_delegate.html">AppDelegate</a> : <span class="keyword">private</span> cocos2d::CCApplication</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="class_app_delegate.html">AppDelegate</a>();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_app_delegate.html">AppDelegate</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="class_app_delegate.html#a68cbaed49edf7581dc59a09d5062fff3">applicationDidFinishLaunching</a>();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_app_delegate.html#a17cb09777419781698324e0415bffd3a">applicationDidEnterBackground</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_app_delegate.html#ac4d653e3f74a91efef5f2def58fe3108">applicationWillEnterForeground</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif // _APP_DELEGATE_H_</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span></div>
+<div class="ttc" id="class_app_delegate_html_a17cb09777419781698324e0415bffd3a"><div class="ttname"><a href="class_app_delegate.html#a17cb09777419781698324e0415bffd3a">AppDelegate::applicationDidEnterBackground</a></div><div class="ttdeci">virtual void applicationDidEnterBackground()</div><div class="ttdoc">The function be called when the application enter background. </div><div class="ttdef"><b>Definition:</b> AppDelegate.cpp:69</div></div>
+<div class="ttc" id="class_app_delegate_html_a68cbaed49edf7581dc59a09d5062fff3"><div class="ttname"><a href="class_app_delegate.html#a68cbaed49edf7581dc59a09d5062fff3">AppDelegate::applicationDidFinishLaunching</a></div><div class="ttdeci">virtual bool applicationDidFinishLaunching()</div><div class="ttdoc">Implement CCDirector and CCScene init code here. </div><div class="ttdef"><b>Definition:</b> AppDelegate.cpp:15</div></div>
+<div class="ttc" id="class_app_delegate_html"><div class="ttname"><a href="class_app_delegate.html">AppDelegate</a></div><div class="ttdef"><b>Definition:</b> AppDelegate.h:23</div></div>
+<div class="ttc" id="class_app_delegate_html_ac4d653e3f74a91efef5f2def58fe3108"><div class="ttname"><a href="class_app_delegate.html#ac4d653e3f74a91efef5f2def58fe3108">AppDelegate::applicationWillEnterForeground</a></div><div class="ttdeci">virtual void applicationWillEnterForeground()</div><div class="ttdoc">The function be called when the application enter foreground. </div><div class="ttdef"><b>Definition:</b> AppDelegate.cpp:77</div></div>
+<div class="ttc" id="structtag_resource_html"><div class="ttname"><a href="structtag_resource.html">tagResource</a></div><div class="ttdoc">The cocos2d Application. </div><div class="ttdef"><b>Definition:</b> AppDelegate.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 21 2013 13:40:41 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 11 2013 14:26:54 for My Project by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

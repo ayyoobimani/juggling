@@ -87,7 +87,7 @@ void JG_Game_Main::InitGame()
 
 
 	//TempAddBall(0);
-	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),2.5,1,1);
+	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	
 
 	/******************************** /Balls ************************************/

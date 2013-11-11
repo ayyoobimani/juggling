@@ -1,4 +1,9 @@
 var searchData=
 [
-  ['testtouch',['TestTouch',['../class_j_g___main___game.html#a270e423f2d88ef6c8b7151e4305f8bb5',1,'JG_Main_Game']]]
+  ['testmultitouch',['TestMultiTouch',['../class_j_g___game___main.html#a5ad7dc858f795f34d33c13b712880b43',1,'JG_Game_Main']]],
+  ['testmultitouch_5fendgen',['TestMultiTouch_EndGen',['../class_j_g___game___main.html#ab2d7fb8240de8466d624a2f187d5eadf',1,'JG_Game_Main']]],
+  ['testmultitouch_5finititouchgen',['TestMultiTouch_InitiTouchGen',['../class_j_g___game___main.html#a104c8ad94eb551ad2ba292aa46c0298c',1,'JG_Game_Main']]],
+  ['testmultitouch_5fmovementtouchgen',['TestMultiTouch_MovementTouchGen',['../class_j_g___game___main.html#ae410c7d1cc74a9e7bf6bc51b525f889e',1,'JG_Game_Main']]],
+  ['testsingletouch',['TestSingleTouch',['../class_j_g___game___main.html#ad4691efc615e12254ea347a7b21cd167',1,'JG_Game_Main']]],
+  ['throw',['Throw',['../class_j_g___ball.html#a58db2f725890ccc7099618aeec121022',1,'JG_Ball']]]
 ];

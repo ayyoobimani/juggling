@@ -7,6 +7,7 @@
 #include "JG_Ball.h"
 
 #include  "JG_Game_HUD.h"
+#include "JG_GUI_Bar.h"
 using namespace cocos2d;
 
 class JG_Game_HUD;
@@ -20,7 +21,7 @@ class JG_Hand;
 #define MAX_LIFE_COUNT 5
 #define MAX_TOUCH_DURATOIN 0.25f
 // throw force is relative to screen height
-#define THROW_FORCE_BASE 0.5
+#define THROW_FORCE_BASE 4
 
 #define GAME_SCALE 0.7
 
@@ -43,11 +44,14 @@ class JG_Game_Main : public cocos2d::CCLayer
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
 	CCArray* handsArray;
+	CCArray* handsPowerBarArray;
 
 	CCArray* ballsArray;
-
+	
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
+
+	
 
 	
 

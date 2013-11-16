@@ -6,7 +6,6 @@
 #include "textures\CCTextureCache.h"
 #include "label_nodes\CCLabelBMFont.h"
 
-
 using namespace cocos2d;
 
 class JG_Game_Main;
@@ -21,17 +20,13 @@ public:
 	CCSprite* gameResetSprite_On;
 	CCSprite* gameResetSprite_Off;
 
-
-
-
 	CCMenuItemSprite* pauseButton;
 	CCMenuItemSprite* resetButton;
 	CCMenuItemSprite* resumeButton;
 	CCMenuItemSprite* exitButton;
 
 	CCMenu* gameMenu;
-
-
+	
 	JG_Game_HUD(void);
 	~JG_Game_HUD(void);
 	static JG_Game_HUD* create(JG_Game_Main* game);

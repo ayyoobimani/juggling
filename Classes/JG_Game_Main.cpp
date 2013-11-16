@@ -56,11 +56,22 @@ bool JG_Game_Main::init()
 	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"RightHand.png");
 	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"LeftHand.png");
 
+	
+
+
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
+	//bar setting
+	
+	handsPowerBarArray=CCArray::create(JG_GUI_Bar::CreateBar(rightHand->getPosition()+ CCPointMake(0,0),100)
+		,JG_GUI_Bar::CreateBar(leftHand->getPosition()+ CCPointMake(-10,10),100)
+		,NULL);
+	handsPowerBarArray->retain();
+	
 	for( int i = 0 ; i<handsArray->count();i++)
 	{
 		this->addChild((CCNode*)handsArray->objectAtIndex(i));
+		this->addChild((CCNode*)handsPowerBarArray->objectAtIndex(i),2);
 	}
 	/*************************** /Hands *************************************/
 
@@ -285,6 +296,7 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 	}
 	JG_Hand * destHand;
 
+
 	touchInfos[index].ball->setPosition(touchInfos[index].hand->getPosition());
 	if(touchInfos[index].hand==leftHand)
 		destHand=rightHand;	
@@ -297,7 +309,10 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 }
 float JG_Game_Main::CalculateThrowForce(unsigned int index)
 {
-	return touchInfos[index].initialTimePosition.getDistance(touchInfos[index].touch->getLocation())/(THROW_FORCE_BASE * screenSize.height );
+	float holdingTime=MAX_TOUCH_DURATOIN- touchInfos[index].remainingTime;
+	float touchLenght=touchInfos[index].initialTimePosition.getDistance(touchInfos[index].touch->getLocation());
+	return (touchLenght/holdingTime)/(THROW_FORCE_BASE * screenSize.height );
+
 }
 
 // for now just reset everything

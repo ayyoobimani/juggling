@@ -22,6 +22,7 @@ class JG_Hand;
 // throw force is relative to screen height
 #define THROW_FORCE_BASE 0.5
 
+#define GAME_SCALE 0.7
 
 struct STouchInfo
 {

@@ -44,7 +44,7 @@ bool JG_Game_Main::init()
 	//gameHUD->draw();
 
 	/*********************** Background **************************/
-	CCSprite * backGround = CCSprite::create("background.png");
+	CCSprite * backGround = CCSprite::create("background2.png");
 
 	backGround->setPosition(ccp(screenSize.width/2,screenSize.height/2));
 	this->addChild(backGround,-100);
@@ -389,7 +389,7 @@ void JG_Game_Main::BallLost(JG_Ball* lostBall)
 		DecrementLifeCount();
 		if(lifeCount>0)
 		{
-			this->schedule(schedule_selector(JG_Game_Main::AddBallToScreen),1,1,1.5);
+			AddBallToScreen();
 
 		}
 	}

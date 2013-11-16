@@ -18,7 +18,8 @@ JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char 
 		hand->autorelease();
 		hand->setPosition(initialPos);
 		hand->mainGame = game;
-		hand->radius = game->screenSize.height * 0.3;
+		hand->radius = game->screenSize.height * RADIUS_RATIO;
+		hand->setScale(GAME_SCALE * HAND_SCALE);
 		return hand;
 	}
 	CC_SAFE_DELETE(hand);

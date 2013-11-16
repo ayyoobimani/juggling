@@ -43,7 +43,7 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		ball->tempInitialThrowDirection = initialDirection;
 		ball->tempInitialPosition = initialPos;
 		/*****************************************************************************/
-
+		ball->setScale(GAME_SCALE * BALL_SCALE);
 		
 		// activating update function 
 		//ball->schedule(schedule_selector(JG_Ball::update));

@@ -321,6 +321,19 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 	}
 }
 
+int JG_Game_Main::GetTouchInfoIndexByBall(JG_Ball* ball)
+{
+	for (int i=0;i<TOUCH_COUNT;i++)
+	{
+		if (touchInfos[i].ball==ball)
+		{
+			return i;
+		}
+	}
+	return -1;
+
+}
+
 void JG_Game_Main::SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball)
 {
 	for(int i = 0 ; i<TOUCH_COUNT ; i++)
@@ -367,11 +380,19 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 void JG_Game_Main::BallLost(JG_Ball* lostBall)
 {
 	CCLog("BallLOst",0);
-	ResetTouchInfoByBall(lostBall);
-	RemoveBallFromScreen(lostBall);
-	DecrementLifeCount();
-	if(lifeCount>0)
-		AddBallToScreen();
+	int touchInfoIndex = GetTouchInfoIndexByBall(lostBall);
+	if(touchInfoIndex!= -1)
+		BallTouchHandler_End(touchInfoIndex);
+	else
+	{
+		RemoveBallFromScreen(lostBall);
+		DecrementLifeCount();
+		if(lifeCount>0)
+		{
+			this->schedule(schedule_selector(JG_Game_Main::AddBallToScreen),1,1,1.5);
+
+		}
+	}
 	
 	
 }
@@ -622,6 +643,7 @@ void JG_Game_Main::RemoveAllBallsFromScreen()
 	}
 
 }
+
 
 void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 {

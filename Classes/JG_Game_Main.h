@@ -125,6 +125,8 @@ public:
 	//TODO: find a better name
 	bool ArePointsColliding (CCPoint point1,CCPoint point2,float radius);
 
+	/*! search through toucheInfos and return index for related ball */
+	int GetTouchInfoIndexByBall(JG_Ball* ball);
 	
 	/*! Set an empty touchinfo with a new info*/
 	void SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball);
@@ -140,6 +142,8 @@ public:
     void menuCloseCallback(CCObject* pSender);
 
 	void menuPauseCallBack(CCObject* pSender);
+
+	
 
 	/*! handles ball removing */
 	void RemoveBallFromScreen(JG_Ball* ball);

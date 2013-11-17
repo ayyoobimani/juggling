@@ -125,6 +125,7 @@ void JG_Game_Main::TempAddBall(float dt)
 void JG_Game_Main::update(float dt)
 {
 	BallTouchHandler_CheckTime(dt);
+	UpdateHandPower();
 	//TestSingleTouch();
 	
 }
@@ -303,6 +304,7 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 	else
 		destHand=leftHand;
 	touchInfos[index].ball->Throw(CalculateThrowForce(index),destHand->getPosition());
+
 	AddScore(touchInfos[index].ball->GetBallScore());
 	
 	ResetTouchInfo(index);
@@ -697,4 +699,23 @@ void JG_Game_Main::menuPauseCallBack(CCObject* pSender)
 		CCDirector::sharedDirector()->pause();
 	else
 		CCDirector::sharedDirector()->resume();
+}
+
+
+//calculating hands power
+void JG_Game_Main::UpdateHandPower()
+{
+	((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(0);
+	((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(0);
+	for (int i=0;i<TOUCH_COUNT;i++)
+	{
+		if(touchInfos[i].touch!=NULL)
+		{
+			if(handsArray->objectAtIndex(0)==touchInfos[i].hand)
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(CalculateThrowForce(i)*5);
+			else
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(CalculateThrowForce(i)*5);
+		}
+		
+	}
 }

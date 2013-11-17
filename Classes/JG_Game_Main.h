@@ -194,6 +194,12 @@ public:
 	
 	void TempAddBall(float time);
 
+
+
+
+	//power calculating 
+	void UpdateHandPower();
+
 	
 
 

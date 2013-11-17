@@ -27,9 +27,12 @@ JG_GUI_Bar* JG_GUI_Bar::CreateBar(CCPoint initialPosition,float newMaxScale)
 
 void JG_GUI_Bar::InitBar(CCPoint initialPosition,float newMaxScale)
 {
-	this->setAnchorPoint(CCPointMake(getContentSize().width/2,0));
-	this->setPosition(initialPosition);
+	
 
+	this->setPosition(initialPosition);
+	this->setAnchorPoint(ccp(0.5,0));
+
+	
 	
 	
 	

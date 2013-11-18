@@ -311,9 +311,9 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 }
 float JG_Game_Main::CalculateThrowForce(unsigned int index)
 {
-	float holdingTime=MAX_TOUCH_DURATOIN- touchInfos[index].remainingTime;
-	float touchLenght=touchInfos[index].initialTimePosition.getDistance(touchInfos[index].touch->getLocation());
-	return (touchLenght/holdingTime)/(THROW_FORCE_BASE * screenSize.height );
+	//float holdingTime=MAX_TOUCH_DURATOIN- touchInfos[index].remainingTime;
+	float touchLenght=touchInfos[index].hand->getPosition().getDistance(touchInfos[index].touch->getLocation());
+	return (touchLenght)/(THROW_FORCE_BASE * screenSize.height );
 
 }
 
@@ -364,7 +364,7 @@ void JG_Game_Main::SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball)
 			touchInfos[i].ball = ball;
 			touchInfos[i].bIsDirValid = false;
 			touchInfos[i].remainingTime=MAX_TOUCH_DURATOIN;
-			touchInfos[i].initialTimePosition=touch->getLocation();
+			touchInfos[i].initialTouchPosition=touch->getLocation();
 			return;
 		}
 	}
@@ -712,9 +712,9 @@ void JG_Game_Main::UpdateHandPower()
 		if(touchInfos[i].touch!=NULL)
 		{
 			if(handsArray->objectAtIndex(0)==touchInfos[i].hand)
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(CalculateThrowForce(i)*5);
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(CalculateThrowForce(i));
 			else
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(CalculateThrowForce(i)*5);
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(CalculateThrowForce(i));
 		}
 		
 	}

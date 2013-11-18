@@ -19,9 +19,9 @@ class JG_Hand;
 #define TOUCH_COUNT 2
 
 #define MAX_LIFE_COUNT 5
-#define MAX_TOUCH_DURATOIN 0.25f
+#define MAX_TOUCH_DURATOIN 0.50f
 // throw force is relative to screen height
-#define THROW_FORCE_BASE 4
+#define THROW_FORCE_BASE 0.5
 
 #define GAME_SCALE 0.7
 
@@ -32,7 +32,7 @@ struct STouchInfo
 	JG_Ball * ball;
 	bool bIsDirValid;
 	float remainingTime;
-	CCPoint initialTimePosition;
+	CCPoint initialTouchPosition;
 
 	
 	

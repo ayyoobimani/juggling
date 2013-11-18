@@ -12,7 +12,7 @@ JG_GUI_Bar::~JG_GUI_Bar(void)
 JG_GUI_Bar* JG_GUI_Bar::CreateBar(CCPoint initialPosition,float newMaxScale)
 {
 	JG_GUI_Bar * bar = new JG_GUI_Bar();
-	if (bar && bar->initWithFile(bar->barTexture.getCString()))
+	if (bar && bar->init())
 	{
 		bar->autorelease();
 		bar->InitBar(initialPosition,newMaxScale);

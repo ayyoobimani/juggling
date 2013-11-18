@@ -14,6 +14,13 @@ class JG_Game_Main;
 #define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(75))
 #define BALL_SCALE 1.0
 
+// Step counts for tracking Path of the Ball
+#define BALL_PATH_TRACE_STEPS 10
+// Interval time for tracking Path of the Ball
+#define BALL_PATH_TRACE_INTERVALS 0.1
+
+#define BALL_PATH_TRACE_FADE_DELAY 1.0
+
 enum EThrowDirection
 {
 	EDir_LeftHandToRight, EDir_RighHandtToLeft, EDir_LeftHandToUp, EDir_RightHandToUp
@@ -36,9 +43,16 @@ class JG_Ball :
 	/*this are the variables that are used in high frequency functions
 		instead of creating them each time, here we to it once (for performance */
 
-	float tempNewX,tempNewY;
-	float tempSpeedY,tempSpeedX;
+	float tempBallNewX,tempBallNewY;
+	float tempBallSpeedY,tempBallSpeedX;
 	/****************** /temporary variables ****************/
+
+	
+	CCTexture2D* tracePointTexture;
+	bool bDrawThrowPath;
+
+	float throwPath_Force;
+	CCPoint throwPath_OriginPosition, throwPath_destPosition;
 
 public:
 	JG_Ball(void);
@@ -87,9 +101,22 @@ public:
 	/*! Handles the movement based on the current mode */
 	void update(float dt);
 
-	void DetermineNewSpeedByForce(float force);
-	void DetermineNewThrowDirection();
-	void DetermineNewMoveMode();
+	float GetNewSpeedByForce(float force);
+	/*! Returns the new ThrowDirection based on the given previous direction */
+	EThrowDirection GetNewThrowDirection(EThrowDirection preDir);
+	/*! Returns the new MoveMove based on the given previous ModeMode */
+	EMoveMode GetNewMoveMode(EMoveMode preMoveMode);
+
+	/*! Calculate Curve Radian By the given Speed, Origin Position and destination position */
+	float CalculateCurveRad(float speed,CCPoint originPosition,CCPoint destPosition);
+
+	void draw();
+
+	void DrawThrowPath();
+	/*! Show the Throw Path before being actually thrown by the given power, originPosition and destination position */
+	void SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition);
+
+	void ResetThrowPathInfo(float dt);
 
 	/*! temporary reset the ball to it's initial postion when it is out of view */
 	//void TempReset();

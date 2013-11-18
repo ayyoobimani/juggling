@@ -211,6 +211,9 @@ public:
 	//power calculating 
 	void UpdateHandPower();
 
+	/*! Update Ball Throw Trace */
+	void UpdateBallThrowTrace();
+
 	
 
 

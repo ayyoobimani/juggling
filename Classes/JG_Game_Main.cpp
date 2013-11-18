@@ -99,7 +99,7 @@ void JG_Game_Main::InitGame()
 
 
 	//TempAddBall(0);
-	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
+	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,0,1.5);
 	
 
 	/******************************** /Balls ************************************/
@@ -127,6 +127,7 @@ void JG_Game_Main::update(float dt)
 {
 	BallTouchHandler_CheckTime(dt);
 	UpdateHandPower();
+	UpdateBallThrowTrace();
 	//TestSingleTouch();
 	
 }
@@ -722,6 +723,23 @@ void JG_Game_Main::UpdateHandPower()
 	}
 }
 
+void JG_Game_Main::UpdateBallThrowTrace()
+{
+	for (int i=0;i<TOUCH_COUNT;i++)
+	{
+		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid)
+		{
+				CCLog("WTTTTTTTTTTTTTTTF");
+				if(touchInfos[i].hand== rightHand)
+					touchInfos[i].ball->SetThrowPathInfo(CalculateThrowForce(i),rightHand->getPosition(),leftHand->getPosition());
+				else
+					touchInfos[i].ball->SetThrowPathInfo(CalculateThrowForce(i),leftHand->getPosition(),rightHand->getPosition());
+
+		}
+		
+	}
+
+}
 void JG_Game_Main::CalculateThrowPower()
 {
 	maxThrowPower=(JG_Ball::GetMaxSpeed()/JG_Ball::GetMinSpeed()-1);

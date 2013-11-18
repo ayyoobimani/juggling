@@ -53,7 +53,6 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 	debugLabel->setColor(ccWHITE);
 	debugLabel->setPosition( mainGame->screenSize * 0.7);
 	
-
 	Init_PauseMenu();
 
 	return true;
@@ -124,6 +123,7 @@ void JG_Game_HUD::draw()
 		DrawLife();
 	}
 }
+
 
 void JG_Game_HUD::DrawLife()
 {

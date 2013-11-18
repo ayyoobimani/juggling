@@ -90,7 +90,8 @@ void JG_Game_Main::InitGame()
 
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
-
+	//it is import we call calculatethrowpower after jg_ball calculate
+	CalculateThrowPower();
 	// initing  one ball for test
 	ballsArray=CCArray::create();
 	ballsArray->retain();
@@ -312,8 +313,9 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 float JG_Game_Main::CalculateThrowForce(unsigned int index)
 {
 	//float holdingTime=MAX_TOUCH_DURATOIN- touchInfos[index].remainingTime;
-	float touchLenght=touchInfos[index].hand->getPosition().getDistance(touchInfos[index].touch->getLocation());
-	return (touchLenght)/(THROW_FORCE_BASE * screenSize.height );
+	float touchLenght=abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
+	
+	return (touchLenght/maxTouchLenght)*maxThrowPower;
 
 }
 
@@ -396,7 +398,7 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 
 void JG_Game_Main::BallLost(JG_Ball* lostBall)
 {
-	CCLog("BallLOst",0);
+	//CCLog("BallLOst",0);
 	int touchInfoIndex = GetTouchInfoIndexByBall(lostBall);
 	if(touchInfoIndex!= -1)
 		BallTouchHandler_End(touchInfoIndex);
@@ -712,10 +714,21 @@ void JG_Game_Main::UpdateHandPower()
 		if(touchInfos[i].touch!=NULL)
 		{
 			if(handsArray->objectAtIndex(0)==touchInfos[i].hand)
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(CalculateThrowForce(i));
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(CalculateThrowForce(i)*2);
 			else
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(CalculateThrowForce(i));
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(CalculateThrowForce(i)*2);
 		}
 		
 	}
+}
+
+void JG_Game_Main::CalculateThrowPower()
+{
+	maxThrowPower=(JG_Ball::GetMaxSpeed()/JG_Ball::GetMinSpeed()-1);
+	maxThrowPower*=(1+MIN_TOUCH_LENGTH_FACTOR);
+	maxTouchLenght=THROW_FORCE_BASE_ON_SREEN*screenSize.height-rightHand->getPositionY();
+	CCLOG("Max maxThrowPower Length %f",maxThrowPower);
+	
+	
+
 }

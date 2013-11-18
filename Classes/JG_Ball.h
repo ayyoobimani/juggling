@@ -95,6 +95,11 @@ public:
 	//void TempReset();
 
 
+	//functions for minspeed and max speed
+	static float GetMaxSpeed();
+	static float GetMinSpeed();
+
+
 
 	/*! get the direction of ball */
 	EThrowDirection GetBallDirection();

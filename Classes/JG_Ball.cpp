@@ -22,7 +22,7 @@ JG_Ball::JG_Ball(void)
 
 JG_Ball::~JG_Ball(void)
 {
-	CCLOG("Ball DELETE " , 0);
+	//CCLOG("Ball DELETE " , 0);
 	this->unscheduleUpdate();
 }
 
@@ -62,7 +62,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	DetermineNewMoveMode();
 	DetermineNewSpeedByForce(force);
 
-	CCLog(" Throw",0);
+	//CCLog(" Throw",0);
 
 	MoveDirX = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
 
@@ -73,7 +73,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 		//curve_Rad = asin((destination.x-getPositionX()) * GRAVITY / pow(currentSpeed,2))/2;
 		
 		mainGame->gameHUD->debugLabel->setString("");
-		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",currentSpeed)->getCString());
+		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());
 		
 
 		/* because there are two radians the have the same range (they can both reach the 
@@ -92,7 +92,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 		if(curve_Rad<0)
 			curve_Rad = CC_DEGREES_TO_RADIANS(180) + curve_Rad;
 
-		CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
+		//CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(curve_Rad));
 
 		//curve_Rad = CC_DEGREES_TO_RADIANS(135);
 		//mainGame->gameHUD->debugLabel->setString("");
@@ -106,14 +106,16 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 void JG_Ball::DetermineNewSpeedByForce(float force)
 {
-	currentSpeed = clampf(minSpeed/2 + minSpeed * force,minSpeed,maxSpeed);
+	force -= (1 - MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower();
+	CCLOG("force is %f",force);
+	currentSpeed = clampf( minSpeed + minSpeed * force,minSpeed,maxSpeed);
 	if(moveMode == EMove_Straight)
 		currentSpeed = minSpeed ;
 	// for test on andorid
 	if(currentSpeed> maxSpeed)
 		currentSpeed = maxSpeed;
-	CCLOG("min speed is %f" , minSpeed);
-	CCLog("speed is %f", currentSpeed);
+	//CCLOG("min speed is %f" , minSpeed);
+	//CCLog("speed is %f", currentSpeed);
 
 }
 
@@ -235,3 +237,11 @@ float JG_Ball::TaylorFormulaCalculate(float angle)
 	return ffs;
 }
 
+float JG_Ball::GetMaxSpeed()
+{
+	return maxSpeed;
+}
+float JG_Ball::GetMinSpeed()
+{
+	return minSpeed;
+}

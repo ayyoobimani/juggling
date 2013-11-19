@@ -99,7 +99,7 @@ void JG_Game_Main::InitGame()
 
 
 	//TempAddBall(0);
-	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,0,1.5);
+	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	
 
 	/******************************** /Balls ************************************/
@@ -727,9 +727,10 @@ void JG_Game_Main::UpdateBallThrowTrace()
 {
 	for (int i=0;i<TOUCH_COUNT;i++)
 	{
-		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid)
+		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid
+			&& touchInfos[i].ball->moveMode==EMove_Straight)
 		{
-				CCLog("WTTTTTTTTTTTTTTTF");
+				//CCLog("WTTTTTTTTTTTTTTTF");
 				if(touchInfos[i].hand== rightHand)
 					touchInfos[i].ball->SetThrowPathInfo(CalculateThrowForce(i),rightHand->getPosition(),leftHand->getPosition());
 				else

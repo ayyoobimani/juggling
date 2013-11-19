@@ -16,7 +16,7 @@ JG_Ball::JG_Ball(void)
 	
 	// give a simple rotation to ball
 	action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
-	//runAction(action_Rotate);
+	runAction(action_Rotate);
 
 	bDrawThrowPath = false;
 
@@ -72,7 +72,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 	if(moveMode == EMove_Curve)
 	{
-		//curve_Rad = CalculateCurveRad(currentSpeed,this->getPosition(),destination);
+		curve_Rad = CalculateCurveRad(currentSpeed,this->getPosition(),destination);
 		mainGame->gameHUD->debugLabel->setString("");
 		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());
 		
@@ -120,8 +120,9 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 
 float JG_Ball::GetNewSpeedByForce(float force)
 {
-	force -= (1 - MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower();
 	//CCLOG("force is %f",force);
+	force -= (1 - MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower();
+	
 	if(moveMode == EMove_Straight)
 		return minSpeed ;
 	else 
@@ -170,9 +171,15 @@ void JG_Ball::ResetThrowPathInfo(float dt)
 
 void JG_Ball::DrawThrowPath()
 {
+	EMoveMode tempMoveMode = moveMode;
+	moveMode = EMove_Curve;
+	CCLog("throw Force %f", throwPath_Force);
 	float tempSpeed = GetNewSpeedByForce(throwPath_Force);
+	//CCLog("tempForce %f" , throwPath_Force);
+	CCLog("tempSpeed %f" , tempSpeed);
 	float tempSpeedX,tempSpeedY;
 	CCPoint tracePoint;
+
 	float tempCurveRad;
 	tempCurveRad = CalculateCurveRad(tempSpeed,throwPath_OriginPosition,throwPath_destPosition);
 	//CCLog("tempCurve Is %f", CC_RADIANS_TO_DEGREES(tempCurveRad));
@@ -186,12 +193,12 @@ void JG_Ball::DrawThrowPath()
 		//tempSpeedX = tempSpeedX;
 		tracePoint.x = tempSpeedX * BALL_PATH_TRACE_INTERVALS + tracePoint.x;
 		tracePoint.y = tempSpeedY * BALL_PATH_TRACE_INTERVALS + tracePoint.y;
-		
 		tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
 		//tracePointTexture->SetOr
 	}
-	bDrawThrowPath = false;
-	//this->scheduleOnce(schedule_selector(JG_Ball::ResetThrowPathInfo),BALL_PATH_TRACE_FADE_DELAY);
+	//bDrawThrowPath = false;
+	moveMode = tempMoveMode;
+	this->scheduleOnce(schedule_selector(JG_Ball::ResetThrowPathInfo),BALL_PATH_TRACE_FADE_DELAY);
 }
 
 void JG_Ball::draw()

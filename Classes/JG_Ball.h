@@ -10,16 +10,16 @@ using namespace cocos2d;
 
 class JG_Game_Main;
 
-#define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.7
+#define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 #define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(75))
 #define BALL_SCALE 1.0
 
 // Step counts for tracking Path of the Ball
-#define BALL_PATH_TRACE_STEPS 10
+#define BALL_PATH_TRACE_STEPS 20
 // Interval time for tracking Path of the Ball
-#define BALL_PATH_TRACE_INTERVALS 0.1
+#define BALL_PATH_TRACE_INTERVALS 0.05
 
-#define BALL_PATH_TRACE_FADE_DELAY 1.0
+#define BALL_PATH_TRACE_FADE_DELAY 1
 
 enum EThrowDirection
 {

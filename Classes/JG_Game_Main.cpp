@@ -92,7 +92,7 @@ void JG_Game_Main::InitGame()
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
 	JG_Ball::InitialBallLevelInformation();
 	//it is import we call calculatethrowpower after jg_ball calculate
-	CalculateThrowMaxPower();
+	CalculateInitialThrowPowers();
 	// initing  one ball for test
 	ballsArray=CCArray::create();
 	ballsArray->retain();
@@ -321,29 +321,35 @@ float JG_Game_Main::CalculateThrowPower(unsigned int index)
 	float touchLenght=abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
 	float currentPower=(touchLenght/maxTouchLenght)*maxThrowPower;
 	
-	return DiscretedPowerValue(currentPower);
+	return DiscretedPowerValueGen(currentPower,touchInfos[index].ball);
 
 }
 
-float JG_Game_Main::DiscretedPowerValue(float input)
+float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
 {
-	//minimum power that we can have 
-	float actualMinPower=GetMaxThrowPower()*MIN_TOUCH_LENGTH_FACTOR;
-	float range=(GetMaxThrowPower()-actualMinPower)/DISCRETE_PARTS_COUNT;
-	if(input>GetMaxThrowPower())
-		input=GetMaxThrowPower();
-	CCLOG("current power is %f",input);
-
-	if(input<actualMinPower)
-		return actualMinPower;
-	else
+	if(input<maxThrowPower && input>actualMinPower)
 	{
 		input-=actualMinPower;
-		CCLOG("max value %f", GetMaxThrowPower());
-		CCLOG("min value %f", actualMinPower);
-		CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
-		return (floor(input/range))*range+actualMinPower;
+		//CCLOG("max value %f", GetMaxThrowPower());
+		//CCLOG("min value %f", actualMinPower);
+		//CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
+		disCretedValue=(floor(input/powerRange))*powerRange+actualMinPower;
 	}
+	else
+	{
+		if(input>=maxThrowPower)
+		{
+			disCretedValue=maxThrowPower;
+			input=maxThrowPower;
+		}
+		else
+		{
+			disCretedValue=actualMinPower;
+			input=actualMinPower;
+		}
+	}
+	//ball->setlevel(floor(input/powerRange));
+	return disCretedValue;
 }
 
 // for now just reset everything
@@ -787,13 +793,18 @@ void JG_Game_Main::UpdateBallThrowTrace()
 	}
 
 }
-void JG_Game_Main::CalculateThrowMaxPower()
+void JG_Game_Main::CalculateInitialThrowPowers()
 {
+	
 	maxThrowPower=(JG_Ball::GetMaxSpeed()/JG_Ball::GetMinSpeed()-1);
 	maxThrowPower*=(1+MIN_TOUCH_LENGTH_FACTOR);
 	maxTouchLenght=THROW_FORCE_BASE_ON_SREEN*screenSize.height-rightHand->getPositionY();
-	CCLOG("Max maxThrowPower Length %f",maxThrowPower);
 	
+	//min power that we can have
+	actualMinPower=maxThrowPower*MIN_TOUCH_LENGTH_FACTOR;
+	//range of power between max and min
+	powerRange=(maxThrowPower-actualMinPower)/DISCRETE_PARTS_COUNT;
 	
-
+	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
+	
 }

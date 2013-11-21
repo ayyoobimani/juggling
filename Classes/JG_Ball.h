@@ -11,7 +11,7 @@ using namespace cocos2d;
 class JG_Game_Main;
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
-#define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(75))
+#define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(80))
 #define BALL_SCALE 1.0
 
 // Step counts for tracking Path of the Ball

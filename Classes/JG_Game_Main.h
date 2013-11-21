@@ -27,7 +27,7 @@ class JG_Hand;
 
 #define GAME_SCALE 0.7
 
-#define DISCRETE_PARTS_COUNT 5.0
+#define DISCRETE_PARTS_COUNT 4.0
 
 struct STouchInfo
 {

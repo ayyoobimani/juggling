@@ -336,11 +336,11 @@ float JG_Game_Main::DiscretedPowerValue(float input)
 		return actualMinPower;
 	else
 	{
-		//input-=actualMinPower;
+		input-=actualMinPower;
 		CCLOG("max value %f", GetMaxThrowPower());
 		CCLOG("min value %f", actualMinPower);
-		CCLOG("discrete value %f", (floor(input/range)*range));
-		return (floor(input/range))*range;
+		CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
+		return (floor(input/range))*range+actualMinPower;
 	}
 }
 

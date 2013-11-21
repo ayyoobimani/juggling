@@ -21,9 +21,9 @@ class JG_Hand;
 #define MAX_LIFE_COUNT 5
 #define MAX_TOUCH_DURATOIN 0.50f
 // throw force is relative to screen height
-#define THROW_FORCE_BASE_ON_SREEN 0.5
+#define THROW_FORCE_BASE_ON_SREEN 0.7
 //factor for minimum touch lenght tolerance
-#define MIN_TOUCH_LENGTH_FACTOR 0.4
+#define MIN_TOUCH_LENGTH_FACTOR 0.3
 
 #define GAME_SCALE 0.7
 

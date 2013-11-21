@@ -4,6 +4,12 @@
 float JG_Ball::minSpeed;
 float JG_Ball::maxSpeed;
 
+int JG_Ball::ballScoreByLevel[MAX_BALL_LEVELS];
+
+CCString JG_Ball::ballTextureNamesByLevel[MAX_BALL_LEVELS];
+
+CCTexture2D* JG_Ball::ballTexturesByLevel[MAX_BALL_LEVELS];
+
 JG_Ball::JG_Ball(void)
 {
 	ballTexture = "ball.png";
@@ -30,7 +36,7 @@ JG_Ball::~JG_Ball(void)
 	this->unscheduleUpdate();
 }
 
-JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirection initialDirection) 
+JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirection initialDirection, int initialBallLevel) 
 {
     
     JG_Ball * ball = new JG_Ball();
@@ -40,7 +46,8 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		ball->setPosition(game->getPosition() + initialPos);
 		CCPoint wtf=  ball->getPosition();
 		ball->ballThrowDirection = initialDirection;
-		ball->ballScore = 20;
+		ball->ballLevel = initialBallLevel;
+		ball->setTexture(ballTexturesByLevel[ball->ballLevel]);
 		ball->mainGame = game;
 
 		/********** temporary store the initial state for tempReset function *********/
@@ -74,14 +81,8 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	{
 		curve_Rad = CalculateCurveRad(currentSpeed,this->getPosition(),destination);
 		mainGame->gameHUD->debugLabel->setString("");
-		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());
-		
-		
-		
+		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
 	}
-
-	
-
 
 }
 
@@ -169,6 +170,12 @@ void JG_Ball::ResetThrowPathInfo(float dt)
 	bDrawThrowPath= false;
 }
 
+void JG_Ball::DrawBallTexture()
+{
+	//setTexture(
+	//ballTexturesByLevel[ballLevel]->drawAtPoint(ccp(0,0));
+}
+
 void JG_Ball::DrawThrowPath()
 {
 	EMoveMode tempMoveMode = moveMode;
@@ -204,6 +211,7 @@ void JG_Ball::DrawThrowPath()
 void JG_Ball::draw()
 {
 	CCSprite::draw();
+	DrawBallTexture();
 	if(bDrawThrowPath)
 		DrawThrowPath();
 }
@@ -312,4 +320,14 @@ float JG_Ball::GetMaxSpeed()
 float JG_Ball::GetMinSpeed()
 {
 	return minSpeed;
+}
+
+void JG_Ball::SetBallLevel(int newLevel)
+{
+	ballLevel = newLevel;
+}
+
+int JG_Ball::GetBallScore()
+{
+	return ballScoreByLevel[ballLevel];
 }

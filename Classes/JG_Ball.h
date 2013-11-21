@@ -21,6 +21,8 @@ class JG_Game_Main;
 
 #define BALL_PATH_TRACE_FADE_DELAY 1
 
+#define MAX_BALL_LEVELS 6
+
 enum EThrowDirection
 {
 	EDir_LeftHandToRight, EDir_RighHandtToLeft, EDir_LeftHandToUp, EDir_RightHandToUp
@@ -35,7 +37,14 @@ enum EMoveMode
 class JG_Ball :
 	public CCSprite
 {
-	int ballScore;
+	/*!  ball Scores for each level */
+	static int ballScoreByLevel[MAX_BALL_LEVELS];
+	/*! ball Texture Names for each level */
+	static CCString ballTextureNamesByLevel[MAX_BALL_LEVELS];
+	/*! ball Textures for each level */
+	static CCTexture2D* ballTexturesByLevel[MAX_BALL_LEVELS];
+
+	int ballLevel;
 
 	JG_Game_Main* mainGame;
 
@@ -58,7 +67,10 @@ public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
 
-	int GetBallScore(){return ballScore;}
+	void SetBallLevel(int newLevel);
+	int GetBallLevel(){return ballLevel;}
+
+	int GetBallScore();
 
 	void OutOfScreen();
 
@@ -92,7 +104,7 @@ public:
 	CCPoint InitialTouchPosition;
 
 	/*! Creating ball in a specific position and specific direction */
-	static JG_Ball* CreateBall(JG_Game_Main* game,CCPoint initialPos,EThrowDirection initialDirection);
+	static JG_Ball* CreateBall(JG_Game_Main* game,CCPoint initialPos,EThrowDirection initialDirection,int initialBallLevel);
 
 	/*! Initial Throw movement variables */
 	void Throw(float force,CCPoint destination);
@@ -111,7 +123,8 @@ public:
 	float CalculateCurveRad(float speed,CCPoint originPosition,CCPoint destPosition);
 
 	void draw();
-
+	/*! draws ball texture based on current ball level */
+	void DrawBallTexture();
 	void DrawThrowPath();
 	/*! Show the Throw Path before being actually thrown by the given power, originPosition and destination position */
 	void SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition);
@@ -141,6 +154,29 @@ public:
 		minSpeed = sqrt( GRAVITY * abs(deltaX))+ 2;
 		//TODO: calculate maxSpeed
 		maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
+	}
+
+	static void InitialBallLevelInformation()
+	{
+		ballScoreByLevel[MAX_BALL_LEVELS-1] = 50;
+		ballScoreByLevel[MAX_BALL_LEVELS-2] = 100;
+		ballScoreByLevel[MAX_BALL_LEVELS-3] = 200;
+		ballScoreByLevel[MAX_BALL_LEVELS-4] = 400;
+		ballScoreByLevel[MAX_BALL_LEVELS-5] = 800;
+		ballScoreByLevel[MAX_BALL_LEVELS-6] = 1600;
+
+		ballTextureNamesByLevel[MAX_BALL_LEVELS-1] = "Gem1.png";
+		ballTextureNamesByLevel[MAX_BALL_LEVELS-2] = "Gem3.png";
+		ballTextureNamesByLevel[MAX_BALL_LEVELS-3] = "Gem4.png";
+		ballTextureNamesByLevel[MAX_BALL_LEVELS-4] = "Gem5.png";
+		ballTextureNamesByLevel[MAX_BALL_LEVELS-5] = "Gem6.png";
+		ballTextureNamesByLevel[MAX_BALL_LEVELS-6] = "Gem7.png";
+
+		for( int i = 0 ; i<MAX_BALL_LEVELS; i++)
+		{
+			ballTexturesByLevel[i] = CCTextureCache::sharedTextureCache()->addImage(ballTextureNamesByLevel[i].getCString());
+		}
+
 	}
 
 	//taylor formula

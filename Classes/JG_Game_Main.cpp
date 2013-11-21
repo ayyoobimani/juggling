@@ -90,6 +90,7 @@ void JG_Game_Main::InitGame()
 
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
+	JG_Ball::InitialBallLevelInformation();
 	//it is import we call calculatethrowpower after jg_ball calculate
 	CalculateThrowMaxPower();
 	// initing  one ball for test
@@ -307,7 +308,8 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 		destHand=leftHand;
 	touchInfos[index].ball->Throw(CalculateThrowPower(index),destHand->getPosition());
 
-	AddScore(touchInfos[index].ball->GetBallScore());
+	//AddScore(touchInfos[index].ball->GetBallScore());
+	ManageBallScore(touchInfos[index].ball);
 	
 	ResetTouchInfo(index);
 }
@@ -414,6 +416,22 @@ void JG_Game_Main::ResetTouchInfoByBall(JG_Ball* ball)
 			return;
 		}
 	}
+}
+
+
+
+void JG_Game_Main::ManageBallScore(JG_Ball * ball)
+{
+	//NOTE: for better performance instead of dynamicaly searching for ball Levels we can store it someWhere
+	JG_Ball * tempBall;
+	int scoreMuliplier= 0;
+	for( int i = 0 ; i< ballsArray->count(); i++)
+	{
+		if(((JG_Ball*)ballsArray->objectAtIndex(i))->GetBallLevel()== ball->GetBallLevel())
+			scoreMuliplier++;
+	}
+	AddScore(ball->GetBallScore() *scoreMuliplier);
+	
 }
 
 bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius)
@@ -701,7 +719,11 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 
 void JG_Game_Main::AddBallToScreen()
 {
-	JG_Ball * newBall = JG_Ball::CreateBall(this,ccp(leftHand->getPositionX(),screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5),EDir_RightHandToUp);
+	JG_Ball * newBall = JG_Ball::CreateBall(this
+		,ccp(leftHand->getPositionX()
+		,screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5)
+		,EDir_RightHandToUp
+		,DISCRETE_PARTS_COUNT);
 	this->addChild(newBall,6);
 	ballsArray->addObject(newBall);
 

@@ -61,6 +61,9 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float maxThrowPower;
 	float maxTouchLenght;
 	void CalculateThrowMaxPower();
+
+	/* ! Manages Ball Score for combos */
+	void ManageBallScore(JG_Ball* ball);
 	
 
 	

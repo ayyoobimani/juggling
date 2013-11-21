@@ -207,6 +207,8 @@ void JG_Ball::draw()
 	if(bDrawThrowPath)
 		DrawThrowPath();
 }
+
+
 void JG_Ball::update(float dt)
 {
 	

@@ -348,7 +348,9 @@ float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
 			input=actualMinPower;
 		}
 	}
-	//ball->setlevel(floor(input/powerRange));
+	if(ball->GetBallDirection()== EDir_LeftHandToRight
+		|| ball->GetBallDirection() ==EDir_RighHandtToLeft)
+	ball->SetBallLevel(floor(input/powerRange));
 	return disCretedValue;
 }
 

@@ -325,6 +325,7 @@ float JG_Ball::GetMinSpeed()
 void JG_Ball::SetBallLevel(int newLevel)
 {
 	ballLevel = newLevel;
+	setTexture(ballTexturesByLevel[ballLevel]);
 }
 
 int JG_Ball::GetBallScore()

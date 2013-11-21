@@ -57,11 +57,17 @@ class JG_Game_Main : public cocos2d::CCLayer
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
 
-	//calculating Maximum Throw Power
+	//calculating Intial values of Throw Power
 	float maxThrowPower;
 	float maxTouchLenght;
-	void CalculateThrowMaxPower();
+	float actualMinPower;
+	float powerRange;
+	float disCretedValue;
+
+	void CalculateInitialThrowPowers();
+	/*! return proper discrete value */
 	
+	float DiscretedPowerValueGen(float input,JG_Ball* ball);
 
 	
 
@@ -132,8 +138,7 @@ public:
 	void BallTouchHandler_CheckTime(float dt);
 	/*! to calculate the force of the touch */
 	float CalculateThrowPower(unsigned int index);
-	/*! return proper discrete value */
-	float DiscretedPowerValue(float input);
+	
 
 	/*! update function */
 	void update(float dt);

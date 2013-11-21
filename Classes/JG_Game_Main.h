@@ -23,9 +23,11 @@ class JG_Hand;
 // throw force is relative to screen height
 #define THROW_FORCE_BASE_ON_SREEN 0.5
 //factor for minimum touch lenght tolerance
-#define MIN_TOUCH_LENGTH_FACTOR 0.5
+#define MIN_TOUCH_LENGTH_FACTOR 0.4
 
 #define GAME_SCALE 0.7
+
+#define DISCRETE_PARTS_COUNT 2.0
 
 struct STouchInfo
 {
@@ -58,7 +60,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	//calculating Maximum Throw Power
 	float maxThrowPower;
 	float maxTouchLenght;
-	void CalculateThrowPower();
+	void CalculateThrowMaxPower();
 	
 
 	
@@ -129,7 +131,9 @@ public:
 	/*! it handle the time player hold his touch on the screen */
 	void BallTouchHandler_CheckTime(float dt);
 	/*! to calculate the force of the touch */
-	float CalculateThrowForce(unsigned int index);
+	float CalculateThrowPower(unsigned int index);
+	/*! return proper discrete value */
+	float DiscretedPowerValue(float input);
 
 	/*! update function */
 	void update(float dt);

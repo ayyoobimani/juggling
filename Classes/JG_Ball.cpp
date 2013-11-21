@@ -173,10 +173,10 @@ void JG_Ball::DrawThrowPath()
 {
 	EMoveMode tempMoveMode = moveMode;
 	moveMode = EMove_Curve;
-	CCLog("throw Force %f", throwPath_Force);
+	//CCLog("throw Force %f", throwPath_Force);
 	float tempSpeed = GetNewSpeedByForce(throwPath_Force);
 	//CCLog("tempForce %f" , throwPath_Force);
-	CCLog("tempSpeed %f" , tempSpeed);
+	//CCLog("tempSpeed %f" , tempSpeed);
 	float tempSpeedX,tempSpeedY;
 	CCPoint tracePoint;
 

@@ -23,7 +23,7 @@ CCScene* JG_Game_Main::scene()
 bool JG_Game_Main::init()
 {
 	prevballCounter =0 ;
-	
+
 	//////////////////////////////
 	// 1. super init first
 	if ( !CCLayer::init() )
@@ -140,23 +140,24 @@ Then for each hand that is touch, finds wich ball is colliding with it.
 */
 void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 {
-	
+
 
 	CCPoint tap = touch->getLocation();
 	JG_Hand * currentHand;
 	float criticalTime;
 
-	
+
 
 
 	for(int j = 0 ; j< handsArray->count();j++)
 	{
 		currentHand = (JG_Hand*)handsArray->objectAtIndex(j);
+		
 		//Checking if tap is colliding with any of hands
 		if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
 		{
 			ballCounter = 0;
-			
+
 			criticalTime = 9999999999.0;
 			JG_Ball *tempBall;
 			JG_Ball *criticalBall = NULL ;
@@ -164,62 +165,69 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 			//most critical ball is the ball witch will be lost befor other balls
 			for (int k=0 ; k<ballsArray->count() ; k++)
 			{
-				
-			
+
+
 				tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
 				if(ArePointsColliding(tempBall->getPosition(),currentHand->getPosition(),currentHand->GetRadius()))
 				{
-					
-					ballCounter++;
-					gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
 
-					if(tempBall->GetBallDirection() == EDir_LeftHandToUp || tempBall->GetBallDirection() == EDir_RightHandToUp)
-					{
-						if(ballCounter == 1)
-							gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()))->getCString());
-						if(ballCounter == 2)
-							gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()))->getCString());
-						
-						
-						if( abs(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) <criticalTime  )
-						{
-							criticalBall = tempBall;
-							criticalTime = (tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) ;
-						}
-					}
-
-					else if(tempBall->GetBallDirection() == EDir_LeftHandToRight)
-					{
-						if(ballCounter == 1)
-							gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-						if(ballCounter == 2)
-							gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-						
-						
-
-						if( ( abs(tempBall->getPositionX())) <criticalTime)
-						{
-							criticalBall = tempBall;
-							criticalTime = (screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX();
-						}
-					}
-
-					else if(tempBall->GetBallDirection() == EDir_RighHandtToLeft)
-					{
-						if(ballCounter == 1)
-							gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionX() / 1.0))->getCString());
-						if(ballCounter == 2)
-							gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionX() / 1.0))->getCString());
-						
-						if(  abs(tempBall->getPositionX() ) < criticalTime)
-						{
-							criticalBall = tempBall;
-							criticalTime = (tempBall->getPositionX() / tempBall->getCurrentSpeedX());
-
-						}
-					}
 
 					
+					if(currentHand==leftHand)
+					{
+						if(tempBall->GetBallDirection() == EDir_LeftHandToUp || tempBall->GetBallDirection() == EDir_RightHandToUp)
+						{
+							ballCounter++;
+							if(ballCounter == 1)
+								gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()))->getCString());
+							if(ballCounter == 2)
+								gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()))->getCString());
+
+
+							if( abs(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) <criticalTime  )
+							{
+								criticalBall = tempBall;
+								criticalTime = (tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) ;
+							}
+						}
+					}
+
+					else
+					{
+
+						if(tempBall->GetBallDirection() == EDir_LeftHandToRight)
+						{
+							ballCounter++;
+							if(ballCounter == 1)
+								gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
+							if(ballCounter == 2)
+								gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
+
+
+
+							if( ( abs(tempBall->getPositionX())) <criticalTime)
+							{
+								criticalBall = tempBall;
+								criticalTime = (screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX();
+							}
+						}
+
+						else if(tempBall->GetBallDirection() == EDir_RighHandtToLeft)
+						{
+							if(ballCounter == 1)
+								gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionX() / 1.0))->getCString());
+							if(ballCounter == 2)
+								gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionX() / 1.0))->getCString());
+
+							if(  abs(tempBall->getPositionX() ) < criticalTime)
+							{
+								criticalBall = tempBall;
+								criticalTime = (tempBall->getPositionX() / tempBall->getCurrentSpeedX());
+
+							}
+						}
+					}
+
 
 				}// end of ball collision cheking
 			}// end of ball looping
@@ -228,9 +236,10 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 				SetTouchInfo(touch,currentHand,criticalBall);
 			}
 
+			gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
 		}// end of hand collision checking
 	}// end of hand looping	
-	
+
 }
 void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 {
@@ -400,7 +409,7 @@ float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDe
 {
 	input = clampf(input,actualMinPower,maxThrowPower);
 
-	
+
 	input-=actualMinPower;
 	//CCLOG("max value %f", GetMaxThrowPower());
 	//CCLOG("min value %f", actualMinPower);
@@ -892,6 +901,6 @@ float JG_Game_Main::absf(float input)
 {
 	if(input > 0.0)
 		return input;
-	
+
 	return 0.0 - input;
 }

@@ -25,6 +25,7 @@ JG_Ball::JG_Ball(void)
 	runAction(action_Rotate);
 
 	bDrawThrowPath = false;
+	ballThrowDirection = EThrowDirection::EDir_RightHandToUp;
 
 	
 }

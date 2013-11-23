@@ -128,7 +128,7 @@ void JG_Game_Main::TempAddBall(float dt)
 void JG_Game_Main::update(float dt)
 {
 	BallTouchHandler_CheckTime(dt);
-	UpdateHandPower();
+	//UpdateHandPower();
 	UpdateBallThrowTrace();
 	//TestSingleTouch();
 
@@ -353,7 +353,7 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 
 	ResetTouchInfo(index);
 }
-float JG_Game_Main::CalculateThrowPower(unsigned int index)
+float JG_Game_Main::CalculateThrowPower(unsigned int index, bool bIsDemo)
 {
 	//float holdingTime=MAX_TOUCH_DURATOIN- touchInfos[index].remainingTime;
 
@@ -361,15 +361,16 @@ float JG_Game_Main::CalculateThrowPower(unsigned int index)
 	float touchLenght=abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
 	float currentPower=(touchLenght/maxTouchLenght)*maxThrowPower;
 
-	return DiscretedPowerValueGen(currentPower,touchInfos[index].ball);
+	return DiscretedPowerValueGen(currentPower,touchInfos[index].ball,bIsDemo);
+
 
 }
 
-float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
+float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo)
 {
 	input = clampf(input,actualMinPower,maxThrowPower);
 
-
+	
 	input-=actualMinPower;
 	//CCLOG("max value %f", GetMaxThrowPower());
 	//CCLOG("min value %f", actualMinPower);
@@ -381,9 +382,12 @@ float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
 	CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
-	if(ball->GetBallDirection()== EDir_LeftHandToRight
-		|| ball->GetBallDirection() ==EDir_RighHandtToLeft)
-		ball->SetBallLevel(powerLevel);
+	if(!bIsDemo)
+	{
+		if(ball->GetBallDirection()== EDir_LeftHandToRight
+			|| ball->GetBallDirection() ==EDir_RighHandtToLeft)
+			ball->SetBallLevel(powerLevel);
+	}
 	return disCretedValue;
 }
 

@@ -74,7 +74,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	
 	void CalculateInitialThrowPowers();
 	/*! return proper discrete value */
-	float DiscretedPowerValueGen(float input,JG_Ball* ball);
+	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
 	
 	
 	int touchcounter;
@@ -145,7 +145,7 @@ public:
 	/*! it handle the time player hold his touch on the screen */
 	void BallTouchHandler_CheckTime(float dt);
 	/*! to calculate the force of the touch */
-	float CalculateThrowPower(unsigned int index);
+	float CalculateThrowPower(unsigned int index, bool bIsDemo = false);
 	
 
 	/*! update function */

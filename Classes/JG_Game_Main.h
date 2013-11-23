@@ -66,28 +66,28 @@ class JG_Game_Main : public cocos2d::CCLayer
 	/* ! Manages Ball Score for combos */
 	void ManageBallScore(JG_Ball* ball);
 
-	float actualMinPower;
+	
 	float powerRange;
 	float disCretedValue;
-
+	float actualMinPower;
+	
 	void CalculateInitialThrowPowers();
 	/*! return proper discrete value */
-
-	
 	float DiscretedPowerValueGen(float input,JG_Ball* ball);
-
 	
-
 	
 
 public:
-
+	
 	JG_Game_HUD * gameHUD;
 
 	/**************** game rule members *************/
 	int lifeCount;
 	int score;
 	/**************** /game rule members *************/
+
+	//actual min power
+	float GetActualMinPower();
 
 	/**************** game rule methods *************/
 

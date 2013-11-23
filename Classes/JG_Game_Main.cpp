@@ -327,35 +327,31 @@ float JG_Game_Main::CalculateThrowPower(unsigned int index)
 
 float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
 {
-	input = clampf(input,maxThrowPower,actualMinPower);
+	input = clampf(input,actualMinPower,maxThrowPower);
 
-	if(input<maxThrowPower && input>actualMinPower)
-	{
+	
 		input-=actualMinPower;
 		//CCLOG("max value %f", GetMaxThrowPower());
 		//CCLOG("min value %f", actualMinPower);
 		//CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
-		disCretedValue=(floor(input/powerRange))*powerRange+actualMinPower;
-	}
-	else
-	{
-		if(input>=maxThrowPower)
-		{
-			disCretedValue=maxThrowPower;
-			input=maxThrowPower;
-		}
-		else
-		{
-			disCretedValue=actualMinPower;
-			input=actualMinPower;
-		}
-	}
+		float powerLevel=floor(input/powerRange);
+
+		disCretedValue=powerLevel*powerRange+actualMinPower;
+
+		CCLOG("power level : %f",powerLevel);
+
 	// set ball level only when it is thrown up
 	if(ball->GetBallDirection()== EDir_LeftHandToRight
 		|| ball->GetBallDirection() ==EDir_RighHandtToLeft)
-		ball->SetBallLevel(floor(input/powerRange));
+		ball->SetBallLevel(powerLevel);
 	return disCretedValue;
 }
+
+float JG_Game_Main::GetActualMinPower()
+{
+	return actualMinPower;
+}
+
 
 // for now just reset everything
 void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)

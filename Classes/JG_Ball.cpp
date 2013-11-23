@@ -73,7 +73,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	moveMode = GetNewMoveMode(moveMode);
 	currentSpeed = GetNewSpeedByForce(force);
 
-	CCLOG("Throw force is %f",force);
+	//CCLOG("Throw force is %f",force);
 
 	//CCLog(" Throw",0);
 
@@ -123,8 +123,8 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 float JG_Ball::GetNewSpeedByForce(float force)
 {
 	
-	force -= (1 - MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower();
-	CCLOG("GetNewSpeedByForce actual min is  is %f", (MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower());
+	force -= mainGame->GetActualMinPower();
+	//CCLOG("GetNewSpeedByForce actual min is  is %f", (MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower());
 	mainGame->gameHUD->debugLabel->setString("");
 	mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
 

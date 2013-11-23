@@ -51,7 +51,7 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 	this->addChild(debugLabel);
 	debugLabel->setScale(2);
 	debugLabel->setColor(ccWHITE);
-	debugLabel->setPosition( mainGame->screenSize * 0.7);
+	debugLabel->setPosition( mainGame->screenSize * 0.8);
 
 	balldepict = CCLabelTTF::create();
 	handdepict = CCLabelTTF::create();
@@ -64,10 +64,15 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 	this->addChild(handdepict);
 	handdepict->setScale(2);
 	handdepict->setColor(ccWHITE);
-	handdepict->setPosition(mainGame->screenSize * 0.4);
+	handdepict->setPosition(mainGame->screenSize * 0.5);
 	
+	prevballcount = CCLabelTTF::create();
 
-
+	this->addChild(prevballcount);
+	prevballcount->setScale(2);
+	prevballcount->setColor(ccWHITE);
+	prevballcount->setPosition(mainGame->screenSize * 0.6);
+	
 
 	Init_PauseMenu();
 

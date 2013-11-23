@@ -125,8 +125,8 @@ float JG_Ball::GetNewSpeedByForce(float force)
 	
 	force -= mainGame->GetActualMinPower();
 	//CCLOG("GetNewSpeedByForce actual min is  is %f", (MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower());
-	mainGame->gameHUD->debugLabel->setString("");
-	mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
+	//mainGame->gameHUD->debugLabel->setString("");
+	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
 
 	if(moveMode == EMove_Straight)
 		return minSpeed ;

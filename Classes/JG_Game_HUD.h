@@ -46,6 +46,7 @@ public:
 	CCLabelTTF* debugLabel;
 	CCLabelTTF* balldepict;
 	CCLabelTTF* handdepict;
+	CCLabelTTF* prevballcount;
 	CCFiniteTimeAction* ScoreGainAnimation;
 	
 	void SetPauseScreen(bool bShow);

@@ -77,7 +77,6 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
 	
 	
-	int touchcounter;
 public:
 	
 	JG_Game_HUD * gameHUD;
@@ -232,7 +231,9 @@ public:
 	void UpdateBallThrowTrace();
 
 	
-
+	float absf(float );
+	int ballCounter;
+	int prevballCounter;
 
 };
 

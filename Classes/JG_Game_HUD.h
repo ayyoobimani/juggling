@@ -44,6 +44,8 @@ public:
 	CCLabelBMFont * scoreLabel;
 
 	CCLabelTTF* debugLabel;
+	CCLabelTTF* balldepict;
+	CCLabelTTF* handdepict;
 	CCFiniteTimeAction* ScoreGainAnimation;
 	
 	void SetPauseScreen(bool bShow);

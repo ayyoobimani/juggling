@@ -15,6 +15,7 @@ class JG_Ball;
 class JG_Hand;
 
 
+
 // define how many touches can be supported at the same time
 #define TOUCH_COUNT 2
 
@@ -76,7 +77,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float DiscretedPowerValueGen(float input,JG_Ball* ball);
 	
 	
-
+	int touchcounter;
 public:
 	
 	JG_Game_HUD * gameHUD;

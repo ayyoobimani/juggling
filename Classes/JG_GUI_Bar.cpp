@@ -34,7 +34,7 @@ void JG_GUI_Bar::InitBar(CCPoint initialPosition,float newMaxScale)
 
 	
 	
-	
+	this->setVisible(false);
 	
 
 

@@ -6,31 +6,32 @@ USING_NS_CC;
 
 CCScene* JG_Game_Main::scene()
 {
-    // 'scene' is an autorelease object
-    CCScene *scene = CCScene::create();
-    
-    // 'layer' is an autorelease object
-    JG_Game_Main *layer = JG_Game_Main::create();
+	// 'scene' is an autorelease object
+	CCScene *scene = CCScene::create();
 
-    // add layer as a child to scene
-    scene->addChild(layer);
-	
-    // return the scene
-    return scene;
+	// 'layer' is an autorelease object
+	JG_Game_Main *layer = JG_Game_Main::create();
+
+	// add layer as a child to scene
+	scene->addChild(layer);
+
+	// return the scene
+	return scene;
 }
 
 // on "init" you need to initialize your instance
 bool JG_Game_Main::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !CCLayer::init() )
-    {
-        return false;
-    }
-    
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+	touchcounter = 0;
+	//////////////////////////////
+	// 1. super init first
+	if ( !CCLayer::init() )
+	{
+		return false;
+	}
+
+	CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+	CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 	screenSize = CCDirector::sharedDirector()->getWinSize();
 
 	//call update for every frame
@@ -56,18 +57,18 @@ bool JG_Game_Main::init()
 	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"RightHand.png");
 	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"LeftHand.png");
 
-	
+
 
 
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
 	//bar setting
-	
+
 	handsPowerBarArray=CCArray::create(JG_GUI_Bar::CreateBar(rightHand->getPosition()+ CCPointMake(0,0),100)
 		,JG_GUI_Bar::CreateBar(leftHand->getPosition()+ CCPointMake(-10,10),100)
 		,NULL);
 	handsPowerBarArray->retain();
-	
+
 	for( int i = 0 ; i<handsArray->count();i++)
 	{
 		this->addChild((CCNode*)handsArray->objectAtIndex(i));
@@ -78,7 +79,7 @@ bool JG_Game_Main::init()
 
 	InitGame();
 	this->setTouchEnabled(true);
-    //test
+	//test
 	//TestMultiTouch();
 	return true;
 
@@ -86,7 +87,7 @@ bool JG_Game_Main::init()
 
 void JG_Game_Main::InitGame()
 {
-	
+
 
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
@@ -101,7 +102,7 @@ void JG_Game_Main::InitGame()
 
 	//TempAddBall(0);
 	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
-	
+
 
 	/******************************** /Balls ************************************/
 
@@ -122,7 +123,7 @@ void JG_Game_Main::InitGame()
 void JG_Game_Main::TempAddBall(float dt)
 {
 	AddBallToScreen();
-		
+
 }
 void JG_Game_Main::update(float dt)
 {
@@ -130,72 +131,76 @@ void JG_Game_Main::update(float dt)
 	UpdateHandPower();
 	UpdateBallThrowTrace();
 	//TestSingleTouch();
-	
+
 }
 
 /* This function first iterate through touches to find with wich hand they are colliding.
-	Then for each hand that is touch, finds wich ball is colliding with it.
+Then for each hand that is touch, finds wich ball is colliding with it.
 */
 void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 {
+	gameHUD->debugLabel->setString("new touch");
+
 	CCPoint tap = touch->getLocation();
 	JG_Hand * currentHand;
 	float criticalTime;
 
 
 	for(int j = 0 ; j< handsArray->count();j++)
+	{
+		currentHand = (JG_Hand*)handsArray->objectAtIndex(j);
+		//Checking if tap is colliding with any of hands
+		if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
+		{
+			
+			criticalTime = 100000.0;
+			JG_Ball *tempBall;
+			JG_Ball *criticalBall = NULL ;
+			//find the most critical ball (if exists) colliding with the ball
+			//most critical ball is the ball witch will be lost befor other balls
+			for (int k=0 ; k<ballsArray->count() ; k++)
 			{
-				currentHand = (JG_Hand*)handsArray->objectAtIndex(j);
-				//Checking if tap is colliding with any of hands
-				if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
+				tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
+				if(ArePointsColliding(tempBall->getPosition(),currentHand->getPosition(),currentHand->GetRadius()))
 				{
-					criticalTime = 0.0;
-					JG_Ball *tempBall;
-					JG_Ball *criticalBall =0;
-					//find the most critical ball (if exists) colliding with the ball
-					//most critical ball is the ball witch will be lost befor other balls
-					for (int k=0 ; k<ballsArray->count() ; k++)
+					if(tempBall->GetBallDirection() == EDir_LeftHandToUp || tempBall->GetBallDirection() == EDir_RightHandToUp)
 					{
-						tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
-						if(ArePointsColliding(tempBall->getPosition(),currentHand->getPosition(),currentHand->GetRadius()))
+						if( abs(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) <criticalTime  )
 						{
-							if(tempBall->GetBallDirection() == EDir_LeftHandToUp || tempBall->GetBallDirection() == EDir_RightHandToUp)
-							{
-								if( (tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) <criticalTime  )
-								{
-									criticalBall = tempBall;
-									criticalTime = (tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) ;
-								}
-							}
-							
-							else if(tempBall->GetBallDirection() == EDir_LeftHandToRight)
-							{
-								if( ( (screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX()) <criticalTime)
-								{
-									criticalBall = tempBall;
-									criticalTime = (screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX();
-								}
-							}
+							criticalBall = tempBall;
+							criticalTime = (tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) ;
+						}
+					}
 
-							else if(tempBall->GetBallDirection() == EDir_RighHandtToLeft)
-							{
-								if(  (tempBall->getPositionX() / tempBall->getCurrentSpeedX()) < criticalTime)
-								{
-									criticalBall = tempBall;
-									criticalTime = (tempBall->getPositionX() / tempBall->getCurrentSpeedX());
+					else if(tempBall->GetBallDirection() == EDir_LeftHandToRight)
+					{
+						if( ( abs(screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX()) <criticalTime)
+						{
+							criticalBall = tempBall;
+							criticalTime = (screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX();
+						}
+					}
 
-								}
-							}
-						
-						}// end of ball collision cheking
-					}// end of ball looping
-				if(criticalBall != 0)	
-				{
-					SetTouchInfo(touch,currentHand,criticalBall);
-				}
+					else if(tempBall->GetBallDirection() == EDir_RighHandtToLeft)
+					{
+						if(  abs(tempBall->getPositionX() / tempBall->getCurrentSpeedX()) < criticalTime)
+						{
+							criticalBall = tempBall;
+							criticalTime = (tempBall->getPositionX() / tempBall->getCurrentSpeedX());
 
-				}// end of hand collision checking
-			}// end of hand looping	
+						}
+					}
+
+				}// end of ball collision cheking
+			}// end of ball looping
+			if(criticalBall != NULL)	
+			{
+				SetTouchInfo(touch,currentHand,criticalBall);
+			}
+
+		}// end of hand collision checking
+	}// end of hand looping	
+	
 }
 void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 {
@@ -345,17 +350,17 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 
 	//AddScore(touchInfos[index].ball->GetBallScore());
 	ManageBallScore(touchInfos[index].ball);
-	
+
 	ResetTouchInfo(index);
 }
 float JG_Game_Main::CalculateThrowPower(unsigned int index)
 {
 	//float holdingTime=MAX_TOUCH_DURATOIN- touchInfos[index].remainingTime;
-	
-	
+
+
 	float touchLenght=abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
 	float currentPower=(touchLenght/maxTouchLenght)*maxThrowPower;
-	
+
 	return DiscretedPowerValueGen(currentPower,touchInfos[index].ball);
 
 }
@@ -364,16 +369,16 @@ float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
 {
 	input = clampf(input,actualMinPower,maxThrowPower);
 
-	
-		input-=actualMinPower;
-		//CCLOG("max value %f", GetMaxThrowPower());
-		//CCLOG("min value %f", actualMinPower);
-		//CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
-		float powerLevel=floor(input/powerRange);
 
-		disCretedValue=powerLevel*powerRange+actualMinPower;
+	input-=actualMinPower;
+	//CCLOG("max value %f", GetMaxThrowPower());
+	//CCLOG("min value %f", actualMinPower);
+	//CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
+	float powerLevel=floor(input/powerRange);
 
-		CCLOG("power level : %f",powerLevel);
+	disCretedValue=powerLevel*powerRange+actualMinPower;
+
+	CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
 	if(ball->GetBallDirection()== EDir_LeftHandToRight
@@ -407,6 +412,8 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 			}
 		}
 	}
+
+	gameHUD->debugLabel->setString("touch end");
 }
 
 int JG_Game_Main::GetTouchInfoIndexByBall(JG_Ball* ball)
@@ -473,7 +480,7 @@ void JG_Game_Main::ManageBallScore(JG_Ball * ball)
 			scoreMuliplier++;
 	}
 	AddScore(ball->GetBallScore() *scoreMuliplier);
-	
+
 }
 
 bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius)
@@ -497,8 +504,8 @@ void JG_Game_Main::BallLost(JG_Ball* lostBall)
 
 		}
 	}
-	
-	
+
+
 }
 
 int JG_Game_Main::GetScore()
@@ -554,7 +561,7 @@ void JG_Game_Main::TestSingleTouch()
 	float randomX;
 	float randomY;
 	CCPoint testPoint;
-	
+
 	if (CCRANDOM_0_1()>0.5)
 	{
 		randomX=leftHand->getPositionX();
@@ -565,14 +572,14 @@ void JG_Game_Main::TestSingleTouch()
 		randomX=rightHand->getPositionX();
 		randomY=rightHand->getPositionY();
 	}
-	
-	
+
+
 	testPoint.setPoint(randomX,randomY);
 	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
 	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
 	CCPoint temp = testTouch->getLocation();
-	
+
 	CCSet* testTouchSet= CCSet::create();
 	testTouchSet->addObject(testTouch);
 
@@ -581,15 +588,15 @@ void JG_Game_Main::TestSingleTouch()
 	//test_touch_move
 	randomX=CCRANDOM_0_1()*screenSize.width;
 	randomY=CCRANDOM_0_1()*screenSize.height;
-	
+
 	testPoint.setPoint(randomX,randomY);
 	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
 	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
-	
+
 	ccTouchesMoved(testTouchSet,NULL);
 	ccTouchesEnded(testTouchSet,NULL);
-	
+
 }
 
 void JG_Game_Main::TestMultiTouch()
@@ -602,7 +609,7 @@ void JG_Game_Main::TestMultiTouch()
 	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_MovementTouchGen),CCRANDOM_0_1()*0.01,1,0);
 	this->schedule(schedule_selector(JG_Game_Main::TestMultiTouch_EndGen),CCRANDOM_0_1()*0.5,1,0);
 
-	
+
 }
 
 void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
@@ -612,7 +619,7 @@ void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
 	float randomX;
 	float randomY;
 	CCPoint testPoint;
-	
+
 	this->unschedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen));
 	if (CCRANDOM_0_1()>0.5)
 	{
@@ -624,20 +631,20 @@ void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
 		randomX=rightHand->getPositionX();
 		randomY=rightHand->getPositionY();
 	}
-	
+
 	testPoint.setPoint(randomX,randomY);
 	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
 	testTouch->setTouchInfo(int(CCRANDOM_0_1() * 5600),testPoint.x,testPoint.y);
 	//CCPoint temp = testTouch->getLocation();
-	
+
 	CCSet* testTouchSet= CCSet::create();
 	testTouchSet->addObject(testTouch);
 
 	ccTouchesBegan(testTouchSet,NULL);
-	
+
 	TestMultiTouchesSet->addObject(testTouch);
-	
+
 	//scheduleOnce(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.1);
 	schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.01,1,0);
 
@@ -651,7 +658,7 @@ void JG_Game_Main::TestMultiTouch_MovementTouchGen(float dt)
 	CCPoint testPoint;
 
 	this->unschedule(schedule_selector(JG_Game_Main::TestMultiTouch_MovementTouchGen));
-	
+
 	for(CCSetIterator i = TestMultiTouchesSet->begin(); i != TestMultiTouchesSet->end(); i++) 
 	{
 		touch = (CCTouch *) (*i);
@@ -666,8 +673,8 @@ void JG_Game_Main::TestMultiTouch_MovementTouchGen(float dt)
 		testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
 		touch->setTouchInfo(touch->getID(),testPoint.x,testPoint.y);
-		
-	
+
+
 	}
 	ccTouchesMoved(TestMultiTouchesSet,NULL);
 
@@ -703,14 +710,14 @@ void JG_Game_Main::PauseGame(CCObject* pSender)
 
 void JG_Game_Main::ExitGame(CCObject* pSender)
 {
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-	#else
-		CCDirector::sharedDirector()->end();
-	#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		exit(0);
-	#endif
-	#endif
+#else
+	CCDirector::sharedDirector()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	exit(0);
+#endif
+#endif
 }
 
 void JG_Game_Main::ResumeGame(CCObject* pSender)
@@ -729,7 +736,7 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 void JG_Game_Main::EndGame()
 {
 
-//	CCTimer::timerWithTarget( this,SEL_CallFuncO(JG_Game_Main::RestartGame),2);
+	//	CCTimer::timerWithTarget( this,SEL_CallFuncO(JG_Game_Main::RestartGame),2);
 	//CCTimer::timerWithTarget(
 
 	//ballsArray->autorelease();
@@ -751,7 +758,7 @@ void JG_Game_Main::RemoveAllBallsFromScreen()
 
 void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 {
-	
+
 	ballsArray->removeObject(ball,false);
 	removeChild(ball,true);
 	CC_SAFE_RELEASE(ball);
@@ -777,9 +784,9 @@ void JG_Game_Main::menuCloseCallback(CCObject* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
 #else
-    CCDirector::sharedDirector()->end();
+	CCDirector::sharedDirector()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+	exit(0);
 #endif
 #endif
 }
@@ -807,7 +814,7 @@ void JG_Game_Main::UpdateHandPower()
 			else
 				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(CalculateThrowPower(i)*2);
 		}
-		
+
 	}
 }
 
@@ -818,29 +825,29 @@ void JG_Game_Main::UpdateBallThrowTrace()
 		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid
 			&& touchInfos[i].ball->moveMode==EMove_Straight)
 		{
-				//CCLog("WTTTTTTTTTTTTTTTF");
-				if(touchInfos[i].hand== rightHand)
-					touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),rightHand->getPosition(),leftHand->getPosition());
-				else
-					touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),leftHand->getPosition(),rightHand->getPosition());
+			//CCLog("WTTTTTTTTTTTTTTTF");
+			if(touchInfos[i].hand== rightHand)
+				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),rightHand->getPosition(),leftHand->getPosition());
+			else
+				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),leftHand->getPosition(),rightHand->getPosition());
 
 		}
-		
+
 	}
 
 }
 void JG_Game_Main::CalculateInitialThrowPowers()
 {
-	
+
 	maxThrowPower=(JG_Ball::GetMaxSpeed()/JG_Ball::GetMinSpeed()-1);
 	maxThrowPower*=(1+MIN_TOUCH_LENGTH_FACTOR);
 	maxTouchLenght=THROW_FORCE_BASE_ON_SREEN*screenSize.height-rightHand->getPositionY();
-	
+
 	//min power that we can have
 	actualMinPower=maxThrowPower*MIN_TOUCH_LENGTH_FACTOR;
 	//range of power between max and min
 	powerRange=(maxThrowPower-actualMinPower)/DISCRETE_PARTS_COUNT;
-	
+
 	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
-	
+
 }

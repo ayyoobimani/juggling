@@ -52,7 +52,23 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 	debugLabel->setScale(2);
 	debugLabel->setColor(ccWHITE);
 	debugLabel->setPosition( mainGame->screenSize * 0.7);
+
+	balldepict = CCLabelTTF::create();
+	handdepict = CCLabelTTF::create();
+
+	this->addChild(balldepict);
+	balldepict->setScale(2);
+	balldepict->setColor(ccWHITE);
+	balldepict->setPosition( mainGame->screenSize * 0.3);
+
+	this->addChild(handdepict);
+	handdepict->setScale(2);
+	handdepict->setColor(ccWHITE);
+	handdepict->setPosition(mainGame->screenSize * 0.4);
 	
+
+
+
 	Init_PauseMenu();
 
 	return true;

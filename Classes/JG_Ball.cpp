@@ -73,6 +73,8 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	moveMode = GetNewMoveMode(moveMode);
 	currentSpeed = GetNewSpeedByForce(force);
 
+	CCLOG("Throw force is %f",force);
+
 	//CCLog(" Throw",0);
 
 	MoveDirX = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
@@ -80,8 +82,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	if(moveMode == EMove_Curve)
 	{
 		curve_Rad = CalculateCurveRad(currentSpeed,this->getPosition(),destination);
-		mainGame->gameHUD->debugLabel->setString("");
-		mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
+			
 	}
 
 }
@@ -121,9 +122,12 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 
 float JG_Ball::GetNewSpeedByForce(float force)
 {
-	//CCLOG("force is %f",force);
-	force -= (1 - MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower();
 	
+	force -= (1 - MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower();
+	CCLOG("GetNewSpeedByForce actual min is  is %f", (MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower());
+	mainGame->gameHUD->debugLabel->setString("");
+	mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
+
 	if(moveMode == EMove_Straight)
 		return minSpeed ;
 	else 
@@ -203,9 +207,9 @@ void JG_Ball::DrawThrowPath()
 		tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
 		//tracePointTexture->SetOr
 	}
-	//bDrawThrowPath = false;
+	bDrawThrowPath = false;
 	moveMode = tempMoveMode;
-	this->scheduleOnce(schedule_selector(JG_Ball::ResetThrowPathInfo),BALL_PATH_TRACE_FADE_DELAY);
+	//this->scheduleOnce(schedule_selector(JG_Ball::ResetThrowPathInfo),BALL_PATH_TRACE_FADE_DELAY);
 }
 
 void JG_Ball::draw()

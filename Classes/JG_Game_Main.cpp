@@ -327,6 +327,8 @@ float JG_Game_Main::CalculateThrowPower(unsigned int index)
 
 float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
 {
+	input = clampf(input,maxThrowPower,actualMinPower);
+
 	if(input<maxThrowPower && input>actualMinPower)
 	{
 		input-=actualMinPower;
@@ -348,9 +350,10 @@ float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball)
 			input=actualMinPower;
 		}
 	}
+	// set ball level only when it is thrown up
 	if(ball->GetBallDirection()== EDir_LeftHandToRight
 		|| ball->GetBallDirection() ==EDir_RighHandtToLeft)
-	ball->SetBallLevel(floor(input/powerRange));
+		ball->SetBallLevel(floor(input/powerRange));
 	return disCretedValue;
 }
 

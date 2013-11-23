@@ -336,3 +336,13 @@ int JG_Ball::GetBallScore()
 {
 	return ballScoreByLevel[ballLevel];
 }
+
+float JG_Ball::getCurrentSpeedX()
+{
+	return tempBallSpeedX;
+}
+
+float JG_Ball::getCurrentSpeedY()
+{
+	return tempBallSpeedY;
+}

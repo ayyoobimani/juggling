@@ -181,6 +181,10 @@ public:
 
 	//taylor formula
 	float TaylorFormulaCalculate(float angle);
+
+	float getCurrentSpeedX();
+	float getCurrentSpeedY();
+
 };
 
 

@@ -182,7 +182,7 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 								criticalBall = tempBall;
 								criticalTime = (tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) ;
 							}
-						}//just a comment
+						}
 					}
 					else // if rightHand
 					{

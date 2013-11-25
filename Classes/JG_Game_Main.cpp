@@ -129,6 +129,7 @@ void JG_Game_Main::update(float dt)
 	BallTouchHandler_CheckTime(dt);
 	UpdateHandPower();
 	UpdateBallThrowTrace();
+
 	//TestSingleTouch();
 	
 }
@@ -808,4 +809,9 @@ void JG_Game_Main::CalculateInitialThrowPowers()
 	
 	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
 	
+}
+
+CCArray* JG_Game_Main::GetBallArray()
+{
+	return this->ballsArray;
 }

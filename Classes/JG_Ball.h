@@ -14,6 +14,9 @@ class JG_Game_Main;
 #define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(80))
 #define BALL_SCALE 1.0
 
+//radious for ball collision
+#define COLLISION_RADIOUS (CCDirector::sharedDirector()->getWinSize().height* 20/320)
+
 // Step counts for tracking Path of the Ball
 #define BALL_PATH_TRACE_STEPS 20
 // Interval time for tracking Path of the Ball
@@ -73,6 +76,13 @@ public:
 	int GetBallScore();
 
 	void OutOfScreen();
+
+
+
+	//collision of balls checking
+	void CheckCollisionWithBall();
+	void MergeBall(JG_Ball* ball);
+	
 
 
 	static float minSpeed;

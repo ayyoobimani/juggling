@@ -91,6 +91,10 @@ public:
 
 	/**************** game rule methods *************/
 
+
+	//getting balls array 
+	CCArray* GetBallArray();
+
 	/*! this method is called when a ball is lost ( for now when it is out of screen ) */
 	void BallLost(JG_Ball* lostBall);
 /*! Return player Score */

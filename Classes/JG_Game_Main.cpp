@@ -131,6 +131,7 @@ void JG_Game_Main::update(float dt)
 	BallTouchHandler_CheckTime(dt);
 	//UpdateHandPower();
 	UpdateBallThrowTrace();
+
 	//TestSingleTouch();
 
 }
@@ -882,6 +883,7 @@ void JG_Game_Main::CalculateInitialThrowPowers()
 	powerRange=(maxThrowPower-actualMinPower)/DISCRETE_PARTS_COUNT;
 
 	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
+<<<<<<< HEAD
 
 }
 
@@ -892,3 +894,12 @@ float JG_Game_Main::absf(float input)
 
 	return 0.0 - input;
 }
+=======
+	
+}
+
+CCArray* JG_Game_Main::GetBallArray()
+{
+	return this->ballsArray;
+}
+>>>>>>> ffs2

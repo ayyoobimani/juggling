@@ -525,6 +525,7 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 {
 	RemoveBallFromScreen(ballOne);
+	AddBallToScreen();
 
 }
 

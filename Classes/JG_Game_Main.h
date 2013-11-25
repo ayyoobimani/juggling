@@ -96,7 +96,10 @@ public:
 	CCArray* GetBallArray();
 
 	/*! this method is called when a ball is lost ( for now when it is out of screen ) */
+	//TODO:change the name to OnBallLost
 	void BallLost(JG_Ball* lostBall);
+	/*!function to merge balls*/
+	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 /*! Return player Score */
 	int GetScore();
 	/*! Set player Score to a new value */

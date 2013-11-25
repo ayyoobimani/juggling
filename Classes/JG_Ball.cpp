@@ -355,15 +355,13 @@ void JG_Ball::CheckCollisionWithBall()
 	{
 		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
 		if(this->GetBallDirection()==tempCurrentBall->GetBallDirection() && this!=tempCurrentBall)
+		{
 			if(mainGame->ArePointsColliding(this->getPosition(),(tempCurrentBall)->getPosition(),COLLISION_RADIOUS))
-					MergeBall(tempCurrentBall);
+				mainGame->OnBallsCollide(tempCurrentBall,this);
+		}
 		
 	}
 	
 
-}
-void JG_Ball::MergeBall(JG_Ball* ball)
-{
-	mainGame->BallLost(ball);
 }
 

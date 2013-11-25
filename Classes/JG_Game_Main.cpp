@@ -522,6 +522,12 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float radius
 	return point1.getDistance(point2)<radius;
 }
 
+void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
+{
+	RemoveBallFromScreen(ballOne);
+
+}
+
 void JG_Game_Main::BallLost(JG_Ball* lostBall)
 {
 	//CCLog("BallLOst",0);

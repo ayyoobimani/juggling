@@ -216,6 +216,16 @@ void JG_Ball::draw()
 	DrawBallTexture();
 	if(bDrawThrowPath)
 		DrawThrowPath();
+
+	if(this->bMustShine)
+	{
+		setColor(ccRED);
+	}
+
+	else
+	{
+		setColor(ccWHITE);
+	}
 }
 
 
@@ -226,6 +236,8 @@ void JG_Ball::update(float dt)
 	//TODO: clean up the code
 	//TODO: check performance
 	//CCLog("update " ,0);
+
+	CheckCollisionWithBall();
 	if (moveMode==EMove_Curve)
 	{
 
@@ -335,6 +347,7 @@ int JG_Ball::GetBallScore()
 	return ballScoreByLevel[ballLevel];
 }
 
+
 float JG_Ball::getCurrentSpeedX()
 {
 	return tempBallSpeedX;
@@ -343,4 +356,26 @@ float JG_Ball::getCurrentSpeedX()
 float JG_Ball::getCurrentSpeedY()
 {
 	return tempBallSpeedY;
+}
+
+void JG_Ball::CheckCollisionWithBall()
+{
+	JG_Ball* tempCurrentBall;
+	for(int i=0;i<mainGame->GetBallArray()->count();i++)
+	{
+		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
+		if(this->GetBallDirection()==tempCurrentBall->GetBallDirection() && this!=tempCurrentBall)
+		{
+			if(mainGame->ArePointsColliding(this->getPosition(),(tempCurrentBall)->getPosition(),COLLISION_RADIOUS))
+				mainGame->OnBallsCollide(tempCurrentBall,this);
+		}
+		
+	}
+	
+
+}
+
+void JG_Ball:: setShineFlag(bool value)
+{
+	bMustShine = value;
 }

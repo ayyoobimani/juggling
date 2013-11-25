@@ -27,3 +27,20 @@ JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char 
 
 }
 
+void JG_Hand::draw()
+{
+	CCSprite::draw();
+
+	if(bMustDrawArea)
+	{
+		ccDrawCircle( this->getPosition(), radius , 360 , 32 , FALSE);
+	}
+
+	CCLOG("hey there");
+
+}
+
+void JG_Hand::setDrawAreaFlag(bool value)
+{
+	bMustDrawArea = value;
+}

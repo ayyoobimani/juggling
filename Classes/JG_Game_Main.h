@@ -79,6 +79,8 @@ class JG_Game_Main : public cocos2d::CCLayer
 	
 public:
 	
+	JG_Ball * findBestBallMatching(JG_Hand*  );
+
 	JG_Game_HUD * gameHUD;
 
 	/**************** game rule members *************/
@@ -91,8 +93,15 @@ public:
 
 	/**************** game rule methods *************/
 
+
+	//getting balls array 
+	CCArray* GetBallArray();
+
 	/*! this method is called when a ball is lost ( for now when it is out of screen ) */
+	//TODO:change the name to OnBallLost
 	void BallLost(JG_Ball* lostBall);
+	/*!function to merge balls*/
+	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 /*! Return player Score */
 	int GetScore();
 	/*! Set player Score to a new value */
@@ -234,6 +243,8 @@ public:
 	float absf(float );
 	int ballCounter;
 	int prevballCounter;
+
+	void checkBallInHand();
 
 };
 

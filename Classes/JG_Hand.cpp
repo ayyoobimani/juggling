@@ -3,7 +3,7 @@
 JG_Hand::JG_Hand()
 {
 
-}
+}//adding a comment
 
 JG_Hand::~JG_Hand()
 {

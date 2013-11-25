@@ -202,6 +202,7 @@ JG_Ball* JG_Game_Main::findBestBallMatching(JG_Hand * currentHand )
 					}
 				}
 			}
+			//adding a comment
 			else // if rightHand
 			{
 

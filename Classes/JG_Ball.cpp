@@ -352,7 +352,7 @@ float JG_Ball::getCurrentSpeedX()
 {
 	return tempBallSpeedX;
 }
-
+//adding a comment
 float JG_Ball::getCurrentSpeedY()
 {
 	return tempBallSpeedY;

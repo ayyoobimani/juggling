@@ -10,7 +10,7 @@ using namespace cocos2d;
 
 #define HAND_SCALE 1.0
 
-class JG_Hand : public CCSprite
+class JG_Hand : public CCSprite//adding a comment
 {
 
 	bool bMustDrawArea;

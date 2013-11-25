@@ -121,7 +121,7 @@ public:
 	/*! Initial Throw movement variables */
 	void Throw(float force,CCPoint destination);
 
-
+	//adding a comment
 	/*! Handles the movement based on the current mode */
 	void update(float dt);
 

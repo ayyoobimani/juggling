@@ -165,14 +165,9 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 			//most critical ball is the ball witch will be lost befor other balls
 			for (int k=0 ; k<ballsArray->count() ; k++)
 			{
-
-
 				tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
 				if(ArePointsColliding(tempBall->getPosition(),currentHand->getPosition(),currentHand->GetRadius()))
 				{
-
-
-					
 					if(currentHand==leftHand)
 					{
 						if(tempBall->GetBallDirection() == EDir_LeftHandToUp || tempBall->GetBallDirection() == EDir_RightHandToUp)
@@ -182,8 +177,6 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 								gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()))->getCString());
 							if(ballCounter == 2)
 								gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()))->getCString());
-
-
 							if( abs(tempBall->getPositionY()/ tempBall->getCurrentSpeedY()) <criticalTime  )
 							{
 								criticalBall = tempBall;
@@ -191,8 +184,7 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 							}
 						}
 					}
-
-					else
+					else // if rightHand
 					{
 
 						if(tempBall->GetBallDirection() == EDir_LeftHandToRight)
@@ -203,15 +195,13 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 							if(ballCounter == 2)
 								gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
 
-
-
 							if( ( abs(tempBall->getPositionX())) <criticalTime)
 							{
 								criticalBall = tempBall;
 								criticalTime = (screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX();
 							}
 						}
-
+						//TODO ayoob : what is this condition for?
 						else if(tempBall->GetBallDirection() == EDir_RighHandtToLeft)
 						{
 							if(ballCounter == 1)
@@ -227,8 +217,6 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 							}
 						}
 					}
-
-
 				}// end of ball collision cheking
 			}// end of ball looping
 			if(criticalBall != NULL)	

@@ -79,6 +79,8 @@ class JG_Game_Main : public cocos2d::CCLayer
 	
 public:
 	
+	JG_Ball * findBestBallMatching(JG_Hand*  );
+
 	JG_Game_HUD * gameHUD;
 
 	/**************** game rule members *************/

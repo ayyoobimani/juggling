@@ -195,6 +195,8 @@ public:
 	float getCurrentSpeedX();
 	float getCurrentSpeedY();
 
+	
+
 };
 
 

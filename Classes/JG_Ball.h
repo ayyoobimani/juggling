@@ -66,6 +66,8 @@ class JG_Ball :
 	float throwPath_Force;
 	CCPoint throwPath_OriginPosition, throwPath_destPosition;
 
+
+	bool bMustShine;
 public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
@@ -195,7 +197,7 @@ public:
 	float getCurrentSpeedX();
 	float getCurrentSpeedY();
 
-	
+	void setShineFlag(bool);
 
 };
 

@@ -216,6 +216,16 @@ void JG_Ball::draw()
 	DrawBallTexture();
 	if(bDrawThrowPath)
 		DrawThrowPath();
+
+	if(this->bMustShine)
+	{
+		setColor(ccRED);
+	}
+
+	else
+	{
+		setColor(ccWHITE);
+	}
 }
 
 
@@ -365,3 +375,7 @@ void JG_Ball::CheckCollisionWithBall()
 
 }
 
+void JG_Ball:: setShineFlag(bool value)
+{
+	bMustShine = value;
+}

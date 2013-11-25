@@ -216,6 +216,16 @@ void JG_Ball::draw()
 	DrawBallTexture();
 	if(bDrawThrowPath)
 		DrawThrowPath();
+
+	if(this->bMustShine)
+	{
+		setColor(ccRED);
+	}
+
+	else
+	{
+		setColor(ccWHITE);
+	}
 }
 
 
@@ -367,3 +377,7 @@ void JG_Ball::MergeBall(JG_Ball* ball)
 	mainGame->BallLost(ball);
 }
 
+void JG_Ball:: setShineFlag(bool value)
+{
+	bMustShine = value;
+}

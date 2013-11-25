@@ -133,6 +133,7 @@ void JG_Game_Main::update(float dt)
 	UpdateBallThrowTrace();
 
 	//TestSingleTouch();
+	checkBallInHand();
 
 }
 
@@ -218,7 +219,7 @@ JG_Ball* JG_Game_Main::findBestBallMatching(JG_Hand * currentHand )
 						criticalTime = (screenSize.width - tempBall->getPositionX())/tempBall->getCurrentSpeedX();
 					}
 				}
-				
+
 			}
 		}// end of ball collision cheking
 	}// end of ball looping
@@ -889,10 +890,43 @@ float JG_Game_Main::absf(float input)
 		return input;
 
 	return 0.0 - input;
-	
+
 }
 
 CCArray* JG_Game_Main::GetBallArray()
 {
 	return this->ballsArray;
+}
+
+void JG_Game_Main:: checkBallInHand()
+{
+
+	JG_Ball *currentBall;
+	JG_Hand * currentHand;
+	
+	for(int i=0 ; i<handsArray->count() ; i++)
+	{
+		( (JG_Hand*) (handsArray->objectAtIndex(i)) ) ->setDrawAreaFlag(false);
+	}
+
+	for(int i=0; i<ballsArray->count() ; i++)
+	{
+		currentBall = (JG_Ball * ) ballsArray->objectAtIndex(i);
+		currentBall->setShineFlag(false);
+
+		for (int j=0 ; j < handsArray->count() ; j++)
+		{
+			currentHand = (JG_Hand*) handsArray->objectAtIndex(j);
+			
+			if(ArePointsColliding(currentBall->getPosition() ,currentHand->getPosition() , currentHand->GetRadius()))
+			{
+				if(currentHand == rightHand)
+					CCLOG("collided with right hand");
+				currentHand->setDrawAreaFlag(true);
+				currentBall->setShineFlag(true);
+				
+			}
+		}
+	}
+
 }

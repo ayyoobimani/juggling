@@ -241,6 +241,8 @@ public:
 	int ballCounter;
 	int prevballCounter;
 
+	void checkBallInHand();
+
 };
 
 #endif // __MainGame_SCENE_H__

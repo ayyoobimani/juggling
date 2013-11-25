@@ -883,7 +883,7 @@ void JG_Game_Main::CalculateInitialThrowPowers()
 	powerRange=(maxThrowPower-actualMinPower)/DISCRETE_PARTS_COUNT;
 
 	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
-<<<<<<< HEAD
+
 
 }
 
@@ -893,8 +893,6 @@ float JG_Game_Main::absf(float input)
 		return input;
 
 	return 0.0 - input;
-}
-=======
 	
 }
 
@@ -902,4 +900,3 @@ CCArray* JG_Game_Main::GetBallArray()
 {
 	return this->ballsArray;
 }
->>>>>>> ffs2

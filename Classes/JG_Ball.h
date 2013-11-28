@@ -132,7 +132,7 @@ public:
 	EMoveMode GetNewMoveMode(EMoveMode preMoveMode);
 
 	/*! Calculate Curve Radian By the given Speed, Origin Position and destination position */
-	float CalculateCurveRad(float speed,CCPoint originPosition,CCPoint destPosition);
+	static float CalculateCurveRad(float speed,CCPoint originPosition,CCPoint destPosition);
 
 	void draw();
 	/*! draws ball texture based on current ball level */

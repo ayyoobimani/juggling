@@ -33,7 +33,7 @@ void JG_Hand::draw()
 
 	if(bMustDrawArea)
 	{
-		ccDrawCircle( this->getPosition(), radius , 360 , 32 , FALSE);
+		ccDrawCircle( convertToNodeSpace(this->getPosition()), radius , 360 , 32 , FALSE);
 	}
 
 	CCLOG("hey there");

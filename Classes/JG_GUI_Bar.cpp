@@ -19,9 +19,8 @@ JG_GUI_Bar* JG_GUI_Bar::CreateBar(CCPoint initialPosition,float newMaxScale)
 		
 		return bar;
 	}
-
-		CC_SAFE_DELETE(bar);
-		return NULL;
+	CC_SAFE_DELETE(bar);
+	return NULL;
 }
 
 

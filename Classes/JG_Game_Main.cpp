@@ -3,6 +3,15 @@
 
 USING_NS_CC;
 
+JG_Game_Main::JG_Game_Main()
+{
+	bIsGameInited = false;
+}
+
+JG_Game_Main::~JG_Game_Main()
+{
+	
+}
 
 CCScene* JG_Game_Main::scene()
 {
@@ -90,6 +99,8 @@ void JG_Game_Main::InitGame()
 {
 
 
+	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("TraceDot.png");
+
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
 	JG_Ball::InitialBallLevelInformation();
@@ -119,6 +130,7 @@ void JG_Game_Main::InitGame()
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
+	bIsGameInited = true;
 }
 
 void JG_Game_Main::TempAddBall(float dt)
@@ -889,6 +901,49 @@ void JG_Game_Main::CalculateInitialThrowPowers()
 
 	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
 
+
+}
+
+
+void JG_Game_Main::draw()
+{
+	if(bIsGameInited)
+		DrawThrowPaths();
+}
+
+void JG_Game_Main::DrawThrowPaths()
+{
+	for(int i = 0 ; i<DISCRETE_PARTS_COUNT; i++)
+	{
+		DrawThrowPathByPower(i*powerRange);
+	}
+}
+
+//TODO: clean up this shit
+void JG_Game_Main::DrawThrowPathByPower(float _power)
+{
+	float tempSpeed =  JG_Ball::minSpeed + JG_Ball::minSpeed * _power;
+
+	float tempSpeedX,tempSpeedY;
+	CCPoint tracePoint;
+
+	float tempCurveRad;
+	tempCurveRad = JG_Ball::CalculateCurveRad(tempSpeed,rightHand->getPosition(),leftHand->getPosition());
+	//CCLog("tempCurve Is %f", CC_RADIANS_TO_DEGREES(tempCurveRad));
+
+	tracePoint = rightHand->getPosition();
+	tempSpeedX= tempSpeed * cos(tempCurveRad);
+	tempSpeedY = tempSpeed * sin(tempCurveRad);
+	float tempInterval = 0.07;
+	for( int i = 0 ; i< 50 ; i++)
+	{
+		tempSpeedY = -GRAVITY* tempInterval  + tempSpeedY;
+		//tempSpeedX = tempSpeedX;
+		tracePoint.x = tempSpeedX * tempInterval + tracePoint.x;
+		tracePoint.y = tempSpeedY * tempInterval + tracePoint.y;
+		tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+		//tracePointTexture->SetOr
+	}
 
 }
 

@@ -26,7 +26,7 @@ class JG_Hand;
 //factor for minimum touch lenght tolerance
 #define MIN_TOUCH_LENGTH_FACTOR 0.3
 
-#define GAME_SCALE 0.7
+#define GAME_SCALE 0.6
 
 #define DISCRETE_PARTS_COUNT 4.0
 
@@ -38,11 +38,6 @@ struct STouchInfo
 	bool bIsDirValid;
 	float remainingTime;
 	CCPoint initialTouchPosition;
-
-
-
-	
-	
 };
 
 /*! The main class for controlling the game */
@@ -62,7 +57,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float maxThrowPower;
 	float maxTouchLenght;
 
-	
+	CCTexture2D* tracePointTexture;
 
 	/* ! Manages Ball Score for combos */
 	void ManageBallScore(JG_Ball* ball);
@@ -75,10 +70,16 @@ class JG_Game_Main : public cocos2d::CCLayer
 	void CalculateInitialThrowPowers();
 	/*! return proper discrete value */
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
+
+	bool bIsGameInited; 
 	
 	
 public:
 	
+	JG_Game_Main(void);
+	virtual ~JG_Game_Main(void);
+
+
 	JG_Ball * findBestBallMatching(JG_Hand*  );
 
 	JG_Game_HUD * gameHUD;
@@ -110,7 +111,7 @@ public:
 	void AddScore(int amount);
 	/*! Reduce a value from player Score */
 	void ReduceScore(int amount);
-/*! Return The life count of player */
+	/*! Return The life count of player */
 	int GetLifeCount();
 	/*! Set the life count of player*/
 	void SetLifeCount( int newLifeCount);
@@ -230,8 +231,14 @@ public:
 	
 	void TempAddBall(float time);
 
+	void draw();
 
+	/*! draw the availble paths for balls throwing */
+	//NOTE: shall it be here or there must be in another class ? 
+	void DrawThrowPaths();
 
+	/*! draw throw path based on given power */
+	void DrawThrowPathByPower(float _power);
 
 	//power calculating 
 	void UpdateHandPower();

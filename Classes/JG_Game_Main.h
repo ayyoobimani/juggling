@@ -5,6 +5,7 @@
 
 #include "JG_Hand.h"
 #include "JG_Ball.h"
+#include "JG_Fruit.h"
 
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
@@ -13,6 +14,7 @@ using namespace cocos2d;
 class JG_Game_HUD;
 class JG_Ball;
 class JG_Hand;
+class JG_Fruit;
 
 
 
@@ -251,7 +253,15 @@ public:
 	int ballCounter;
 	int prevballCounter;
 
+
 	void checkBallInHand();
+
+
+	//collision of fruit and ball
+	void OnFruitHit(JG_Ball* ball, JG_Fruit* fruit);
+	void AddFruitToScreen();
+	void TempAddFruitToScreen(float time);
+
 
 };
 

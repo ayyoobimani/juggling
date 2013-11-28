@@ -36,7 +36,7 @@ void JG_Hand::draw()
 		ccDrawCircle( convertToNodeSpace(this->getPosition()), radius , 360 , 32 , FALSE);
 	}
 
-	CCLOG("hey there");
+//	CCLOG("hey there");
 
 }
 

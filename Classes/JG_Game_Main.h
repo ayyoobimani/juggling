@@ -60,6 +60,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float maxTouchLenght;
 
 	CCTexture2D* tracePointTexture;
+	CCTexture2D* traceLivePointTexture;
 
 	/* ! Manages Ball Score for combos */
 	void ManageBallScore(JG_Ball* ball);
@@ -240,13 +241,16 @@ public:
 	void DrawThrowPaths();
 
 	/*! draw throw path based on given power */
-	void DrawThrowPathByPower(float _power);
+	void DrawThrowPathByPower(float _power,int level);
 
 	//power calculating 
 	void UpdateHandPower();
 
 	/*! Update Ball Throw Trace */
-	void UpdateBallThrowTrace();
+	//void UpdateBallThrowTrace(); //TOCHECK
+
+	/*# check to see if a ball may be throw in this curve! */
+	bool checkCurvesLife(int level);
 
 	
 	float absf(float );

@@ -13,7 +13,7 @@ CCTexture2D* JG_Ball::ballTexturesByLevel[MAX_BALL_LEVELS];
 JG_Ball::JG_Ball(void)
 {
 	ballTexture = "ball.png";
-	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("TraceDot.png");
+	//tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");//TOCHECK
 
 	moveMode = EMove_Curve;
 	curve_Rad = 0;
@@ -24,7 +24,7 @@ JG_Ball::JG_Ball(void)
 	action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
 	runAction(action_Rotate);
 
-	bDrawThrowPath = false;
+	//bDrawThrowPath = false; //TOCHECK
 }
 
 
@@ -129,7 +129,11 @@ float JG_Ball::GetNewSpeedByForce(float force)
 	if(moveMode == EMove_Straight)
 		return minSpeed ;
 	else 
+	{
+		
+		
 		return clampf( minSpeed + minSpeed * force,minSpeed,maxSpeed);
+	}
 
 	// for test on andorid
 	//CCLOG("min speed is %f" , minSpeed);
@@ -158,6 +162,7 @@ EMoveMode JG_Ball::GetNewMoveMode(EMoveMode preMoveMode)
 		return EMove_Straight;
 }
 
+/*
 void JG_Ball::SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition)
 {
 	throwPath_Force = force;
@@ -171,13 +176,13 @@ void JG_Ball::ResetThrowPathInfo(float dt)
 {
 	bDrawThrowPath= false;
 }
-
+*/
 void JG_Ball::DrawBallTexture()
 {
 	//setTexture(
 	//ballTexturesByLevel[ballLevel]->drawAtPoint(ccp(0,0));
 }
-
+/*
 void JG_Ball::DrawThrowPath()
 {
 	EMoveMode tempMoveMode = moveMode;
@@ -185,7 +190,7 @@ void JG_Ball::DrawThrowPath()
 	//CCLog("throw Force %f", throwPath_Force);
 	float tempSpeed = GetNewSpeedByForce(throwPath_Force);
 	//CCLog("tempForce %f" , throwPath_Force);
-	//CCLog("tempSpeed %f" , tempSpeed);
+	CCLog("tempSpeed %f" , tempSpeed);
 	float tempSpeedX,tempSpeedY;
 	CCPoint tracePoint;
 
@@ -198,6 +203,7 @@ void JG_Ball::DrawThrowPath()
 	tempSpeedY = tempSpeed * sin(tempCurveRad);
 	for( int i = 0 ; i< BALL_PATH_TRACE_STEPS ; i++)
 	{
+		
 		tempSpeedY = -GRAVITY* BALL_PATH_TRACE_INTERVALS  + tempSpeedY;
 		//tempSpeedX = tempSpeedX;
 		tracePoint.x = tempSpeedX * BALL_PATH_TRACE_INTERVALS + tracePoint.x;
@@ -209,13 +215,13 @@ void JG_Ball::DrawThrowPath()
 	moveMode = tempMoveMode;
 	//this->scheduleOnce(schedule_selector(JG_Ball::ResetThrowPathInfo),BALL_PATH_TRACE_FADE_DELAY);
 }
-
+*/
 void JG_Ball::draw()
 {
 	CCSprite::draw();
 	DrawBallTexture();
-	if(bDrawThrowPath)
-		DrawThrowPath();
+	//if(bDrawThrowPath)
+		//DrawThrowPath();
 
 	if(this->bMustShine)
 	{

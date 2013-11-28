@@ -18,9 +18,9 @@ class JG_Game_Main;
 #define COLLISION_RADIOUS (CCDirector::sharedDirector()->getWinSize().height* 20/320)
 
 // Step counts for tracking Path of the Ball
-#define BALL_PATH_TRACE_STEPS 20
+#define BALL_PATH_TRACE_STEPS 30
 // Interval time for tracking Path of the Ball
-#define BALL_PATH_TRACE_INTERVALS 0.05
+//#define BALL_PATH_TRACE_INTERVALS 0.07 //TOCHECK
 
 #define BALL_PATH_TRACE_FADE_DELAY 1
 
@@ -60,11 +60,11 @@ class JG_Ball :
 	/****************** /temporary variables ****************/
 
 	
-	CCTexture2D* tracePointTexture;
-	bool bDrawThrowPath;
+	//CCTexture2D* tracePointTexture; //TOCHECK
+	//bool bDrawThrowPath; //TOCHECK
 
 	float throwPath_Force;
-	CCPoint throwPath_OriginPosition, throwPath_destPosition;
+	//CCPoint throwPath_OriginPosition, throwPath_destPosition; //TOCHECK
 
 
 	bool bMustShine;
@@ -137,14 +137,14 @@ public:
 	void draw();
 	/*! draws ball texture based on current ball level */
 	void DrawBallTexture();
-	void DrawThrowPath();
+	//void DrawThrowPath();
 	/*! Show the Throw Path before being actually thrown by the given power, originPosition and destination position */
-	void SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition);
+	//void SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition);
 
-	void ResetThrowPathInfo(float dt);
+	//void ResetThrowPathInfo(float dt);
 
 	/*! temporary reset the ball to it's initial postion when it is out of view */
-	//void TempReset();
+	//void TempReset(); //TOCHECK
 
 
 	//functions for minspeed and max speed

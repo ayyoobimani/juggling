@@ -10,7 +10,7 @@ JG_Game_Main::JG_Game_Main()
 
 JG_Game_Main::~JG_Game_Main()
 {
-	
+
 }
 
 CCScene* JG_Game_Main::scene()
@@ -99,7 +99,8 @@ void JG_Game_Main::InitGame()
 {
 
 
-	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("TraceDot.png");
+	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
+	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
@@ -142,7 +143,7 @@ void JG_Game_Main::update(float dt)
 {
 	BallTouchHandler_CheckTime(dt);
 	//UpdateHandPower();
-	UpdateBallThrowTrace();
+	//UpdateBallThrowTrace(); //TOCHECK
 
 	//TestSingleTouch();
 	checkBallInHand();
@@ -420,12 +421,12 @@ float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDe
 	CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
-	if(!bIsDemo)
-	{
+	//if(!bIsDemo)
+	//{
 		if(ball->GetBallDirection()== EDir_LeftHandToRight
 			|| ball->GetBallDirection() ==EDir_RighHandtToLeft)
 			ball->SetBallLevel(powerLevel);
-	}
+	//}
 	return disCretedValue;
 }
 
@@ -869,7 +870,7 @@ void JG_Game_Main::UpdateHandPower()
 	}
 }
 
-void JG_Game_Main::UpdateBallThrowTrace()
+/*void JG_Game_Main::UpdateBallThrowTrace()
 {
 	for (int i=0;i<TOUCH_COUNT;i++)
 	{
@@ -886,7 +887,35 @@ void JG_Game_Main::UpdateBallThrowTrace()
 
 	}
 
+}*/
+
+bool JG_Game_Main::checkCurvesLife(int speed)
+{
+	for (int i=0;i<TOUCH_COUNT;i++)
+	{
+		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid
+			&& touchInfos[i].ball->moveMode==EMove_Straight)
+		{
+			/*if(touchInfos[i].hand== rightHand)
+			{
+				CCLog("WTTTTTTTTTTTTTTTF: %f",touchInfos[i].ball->GetNewSpeedByForce(CalculateThrowPower(i)));
+				CCLog("drawspeed: %f", speed);
+			}
+
+			if(touchInfos[i].hand== rightHand && touchInfos[i].ball->GetNewSpeedByForce(CalculateThrowPower(i)) == speed)
+				return true;
+				*/
+			CalculateThrowPower(i);		//TODO should I call it at all???
+			if(touchInfos[i].ball->GetBallLevel() == speed && touchInfos[i].hand== rightHand)
+				return true;
+		}
+
+	}
+
+	return false;
 }
+
+
 void JG_Game_Main::CalculateInitialThrowPowers()
 {
 
@@ -915,12 +944,12 @@ void JG_Game_Main::DrawThrowPaths()
 {
 	for(int i = 0 ; i<DISCRETE_PARTS_COUNT; i++)
 	{
-		DrawThrowPathByPower(i*powerRange);
+		DrawThrowPathByPower(i*powerRange,i);
 	}
 }
 
 //TODO: clean up this shit
-void JG_Game_Main::DrawThrowPathByPower(float _power)
+void JG_Game_Main::DrawThrowPathByPower(float _power,int level)
 {
 	float tempSpeed =  JG_Ball::minSpeed + JG_Ball::minSpeed * _power;
 
@@ -929,19 +958,25 @@ void JG_Game_Main::DrawThrowPathByPower(float _power)
 
 	float tempCurveRad;
 	tempCurveRad = JG_Ball::CalculateCurveRad(tempSpeed,rightHand->getPosition(),leftHand->getPosition());
-	//CCLog("tempCurve Is %f", CC_RADIANS_TO_DEGREES(tempCurveRad));
+
 
 	tracePoint = rightHand->getPosition();
 	tempSpeedX= tempSpeed * cos(tempCurveRad);
 	tempSpeedY = tempSpeed * sin(tempCurveRad);
 	float tempInterval = 0.07;
-	for( int i = 0 ; i< 50 ; i++)
+	//for( int i = 0 ; i< 50 ; i++)
+	while(tracePoint.y >= rightHand->getPositionY())
 	{
 		tempSpeedY = -GRAVITY* tempInterval  + tempSpeedY;
 		//tempSpeedX = tempSpeedX;
 		tracePoint.x = tempSpeedX * tempInterval + tracePoint.x;
 		tracePoint.y = tempSpeedY * tempInterval + tracePoint.y;
-		tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+
+		if(checkCurvesLife(level))
+			traceLivePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+		else
+			tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+
 		//tracePointTexture->SetOr
 	}
 
@@ -966,7 +1001,7 @@ void JG_Game_Main:: checkBallInHand()
 
 	JG_Ball *currentBall;
 	JG_Hand * currentHand;
-	
+
 	for(int i=0 ; i<handsArray->count() ; i++)
 	{
 		( (JG_Hand*) (handsArray->objectAtIndex(i)) ) ->setDrawAreaFlag(false);
@@ -980,14 +1015,14 @@ void JG_Game_Main:: checkBallInHand()
 		for (int j=0 ; j < handsArray->count() ; j++)
 		{
 			currentHand = (JG_Hand*) handsArray->objectAtIndex(j);
-			
+
 			if(ArePointsColliding(currentBall->getPosition() ,currentHand->getPosition() , currentHand->GetRadius()))
 			{
 				if(currentHand == rightHand)
 					CCLOG("collided with right hand");
 				currentHand->setDrawAreaFlag(true);
 				currentBall->setShineFlag(true);
-				
+
 			}
 		}
 	}

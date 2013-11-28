@@ -103,7 +103,8 @@ void JG_Game_Main::InitGame()
 
 	//TempAddBall(0);
 	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
-
+	//fruit
+	//this->scheduleOnce(schedule_selector(JG_Game_Main::TempAddFruitToScreen),1.75);
 
 	/******************************** /Balls ************************************/
 
@@ -906,4 +907,28 @@ float JG_Game_Main::absf(float input)
 CCArray* JG_Game_Main::GetBallArray()
 {
 	return this->ballsArray;
+}
+//collision of the ball and fruit
+void JG_Game_Main::OnFruitHit(JG_Ball* ball, JG_Fruit* fruit)
+{
+	this->AddScore(100);
+	CC_SAFE_RELEASE(fruit);
+}
+
+void JG_Game_Main::AddFruitToScreen()
+{
+	float tempX=CCRANDOM_0_1()*rightHand->getPosition().getDistance(leftHand->getPosition())+leftHand->getPositionX();
+	float tempY=screenSize.height;
+	CCPoint tempPoint;
+	tempPoint.x=tempX;
+	tempPoint.y=tempY;
+	this->addChild(JG_Fruit::CreateFruit(this,tempPoint,(-1)*(CCRANDOM_0_1()*10+15)));
+	
+}
+void JG_Game_Main::TempAddFruitToScreen(float time)
+{
+
+	AddFruitToScreen();
+
+	this->scheduleOnce(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
 }

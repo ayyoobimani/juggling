@@ -12,6 +12,7 @@ CCTexture2D* JG_Ball::ballTexturesByLevel[MAX_BALL_LEVELS];
 
 JG_Ball::JG_Ball(void)
 {
+	radius=20;
 	ballTexture = "ball.png";
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("TraceDot.png");
 

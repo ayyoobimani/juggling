@@ -66,6 +66,10 @@ class JG_Ball :
 	float throwPath_Force;
 	CCPoint throwPath_OriginPosition, throwPath_destPosition;
 
+
+	//radius
+	
+
 public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
@@ -77,6 +81,8 @@ public:
 
 	void OutOfScreen();
 
+	//radius
+	float radius;
 
 
 	//collision of balls checking

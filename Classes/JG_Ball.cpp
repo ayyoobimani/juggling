@@ -12,12 +12,12 @@ CCTexture2D* JG_Ball::ballTexturesByLevel[MAX_BALL_LEVELS];
 
 JG_Ball::JG_Ball(void)
 {
-	radius=20;
+	radius=(CCDirector::sharedDirector()->getWinSize().height* 20/320) ;
 	ballTexture = "ball.png";
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("TraceDot.png");
 
-	moveMode = EMove_Curve;
-	curve_Rad = 0;
+	moveMode = Move_Curve;
+	curveRadian = 0;
 	currentSpeed = 0;
 	//tempInitialPosition = ccp(50,50);
 	
@@ -78,9 +78,9 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 	MoveDirX = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
 
-	if(moveMode == EMove_Curve)
+	if(moveMode == Move_Curve)
 	{
-		curve_Rad = CalculateCurveRad(currentSpeed,this->getPosition(),destination);
+		curveRadian = CalculateCurveRad(currentSpeed,this->getPosition(),destination);
 			
 	}
 
@@ -100,8 +100,8 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 			we can throw the ball with 30 deg and 60 deg and they will reach the destination
 			but we choose the 60 deg.
 			*/
-		//if(abs(CC_RADIANS_TO_DEGREES(curve_Rad))<45)
-			//curve_Rad = (curve_Rad/abs(curve_Rad)) *CC_DEGREES_TO_RADIANS(90)- curve_Rad;
+		//if(abs(CC_RADIANS_TO_DEGREES(curveRadian))<45)
+			//curveRadian = (curveRadian/abs(curveRadian)) *CC_DEGREES_TO_RADIANS(90)- curveRadian;
 		//TODO : Do it for reverse direction
 		if( CC_RADIANS_TO_DEGREES(tempCurveRad)>-45)
 			tempCurveRad = CC_DEGREES_TO_RADIANS(-90) - tempCurveRad;
@@ -114,9 +114,9 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 		//CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(tempCurveRad));
 
 		return tempCurveRad;
-		//curve_Rad = CC_DEGREES_TO_RADIANS(135);
+		//curveRadian = CC_DEGREES_TO_RADIANS(135);
 		//mainGame->gameHUD->debugLabel->setString("");
-		//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curve_Rad))->getCString());
+		//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curveRadian))->getCString());
 }
 
 float JG_Ball::GetNewSpeedByForce(float force)
@@ -127,7 +127,7 @@ float JG_Ball::GetNewSpeedByForce(float force)
 	//mainGame->gameHUD->debugLabel->setString("");
 	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
 
-	if(moveMode == EMove_Straight)
+	if(moveMode == Move_Straight)
 		return minSpeed ;
 	else 
 		return clampf( minSpeed + minSpeed * force,minSpeed,maxSpeed);
@@ -140,30 +140,30 @@ float JG_Ball::GetNewSpeedByForce(float force)
 
 EThrowDirection JG_Ball::GetNewThrowDirection(EThrowDirection preDir)
 {
-	if (preDir==EDir_LeftHandToRight)
-		return EDir_RightHandToUp;
-	else if(preDir==EDir_RighHandtToLeft)
-		return EDir_LeftHandToUp;
-	else if( preDir== EDir_RightHandToUp)
-		return EDir_LeftHandToRight;
+	if (preDir==Dir_LeftHandToRight)
+		return Dir_RightHandToUp;
+	else if(preDir==Dir_RighHandtToLeft)
+		return Dir_LeftHandToUp;
+	else if( preDir== Dir_RightHandToUp)
+		return Dir_LeftHandToRight;
 	else //if ( ballThrowDirection== EDir_LeftHandToUp)
-		return EDir_RightHandToUp;
+		return Dir_RightHandToUp;
 
 }
 
 EMoveMode JG_Ball::GetNewMoveMode(EMoveMode preMoveMode)
 {
-	if(preMoveMode==EMove_Straight)
-		return  EMove_Curve;
+	if(preMoveMode==Move_Straight)
+		return  Move_Curve;
 	else //if(moveMode == EMove_Curve)
-		return EMove_Straight;
+		return Move_Straight;
 }
 
 void JG_Ball::SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition)
 {
 	throwPath_Force = force;
 	throwPath_OriginPosition = originPosition;
-	throwPath_destPosition = destPosition;
+	throwPath_DestPosition = destPosition;
 	bDrawThrowPath = true;
 	
 }
@@ -182,7 +182,7 @@ void JG_Ball::DrawBallTexture()
 void JG_Ball::DrawThrowPath()
 {
 	EMoveMode tempMoveMode = moveMode;
-	moveMode = EMove_Curve;
+	moveMode = Move_Curve;
 	//CCLog("throw Force %f", throwPath_Force);
 	float tempSpeed = GetNewSpeedByForce(throwPath_Force);
 	//CCLog("tempForce %f" , throwPath_Force);
@@ -191,7 +191,7 @@ void JG_Ball::DrawThrowPath()
 	CCPoint tracePoint;
 
 	float tempCurveRad;
-	tempCurveRad = CalculateCurveRad(tempSpeed,throwPath_OriginPosition,throwPath_destPosition);
+	tempCurveRad = CalculateCurveRad(tempSpeed,throwPath_OriginPosition,throwPath_DestPosition);
 	//CCLog("tempCurve Is %f", CC_RADIANS_TO_DEGREES(tempCurveRad));
 
 	tracePoint = throwPath_OriginPosition;
@@ -234,17 +234,31 @@ void JG_Ball::update(float dt)
 {
 	
 
-	//TODO: clean up the code
-	//TODO: check performance
 	//CCLog("update " ,0);
 
+	ProcessMove(dt);
+
 	CheckCollisionWithBall();
-	if (moveMode==EMove_Curve)
+
+	// temporary for reseting ball
+	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
+	{
+		OutOfScreen();
+	}
+   
+}
+
+
+	//TODO: clean up the code
+	//TODO: check performance
+void JG_Ball::ProcessMove(float dt)
+{
+	if (moveMode==Move_Curve)
 	{
 
 
-		tempBallSpeedX = currentSpeed * cos(curve_Rad);
-		tempBallSpeedY = currentSpeed * sin(curve_Rad);
+		tempBallSpeedX = currentSpeed * cos(curveRadian);
+		tempBallSpeedY = currentSpeed * sin(curveRadian);
 
 		// calculate new speeds
 		tempBallSpeedX = tempBallSpeedX;
@@ -257,17 +271,17 @@ void JG_Ball::update(float dt)
 		// calculate the total speed based on new speeds on each direction
 		currentSpeed = sqrt(pow(tempBallSpeedY,2)+pow(tempBallSpeedX,2));
 
-		// calculate new curve_Rad (falling radian) base on new speeds on each direction
+		// calculate new curveRadian (falling radian) base on new speeds on each direction
 		//**************** TODO: find a better soloution *************/
 		if(tempBallSpeedX >= 0)
-			curve_Rad = atan(tempBallSpeedY/tempBallSpeedX);
+			curveRadian = atan(tempBallSpeedY/tempBallSpeedX);
 		else
-			curve_Rad =CC_DEGREES_TO_RADIANS(180)+ atan(tempBallSpeedY/tempBallSpeedX);
+			curveRadian =CC_DEGREES_TO_RADIANS(180)+ atan(tempBallSpeedY/tempBallSpeedX);
 		/**************************************************************/	
 
 		setPosition(ccp(tempBallNewX,tempBallNewY));
 	}
-	else if(moveMode==EMove_Straight)
+	else if(moveMode==Move_Straight)
 	{
 		//just changing X based on speed and direction 
 		setPosition(ccp(getPositionX()+ MoveDirX *(currentSpeed* dt),getPositionY()));
@@ -278,19 +292,13 @@ void JG_Ball::update(float dt)
 	}
 
 
-	// temporary for reseting ball
-	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
-	{
-		OutOfScreen();
-	}
-   
 }
 
 void JG_Ball::OutOfScreen()
 {
 
 	CCPoint wtf = this->getPosition();
-	mainGame->BallLost(this);
+	mainGame->OnBallLost(this);
 }
 
 //
@@ -300,9 +308,9 @@ void JG_Ball::OutOfScreen()
 //	setPosition(tempInitialPosition);
 //	
 //	moveMode = EMove_Curve;
-//	curve_Rad = 0;
+//	curveRadian = 0;
 //	ballThrowDirection = tempInitialThrowDirection;
-//	curve_Rad = CC_DEGREES_TO_RADIANS(0); 
+//	curveRadian = CC_DEGREES_TO_RADIANS(0); 
 //	currentSpeed = 0;
 //}
 
@@ -321,12 +329,12 @@ EThrowDirection JG_Ball::GetBallDirection()
 {
 	return ballThrowDirection;
 }
-float JG_Ball::TaylorFormulaCalculate(float angle)
-{
-	float ffs=angle + 0.5 * pow(angle,3)/3 + 3/8 * pow(angle,5)/5 + 15/ 48 * pow(angle,7)/7 ;;
-	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("%f,%f",angle,ffs)->getCString());
-	return ffs;
-}
+//float JG_Ball::TaylorFormulaCalculate(float angle)
+//{
+//	float ffs=angle + 0.5 * pow(angle,3)/3 + 3/8 * pow(angle,5)/5 + 15/ 48 * pow(angle,7)/7 ;;
+//	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("%f,%f",angle,ffs)->getCString());
+//	return ffs;
+//}
 
 float JG_Ball::GetMaxSpeed()
 {
@@ -349,14 +357,20 @@ int JG_Ball::GetBallScore()
 }
 
 
-float JG_Ball::getCurrentSpeedX()
+float JG_Ball::GetCurrentSpeedX()
 {
-	return tempBallSpeedX;
+	if(moveMode == Move_Curve)
+		return tempBallSpeedX;
+	else
+		return currentSpeed ;
 }
 //adding a comment
-float JG_Ball::getCurrentSpeedY()
+float JG_Ball::GetCurrentSpeedY()
 {
-	return tempBallSpeedY;
+	if(moveMode == Move_Curve)
+		return tempBallSpeedY;
+	else
+		return 0;
 }
 
 void JG_Ball::CheckCollisionWithBall()
@@ -367,7 +381,7 @@ void JG_Ball::CheckCollisionWithBall()
 		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
 		if(this->GetBallDirection()==tempCurrentBall->GetBallDirection() && this!=tempCurrentBall)
 		{
-			if(mainGame->ArePointsColliding(this->getPosition(),(tempCurrentBall)->getPosition(),COLLISION_RADIOUS))
+			if(mainGame->ArePointsColliding(this->getPosition(),(tempCurrentBall)->getPosition(),radius+radius))
 				mainGame->OnBallsCollide(tempCurrentBall,this);
 		}
 		
@@ -376,7 +390,7 @@ void JG_Ball::CheckCollisionWithBall()
 
 }
 
-void JG_Ball:: setShineFlag(bool value)
+void JG_Ball:: SetShineVisibility(bool value)
 {
 	bMustShine = value;
 }

@@ -18,6 +18,8 @@ public:
 	JG_Hand(void);
 	virtual ~JG_Hand(void);
 
+	static JG_Hand* CreateHand(JG_Game_Main* game, CCPoint initialPos, const char * handSprite);
+
 	JG_Game_Main* mainGame;
 
 	float radius;
@@ -28,13 +30,13 @@ public:
 	}
 
 
-	static JG_Hand* CreateHand(JG_Game_Main* game, CCPoint initialPos, const char * handSprite);
+	
 
 	 CREATE_FUNC(JG_Hand);
 
 	 void draw();
 
-	 void setDrawAreaFlag(bool);
+	 void SetAreaVisibility(bool newVisibility);
 	 
 };
 

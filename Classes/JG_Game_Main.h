@@ -22,6 +22,7 @@ class JG_Fruit;
 #define TOUCH_COUNT 2
 
 #define MAX_LIFE_COUNT 5
+
 #define MAX_TOUCH_DURATOIN 0.50f
 // throw force is relative to screen height
 #define THROW_FORCE_BASE_ON_SREEN 0.7
@@ -59,21 +60,27 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float maxThrowPower;
 	float maxTouchLenght;
 
+	// trace texture for drawing throw paths
 	CCTexture2D* tracePointTexture;
 
-	/* ! Manages Ball Score for combos */
-	void ManageBallScore(JG_Ball* ball);
+
 
 	
 	float powerRange;
-	float disCretedValue;
+	float discretedValue;
 	float actualMinPower;
-	
-	void CalculateInitialThrowPowers();
+	/*! calculate and initials some variables for calculating throw power */
+	void InitialThrowPowerVariables();
 	/*! return proper discrete value */
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
 
 	bool bIsGameInited; 
+
+	/* ! Manages Ball Score for combos */
+	void ManageBallComboScore(JG_Ball* ball);
+
+	int ballCounter;
+	int prevballCounter;
 	
 	
 public:
@@ -81,31 +88,42 @@ public:
 	JG_Game_Main(void);
 	virtual ~JG_Game_Main(void);
 
+	 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
+	virtual bool init();  
 
-	JG_Ball * findBestBallMatching(JG_Hand*  );
+    /*! Initial the game state */
+	void InitGame();
 
+    // there's no 'id' in cpp, so we recommend returning the class instance pointer
+    static cocos2d::CCScene* scene();
+
+	CCSize screenSize ;
+	// refrenece to the Game HUD
 	JG_Game_HUD * gameHUD;
+
+
+	/*! finds best ball in balls that are touched in a hand */
+	JG_Ball* FindBestBallMatching(JG_Hand*  hand);
 
 	/**************** game rule members *************/
 	int lifeCount;
 	int score;
 	/**************** /game rule members *************/
 
-	//actual min power
-	float GetActualMinPower();
+	
 
 	/**************** game rule methods *************/
 
-
-	//getting balls array 
-	CCArray* GetBallArray();
-
-	/*! this method is called when a ball is lost ( for now when it is out of screen ) */
+	/*! this event is called when a ball is lost ( for now when it is out of screen ) */
 	//TODO:change the name to OnBallLost
-	void BallLost(JG_Ball* lostBall);
-	/*!function to merge balls*/
+	void OnBallLost(JG_Ball* lostBall);
+	/*! this event is called when two balls are collided */
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
-/*! Return player Score */
+	/*! this event is called when a ball is collided with a fruit*/
+	void OnFruitHit(JG_Ball* ball, JG_Fruit* fruit);
+
+
+	/*! Return player Score */
 	int GetScore();
 	/*! Set player Score to a new value */
 	void SetScore( int newScore);
@@ -113,6 +131,8 @@ public:
 	void AddScore(int amount);
 	/*! Reduce a value from player Score */
 	void ReduceScore(int amount);
+
+
 	/*! Return The life count of player */
 	int GetLifeCount();
 	/*! Set the life count of player*/
@@ -121,21 +141,34 @@ public:
 	void DecrementLifeCount();
 	/*! Increment the life count of player */
 	void IncrementLifeCount();
+
+	
+	/*! handles ball removing */
+	void RemoveBallFromScreen(JG_Ball* ball);
+	/*! Remove all balls from screen */
+	void RemoveAllBallsFromScreen();
+	/*! Adding new ball to screen */
+	void AddBallToScreen();
+	void TempAddBall(float time);
+
+	void AddFruitToScreen();
+	void TempAddFruitToScreen(float time);
+
+	void CheckBallCollisionWithHand();
 	
 	/**************** /game rule methods *************/
 
-	CCSize screenSize ;
-
-    // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
-	virtual bool init();  
 
 
+	/********************* Overwritten COCOS2D functions ********************/
 
-    /*! Initial the game state */
-	void InitGame();
+    // implement the "static node()" method manually
+    CREATE_FUNC(JG_Game_Main);
+	    
+    // a selector callback
+    void menuCloseCallback(CCObject* pSender);
 
-    // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::CCScene* scene();
+	void menuPauseCallBack(CCObject* pSender);
 
 	/*! Handles the beginning of the touch */
 	virtual void ccTouchesBegan(CCSet* pTouches, CCEvent* event);
@@ -146,6 +179,15 @@ public:
 	/*! Handles the end of the touch */
 	virtual void ccTouchesEnded(CCSet* pTouches, CCEvent* event);
 
+	/*! update function */
+	void update(float dt);
+	void draw();
+
+	/********************* /COCOS2D functions ********************/
+
+
+
+	/*********************** Ball Touch handlers *******************/
 
 	/*! defined to handle initiation of touch */
 	void BallTouchHandler_Init(CCTouch* touch);
@@ -156,58 +198,72 @@ public:
 	/*! it handle the time player hold his touch on the screen */
 	void BallTouchHandler_CheckTime(float dt);
 	/*! to calculate the force of the touch */
-	float CalculateThrowPower(unsigned int index, bool bIsDemo = false);
-	
 
-	/*! update function */
-	void update(float dt);
+	/*! Set Direction For Ball for the give index in touchInfos.
+	 * @return : whether direction was valid or not 
+	 */
+	bool SetTouchDirectionForBall(int index);
 
-	/*!checks whether distance of the two point are lesser than radius or not*/
-	//TODO: find a better name
-	bool ArePointsColliding (CCPoint point1,CCPoint point2,float radius);
+	/*********************** /Ball Touch handlers *******************/
 
+
+	/************************** Touch info methods ******************/
 	/*! search through toucheInfos and return index for related ball */
 	int GetTouchInfoIndexByBall(JG_Ball* ball);
-	
 	/*! Set an empty touchinfo with a new info*/
 	void SetTouchInfo(CCTouch* touch, JG_Hand* hand,JG_Ball* ball);
 	/*! Reset an touchinfo with the given index in touchInfos */
 	void ResetTouchInfo( int index);
 	/*! Reset an touchinfo with the given ball in touchInfos */
 	void ResetTouchInfoByBall(JG_Ball* ball);
-	/*! Set Direction For Ball for the give index in touchInfos. return whether direction was valid or not */
-	bool SetTouchDirectionForBall(int index);
+
+	/************************** /Touch info methods ******************/
+
+	/*! draw the availble paths for balls throwing */
+	//NOTE: shall it be here or there must be in another class ? 
+	void DrawThrowPaths();
+	/*! draw throw path based on given power */
+	void DrawThrowPathByPower(float _power);
+	/*! updates hands' power bars */ 
+	void UpdateHandPowerBar();
+	/*! Update Ball Throw Trace for all touched balls */
+	void UpdateBallThrowTrace();
+
 	
-    
-    // a selector callback
-    void menuCloseCallback(CCObject* pSender);
+	/*! End of the game */
+	void EndGame();
+	/*! Pausing the game */
+	void PauseGame(CCObject* pSender);
+	/*! Exit the game */
+	void ExitGame(CCObject* pSender);
+	/*! Resuming the game */
+	void ResumeGame(CCObject* pSender);
+	/*! Reseting the game */
+	void ResetGame(CCObject* pSender);
 
-	void menuPauseCallBack(CCObject* pSender);
-
+	/* Calculate the throw power for a touched ball 
+	 * @Param unsigned int index : the index of the ball 
+	 * @Param bool bIsDemo : the flag the set whether must affect the ball or not (true: don't affect the ball)
+	 */
+	float CalculateThrowPower(unsigned int index, bool bIsDemo = false);
 	
-
-	/*! handles ball removing */
-	void RemoveBallFromScreen(JG_Ball* ball);
-	/*! Remove all balls from screen */
-	void RemoveAllBallsFromScreen();
-	/*! Adding new ball to screen */
-	void AddBallToScreen();
-	
-	inline float getSign(float num)
-	{
-		return num/abs(num);
-	}
-
-
+	/*! returns  maxThrow Power */
+	float GetMaxThrowPower();
+	/*! returns actual min power */
+	float GetActualMinPower();
+	/*! returns balls array */
+	CCArray* GetBallArray();
 	/*! returns maxThrowPower */ 
-	float GetMaxThrowPower()
-	{
-		return maxThrowPower;
-	}
 
-    
-    // implement the "static node()" method manually
-    CREATE_FUNC(JG_Game_Main);
+
+
+	
+
+
+
+
+
+
 	/*! a function to test single touch */
 	void TestSingleTouch();
 	/*! a function to test single touch */
@@ -220,47 +276,29 @@ public:
 	void TestMultiTouch_MovementTouchGen(float dt=0);
 	/*! End phase of multi touch testing */
 	void TestMultiTouch_EndGen(float dt=0);
-	/*! End of the game */
-	void EndGame();
-	/*! Pausing the game */
-	void PauseGame(CCObject* pSender);
-	/*! Exit the game */
-	void ExitGame(CCObject* pSender);
-	/*! Resuming the game */
-	void ResumeGame(CCObject* pSender);
-	/*! Reseting the game */
-	void ResetGame(CCObject* pSender);
+
+
+
 	
-	void TempAddBall(float time);
 
-	void draw();
-
-	/*! draw the availble paths for balls throwing */
-	//NOTE: shall it be here or there must be in another class ? 
-	void DrawThrowPaths();
-
-	/*! draw throw path based on given power */
-	void DrawThrowPathByPower(float _power);
-
-	//power calculating 
-	void UpdateHandPower();
-
-	/*! Update Ball Throw Trace */
-	void UpdateBallThrowTrace();
-
+	
+	/*!checks whether distance of the two point are lesser than distance or not*/
+	//TODO: find a better name
+	bool ArePointsColliding (CCPoint point1,CCPoint point2,float distance);
 	
 	float absf(float );
-	int ballCounter;
-	int prevballCounter;
+
+	inline float getSign(float num)
+	{
+		return num/abs(num);
+	}
+	
 
 
-	void checkBallInHand();
+	
 
 
-	//collision of fruit and ball
-	void OnFruitHit(JG_Ball* ball, JG_Fruit* fruit);
-	void AddFruitToScreen();
-	void TempAddFruitToScreen(float time);
+
 
 
 };

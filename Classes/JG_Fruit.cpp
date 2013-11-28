@@ -12,30 +12,32 @@ JG_Fruit::~JG_Fruit(void)
 }
 void JG_Fruit::update(float dt)
 {
-	float temp=this->getPositionY()+dt*speed;
-	this->setPositionY(temp);
-	this->checkCollisionWithBall();
+	ProcessMove(dt);
+	CheckCollisionWithBall();
 }
+
+void JG_Fruit::ProcessMove(float dt)
+{
+	setPositionY(getPositionY()+ dt *speed);
+}
+
 JG_Fruit* JG_Fruit::CreateFruit(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed)
 {
 	JG_Fruit * fruit = new JG_Fruit();
 	if (fruit && fruit->initWithFile("fruit.png"))
 	{
-		//fruit->autorelease();
+		fruit->autorelease();
 		fruit->setPosition(initialPosition);
 		fruit->speed=initialSpeed;
 		fruit->scheduleUpdate();
-		
 		fruit->mainGame=game;
-		fruit->retain();
 		return fruit;
-
 
 	}
 	CC_SAFE_DELETE(fruit);
 	return NULL;	 
 }
-void JG_Fruit::checkCollisionWithBall()
+void JG_Fruit::CheckCollisionWithBall()
 {
 	JG_Ball* tempCurrentBall;
 	for(int i=0;i<mainGame->GetBallArray()->count();i++)

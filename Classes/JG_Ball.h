@@ -4,18 +4,15 @@
 #include "actions\CCActionInterval.h"
 #include "cocos2d.h"
 
-#define ARCSIN(__ANGLE__) (__ANGLE__ + 0.5 * pow(__ANGLE__,3)/3 + 3/8 * pow(__ANGLE__,5)/5 + 15/ 48 * pow(__ANGLE__,7)/7)
 
 using namespace cocos2d;
 
 class JG_Game_Main;
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
+
 #define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(80))
 #define BALL_SCALE 1.0
-
-//radious for ball collision
-#define COLLISION_RADIOUS (CCDirector::sharedDirector()->getWinSize().height* 20/320)
 
 // Step counts for tracking Path of the Ball
 #define BALL_PATH_TRACE_STEPS 20
@@ -28,12 +25,12 @@ class JG_Game_Main;
 
 enum EThrowDirection
 {
-	EDir_LeftHandToRight, EDir_RighHandtToLeft, EDir_LeftHandToUp, EDir_RightHandToUp
+	Dir_LeftHandToRight, Dir_RighHandtToLeft, Dir_LeftHandToUp, Dir_RightHandToUp
 };
 
 enum EMoveMode
 {
-	EMove_Curve, EMove_Straight
+	Move_Curve, Move_Straight
 };
 
 /*! The main class for handling ball movement */
@@ -61,11 +58,11 @@ class JG_Ball :
 
 	
 	CCTexture2D* tracePointTexture;
+
 	bool bDrawThrowPath;
 
 	float throwPath_Force;
-	CCPoint throwPath_OriginPosition, throwPath_destPosition;
-
+	CCPoint throwPath_OriginPosition, throwPath_DestPosition;
 
 
 	bool bMustShine;
@@ -78,31 +75,22 @@ public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
 
-	void SetBallLevel(int newLevel);
-	int GetBallLevel(){return ballLevel;}
+	/*! Creating ball in a specific position and specific direction */
+	static JG_Ball* CreateBall(JG_Game_Main* game,CCPoint initialPos,EThrowDirection initialDirection,int initialBallLevel);
 
-	int GetBallScore();
-
-	void OutOfScreen();
+	
+	static float minSpeed;
+	static float maxSpeed;
 
 	//radius
 	float radius;
 
-
-	//collision of balls checking
-	void CheckCollisionWithBall();
-	void MergeBall(JG_Ball* ball);
-	
-
-
-	static float minSpeed;
-	static float maxSpeed;
 	float currentSpeed;
 	
 	EThrowDirection ballThrowDirection;
 
 	/*! radians of falling in EMove_Curve */
-	float curve_Rad;
+	float curveRadian;
 	/*! movement direction in X (-1 or 1) */
 	float MoveDirX;
 
@@ -123,13 +111,13 @@ public:
 	    This is used for determining the direction of throw (touch) */
 	CCPoint InitialTouchPosition;
 
-	/*! Creating ball in a specific position and specific direction */
-	static JG_Ball* CreateBall(JG_Game_Main* game,CCPoint initialPos,EThrowDirection initialDirection,int initialBallLevel);
-
+	
 	/*! Initial Throw movement variables */
 	void Throw(float force,CCPoint destination);
 
-	//adding a comment
+	/*! process the movement of ball */
+	void ProcessMove(float dt);
+
 	/*! Handles the movement based on the current mode */
 	void update(float dt);
 
@@ -159,12 +147,21 @@ public:
 	static float GetMaxSpeed();
 	static float GetMinSpeed();
 
+	void SetBallLevel(int newLevel);
+	int GetBallLevel(){return ballLevel;}
 
+	int GetBallScore();
+
+	void OutOfScreen();
+
+		//collision of balls checking
+	void CheckCollisionWithBall();
 
 	/*! get the direction of ball */
 	EThrowDirection GetBallDirection();
 
 	CCPoint GetInitialTouchPosition();
+
 	void SetInitialTouchPosition(CCPoint newTouchPos);
 
 	/*! Calculate the minimum Speed , based on the distance of handes */
@@ -200,12 +197,12 @@ public:
 	}
 
 	//taylor formula
-	float TaylorFormulaCalculate(float angle);
+	//float TaylorFormulaCalculate(float angle);
 
-	float getCurrentSpeedX();
-	float getCurrentSpeedY();
+	float GetCurrentSpeedX();
+	float GetCurrentSpeedY();
 
-	void setShineFlag(bool);
+	void SetShineVisibility(bool _newShine);
 
 };
 

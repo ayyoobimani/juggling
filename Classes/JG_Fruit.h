@@ -21,7 +21,9 @@ public:
 	static JG_Fruit* CreateFruit(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed);
 	void update(float dt);
 	//checking collision with ball
-	void checkCollisionWithBall();
+	void CheckCollisionWithBall();
+
+	void ProcessMove(float dt);
 
 	
 

@@ -14,7 +14,7 @@ JG_Ball::JG_Ball(void)
 {
 	radius=(CCDirector::sharedDirector()->getWinSize().height* 20/320) ;
 	ballTexture = "ball.png";
-	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("TraceDot.png");
+	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 
 	moveMode = Move_Curve;
 	curveRadian = 0;
@@ -25,7 +25,7 @@ JG_Ball::JG_Ball(void)
 	action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
 	runAction(action_Rotate);
 
-	bDrawThrowPath = false;
+	bDrawThrowPath = false; 
 }
 
 
@@ -122,7 +122,7 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 float JG_Ball::GetNewSpeedByForce(float force)
 {
 	
-	force -= mainGame->GetActualMinPower();
+	//force -= mainGame->GetActualMinPower();
 	//CCLOG("GetNewSpeedByForce actual min is  is %f", (MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower());
 	//mainGame->gameHUD->debugLabel->setString("");
 	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
@@ -130,7 +130,11 @@ float JG_Ball::GetNewSpeedByForce(float force)
 	if(moveMode == Move_Straight)
 		return minSpeed ;
 	else 
+	{
+		
+		
 		return clampf( minSpeed + minSpeed * force,minSpeed,maxSpeed);
+	}
 
 	// for test on andorid
 	//CCLOG("min speed is %f" , minSpeed);
@@ -159,6 +163,7 @@ EMoveMode JG_Ball::GetNewMoveMode(EMoveMode preMoveMode)
 		return Move_Straight;
 }
 
+
 void JG_Ball::SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition)
 {
 	throwPath_Force = force;
@@ -186,7 +191,7 @@ void JG_Ball::DrawThrowPath()
 	//CCLog("throw Force %f", throwPath_Force);
 	float tempSpeed = GetNewSpeedByForce(throwPath_Force);
 	//CCLog("tempForce %f" , throwPath_Force);
-	//CCLog("tempSpeed %f" , tempSpeed);
+	CCLog("tempSpeed %f" , tempSpeed);
 	float tempSpeedX,tempSpeedY;
 	CCPoint tracePoint;
 
@@ -199,6 +204,7 @@ void JG_Ball::DrawThrowPath()
 	tempSpeedY = tempSpeed * sin(tempCurveRad);
 	for( int i = 0 ; i< BALL_PATH_TRACE_STEPS ; i++)
 	{
+		
 		tempSpeedY = -GRAVITY* BALL_PATH_TRACE_INTERVALS  + tempSpeedY;
 		//tempSpeedX = tempSpeedX;
 		tracePoint.x = tempSpeedX * BALL_PATH_TRACE_INTERVALS + tracePoint.x;
@@ -215,8 +221,8 @@ void JG_Ball::draw()
 {
 	CCSprite::draw();
 	DrawBallTexture();
-	if(bDrawThrowPath)
-		DrawThrowPath();
+	//if(bDrawThrowPath)
+		//DrawThrowPath();
 
 	if(this->bMustShine)
 	{
@@ -249,8 +255,8 @@ void JG_Ball::update(float dt)
 }
 
 
-	//TODO: clean up the code
-	//TODO: check performance
+//TODO: clean up the code
+//TODO: check performance
 void JG_Ball::ProcessMove(float dt)
 {
 	if (moveMode==Move_Curve)

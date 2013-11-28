@@ -62,6 +62,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	// trace texture for drawing throw paths
 	CCTexture2D* tracePointTexture;
+	CCTexture2D* traceLivePointTexture;
 
 
 
@@ -277,9 +278,12 @@ public:
 	/*! End phase of multi touch testing */
 	void TestMultiTouch_EndGen(float dt=0);
 
+	/*! draw throw path based on given power */
+	void DrawThrowPathByPower(float _power,int level);
 
 
-	
+	/*! check to see if a ball may be throw in this curve! */
+	bool checkCurvesLife(int pathLevel);
 
 	
 	/*!checks whether distance of the two point are lesser than distance or not*/

@@ -40,6 +40,7 @@ void JG_GUI_Bar::InitBar(CCPoint initialPosition,float newMaxScale)
 }
 void JG_GUI_Bar::SetBarScale(float scale)
 {
+	setVisible(true);
 	clampf(scale,0,maxBarScale);
 	setScaleY(scale);
 

@@ -10,7 +10,7 @@ JG_Game_Main::JG_Game_Main()
 
 JG_Game_Main::~JG_Game_Main()
 {
-	
+
 }
 
 CCScene* JG_Game_Main::scene()
@@ -99,7 +99,8 @@ void JG_Game_Main::InitGame()
 {
 
 
-	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("TraceDot.png");
+	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
+	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
 	/****************************** Balls ************************************/
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
@@ -139,8 +140,8 @@ void JG_Game_Main::InitGame()
 void JG_Game_Main::update(float dt)
 {
 	BallTouchHandler_CheckTime(dt);
-	//UpdateHandPower();
-	UpdateBallThrowTrace();
+	//UpdateHandPowerBar();
+	//UpdateBallThrowTrace(); 
 
 	//TestSingleTouch();
 	CheckBallCollisionWithHand();
@@ -425,23 +426,23 @@ float JG_Game_Main::CalculateThrowPower(unsigned int index, bool bIsDemo)
 {
 
 	float touchLenght=abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
-	float currentPower=(touchLenght/maxTouchLenght)*maxThrowPower;
+	float currentRawPower=(touchLenght/maxTouchLenght)*maxThrowPower;
 
-	return DiscretedPowerValueGen(currentPower,touchInfos[index].ball,bIsDemo);
+	return DiscretedPowerValueGen(currentRawPower,touchInfos[index].ball,bIsDemo);
 }
 
-float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo)
+float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bIsDemo)
 {
-	input = clampf(input,actualMinPower,maxThrowPower);
+	rawInput = clampf(rawInput,actualMinPower,maxThrowPower);
 
 
-	input-=actualMinPower;
+	rawInput-=actualMinPower;
 	//CCLOG("max value %f", GetMaxThrowPower());
 	//CCLOG("min value %f", actualMinPower);
 	//CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
-	float powerLevel=floor(input/powerRange);
+	float powerLevel=floor(rawInput/powerRange);
 
-	discretedValue=powerLevel*powerRange+actualMinPower;
+	discretedValue=powerLevel*powerRange;
 
 	//CCLOG("power level : %f",powerLevel);
 
@@ -453,6 +454,7 @@ float JG_Game_Main::DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDe
 			ball->SetBallLevel(powerLevel);
 	}
 	return discretedValue;
+
 }
 
 float JG_Game_Main::GetActualMinPower()
@@ -686,9 +688,9 @@ void JG_Game_Main::UpdateHandPowerBar()
 		if(touchInfos[i].touch!=NULL)
 		{
 			if(handsArray->objectAtIndex(0)==touchInfos[i].hand)
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(CalculateThrowPower(i)*2);
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale((CalculateThrowPower(i)+actualMinPower)*2);
 			else
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(CalculateThrowPower(i)*2);
+				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale((CalculateThrowPower(i)+actualMinPower)*2);
 		}
 
 	}
@@ -740,12 +742,12 @@ void JG_Game_Main::DrawThrowPaths()
 {
 	for(int i = 0 ; i<DISCRETE_PARTS_COUNT; i++)
 	{
-		DrawThrowPathByPower(i*powerRange);
+		DrawThrowPathByPower(i*powerRange,i);
 	}
 }
 
 //TODO: clean up this shit
-void JG_Game_Main::DrawThrowPathByPower(float _power)
+void JG_Game_Main::DrawThrowPathByPower(float _power, int level)
 {
 	float tempSpeed =  JG_Ball::minSpeed + JG_Ball::minSpeed * _power;
 
@@ -754,23 +756,64 @@ void JG_Game_Main::DrawThrowPathByPower(float _power)
 
 	float tempCurveRad;
 	tempCurveRad = JG_Ball::CalculateCurveRad(tempSpeed,rightHand->getPosition(),leftHand->getPosition());
-	//CCLog("tempCurve Is %f", CC_RADIANS_TO_DEGREES(tempCurveRad));
+
 
 	tracePoint = rightHand->getPosition();
 	tempSpeedX= tempSpeed * cos(tempCurveRad);
 	tempSpeedY = tempSpeed * sin(tempCurveRad);
 	float tempInterval = 0.07;
-	for( int i = 0 ; i< 50 ; i++)
+	//for( int i = 0 ; i< 50 ; i++)
+	while(tracePoint.y >= rightHand->getPositionY())
 	{
 		tempSpeedY = -GRAVITY* tempInterval  + tempSpeedY;
 		//tempSpeedX = tempSpeedX;
 		tracePoint.x = tempSpeedX * tempInterval + tracePoint.x;
 		tracePoint.y = tempSpeedY * tempInterval + tracePoint.y;
-		tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+
+		if(checkCurvesLife(level))
+			traceLivePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+		else
+			tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+
 		//tracePointTexture->SetOr
 	}
 
+
 }
+
+bool JG_Game_Main::checkCurvesLife(int pathLevel)
+{
+	//TODO ayyoob : find a better name
+	//TODO ayyoob : implement this for reverse ball throwing ( from right hand to left)
+	float tempCurrentBallPower;
+	for (int i=0;i<TOUCH_COUNT;i++)
+	{
+		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid
+			&& touchInfos[i].ball->moveMode==Move_Straight)
+		{
+			/*if(touchInfos[i].hand== rightHand)
+			{
+			CCLog("WTTTTTTTTTTTTTTTF: %f",touchInfos[i].ball->GetNewSpeedByForce(CalculateThrowPower(i)));
+			CCLog("drawspeed: %f", speed);
+			}
+
+			if(touchInfos[i].hand== rightHand && touchInfos[i].ball->GetNewSpeedByForce(CalculateThrowPower(i)) == speed)
+			return true;
+			*/
+			
+			/* NOTE FOR ayyoob :there will be no level for ball so check current ball power 
+			 * with the needed power for that path ( pathLevel*powerRange) 
+			 * */
+			tempCurrentBallPower = CalculateThrowPower(i,true); 
+			if(tempCurrentBallPower == pathLevel*powerRange  && touchInfos[i].hand== rightHand)
+				return true;
+		}
+
+	}
+
+	return false;
+}
+
 
 
 
@@ -880,52 +923,53 @@ void JG_Game_Main::menuPauseCallBack(CCObject* pSender)
 
 void JG_Game_Main::TestSingleTouch()
 {
-	CCTouch* testTouch;
-	testTouch = new CCTouch();
-	float randomX;
-	float randomY;
-	CCPoint testPoint;
+    CCTouch* testTouch;
+    testTouch = new CCTouch();
+    float randomX;
+    float randomY;
+    CCPoint testPoint;
 
-	if (CCRANDOM_0_1()>0.5)
-	{
+    if (CCRANDOM_0_1()>0.5)
+    {
 		randomX=leftHand->getPositionX();
 		randomY=leftHand->getPositionY();
-	}
-	else
-	{
+    }
+    else
+    {
 		randomX=rightHand->getPositionX();
 		randomY=rightHand->getPositionY();
-	}
+    }
 
 
-	testPoint.setPoint(randomX,randomY);
-	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
+    testPoint.setPoint(randomX,randomY);
+    testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
-	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
-	CCPoint temp = testTouch->getLocation();
+    testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
+    CCPoint temp = testTouch->getLocation();
 
-	CCSet* testTouchSet= CCSet::create();
-	testTouchSet->addObject(testTouch);
+    CCSet* testTouchSet= CCSet::create();
+    testTouchSet->addObject(testTouch);
 
-	ccTouchesBegan(testTouchSet,NULL);
+    ccTouchesBegan(testTouchSet,NULL);
 
-	//test_touch_move
-	randomX=CCRANDOM_0_1()*screenSize.width;
-	randomY=CCRANDOM_0_1()*screenSize.height;
+    //test_touch_move
+    randomX=CCRANDOM_0_1()*screenSize.width;
+    randomY=CCRANDOM_0_1()*screenSize.height;
 
-	testPoint.setPoint(randomX,randomY);
-	testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
+    testPoint.setPoint(randomX,randomY);
+    testPoint= CCDirector::sharedDirector()->convertToGL(testPoint);
 
-	testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
+    testTouch->setTouchInfo(1,testPoint.x,testPoint.y);
 
-	ccTouchesMoved(testTouchSet,NULL);
-	ccTouchesEnded(testTouchSet,NULL);
+    ccTouchesMoved(testTouchSet,NULL);
+    ccTouchesEnded(testTouchSet,NULL);
 
 }
 
+
+
 void JG_Game_Main::TestMultiTouch()
 {
-	//TODO: implement TestMultiTouch
 	TestMultiTouchesSet=CCSet::create();
 	TestMultiTouchesSet->retain();
 
@@ -971,8 +1015,8 @@ void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
 
 	//scheduleOnce(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.1);
 	schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.01,1,0);
-
 }
+
 
 void JG_Game_Main::TestMultiTouch_MovementTouchGen(float dt)
 {

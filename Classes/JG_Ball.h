@@ -15,9 +15,9 @@ class JG_Game_Main;
 #define BALL_SCALE 1.0
 
 // Step counts for tracking Path of the Ball
-#define BALL_PATH_TRACE_STEPS 20
+#define BALL_PATH_TRACE_STEPS 30
 // Interval time for tracking Path of the Ball
-#define BALL_PATH_TRACE_INTERVALS 0.05
+#define BALL_PATH_TRACE_INTERVALS 0.07 
 
 #define BALL_PATH_TRACE_FADE_DELAY 1
 
@@ -63,6 +63,7 @@ class JG_Ball :
 
 	float throwPath_Force;
 	CCPoint throwPath_OriginPosition, throwPath_DestPosition;
+
 
 
 	bool bMustShine;
@@ -140,7 +141,7 @@ public:
 	void ResetThrowPathInfo(float dt);
 
 	/*! temporary reset the ball to it's initial postion when it is out of view */
-	//void TempReset();
+	void TempReset(); 
 
 
 	//functions for minspeed and max speed
@@ -154,7 +155,7 @@ public:
 
 	void OutOfScreen();
 
-		//collision of balls checking
+	//collision of balls checking
 	void CheckCollisionWithBall();
 
 	/*! get the direction of ball */

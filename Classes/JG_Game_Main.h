@@ -1,6 +1,7 @@
 #ifndef __MainGame_SCENE_H__
 #define __MainGame_SCENE_H__
 
+
 #include "cocos2d.h"
 
 #include "JG_Hand.h"
@@ -33,7 +34,7 @@ class JG_ScorePopup;
 
 #define GAME_SCALE 0.6
 
-#define DISCRETE_PARTS_COUNT 4.0
+#define DISCRETE_PARTS_COUNT 4
 
 struct STouchInfo
 {
@@ -48,6 +49,7 @@ struct STouchInfo
 /*! The main class for controlling the game */
 class JG_Game_Main : public cocos2d::CCLayer
 {
+	
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
 	CCArray* handsArray;
@@ -70,7 +72,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 
 
-	
+	float chosenPathPower;
 	float powerRange;
 	float discretedValue;
 	float actualMinPower;
@@ -89,6 +91,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	/* ! Manages Ball Score for combos */
 	void ManageBallComboScore(JG_Ball* ball);
 	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
+	
 	
 public:
 	
@@ -238,12 +241,12 @@ public:
 	//NOTE: shall it be here or there must be in another class ? 
 	void DrawThrowPaths();
 	/*! draw throw path based on given power */
-	void DrawThrowPathByPower(float _power);
+	void DrawThrowPathByPower(float _power , bool mustHighlight);
 	/*! updates hands' power bars */ 
 	void UpdateHandPowerBar();
 	/*! Update Ball Throw Trace for all touched balls */
 	void UpdateBallThrowTrace();
-
+	
 	
 	/*! End of the game */
 	void EndGame();
@@ -297,7 +300,7 @@ public:
 
 
 	/*! check to see if a ball may be throw in this curve! */
-	bool checkCurvesLife(int pathLevel);
+	bool checkCurvesLife(float power);
 
 	
 	/*!checks whether distance of the two point are lesser than distance or not*/

@@ -59,13 +59,12 @@ class JG_Ball :
 	
 	CCTexture2D* tracePointTexture;
 
-	bool bDrawThrowPath;
 
 	float throwPath_Force;
 	CCPoint throwPath_OriginPosition, throwPath_DestPosition;
+	bool bDrawThrowPath;
 
-
-
+	bool bIsAlreadyThrown;
 	bool bMustShine;
 	/*! how many combo does the ball do */
 	int comboChain;
@@ -205,6 +204,7 @@ public:
 
 	float GetCurrentSpeedX();
 	float GetCurrentSpeedY();
+	EMoveMode GetMoveMode();
 
 	void SetShineVisibility(bool _newShine);
 

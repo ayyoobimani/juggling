@@ -15,6 +15,7 @@ JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char 
 	JG_Hand * hand = new JG_Hand();
 	if (hand && hand->initWithFile(handSprite))
 	{
+		hand->throwPower =-1;
 		hand->autorelease();
 		hand->setPosition(initialPos);
 		hand->mainGame = game;
@@ -33,7 +34,10 @@ void JG_Hand::draw()
 
 	if(bMustDrawArea)
 	{
-		ccDrawCircle( convertToNodeSpace(this->getPosition()), radius , 360 , 32 , FALSE);
+		glLineWidth(200);
+		ccDrawColor4B(0, 255, 255, 0); 
+		ccDrawCircle( convertToNodeSpace(this->getPosition()), radius , 360 , 32 , false);
+
 	}
 
 }
@@ -41,4 +45,20 @@ void JG_Hand::draw()
 void JG_Hand::SetAreaVisibility(bool newVisibility)
 {
 	bMustDrawArea = newVisibility;
+}
+
+void JG_Hand::setThrowPower(float _power)
+{
+	throwPower = _power;
+	scheduleOnce(schedule_selector(JG_Hand::resetThrowPower),0.4);
+}
+
+void JG_Hand::resetThrowPower(float dt)
+{
+	throwPower = -1 ;
+}
+
+float JG_Hand::getThrowPower()
+{
+	return throwPower;
 }

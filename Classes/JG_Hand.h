@@ -14,6 +14,8 @@ class JG_Hand : public CCSprite//adding a comment
 {
 
 	bool bMustDrawArea;
+
+	float throwPower;
 public:
 	JG_Hand(void);
 	virtual ~JG_Hand(void);
@@ -37,6 +39,13 @@ public:
 	 void draw();
 
 	 void SetAreaVisibility(bool newVisibility);
+
+	 /*sets the last power this hand has thrown a ball upward */
+	 void setThrowPower(float _power);
+	 /*resets the last power this hand has thrown a ball upward */
+	 void resetThrowPower (float dt);
+	 /*return the last power this hand has thrown a ball upward*/
+	 float getThrowPower();
 	 
 };
 

@@ -24,8 +24,6 @@ JG_Ball::JG_Ball(void)
 	// give a simple rotation to ball
 	action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
 	runAction(action_Rotate);
-
-	bDrawThrowPath = false; 
 }
 
 
@@ -227,7 +225,7 @@ void JG_Ball::draw()
 	//if(bDrawThrowPath)
 		//DrawThrowPath();
 
-	if(this->bMustShine)
+	/*if(this->bMustShine)
 	{
 		setColor(ccRED);
 	}
@@ -236,6 +234,7 @@ void JG_Ball::draw()
 	{
 		setColor(ccWHITE);
 	}
+	*/
 }
 
 
@@ -424,4 +423,10 @@ void JG_Ball::CheckCollisionWithBall()
 void JG_Ball:: SetShineVisibility(bool value)
 {
 	bMustShine = value;
+}
+
+
+EMoveMode JG_Ball::GetMoveMode()
+{
+	return moveMode;
 }

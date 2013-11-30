@@ -93,6 +93,7 @@ bool JG_Game_Main::init()
 	//TestMultiTouch();
 	return true;
 
+	
 }
 
 void JG_Game_Main::InitGame()
@@ -113,7 +114,6 @@ void JG_Game_Main::InitGame()
 
 	fruitArray= CCArray::create();
 	fruitArray->retain();
-
 
 
 	//TempAddBall(0);
@@ -418,7 +418,13 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 		destHand=rightHand;	
 	else
 		destHand=leftHand;
-	touchInfos[index].ball->Throw(CalculateThrowPower(index),destHand->getPosition());
+	float throwPower = CalculateThrowPower(index);
+
+	if(touchInfos[index].ball->GetMoveMode() == Move_Straight)
+		touchInfos[index].hand->setThrowPower(throwPower);
+	
+	
+	touchInfos[index].ball->Throw(throwPower,destHand->getPosition());
 
 	//AddScore(touchInfos[index].ball->GetBallScore());
 	//ManageBallComboScore(touchInfos[index].ball);
@@ -781,15 +787,21 @@ void JG_Game_Main::draw()
 
 void JG_Game_Main::DrawThrowPaths()
 {
+	float power;
 	for(int i = 0 ; i<DISCRETE_PARTS_COUNT; i++)
 	{
-		DrawThrowPathByPower(i*powerRange,i);
+		power = i*powerRange;
+		DrawThrowPathByPower(power,checkCurvesLife(power));
+
+
 	}
 }
 
 //TODO: clean up this shit
-void JG_Game_Main::DrawThrowPathByPower(float _power, int level)
+void JG_Game_Main::DrawThrowPathByPower(float _power, bool mustHighlight)
 {
+	
+	//CCLOG(CCString::createWithFormat("chosen:%f",_power)->getCString());
 	float tempSpeed =  JG_Ball::minSpeed + JG_Ball::minSpeed * _power;
 
 	float tempSpeedX,tempSpeedY;
@@ -811,7 +823,7 @@ void JG_Game_Main::DrawThrowPathByPower(float _power, int level)
 		tracePoint.x = tempSpeedX * tempInterval + tracePoint.x;
 		tracePoint.y = tempSpeedY * tempInterval + tracePoint.y;
 
-		if(checkCurvesLife(level))
+		if(mustHighlight)
 			traceLivePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
 		else
 			tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
@@ -822,35 +834,35 @@ void JG_Game_Main::DrawThrowPathByPower(float _power, int level)
 
 }
 
-bool JG_Game_Main::checkCurvesLife(int pathLevel)
+
+
+bool JG_Game_Main::checkCurvesLife(float _power)
 {
+	
 	//TODO ayyoob : find a better name
 	//TODO ayyoob : implement this for reverse ball throwing ( from right hand to left)
-	float tempCurrentBallPower;
+	
 	for (int i=0;i<TOUCH_COUNT;i++)
 	{
 		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid
 			&& touchInfos[i].ball->moveMode==Move_Straight)
 		{
-			/*if(touchInfos[i].hand== rightHand)
-			{
-			CCLog("WTTTTTTTTTTTTTTTF: %f",touchInfos[i].ball->GetNewSpeedByForce(CalculateThrowPower(i)));
-			CCLog("drawspeed: %f", speed);
-			}
-
-			if(touchInfos[i].hand== rightHand && touchInfos[i].ball->GetNewSpeedByForce(CalculateThrowPower(i)) == speed)
-			return true;
-			*/
 			
-			/* NOTE FOR ayyoob :there will be no level for ball so check current ball power 
-			 * with the needed power for that path ( pathLevel*powerRange) 
-			 * */
-			tempCurrentBallPower = CalculateThrowPower(i,true); 
-			if(tempCurrentBallPower == pathLevel*powerRange  && touchInfos[i].hand== rightHand)
+			if(CalculateThrowPower(i,true) == _power  && touchInfos[i].hand== rightHand)
 				return true;
 		}
 
 	}
+
+	JG_Hand * hand;
+	for (int i=0 ; i<handsArray->count() ; i++)
+	{
+		hand = (JG_Hand* ) handsArray->objectAtIndex(i);
+
+		if(hand->getThrowPower() == _power)
+			return true;
+	}
+	
 
 	return false;
 }
@@ -1029,7 +1041,7 @@ void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
 	float randomX;
 	float randomY;
 	CCPoint testPoint;
-
+	
 	this->unschedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen));
 	if (CCRANDOM_0_1()>0.5)
 	{

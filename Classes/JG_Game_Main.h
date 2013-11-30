@@ -52,6 +52,8 @@ class JG_Game_Main : public cocos2d::CCLayer
 	CCArray* handsPowerBarArray;
 
 	CCArray* ballsArray;
+
+	CCArray* fruitArray;
 	
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
@@ -151,6 +153,10 @@ public:
 	/*! Adding new ball to screen */
 	void AddBallToScreen();
 	void TempAddBall(float time);
+
+
+	void RemoveFruitFromScreen(JG_Fruit* fruit);
+	void RemoveAllFruitsFromScreen();
 
 	void AddFruitToScreen();
 	void TempAddFruitToScreen(float time);

@@ -111,12 +111,15 @@ void JG_Game_Main::InitGame()
 	ballsArray=CCArray::create();
 	ballsArray->retain();
 
+	fruitArray= CCArray::create();
+	fruitArray->retain();
+
 
 
 	//TempAddBall(0);
 	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	//fruit
-	//this->scheduleOnce(schedule_selector(JG_Game_Main::TempAddFruitToScreen),1.75);
+	this->scheduleOnce(schedule_selector(JG_Game_Main::TempAddFruitToScreen),1.75);
 
 	/******************************** /Balls ************************************/
 
@@ -547,7 +550,7 @@ void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 void JG_Game_Main::OnFruitHit(JG_Ball* ball, JG_Fruit* fruit)
 {
 	this->AddScore(100);
-	CC_SAFE_RELEASE(fruit);
+	RemoveFruitFromScreen(fruit);
 }
 
 void JG_Game_Main::OnBallLost(JG_Ball* lostBall)
@@ -639,6 +642,24 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 	CC_SAFE_RELEASE(ball);
 }
 
+void JG_Game_Main::RemoveAllFruitsFromScreen()
+{
+	JG_Fruit* tempFruit;
+	int temp = fruitArray->count();
+
+	while(fruitArray->count()>0)
+	{
+		RemoveFruitFromScreen((JG_Fruit*)fruitArray->randomObject());
+	}
+}
+
+void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
+{
+	fruitArray->removeObject(fruit,false);
+	removeChild(fruit,true);
+	CC_SAFE_RELEASE(fruit);
+}
+
 void JG_Game_Main::AddBallToScreen()
 {
 	JG_Ball * newBall = JG_Ball::CreateBall(this
@@ -664,9 +685,10 @@ void JG_Game_Main::AddFruitToScreen()
 	CCPoint tempPoint;
 	tempPoint.x=tempX;
 	tempPoint.y=tempY;
-	JG_Fruit* tempFruit = JG_Fruit::CreateFruit(this,tempPoint,(-1)*(CCRANDOM_0_1()*10+15));
-	tempFruit->retain();
-	this->addChild(tempFruit);
+	JG_Fruit* newFruit = JG_Fruit::CreateFruit(this,tempPoint,(-1)*(CCRANDOM_0_1()*10+15));
+	
+	this->addChild(newFruit);
+	fruitArray->addObject(newFruit);
 	
 }
 
@@ -884,6 +906,7 @@ void JG_Game_Main::ResumeGame(CCObject* pSender)
 void JG_Game_Main::ResetGame(CCObject* pSender)
 {
 	RemoveAllBallsFromScreen();
+	RemoveAllFruitsFromScreen();
 	InitGame();
 	ResumeGame(pSender);
 }

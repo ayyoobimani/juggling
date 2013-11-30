@@ -9,17 +9,20 @@ JG_ScorePopup:: ~JG_ScorePopup()
 }
 
 
-JG_ScorePopup* JG_ScorePopup::CreateScorePopup(int score , int multiplier , CCPoint position)
+JG_ScorePopup* JG_ScorePopup::CreateScorePopup(JG_Game_Main* game, int score , int multiplier , CCPoint position)
 {
 
 	JG_ScorePopup * scorePopup = new JG_ScorePopup();
 	if (scorePopup)
 	{
+		
 		scorePopup->autorelease();
 		scorePopup->setPosition(position);
-
-		scorePopup->scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt",  CCDirector::sharedDirector()->getWinSize().height * 0.3f);
-		
+		scorePopup->mainGame = game;
+		scorePopup->mainGame->addChild(scorePopup);
+		scorePopup->retain();
+		scorePopup->scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt",  CCDirector::sharedDirector()->getWinSize().height * 0.1f);
+		scorePopup->setScale(0.5);
 		scorePopup->addChild(scorePopup->scoreLabel);
 
 		scorePopup->ScoreGainAnimation = CCSequence::create(
@@ -39,18 +42,20 @@ JG_ScorePopup* JG_ScorePopup::CreateScorePopup(int score , int multiplier , CCPo
 
 void JG_ScorePopup::removeFromScreen(float dt)
 {
+	mainGame->removeChild(this);
 	CC_SAFE_RELEASE(this);
 }
 
 void JG_ScorePopup::initialScore(int score , int multiplier)
 {
+
 	if (multiplier==1)
 	{
 		scoreLabel->setString(CCString::createWithFormat("%i" , score)->getCString());
 	}
 	else
 	{
-		scoreLabel->setString(CCString::createWithFormat("%iX%i" , multiplier , score )->getCString());
+		scoreLabel->setString(CCString::createWithFormat("%i:%i" , multiplier , score )->getCString());
 		
 	}
 

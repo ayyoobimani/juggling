@@ -544,6 +544,12 @@ void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
 {
 
 	AddScore( ball->IncrementAndGetComboChain() *fruit->GetScore());
+
+	JG_ScorePopup * fruitScore = JG_ScorePopup::CreateScorePopup(this 
+		, fruit->GetScore() 
+		, ball->GetComboChain()
+		, fruit->getPosition());
+	
 }
 
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)

@@ -6,6 +6,7 @@
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
+#include "JG_ScorePopup.h"
 
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
@@ -15,6 +16,7 @@ class JG_Game_HUD;
 class JG_Ball;
 class JG_Hand;
 class JG_Fruit;
+class JG_ScorePopup;
 
 
 

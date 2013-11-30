@@ -248,6 +248,7 @@ void JG_Ball::update(float dt)
 	ProcessMove(dt);
 
 	CheckCollisionWithBall();
+	CheckOutOfScreen();
 
 	// temporary for reseting ball
 

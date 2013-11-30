@@ -79,12 +79,14 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	bool bIsGameInited; 
 
-	/* ! Manages Ball Score for combos */
-	void ManageBallComboScore(JG_Ball* ball);
+
 
 	int ballCounter;
 	int prevballCounter;
 	
+	/* ! Manages Ball Score for combos */
+	void ManageBallComboScore(JG_Ball* ball);
+	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
 	
 public:
 	
@@ -123,7 +125,11 @@ public:
 	/*! this event is called when two balls are collided */
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 	/*! this event is called when a ball is collided with a fruit*/
-	void OnFruitHit(JG_Ball* ball, JG_Fruit* fruit);
+	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
+	/*! this event is called when fruit is out of screen */
+	void OnFruitLost(JG_Fruit* fruit);
+	/*! this event is called when ball is successfully throwed*/
+	void OnBallThrow(JG_Ball* ball);
 
 
 	/*! Return player Score */

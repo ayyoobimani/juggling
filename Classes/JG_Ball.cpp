@@ -49,6 +49,8 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		ball->setTexture(ballTexturesByLevel[ball->ballLevel]);
 		ball->mainGame = game;
 
+		ball->ResetComboChain();
+
 		/********** temporary store the initial state for tempReset function *********/
 		ball->tempInitialThrowDirection = initialDirection;
 		ball->tempInitialPosition = initialPos;
@@ -67,6 +69,7 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 
 void JG_Ball::Throw(float force, CCPoint destination)
 {
+	mainGame->OnBallThrow(this);
 	// Note: the order is important 
 	ballThrowDirection = GetNewThrowDirection(ballThrowDirection);
 	moveMode = GetNewMoveMode(moveMode);
@@ -247,10 +250,7 @@ void JG_Ball::update(float dt)
 	CheckCollisionWithBall();
 
 	// temporary for reseting ball
-	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
-	{
-		OutOfScreen();
-	}
+
    
 }
 
@@ -300,11 +300,15 @@ void JG_Ball::ProcessMove(float dt)
 
 }
 
-void JG_Ball::OutOfScreen()
+void JG_Ball::CheckOutOfScreen()
 {
 
-	CCPoint wtf = this->getPosition();
-	mainGame->OnBallLost(this);
+	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
+	{
+		//NOTE: temporary
+		ResetComboChain();
+		mainGame->OnBallLost(this);
+	}
 }
 
 //
@@ -360,6 +364,26 @@ void JG_Ball::SetBallLevel(int newLevel)
 int JG_Ball::GetBallScore()
 {
 	return ballScoreByLevel[ballLevel];
+}
+
+void JG_Ball::IncrementComboChain()
+{
+	++comboChain;
+}
+
+int JG_Ball::IncrementAndGetComboChain()
+{
+	IncrementComboChain();
+	return GetComboChain();
+}
+
+void JG_Ball::ResetComboChain()
+{
+	comboChain = 0;
+}
+int JG_Ball::GetComboChain()
+{
+	return comboChain;
 }
 
 

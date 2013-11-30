@@ -119,7 +119,8 @@ void JG_Game_Main::InitGame()
 	//TempAddBall(0);
 	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	//fruit
-	this->scheduleOnce(schedule_selector(JG_Game_Main::TempAddFruitToScreen),1.75);
+	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
+
 
 	/******************************** /Balls ************************************/
 
@@ -420,7 +421,7 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 	touchInfos[index].ball->Throw(CalculateThrowPower(index),destHand->getPosition());
 
 	//AddScore(touchInfos[index].ball->GetBallScore());
-	ManageBallComboScore(touchInfos[index].ball);
+	//ManageBallComboScore(touchInfos[index].ball);
 
 	ResetTouchInfo(index);
 }
@@ -539,6 +540,11 @@ void JG_Game_Main::ManageBallComboScore(JG_Ball * ball)
 
 }
 
+void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
+{
+
+	AddScore( ball->IncrementAndGetComboChain() *fruit->GetScore());
+}
 
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 {
@@ -547,21 +553,21 @@ void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 }
 
 //collision of the ball and fruit
-void JG_Game_Main::OnFruitHit(JG_Ball* ball, JG_Fruit* fruit)
+void JG_Game_Main::OnFruitHit(JG_Fruit* fruit, JG_Ball* ball)
 {
-	this->AddScore(100);
+	ManageFruitScore(fruit,ball);
 	RemoveFruitFromScreen(fruit);
 }
 
-void JG_Game_Main::OnBallLost(JG_Ball* lostBall)
+void JG_Game_Main::OnBallLost(JG_Ball* ball)
 {
 	//CCLog("BallLOst",0);
-	int touchInfoIndex = GetTouchInfoIndexByBall(lostBall);
+	int touchInfoIndex = GetTouchInfoIndexByBall(ball);
 	if(touchInfoIndex!= -1)
 		BallTouchHandler_End(touchInfoIndex);
 	else
 	{
-		RemoveBallFromScreen(lostBall);
+		RemoveBallFromScreen(ball);
 		DecrementLifeCount();
 		if(lifeCount>0)
 		{
@@ -569,8 +575,16 @@ void JG_Game_Main::OnBallLost(JG_Ball* lostBall)
 
 		}
 	}
+}
 
+void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
+{
+	RemoveFruitFromScreen(fruit);
+}
 
+void JG_Game_Main::OnBallThrow(JG_Ball* ball)
+{
+	ball->ResetComboChain();
 }
 
 int JG_Game_Main::GetScore()
@@ -696,8 +710,7 @@ void JG_Game_Main::TempAddFruitToScreen(float time)
 {
 
 	AddFruitToScreen();
-
-	this->scheduleOnce(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
+	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1()*5);
 }
 
 

@@ -67,10 +67,8 @@ class JG_Ball :
 
 
 	bool bMustShine;
-
-	
-	
-
+	/*! how many combo does the ball do */
+	int comboChain;
 
 public:
 	JG_Ball(void);
@@ -153,7 +151,12 @@ public:
 
 	int GetBallScore();
 
-	void OutOfScreen();
+	void IncrementComboChain();
+	int IncrementAndGetComboChain();
+	void ResetComboChain();
+	int GetComboChain();
+
+	void CheckOutOfScreen();
 
 	//collision of balls checking
 	void CheckCollisionWithBall();

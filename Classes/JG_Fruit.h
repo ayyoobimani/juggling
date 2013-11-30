@@ -13,6 +13,7 @@ private:
 	float speed;
 	float radius;
 	JG_Game_Main* mainGame;
+	float score;
 
 public:
 	JG_Fruit(void);
@@ -24,9 +25,8 @@ public:
 	void CheckCollisionWithBall();
 
 	void ProcessMove(float dt);
+	void CheckOutOfScreen();
 
-	
-
-
+	float GetScore();
 };
 

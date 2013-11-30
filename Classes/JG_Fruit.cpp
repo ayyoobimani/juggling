@@ -4,6 +4,7 @@
 JG_Fruit::JG_Fruit(void)
 {
 	radius=15;
+	score = 100;
 }
 
 
@@ -46,12 +47,23 @@ void JG_Fruit::CheckCollisionWithBall()
 		float collision_radius=this->radius+tempCurrentBall->radius;
 		if(mainGame->ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
 		{
-			mainGame->OnFruitHit(tempCurrentBall,this);
+			mainGame->OnFruitHit(this, tempCurrentBall);
 			return;
 		}
 
 	}
+}
 
+float JG_Fruit::GetScore()
+{
+	return score;
+}
 
+void JG_Fruit::CheckOutOfScreen()
+{
+	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
+	{
+		mainGame->OnFruitLost(this);
+	}
 }
 

@@ -457,12 +457,12 @@ float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bI
 	//CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
-	if(!bIsDemo)
-	{
-		if(ball->GetBallDirection()== Dir_LeftHandToRight
-			|| ball->GetBallDirection() ==Dir_RighHandtToLeft)
-			ball->SetBallLevel(powerLevel);
-	}
+	//if(!bIsDemo)
+	//{
+		//if(ball->GetBallDirection()== Dir_LeftHandToRight
+		//	|| ball->GetBallDirection() ==Dir_RighHandtToLeft)
+		//	ball->SetBallLevel(powerLevel);
+	//}
 	return discretedValue;
 
 }

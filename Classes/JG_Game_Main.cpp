@@ -285,9 +285,9 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				{
 					ballCounter++;
 					if(ballCounter == 1)
-						gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
+						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
 					if(ballCounter == 2)
-						gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
+						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
 
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{

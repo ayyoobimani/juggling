@@ -35,8 +35,8 @@ void JG_Hand::draw()
 
 	if(bMustDrawArea)
 	{
-		glLineWidth(200*mainGame->screenSize.height/320);
-		ccDrawColor4B(0, 255, 255, 128); 
+		glLineWidth(10*mainGame->screenSize.height/320);
+		ccDrawColor4B(0, 186, 60, 60); 
 		ccDrawCircle( convertToNodeSpace(this->getPosition()), radius , 360 , 32 , false);
 
 	}

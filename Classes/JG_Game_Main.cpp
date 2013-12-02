@@ -206,8 +206,8 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 			}
 		}
 	}
-	gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
-	gameHUD->prevballcount->setString(CCString::createWithFormat("%d",prevballCounter)->getCString());
+	//gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
+	//gameHUD->prevballcount->setString(CCString::createWithFormat("%d",prevballCounter)->getCString());
 	prevballCounter = ballCounter;
 
 }
@@ -231,6 +231,7 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 			criticalBall = FindBestBallMatching(currentHand);
 			if(criticalBall != NULL)	
 			{
+
 				SetTouchInfo(touch,currentHand,criticalBall);
 			}
 
@@ -263,10 +264,10 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				{
 					
 					ballCounter++;
-					if(ballCounter == 1)
-						gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
-					if(ballCounter == 2)
-						gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					if(ballCounter == 1);
+						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					if(ballCounter == 2);
+						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
 					if( absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) <criticalTime  )
 					{
 						criticalBall = tempBall;
@@ -281,16 +282,19 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 			else // if rightHand
 			{
 
+
 				if(tempBall->GetBallDirection() == Dir_LeftHandToRight)
 				{
 					ballCounter++;
-					if(ballCounter == 1)
+					if(ballCounter == 1);
 						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-					if(ballCounter == 2)
+					if(ballCounter == 2);
 						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
 
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{
+						CCLog("it's all in your minde, tap location ");
+
 						criticalBall = tempBall;
 						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
 					}

@@ -235,7 +235,7 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 				SetTouchInfo(touch,currentHand,criticalBall);
 			}
 
-			gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
+			//gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
 		}// end of hand collision checking
 	}// end of hand looping	
 
@@ -453,12 +453,12 @@ float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bI
 	rawInput-=actualMinPower;
 	//CCLOG("max value %f", GetMaxThrowPower());
 	//CCLOG("min value %f", actualMinPower);
-	//CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
+	//CCLOG("discrete value %f", (floor(rawInput/powerRange)*powerRange));
 	float powerLevel=floor(rawInput/powerRange);
 
 	discretedValue=powerLevel*powerRange;
 
-	//CCLOG("power level : %f",powerLevel);
+	CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
 	//if(!bIsDemo)
@@ -777,7 +777,7 @@ void JG_Game_Main::InitialThrowPowerVariables()
 	//min power that we can have
 	actualMinPower=maxThrowPower*MIN_TOUCH_LENGTH_FACTOR;
 	//range of power between max and min
-	powerRange=(maxThrowPower-actualMinPower)/DISCRETE_PARTS_COUNT;
+	powerRange=(maxThrowPower-actualMinPower)/(DISCRETE_PARTS_COUNT-1);
 
 	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
 }

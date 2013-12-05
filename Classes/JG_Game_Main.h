@@ -8,6 +8,7 @@
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
 #include "JG_ScorePopup.h"
+#include "JG_Path.h"
 
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
@@ -18,8 +19,9 @@ class JG_Ball;
 class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
+class JG_Path;
 
-
+#define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 
 // define how many touches can be supported at the same time
 #define TOUCH_COUNT 2
@@ -57,7 +59,9 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCArray* ballsArray;
 
-	CCArray* fruitArray;
+	CCArray* fruitsArray;
+
+	CCArray* pathsArray;
 	
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
@@ -301,6 +305,9 @@ public:
 
 	/*! check to see if a ball may be throw in this curve! */
 	bool checkCurvesLife(float power);
+
+	/*! checks throw path for each ball and activated them */
+	void CheckBallsThrowPath();
 
 	
 	/*!checks whether distance of the two point are lesser than distance or not*/

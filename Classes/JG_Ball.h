@@ -9,7 +9,7 @@ using namespace cocos2d;
 
 class JG_Game_Main;
 
-#define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
+
 
 #define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(75))
 #define BALL_SCALE 1.0
@@ -168,36 +168,8 @@ public:
 	void SetInitialTouchPosition(CCPoint newTouchPos);
 
 	/*! Calculate the minimum Speed , based on the distance of handes */
-	static void CalculateSpeedBoundriesBaseOnLength(float deltaX)
-	{
-		//TODO: wtf +2 needed
-		minSpeed = sqrt( GRAVITY * abs(deltaX))+ 2;
-		//TODO: calculate maxSpeed
-		maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
-	}
-
-	static void InitialBallLevelInformation()
-	{
-		ballScoreByLevel[MAX_BALL_LEVELS-1] = 50;
-		ballScoreByLevel[MAX_BALL_LEVELS-2] = 100;
-		ballScoreByLevel[MAX_BALL_LEVELS-3] = 200;
-		ballScoreByLevel[MAX_BALL_LEVELS-4] = 400;
-		ballScoreByLevel[MAX_BALL_LEVELS-5] = 800;
-		ballScoreByLevel[MAX_BALL_LEVELS-6] = 1600;
-
-		ballTextureNamesByLevel[MAX_BALL_LEVELS-1] = "Gem1.png";
-		ballTextureNamesByLevel[MAX_BALL_LEVELS-2] = "Gem3.png";
-		ballTextureNamesByLevel[MAX_BALL_LEVELS-3] = "Gem4.png";
-		ballTextureNamesByLevel[MAX_BALL_LEVELS-4] = "Gem5.png";
-		ballTextureNamesByLevel[MAX_BALL_LEVELS-5] = "Gem6.png";
-		ballTextureNamesByLevel[MAX_BALL_LEVELS-6] = "Gem7.png";
-
-		for( int i = 0 ; i<MAX_BALL_LEVELS; i++)
-		{
-			ballTexturesByLevel[i] = CCTextureCache::sharedTextureCache()->addImage(ballTextureNamesByLevel[i].getCString());
-		}
-
-	}
+	static void CalculateSpeedBoundriesBaseOnLength(float deltaX);
+	static void InitialBallLevelInformation();
 
 	//taylor formula
 	//float TaylorFormulaCalculate(float angle);

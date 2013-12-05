@@ -65,6 +65,37 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 	return NULL;
 }
 
+void JG_Ball::CalculateSpeedBoundriesBaseOnLength(float deltaX)
+{
+	//TODO: wtf +2 needed
+	minSpeed = sqrt( GRAVITY * abs(deltaX))+ 2;
+	//TODO: calculate maxSpeed
+	maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
+}
+
+void JG_Ball::InitialBallLevelInformation()
+{
+	ballScoreByLevel[MAX_BALL_LEVELS-1] = 50;
+	ballScoreByLevel[MAX_BALL_LEVELS-2] = 100;
+	ballScoreByLevel[MAX_BALL_LEVELS-3] = 200;
+	ballScoreByLevel[MAX_BALL_LEVELS-4] = 400;
+	ballScoreByLevel[MAX_BALL_LEVELS-5] = 800;
+	ballScoreByLevel[MAX_BALL_LEVELS-6] = 1600;
+
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-1] = "Gem1.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-2] = "Gem3.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-3] = "Gem4.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-4] = "Gem5.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-5] = "Gem6.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-6] = "Gem7.png";
+
+	for( int i = 0 ; i<MAX_BALL_LEVELS; i++)
+	{
+		ballTexturesByLevel[i] = CCTextureCache::sharedTextureCache()->addImage(ballTextureNamesByLevel[i].getCString());
+	}
+
+}
+
 void JG_Ball::Throw(float force, CCPoint destination)
 {
 	mainGame->OnBallThrow(this);

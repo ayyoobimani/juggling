@@ -54,6 +54,8 @@ bool JG_Game_Main::init()
 	this->addChild(gameHUD,100);
 	//gameHUD->draw();
 
+
+
 	/*********************** Background **************************/
 	CCSprite * backGround = CCSprite::create("background2.png");
 
@@ -81,10 +83,29 @@ bool JG_Game_Main::init()
 
 	for( int i = 0 ; i<handsArray->count();i++)
 	{
-		this->addChild((CCNode*)handsArray->objectAtIndex(i));
+		this->addChild((CCNode*)handsArray->objectAtIndex(i),5);
 		this->addChild((CCNode*)handsPowerBarArray->objectAtIndex(i),2);
 	}
 	/*************************** /Hands *************************************/
+
+	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
+	JG_Ball::InitialBallLevelInformation();
+	//it is import we call calculatethrowpower after jg_ball calculate
+	InitialThrowPowerVariables();
+
+	/*************************** Paths ****************************/
+
+	pathsArray = CCArray::create();
+	pathsArray->retain();
+	for( int i= 0 ; i< DISCRETE_PARTS_COUNT ; i++)
+	{
+		pathsArray->addObject(JG_Path::CreatePath(i * powerRange
+			, leftHand->getPosition()
+			, rightHand->getPosition()));
+		this->addChild((CCNode*)pathsArray->objectAtIndex(i),2);
+	}
+
+	/*************************** /Paths ****************************/
 
 
 	InitGame();
@@ -104,16 +125,13 @@ void JG_Game_Main::InitGame()
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
 	/****************************** Balls ************************************/
-	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
-	JG_Ball::InitialBallLevelInformation();
-	//it is import we call calculatethrowpower after jg_ball calculate
-	InitialThrowPowerVariables();
+
 	// initing  one ball for test
 	ballsArray=CCArray::create();
 	ballsArray->retain();
 
-	fruitArray= CCArray::create();
-	fruitArray->retain();
+	fruitsArray= CCArray::create();
+	fruitsArray->retain();
 
 
 	//TempAddBall(0);
@@ -149,7 +167,31 @@ void JG_Game_Main::update(float dt)
 
 	//TestSingleTouch();
 	CheckBallCollisionWithHand();
+	CheckBallsThrowPath();
 
+}
+
+void JG_Game_Main::CheckBallsThrowPath()
+{
+
+	for( int i = 0; i < pathsArray->count() ; i++)
+	{
+		((JG_Path * ) pathsArray->objectAtIndex(i))->SetHighlight(false);
+	}
+
+	for( int i = 0 ; i< TOUCH_COUNT; i++)
+	{
+		if( touchInfos[i].ball!=NULL)
+		{
+			if(touchInfos[i].ball->GetBallDirection() == Dir_RighHandtToLeft
+				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
+			{
+				int ballPath = CalculateThrowPower(i,true)/ powerRange;
+				CCLOG("power level : %f",ballPath);
+				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
+			}
+		}
+	}
 }
 
 void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
@@ -456,9 +498,10 @@ float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bI
 	//CCLOG("discrete value %f", (floor(rawInput/powerRange)*powerRange));
 	float powerLevel=floor(rawInput/powerRange);
 
+
 	discretedValue=powerLevel*powerRange;
 
-	CCLOG("power level : %f",powerLevel);
+	//CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
 	//if(!bIsDemo)
@@ -675,17 +718,17 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 void JG_Game_Main::RemoveAllFruitsFromScreen()
 {
 	JG_Fruit* tempFruit;
-	int temp = fruitArray->count();
+	int temp = fruitsArray->count();
 
-	while(fruitArray->count()>0)
+	while(fruitsArray->count()>0)
 	{
-		RemoveFruitFromScreen((JG_Fruit*)fruitArray->randomObject());
+		RemoveFruitFromScreen((JG_Fruit*)fruitsArray->randomObject());
 	}
 }
 
 void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
 {
-	fruitArray->removeObject(fruit,false);
+	fruitsArray->removeObject(fruit,false);
 	removeChild(fruit,true);
 	CC_SAFE_RELEASE(fruit);
 }
@@ -718,7 +761,7 @@ void JG_Game_Main::AddFruitToScreen()
 	JG_Fruit* newFruit = JG_Fruit::CreateFruit(this,tempPoint,(-1)*(CCRANDOM_0_1()*10+15));
 	
 	this->addChild(newFruit);
-	fruitArray->addObject(newFruit);
+	fruitsArray->addObject(newFruit);
 	
 }
 
@@ -785,8 +828,8 @@ void JG_Game_Main::InitialThrowPowerVariables()
 
 void JG_Game_Main::draw()
 {
-	if(bIsGameInited)
-		DrawThrowPaths();
+	//if(bIsGameInited)
+		//DrawThrowPaths();
 }
 
 void JG_Game_Main::DrawThrowPaths()
@@ -866,14 +909,8 @@ bool JG_Game_Main::checkCurvesLife(float _power)
 		if(hand->getThrowPower() == _power)
 			return true;
 	}
-	
-
 	return false;
 }
-
-
-
-
 
 
 void JG_Game_Main:: CheckBallCollisionWithHand()
@@ -899,12 +936,10 @@ void JG_Game_Main:: CheckBallCollisionWithHand()
 			if(ArePointsColliding(currentBall->getPosition() ,currentHand->getPosition() , currentHand->GetRadius()))
 			{
 				currentHand->SetAreaVisibility(true);
-				currentBall->SetShineVisibility(true);
-				
+				currentBall->SetShineVisibility(true);			
 			}
 		}
 	}
-
 }
 
 

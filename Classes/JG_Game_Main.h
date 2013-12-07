@@ -7,6 +7,7 @@
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
+#include "JG_Enemy.h"
 #include "JG_ScorePopup.h"
 #include "JG_Path.h"
 
@@ -139,6 +140,9 @@ public:
 	void OnFruitLost(JG_Fruit* fruit);
 	/*! this event is called when ball is successfully throwed*/
 	void OnBallThrow(JG_Ball* ball);
+
+	/*!this event called when a ball is collided with an enemy*/
+	//void OnEnemyHit(JG_E
 
 
 	/*! Return player Score */

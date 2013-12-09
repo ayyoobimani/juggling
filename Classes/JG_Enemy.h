@@ -18,19 +18,20 @@ private:
 	EEnemyState state;
 	bool bIsDirectionSet;
 	CCPoint destination;
-	float delay;
+	float directionRadian;
 
 	JG_Game_Main* mainGame;
 	float score;
 
-	void SetState(EEnemyState state);
+	
 
-	void IntendingState();
-	void AttackingState();
-	void WaitingState();
-	void EscapingState();
 
-	void BetweenIntendingWaiting(float dt);
+	void GotoState_Intending();
+	void GotoState_Attacking();
+	void GotoState_Waiting();
+	void GotoState_Escaping();
+
+	
 public:
 	JG_Enemy(void);
 	~JG_Enemy(void);
@@ -40,7 +41,7 @@ public:
 	
 	void SetDestination(CCPoint destination);
 	
-
+	void SetState(EEnemyState state);
 
 	static JG_Enemy* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed,float delay);
 	void update(float dt);
@@ -48,6 +49,8 @@ public:
 	void CheckCollisionWithBall();
 
 	void ProcessMove(float dt);
+
+	void HandleWaitingToAttacking(float time);
 
 	
 

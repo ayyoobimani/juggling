@@ -107,6 +107,14 @@ bool JG_Game_Main::init()
 
 	/*************************** /Paths ****************************/
 
+	
+	tempDestination = new CCSprite();
+	tempDestination->initWithFile("cross.png");
+	tempDestination->retain();
+	this->addChild((CCNode*) tempDestination);
+
+	tempEnemy = JG_Enemy::CreateEnemy(this,ccp(100,100),60,1);
+	this->addChild((CCNode*) tempEnemy);
 
 	InitGame();
 	this->setTouchEnabled(true);
@@ -202,12 +210,17 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 
 	for( i = pTouches->begin(); i != pTouches->end(); i++) 
 	{
+		
 		touch = (CCTouch*) (*i);
+		tempDestination->setPosition(touch->getLocation());
+		tempEnemy->SetDestination(tempDestination->getPosition());
 		if(touch) 
 		{
 			BallTouchHandler_Init(touch);
 		}
 	}
+
+
 }
 
 void JG_Game_Main::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
@@ -769,6 +782,7 @@ void JG_Game_Main::TempAddFruitToScreen(float time)
 {
 
 	AddFruitToScreen();
+	this->unschedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen));
 	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1()*5);
 }
 

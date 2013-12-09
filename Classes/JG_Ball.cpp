@@ -127,28 +127,28 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 		
 		
 
-		/* because there are two radians the have the same range (they can both reach the 
-			destination in same time), we choose the bigger one for better curve.
-			we can throw the ball with 30 deg and 60 deg and they will reach the destination
-			but we choose the 60 deg.
-			*/
-		//if(abs(CC_RADIANS_TO_DEGREES(curveRadian))<45)
-			//curveRadian = (curveRadian/abs(curveRadian)) *CC_DEGREES_TO_RADIANS(90)- curveRadian;
-		//TODO : Do it for reverse direction
-		if( CC_RADIANS_TO_DEGREES(tempCurveRad)>-45)
-			tempCurveRad = CC_DEGREES_TO_RADIANS(-90) - tempCurveRad;
+	/* because there are two radians the have the same range (they can both reach the 
+		destination in same time), we choose the bigger one for better curve.
+		we can throw the ball with 30 deg and 60 deg and they will reach the destination
+		but we choose the 60 deg.
+		*/
+	//if(abs(CC_RADIANS_TO_DEGREES(curveRadian))<45)
+		//curveRadian = (curveRadian/abs(curveRadian)) *CC_DEGREES_TO_RADIANS(90)- curveRadian;
+	//TODO : Do it for reverse direction
+	if( CC_RADIANS_TO_DEGREES(tempCurveRad)>-45)
+		tempCurveRad = CC_DEGREES_TO_RADIANS(-90) - tempCurveRad;
 
 	
-		/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
-		if(tempCurveRad<0)
-			tempCurveRad = CC_DEGREES_TO_RADIANS(180) + tempCurveRad;
+	/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
+	if(tempCurveRad<0)
+		tempCurveRad = CC_DEGREES_TO_RADIANS(180) + tempCurveRad;
 
-		//CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(tempCurveRad));
+	//CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(tempCurveRad));
 
-		return tempCurveRad;
-		//curveRadian = CC_DEGREES_TO_RADIANS(135);
-		//mainGame->gameHUD->debugLabel->setString("");
-		//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curveRadian))->getCString());
+	return tempCurveRad;
+	//curveRadian = CC_DEGREES_TO_RADIANS(135);
+	//mainGame->gameHUD->debugLabel->setString("");
+	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curveRadian))->getCString());
 }
 
 float JG_Ball::GetNewSpeedByForce(float force)

@@ -10,10 +10,12 @@
 #include "JG_Enemy.h"
 #include "JG_ScorePopup.h"
 #include "JG_Path.h"
+#include "JG_Enemy.h"
 
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
 using namespace cocos2d;
+
 
 class JG_Game_HUD;
 class JG_Ball;
@@ -21,6 +23,7 @@ class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
 class JG_Path;
+class JG_Enemy;
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 
@@ -63,6 +66,10 @@ class JG_Game_Main : public cocos2d::CCLayer
 	CCArray* fruitsArray;
 
 	CCArray* pathsArray;
+
+	CCSprite* tempDestination;
+
+	JG_Enemy* tempEnemy;
 	
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];

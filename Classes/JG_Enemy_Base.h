@@ -1,10 +1,15 @@
 #pragma once
 #include "sprite_nodes\CCSprite.h"
 #include "JG_Game_Main.h"
+#include "JG_Path.h"
 
+class JG_Path;
+
+
+// EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {
-	EnemyS_Intending,EnemyS_Attacking,EnemyS_Waiting,EnemyS_Escaping
+	EnemyS_Inited,EnemyS_Intending,EnemyS_Attacking,EnemyS_Waiting,EnemyS_Escaping
 };
 
 #define BASE_WAITING_TIME 5
@@ -27,11 +32,12 @@ private:
 	JG_Game_Main* mainGame;
 	float score;
 
+	JG_Path* targetPath;
 
-	float interVal;
+	float attackInterval;
 	float damagePerSecond;
 	float damagePerInterval;
-	void Attack();
+	void Attack(float dt);
 
 	
 	void GotoState_Intending();
@@ -51,11 +57,14 @@ public:
 	//move to  function
 	void MoveTo(float dt);
 	
-	void SetDestination(CCPoint destination);
+	void SetDestination(CCPoint destination, JG_Path * newTargetPath);
 	
 	void SetState(EEnemyState state);
 
-	static JG_Enemy_Base* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed,float delay);
+	static JG_Enemy_Base* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition);
+
+	void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition);
+
 	void update(float dt);
 	//checking collision with ball
 	void CheckCollisionWithBall();
@@ -73,6 +82,6 @@ public:
 
 	//float GetScore();
 
-	float  getDifficulty();
+	float  GetDifficulty();
 };
 

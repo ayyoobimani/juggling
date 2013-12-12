@@ -3,6 +3,11 @@
 
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
+	speed = 20;
+	waitingTime = 2.0;
+	SetState(EnemyS_Inited);
+	targetPath = NULL;
+	damagePerInterval=damagePerSecond*attackInterval;
 }
 
 
@@ -10,25 +15,30 @@ JG_Enemy_Base::~JG_Enemy_Base(void)
 {
 }
 
-JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed,float delay)
+JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(JG_Game_Main* game,CCPoint initialPosition)
 {
 	
 	JG_Enemy_Base * enemy = new JG_Enemy_Base();
 	
-	if (enemy && enemy->initWithFile("crow.png"))
+	if (enemy )
 	{
-		enemy->autorelease();
-		enemy->setPosition(initialPosition);
-		enemy->speed=initialSpeed;
-		enemy->scheduleUpdate();
-		enemy->mainGame=game;
-		enemy->waitingTime=delay;
-		enemy->state = EnemyS_Waiting;
+		enemy->InitialEnemy(game,initialPosition);
+		
 		return enemy;
 
 	}
 	CC_SAFE_DELETE(enemy);
 	return NULL;	 
+}
+
+void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
+{
+	initWithFile("crow.png");
+	autorelease();
+	setPosition(initialPosition);
+	scheduleUpdate();
+	mainGame=game;
+
 }
 
 void JG_Enemy_Base::CheckCollisionWithBall()
@@ -64,9 +74,10 @@ void JG_Enemy_Base::MoveTo(float dt)
 
 }
 
-void JG_Enemy_Base::SetDestination(CCPoint destination)
+void JG_Enemy_Base::SetDestination(CCPoint destination, JG_Path * newTargetPath)
 {
 	this->destination=destination;
+	targetPath = newTargetPath;
 	bIsDirectionSet=true;
 	CCPoint direction = destination- getPosition();
 
@@ -93,8 +104,11 @@ void JG_Enemy_Base::update(float dt)
 void JG_Enemy_Base::SetState(EEnemyState newState)
 {
 	this->unschedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking));
+	this->unschedule(schedule_selector(JG_Enemy_Base::Attack));
 	switch (newState)
 	{
+	case EnemyS_Inited:
+		break;
 	case EnemyS_Attacking:
 		GotoState_Attacking();
 		break;
@@ -119,6 +133,7 @@ void JG_Enemy_Base::GotoState_Intending()
 void JG_Enemy_Base::GotoState_Attacking()
 {
 	CCLog("In state Attacking");
+	this->schedule(schedule_selector(JG_Enemy_Base::Attack),attackInterval);
 	
 
 }
@@ -141,12 +156,13 @@ void JG_Enemy_Base::HandleWaitingToAttacking(float dt)
 {
 	SetState(EnemyS_Attacking);
 }
-void JG_Enemy_Base::Attack()
+void JG_Enemy_Base::Attack(float dt)
 {
-	damagePerInterval=damagePerSecond*interVal;
+	if(targetPath!=NULL)
+		targetPath->TakeDamage(damagePerInterval);
 }
 
-float JG_Enemy::getDifficulty()
+float JG_Enemy_Base::GetDifficulty()
 {
-	return ( (BASE_WAITING_TIME - waitingTime)* FIRST_HIT_COEFFICIENT + (BASE_INTERVAL - interVal) )*damagePerInterval;
+	return ( (BASE_WAITING_TIME - waitingTime)* FIRST_HIT_COEFFICIENT + (BASE_INTERVAL - attackInterval) )*damagePerInterval;
 }

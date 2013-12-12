@@ -3,6 +3,7 @@
 
 JG_Path::JG_Path(void)
 {
+	health = 100;
 }
 
 
@@ -83,6 +84,15 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 
 	return PointPosition;
 
+}
+
+void JG_Path::TakeDamage(float damage)
+{
+	health-= damage;
+	if(health<=0)
+	{
+		//TODO: implement here
+	}
 }
 
 

@@ -29,11 +29,13 @@ private:
 	float damagePerInterval;
 	void Attack();
 
-
+	
 	void GotoState_Intending();
 	void GotoState_Attacking();
 	void GotoState_Waiting();
 	void GotoState_Escaping();
+
+
 
 	
 

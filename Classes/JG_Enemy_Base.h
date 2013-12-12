@@ -8,7 +8,7 @@ enum EEnemyState
 };
 
 
-class JG_Enemy:
+class JG_Enemy_Base:
 	public CCSprite
 {
 private:
@@ -41,8 +41,8 @@ private:
 
 	
 public:
-	JG_Enemy(void);
-	~JG_Enemy(void);
+	JG_Enemy_Base(void);
+	~JG_Enemy_Base(void);
 
 	//move to  function
 	void MoveTo(float dt);
@@ -51,7 +51,7 @@ public:
 	
 	void SetState(EEnemyState state);
 
-	static JG_Enemy* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed,float delay);
+	static JG_Enemy_Base* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed,float delay);
 	void update(float dt);
 	//checking collision with ball
 	void CheckCollisionWithBall();

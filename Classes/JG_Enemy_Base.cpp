@@ -1,19 +1,19 @@
-#include "JG_Enemy.h"
+#include "JG_Enemy_Base.h"
 
 
-JG_Enemy::JG_Enemy(void)
+JG_Enemy_Base::JG_Enemy_Base(void)
 {
 }
 
 
-JG_Enemy::~JG_Enemy(void)
+JG_Enemy_Base::~JG_Enemy_Base(void)
 {
 }
 
-JG_Enemy* JG_Enemy::CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed,float delay)
+JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float initialSpeed,float delay)
 {
 	
-	JG_Enemy * enemy = new JG_Enemy();
+	JG_Enemy_Base * enemy = new JG_Enemy_Base();
 	
 	if (enemy && enemy->initWithFile("crow.png"))
 	{
@@ -31,7 +31,7 @@ JG_Enemy* JG_Enemy::CreateEnemy(JG_Game_Main* game,CCPoint initialPosition,float
 	return NULL;	 
 }
 
-void JG_Enemy::CheckCollisionWithBall()
+void JG_Enemy_Base::CheckCollisionWithBall()
 {
 	JG_Ball* tempCurrentBall;
 	for(int i=0;i<mainGame->GetBallArray()->count();i++)
@@ -46,7 +46,7 @@ void JG_Enemy::CheckCollisionWithBall()
 
 	}
 }
-void JG_Enemy::MoveTo(float dt)
+void JG_Enemy_Base::MoveTo(float dt)
 {
 	//this->SetDestination(this->destination);
 	if( getPosition().getDistance(destination)< speed *dt)
@@ -64,7 +64,7 @@ void JG_Enemy::MoveTo(float dt)
 
 }
 
-void JG_Enemy::SetDestination(CCPoint destination)
+void JG_Enemy_Base::SetDestination(CCPoint destination)
 {
 	this->destination=destination;
 	bIsDirectionSet=true;
@@ -83,16 +83,16 @@ void JG_Enemy::SetDestination(CCPoint destination)
 	SetState(EnemyS_Intending);
 }
 
-void JG_Enemy::update(float dt)
+void JG_Enemy_Base::update(float dt)
 {
 	if(state==EnemyS_Intending&&bIsDirectionSet==true)
 		MoveTo(dt);
 
 }
 //nonesense
-void JG_Enemy::SetState(EEnemyState newState)
+void JG_Enemy_Base::SetState(EEnemyState newState)
 {
-	this->unschedule(schedule_selector(JG_Enemy::HandleWaitingToAttacking));
+	this->unschedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking));
 	switch (newState)
 	{
 	case EnemyS_Attacking:
@@ -110,38 +110,38 @@ void JG_Enemy::SetState(EEnemyState newState)
 	}
 	state=newState;
 }
-void JG_Enemy::GotoState_Intending()
+void JG_Enemy_Base::GotoState_Intending()
 {
 	CCLog("In state Intending");
 	
 	
 }
-void JG_Enemy::GotoState_Attacking()
+void JG_Enemy_Base::GotoState_Attacking()
 {
 	CCLog("In state Attacking");
 	
 
 }
-void JG_Enemy::GotoState_Waiting()
+void JG_Enemy_Base::GotoState_Waiting()
 {
 	CCLog("In state Waiting");
 	
 
-	this->schedule(schedule_selector(JG_Enemy::HandleWaitingToAttacking),0,0,waitingTime);
+	this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,waitingTime);
 	
 }
-void JG_Enemy::GotoState_Escaping()
+void JG_Enemy_Base::GotoState_Escaping()
 {
 	CCLog("In state Escaping");
 
 	
 	
 }
-void JG_Enemy::HandleWaitingToAttacking(float dt)
+void JG_Enemy_Base::HandleWaitingToAttacking(float dt)
 {
 	SetState(EnemyS_Attacking);
 }
-void JG_Enemy::Attack()
+void JG_Enemy_Base::Attack()
 {
 	damagePerInterval=damagePerSecond*interVal;
 }

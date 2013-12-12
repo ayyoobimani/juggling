@@ -7,10 +7,11 @@
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
-#include "JG_Enemy.h"
+#include "JG_Enemy_Base.h"
 #include "JG_ScorePopup.h"
 #include "JG_Path.h"
-#include "JG_Enemy.h"
+#include "JG_Factory_Enemy.h"
+
 
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
@@ -23,7 +24,7 @@ class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
 class JG_Path;
-class JG_Enemy;
+class JG_Enemy_Base;
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 
@@ -41,6 +42,19 @@ class JG_Enemy;
 #define GAME_SCALE 0.6
 
 #define DISCRETE_PARTS_COUNT 4
+
+struct SObjectType
+{
+
+};
+
+template <Class EnemyType>
+struct SEnemyTypes
+{
+	JG_Factory_Enemy<EnemyType> type;
+	int currentChance;
+	int chanceIncreasePerRound;
+};
 
 struct STouchInfo
 {

@@ -78,14 +78,8 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 	//TODO: implement this
 	CCPoint PointPosition;
 	lenghtRatio = clampf(lenghtRatio,0,1);
-	PointPosition.x=abs(destinationPoint.x-originPoint.x)*lenghtRatio;
-	PointPosition.y=PointPosition.x*atan(pathThrowRadian)-(0.5*GRAVITY*pow(PointPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2))
-
-	
-
-
-
-
+	PointPosition.x=abs(destinationPoint.x-originPoint.x)*lenghtRatio+originPoint.x;
+	PointPosition.y=(PointPosition.x*atan(pathThrowRadian))-(0.5*GRAVITY*pow(PointPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2))+destinationPoint.y;
 
 	return PointPosition;
 

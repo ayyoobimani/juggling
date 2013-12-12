@@ -17,6 +17,7 @@ class JG_Path :
 	CCPoint originPoint;
 	CCPoint destinationPoint;
 
+
 	// trace texture for drawing throw paths
 	CCTexture2D* tracePointTexture;
 	CCTexture2D* traceLivePointTexture;

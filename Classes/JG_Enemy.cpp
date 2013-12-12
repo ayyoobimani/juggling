@@ -141,3 +141,7 @@ void JG_Enemy::HandleWaitingToAttacking(float dt)
 {
 	SetState(EnemyS_Attacking);
 }
+void JG_Enemy::Attack()
+{
+	damagePerInterval=damagePerSecond*interVal;
+}

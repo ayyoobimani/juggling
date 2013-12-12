@@ -23,13 +23,19 @@ private:
 	JG_Game_Main* mainGame;
 	float score;
 
-	
+
+	float interVal;
+	float damagePerSecond;
+	float damagePerInterval;
+	void Attack();
 
 
 	void GotoState_Intending();
 	void GotoState_Attacking();
 	void GotoState_Waiting();
 	void GotoState_Escaping();
+
+	
 
 	
 public:

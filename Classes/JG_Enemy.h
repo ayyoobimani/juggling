@@ -7,6 +7,10 @@ enum EEnemyState
 	EnemyS_Intending,EnemyS_Attacking,EnemyS_Waiting,EnemyS_Escaping
 };
 
+#define BASE_WAITING_TIME 5
+#define BASE_INTERVAL 5
+#define FIRST_HIT_COEFFICIENT 2
+
 
 class JG_Enemy:
 	public CCSprite
@@ -69,6 +73,6 @@ public:
 
 	//float GetScore();
 
-	
+	float  getDifficulty();
 };
 

@@ -54,6 +54,8 @@ bool JG_Game_Main::init()
 	this->addChild(gameHUD,100);
 	//gameHUD->draw();
 
+
+
 	/*********************** Background **************************/
 	CCSprite * backGround = CCSprite::create("background2.png");
 
@@ -81,11 +83,38 @@ bool JG_Game_Main::init()
 
 	for( int i = 0 ; i<handsArray->count();i++)
 	{
-		this->addChild((CCNode*)handsArray->objectAtIndex(i));
+		this->addChild((CCNode*)handsArray->objectAtIndex(i),5);
 		this->addChild((CCNode*)handsPowerBarArray->objectAtIndex(i),2);
 	}
 	/*************************** /Hands *************************************/
 
+	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
+	JG_Ball::InitialBallLevelInformation();
+	//it is import we call calculatethrowpower after jg_ball calculate
+	InitialThrowPowerVariables();
+
+	/*************************** Paths ****************************/
+
+	pathsArray = CCArray::create();
+	pathsArray->retain();
+	for( int i= 0 ; i< DISCRETE_PARTS_COUNT ; i++)
+	{
+		pathsArray->addObject(JG_Path::CreatePath(i * powerRange
+			, leftHand->getPosition()
+			, rightHand->getPosition()));
+		this->addChild((CCNode*)pathsArray->objectAtIndex(i),2);
+	}
+
+	/*************************** /Paths ****************************/
+
+	
+	tempDestination = new CCSprite();
+	tempDestination->initWithFile("cross.png");
+	tempDestination->retain();
+	this->addChild((CCNode*) tempDestination);
+
+	tempEnemy = JG_Enemy::CreateEnemy(this,ccp(100,100),60,1);
+	this->addChild((CCNode*) tempEnemy);
 
 	InitGame();
 	this->setTouchEnabled(true);
@@ -104,16 +133,13 @@ void JG_Game_Main::InitGame()
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
 	/****************************** Balls ************************************/
-	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
-	JG_Ball::InitialBallLevelInformation();
-	//it is import we call calculatethrowpower after jg_ball calculate
-	InitialThrowPowerVariables();
+
 	// initing  one ball for test
 	ballsArray=CCArray::create();
 	ballsArray->retain();
 
-	fruitArray= CCArray::create();
-	fruitArray->retain();
+	fruitsArray= CCArray::create();
+	fruitsArray->retain();
 
 
 	//TempAddBall(0);
@@ -149,7 +175,31 @@ void JG_Game_Main::update(float dt)
 
 	//TestSingleTouch();
 	CheckBallCollisionWithHand();
+	CheckBallsThrowPath();
 
+}
+
+void JG_Game_Main::CheckBallsThrowPath()
+{
+
+	for( int i = 0; i < pathsArray->count() ; i++)
+	{
+		((JG_Path * ) pathsArray->objectAtIndex(i))->SetHighlight(false);
+	}
+
+	for( int i = 0 ; i< TOUCH_COUNT; i++)
+	{
+		if( touchInfos[i].ball!=NULL)
+		{
+			if(touchInfos[i].ball->GetBallDirection() == Dir_RighHandtToLeft
+				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
+			{
+				int ballPath = CalculateThrowPower(i,true)/ powerRange;
+				CCLOG("power level : %f",ballPath);
+				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
+			}
+		}
+	}
 }
 
 void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
@@ -160,12 +210,17 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 
 	for( i = pTouches->begin(); i != pTouches->end(); i++) 
 	{
+		
 		touch = (CCTouch*) (*i);
+		tempDestination->setPosition(touch->getLocation());
+		tempEnemy->SetDestination(tempDestination->getPosition());
 		if(touch) 
 		{
 			BallTouchHandler_Init(touch);
 		}
 	}
+
+
 }
 
 void JG_Game_Main::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
@@ -206,8 +261,8 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 			}
 		}
 	}
-	gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
-	gameHUD->prevballcount->setString(CCString::createWithFormat("%d",prevballCounter)->getCString());
+	//gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
+	//gameHUD->prevballcount->setString(CCString::createWithFormat("%d",prevballCounter)->getCString());
 	prevballCounter = ballCounter;
 
 }
@@ -231,10 +286,11 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 			criticalBall = FindBestBallMatching(currentHand);
 			if(criticalBall != NULL)	
 			{
+
 				SetTouchInfo(touch,currentHand,criticalBall);
 			}
 
-			gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
+			//gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
 		}// end of hand collision checking
 	}// end of hand looping	
 
@@ -263,10 +319,10 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				{
 					
 					ballCounter++;
-					if(ballCounter == 1)
-						gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
-					if(ballCounter == 2)
-						gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					if(ballCounter == 1);
+						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					if(ballCounter == 2);
+						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
 					if( absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) <criticalTime  )
 					{
 						criticalBall = tempBall;
@@ -281,16 +337,19 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 			else // if rightHand
 			{
 
+
 				if(tempBall->GetBallDirection() == Dir_LeftHandToRight)
 				{
 					ballCounter++;
-					if(ballCounter == 1)
-						gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-					if(ballCounter == 2)
-						gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
+					if(ballCounter == 1);
+						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
+					if(ballCounter == 2);
+						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
 
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{
+						CCLog("it's all in your minde, tap location ");
+
 						criticalBall = tempBall;
 						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
 					}
@@ -449,20 +508,21 @@ float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bI
 	rawInput-=actualMinPower;
 	//CCLOG("max value %f", GetMaxThrowPower());
 	//CCLOG("min value %f", actualMinPower);
-	//CCLOG("discrete value %f", (floor(input/range)*range)+actualMinPower);
+	//CCLOG("discrete value %f", (floor(rawInput/powerRange)*powerRange));
 	float powerLevel=floor(rawInput/powerRange);
+
 
 	discretedValue=powerLevel*powerRange;
 
 	//CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
-	if(!bIsDemo)
-	{
-		if(ball->GetBallDirection()== Dir_LeftHandToRight
-			|| ball->GetBallDirection() ==Dir_RighHandtToLeft)
-			ball->SetBallLevel(powerLevel);
-	}
+	//if(!bIsDemo)
+	//{
+		//if(ball->GetBallDirection()== Dir_LeftHandToRight
+		//	|| ball->GetBallDirection() ==Dir_RighHandtToLeft)
+		//	ball->SetBallLevel(powerLevel);
+	//}
 	return discretedValue;
 
 }
@@ -671,17 +731,17 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 void JG_Game_Main::RemoveAllFruitsFromScreen()
 {
 	JG_Fruit* tempFruit;
-	int temp = fruitArray->count();
+	int temp = fruitsArray->count();
 
-	while(fruitArray->count()>0)
+	while(fruitsArray->count()>0)
 	{
-		RemoveFruitFromScreen((JG_Fruit*)fruitArray->randomObject());
+		RemoveFruitFromScreen((JG_Fruit*)fruitsArray->randomObject());
 	}
 }
 
 void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
 {
-	fruitArray->removeObject(fruit,false);
+	fruitsArray->removeObject(fruit,false);
 	removeChild(fruit,true);
 	CC_SAFE_RELEASE(fruit);
 }
@@ -714,7 +774,7 @@ void JG_Game_Main::AddFruitToScreen()
 	JG_Fruit* newFruit = JG_Fruit::CreateFruit(this,tempPoint,(-1)*(CCRANDOM_0_1()*10+15));
 	
 	this->addChild(newFruit);
-	fruitArray->addObject(newFruit);
+	fruitsArray->addObject(newFruit);
 	
 }
 
@@ -722,6 +782,7 @@ void JG_Game_Main::TempAddFruitToScreen(float time)
 {
 
 	AddFruitToScreen();
+	this->unschedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen));
 	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1()*5);
 }
 
@@ -773,7 +834,7 @@ void JG_Game_Main::InitialThrowPowerVariables()
 	//min power that we can have
 	actualMinPower=maxThrowPower*MIN_TOUCH_LENGTH_FACTOR;
 	//range of power between max and min
-	powerRange=(maxThrowPower-actualMinPower)/DISCRETE_PARTS_COUNT;
+	powerRange=(maxThrowPower-actualMinPower)/(DISCRETE_PARTS_COUNT-1);
 
 	//CCLOG("Max maxThrowPower Length %f",maxThrowPower);
 }
@@ -781,8 +842,8 @@ void JG_Game_Main::InitialThrowPowerVariables()
 
 void JG_Game_Main::draw()
 {
-	if(bIsGameInited)
-		DrawThrowPaths();
+	//if(bIsGameInited)
+		//DrawThrowPaths();
 }
 
 void JG_Game_Main::DrawThrowPaths()
@@ -862,14 +923,8 @@ bool JG_Game_Main::checkCurvesLife(float _power)
 		if(hand->getThrowPower() == _power)
 			return true;
 	}
-	
-
 	return false;
 }
-
-
-
-
 
 
 void JG_Game_Main:: CheckBallCollisionWithHand()
@@ -895,12 +950,10 @@ void JG_Game_Main:: CheckBallCollisionWithHand()
 			if(ArePointsColliding(currentBall->getPosition() ,currentHand->getPosition() , currentHand->GetRadius()))
 			{
 				currentHand->SetAreaVisibility(true);
-				currentBall->SetShineVisibility(true);
-				
+				currentBall->SetShineVisibility(true);			
 			}
 		}
 	}
-
 }
 
 

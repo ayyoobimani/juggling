@@ -7,19 +7,25 @@
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
+#include "JG_Enemy.h"
 #include "JG_ScorePopup.h"
+#include "JG_Path.h"
+#include "JG_Enemy.h"
 
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
 using namespace cocos2d;
+
 
 class JG_Game_HUD;
 class JG_Ball;
 class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
+class JG_Path;
+class JG_Enemy;
 
-
+#define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 
 // define how many touches can be supported at the same time
 #define TOUCH_COUNT 2
@@ -57,7 +63,13 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCArray* ballsArray;
 
-	CCArray* fruitArray;
+	CCArray* fruitsArray;
+
+	CCArray* pathsArray;
+
+	CCSprite* tempDestination;
+
+	JG_Enemy* tempEnemy;
 	
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
@@ -135,6 +147,9 @@ public:
 	void OnFruitLost(JG_Fruit* fruit);
 	/*! this event is called when ball is successfully throwed*/
 	void OnBallThrow(JG_Ball* ball);
+
+	/*!this event called when a ball is collided with an enemy*/
+	//void OnEnemyHit(JG_E
 
 
 	/*! Return player Score */
@@ -301,6 +316,9 @@ public:
 
 	/*! check to see if a ball may be throw in this curve! */
 	bool checkCurvesLife(float power);
+
+	/*! checks throw path for each ball and activated them */
+	void CheckBallsThrowPath();
 
 	
 	/*!checks whether distance of the two point are lesser than distance or not*/

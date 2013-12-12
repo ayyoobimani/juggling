@@ -30,12 +30,13 @@ JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char 
 
 void JG_Hand::draw()
 {
+	
 	CCSprite::draw();
 
 	if(bMustDrawArea)
 	{
-		glLineWidth(200);
-		ccDrawColor4B(0, 255, 255, 0); 
+		glLineWidth(10*mainGame->screenSize.height/320);
+		ccDrawColor4B(0, 186, 60, 60); 
 		ccDrawCircle( convertToNodeSpace(this->getPosition()), radius , 360 , 32 , false);
 
 	}

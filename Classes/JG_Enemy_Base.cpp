@@ -145,3 +145,8 @@ void JG_Enemy_Base::Attack()
 {
 	damagePerInterval=damagePerSecond*interVal;
 }
+
+float JG_Enemy::getDifficulty()
+{
+	return ( (BASE_WAITING_TIME - waitingTime)* FIRST_HIT_COEFFICIENT + (BASE_INTERVAL - interVal) )*damagePerInterval;
+}

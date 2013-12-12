@@ -17,6 +17,8 @@ class JG_Path :
 	CCPoint originPoint;
 	CCPoint destinationPoint;
 
+	float health; 
+
 
 	// trace texture for drawing throw paths
 	CCTexture2D* tracePointTexture;
@@ -38,5 +40,7 @@ public:
 
 	void draw();
 	void DrawPath();
+
+	void TakeDamage(float damage);
 };
 

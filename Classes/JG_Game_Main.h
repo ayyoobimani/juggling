@@ -7,10 +7,15 @@
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
-#include "JG_Enemy.h"
+#include "JG_Enemy_Base.h"
 #include "JG_ScorePopup.h"
 #include "JG_Path.h"
-#include "JG_Enemy.h"
+#include "JG_Factory_Base.h"
+#include "JG_Factory_Enemy.h"
+
+#include <vector>
+
+
 
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
@@ -23,7 +28,8 @@ class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
 class JG_Path;
-class JG_Enemy;
+class JG_Enemy_Base;
+class JG_Factory_Base;
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 
@@ -42,6 +48,14 @@ class JG_Enemy;
 
 #define DISCRETE_PARTS_COUNT 4
 
+
+struct SEnemyTypes
+{
+	JG_Factory_Base * factory;
+	int currentChance;
+	int chanceIncreasePerRound;
+};
+
 struct STouchInfo
 {
 	CCTouch * touch;
@@ -56,6 +70,8 @@ struct STouchInfo
 class JG_Game_Main : public cocos2d::CCLayer
 {
 	
+	std::vector<SEnemyTypes> enemyTypes;
+	
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
 	CCArray* handsArray;
@@ -69,7 +85,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCSprite* tempDestination;
 
-	JG_Enemy* tempEnemy;
+	JG_Enemy_Base* tempEnemy;
 	
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
@@ -103,6 +119,9 @@ class JG_Game_Main : public cocos2d::CCLayer
 	/* ! Manages Ball Score for combos */
 	void ManageBallComboScore(JG_Ball* ball);
 	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
+
+	template<class enemyClass>
+	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
 	
 	
 public:

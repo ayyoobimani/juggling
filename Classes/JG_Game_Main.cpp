@@ -107,13 +107,22 @@ bool JG_Game_Main::init()
 
 	/*************************** /Paths ****************************/
 
+	/************************* Enemy Factories ********************/
+
+	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Base>(6,2));
+
+	/************************* /Enemy Factories ********************/
+
+
 	
 	tempDestination = new CCSprite();
 	tempDestination->initWithFile("cross.png");
 	tempDestination->retain();
 	this->addChild((CCNode*) tempDestination);
 
-	tempEnemy = JG_Enemy::CreateEnemy(this,ccp(100,100),60,1);
+	tempEnemy = enemyTypes[0].factory->Create();
+	tempEnemy->InitialEnemy(this,ccp(50,50));
+
 	this->addChild((CCNode*) tempEnemy);
 
 	InitGame();
@@ -213,7 +222,7 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		
 		touch = (CCTouch*) (*i);
 		tempDestination->setPosition(touch->getLocation());
-		tempEnemy->SetDestination(tempDestination->getPosition());
+		tempEnemy->SetDestination(tempDestination->getPosition(),NULL);
 		if(touch) 
 		{
 			BallTouchHandler_Init(touch);
@@ -319,9 +328,9 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				{
 					
 					ballCounter++;
-					if(ballCounter == 1);
+					//if(ballCounter == 1);
 						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
-					if(ballCounter == 2);
+					//if(ballCounter == 2);
 						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
 					if( absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) <criticalTime  )
 					{
@@ -341,9 +350,9 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				if(tempBall->GetBallDirection() == Dir_LeftHandToRight)
 				{
 					ballCounter++;
-					if(ballCounter == 1);
+					//if(ballCounter == 1);
 						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-					if(ballCounter == 2);
+					//if(ballCounter == 2);
 						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
 
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
@@ -1195,4 +1204,12 @@ float JG_Game_Main::absf(float input)
 
 }
 
-
+template<class enemyClass>
+SEnemyTypes JG_Game_Main::CreateEnemyType(int baseChance,int chaceIncrease)
+{
+	SEnemyTypes enemyType;
+	enemyType.factory = new JG_Factory_Enemy<enemyClass>;
+	enemyType.currentChance = baseChance;
+	enemyType.chanceIncreasePerRound = chaceIncrease;
+	return enemyType;
+}

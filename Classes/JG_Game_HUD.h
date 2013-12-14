@@ -25,6 +25,8 @@ public:
 	CCMenuItemSprite* resumeButton;
 	CCMenuItemSprite* exitButton;
 
+	CCMenuItemSprite* ballAddButton;
+
 	CCMenu* gameMenu;
 	
 	JG_Game_HUD(void);

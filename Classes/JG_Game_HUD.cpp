@@ -113,12 +113,19 @@ void JG_Game_HUD::Init_PauseMenu()
 	exitButton->retain();
 	exitButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.3));
 
+	ballAddButton = CCMenuItemSprite::create(CCSprite::create("BallAdder_Normal.png"),CCSprite::create("BallAdder_Selected.png")
+		 ,mainGame
+		 ,menu_selector(JG_Game_Main::ReleaseBall));
+	ballAddButton->retain();
+	ballAddButton->setPosition(ccp(mainGame->screenSize.width * 0.1 ,mainGame->screenSize.height * 0.8));
+
 
 	
 	gameMenu->addChild(pauseButton);
 	gameMenu->addChild(resumeButton);
 	gameMenu->addChild(resetButton);
 	gameMenu->addChild(exitButton);
+	gameMenu->addChild(ballAddButton);
 	
 	SetPauseScreen(false);
 

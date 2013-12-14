@@ -13,6 +13,7 @@
 #include "JG_Factory_Base.h"
 #include "JG_Factory_Enemy.h"
 
+
 #include <vector>
 
 
@@ -70,6 +71,8 @@ struct STouchInfo
 class JG_Game_Main : public cocos2d::CCLayer
 {
 	
+	bool bIsGameInited; 
+
 	std::vector<SEnemyTypes> enemyTypes;
 	
 	JG_Hand* leftHand;
@@ -100,6 +103,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 
 
+
 	float chosenPathPower;
 	float powerRange;
 	float discretedValue;
@@ -108,8 +112,6 @@ class JG_Game_Main : public cocos2d::CCLayer
 	void InitialThrowPowerVariables();
 	/*! return proper discrete value */
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
-
-	bool bIsGameInited; 
 
 
 
@@ -146,11 +148,13 @@ public:
 	/*! finds best ball in balls that are touched in a hand */
 	JG_Ball* FindBestBallMatching(JG_Hand*  hand);
 
+
+	//TODO: move them to private
 	/**************** game rule members *************/
 	int lifeCount;
 	int score;
+	int reservedBallCount;
 	/**************** /game rule members *************/
-
 	
 
 	/**************** game rule methods *************/
@@ -189,6 +193,12 @@ public:
 	void DecrementLifeCount();
 	/*! Increment the life count of player */
 	void IncrementLifeCount();
+
+	void IncrementReservedBallCount();
+	void DecrementReservedBallCount();
+	void SetReservedBallCount(int newCount);
+	void ReleaseBall(CCObject* pSender);
+
 
 	
 	/*! handles ball removing */

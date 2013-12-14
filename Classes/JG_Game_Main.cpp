@@ -125,6 +125,8 @@ bool JG_Game_Main::init()
 
 	this->addChild((CCNode*) tempEnemy);
 
+
+
 	InitGame();
 	this->setTouchEnabled(true);
 	//test
@@ -152,13 +154,14 @@ void JG_Game_Main::InitGame()
 
 
 	//TempAddBall(0);
-	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
+	//this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	//fruit
 	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
 
 
 	/******************************** /Balls ************************************/
 
+	SetReservedBallCount(5);
 
 	for( int i = 0 ; i< TOUCH_COUNT ; i++)
 	{
@@ -629,8 +632,8 @@ void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
 
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 {
-	RemoveBallFromScreen(ballOne);
-	AddBallToScreen();
+	//RemoveBallFromScreen(ballOne);
+	//AddBallToScreen();
 }
 
 //collision of the ball and fruit
@@ -652,7 +655,7 @@ void JG_Game_Main::OnBallLost(JG_Ball* ball)
 		DecrementLifeCount();
 		if(lifeCount>0)
 		{
-			AddBallToScreen();
+			//AddBallToScreen();
 
 		}
 	}
@@ -717,6 +720,24 @@ void JG_Game_Main::IncrementLifeCount()
 }
 
 
+
+void JG_Game_Main::IncrementReservedBallCount()
+{
+	reservedBallCount++;
+}
+
+void JG_Game_Main::DecrementReservedBallCount()
+{
+	reservedBallCount--;
+}
+
+void JG_Game_Main::SetReservedBallCount( int newCount)
+{
+	reservedBallCount = newCount;
+}
+
+
+
 void JG_Game_Main::RemoveAllBallsFromScreen()
 {
 	JG_Ball* tempBall;
@@ -753,6 +774,15 @@ void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
 	fruitsArray->removeObject(fruit,false);
 	removeChild(fruit,true);
 	CC_SAFE_RELEASE(fruit);
+}
+
+void JG_Game_Main::ReleaseBall(CCObject* pSender)
+{
+	if(reservedBallCount>0)
+	{
+		AddBallToScreen();
+		DecrementReservedBallCount();
+	}
 }
 
 void JG_Game_Main::AddBallToScreen()

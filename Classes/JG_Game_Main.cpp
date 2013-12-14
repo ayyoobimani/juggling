@@ -120,11 +120,12 @@ bool JG_Game_Main::init()
 	tempDestination->retain();
 	this->addChild((CCNode*) tempDestination);
 
-	tempEnemy = enemyTypes[0].factory->Create();
+	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
 	tempEnemy->InitialEnemy(this,ccp(50,50));
 
 	this->addChild((CCNode*) tempEnemy);
 
+	InitGame_AttackWaves();
 
 
 	InitGame();
@@ -134,6 +135,11 @@ bool JG_Game_Main::init()
 	return true;
 
 	
+}
+
+void JG_Game_Main::InitGame_AttackWaves()
+{
+	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
 }
 
 void JG_Game_Main::InitGame()
@@ -1158,7 +1164,7 @@ void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
 	ccTouchesBegan(testTouchSet,NULL);
 
 	TestMultiTouchesSet->addObject(testTouch);
-
+	
 	//scheduleOnce(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.1);
 	schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.01,1,0);
 }
@@ -1242,4 +1248,24 @@ SEnemyTypes JG_Game_Main::CreateEnemyType(int baseChance,int chaceIncrease)
 	enemyType.currentChance = baseChance;
 	enemyType.chanceIncreasePerRound = chaceIncrease;
 	return enemyType;
+}
+
+
+int JG_Game_Main::getAttackWaveType()
+{
+	return CCRANDOM_0_1()*attackWaveTypes.size();
+}
+
+void JG_Game_Main::ManageDifficulty()
+{
+	//int attackWaveIndex = getAttackWaveType();
+
+	//JG_AttackWave_Base* currentAttackWave;
+	//currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
+
+	//float difficulty = 100*attackWaveCount ;
+
+	//currentAttackWave->initAttacWave(this,difficulty,attackWaveCount);
+
+	//attackWaveCount++;
 }

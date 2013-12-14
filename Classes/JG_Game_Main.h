@@ -7,19 +7,23 @@
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
-#include "JG_Enemy_Base.h"
+
 #include "JG_ScorePopup.h"
 #include "JG_Path.h"
+
+#include "JG_Enemy_Base.h"
 #include "JG_Factory_Base.h"
+#include "JG_AttackWave_Base.h"
+
+#include "JG_Factory_AttackWave.h"
+#include "JG_AttackWave_AllLinesSequential.h"
 #include "JG_Factory_Enemy.h"
 
-
 #include <vector>
-
-
-
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
+
+
 using namespace cocos2d;
 
 
@@ -31,6 +35,11 @@ class JG_ScorePopup;
 class JG_Path;
 class JG_Enemy_Base;
 class JG_Factory_Base;
+//class JG_Factory_AttackWave;
+class JG_AttackWave_Base;
+class JG_Enemy_Crow;
+class JG_AttackWave_AllLinesSequential;
+
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 
@@ -71,9 +80,10 @@ struct STouchInfo
 class JG_Game_Main : public cocos2d::CCLayer
 {
 	
+
 	bool bIsGameInited; 
 
-	std::vector<SEnemyTypes> enemyTypes;
+
 	
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
@@ -84,7 +94,6 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCArray* fruitsArray;
 
-	CCArray* pathsArray;
 
 	CCSprite* tempDestination;
 
@@ -125,8 +134,18 @@ class JG_Game_Main : public cocos2d::CCLayer
 	template<class enemyClass>
 	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
 	
+
+	float attackWaveCount;
 	
 public:
+
+	std::vector<SEnemyTypes> enemyTypes;
+	
+
+	std::vector<JG_Factory_Base*> attackWaveTypes;
+
+
+	CCArray* pathsArray;
 	
 	JG_Game_Main(void);
 	virtual ~JG_Game_Main(void);
@@ -367,7 +386,9 @@ public:
 
 
 
-
+	void InitGame_AttackWaves();
+	int getAttackWaveType();
+	void ManageDifficulty();
 
 };
 

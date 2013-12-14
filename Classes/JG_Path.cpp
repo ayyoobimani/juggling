@@ -100,3 +100,9 @@ void JG_Path::SetHighlight(bool newHighlight)
 {
 	bMustHighlight = newHighlight;
 }
+
+
+float JG_Path::getHealth()
+{
+	return health;
+}

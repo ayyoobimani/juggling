@@ -302,8 +302,8 @@ void JG_Ball::ProcessMove(float dt)
 		tempBallSpeedY = -GRAVITY* dt + tempBallSpeedY;
 
 		// calculat new positions based on new speeds
-		tempBallNewX = tempBallSpeedX * dt + getPositionX();
-		tempBallNewY = tempBallSpeedY * dt + getPositionY();
+		tempBallNewX = (tempBallSpeedX * dt + getPositionX());
+		tempBallNewY = (tempBallSpeedY * dt + getPositionY());
 
 		// calculate the total speed based on new speeds on each direction
 		currentSpeed = sqrt(pow(tempBallSpeedY,2)+pow(tempBallSpeedX,2));

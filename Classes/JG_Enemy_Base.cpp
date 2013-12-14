@@ -164,5 +164,22 @@ void JG_Enemy_Base::Attack(float dt)
 
 float JG_Enemy_Base::GetDifficulty()
 {
-	return ( (BASE_WAITING_TIME - waitingTime)* FIRST_HIT_COEFFICIENT + (BASE_INTERVAL - attackInterval) )*damagePerInterval;
+	float waitingTimeFactor;
+	float intervalFactor;
+	if(BASE_WAITING_TIME >= waitingTime +1)
+		waitingTimeFactor = (BASE_WAITING_TIME - waitingTime);
+	else
+		waitingTimeFactor = 1;
+
+	if(BASE_INTERVAL >= attackInterval +1)
+		intervalFactor = (BASE_INTERVAL - attackInterval);
+	else
+		intervalFactor = 1;
+
+	return ( ( waitingTimeFactor * FIRST_HIT_COEFFICIENT + intervalFactor )*damagePerInterval ) ;
+}
+
+JG_Path* JG_Enemy_Base::getPath()
+{
+	return targetPath;
 }

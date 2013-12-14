@@ -16,7 +16,7 @@ public:
 	JG_Factory_Enemy(void){}
 	virtual ~JG_Factory_Enemy(void){}
 
-	JG_Enemy_Base* Create()
+	CCNode* Create()
 	{
 		return  new EnemyType; 
 	}

@@ -3,6 +3,7 @@
 #include "cocos2d.h"
 #include "JG_Game_Main.h"
 
+
 using namespace cocos2d;
 class JG_Path :
 	public CCSprite
@@ -42,5 +43,6 @@ public:
 	void DrawPath();
 
 	void TakeDamage(float damage);
+	float getHealth();
 };
 

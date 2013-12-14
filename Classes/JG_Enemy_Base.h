@@ -83,5 +83,6 @@ public:
 	//float GetScore();
 
 	float  GetDifficulty();
+	JG_Path* getPath();
 };
 

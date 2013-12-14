@@ -14,6 +14,6 @@ public:
 	virtual ~JG_Factory_Base(void);
 
 	//Warning : this factory only works when objects are derived from CCSprite 
-	virtual JG_Enemy_Base* Create()= 0;
+	virtual CCNode* Create()= 0;
 };
 

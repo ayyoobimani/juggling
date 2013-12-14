@@ -13,7 +13,7 @@
 
 #include "JG_Enemy_Base.h"
 #include "JG_Factory_Base.h"
-#include "JG_AttackWave_Base.h"
+//#include "JG_AttackWave_Base.h"
 
 #include "JG_Factory_AttackWave.h"
 #include "JG_AttackWave_AllLinesSequential.h"
@@ -33,12 +33,12 @@ class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
 class JG_Path;
-class JG_Enemy_Base;
-class JG_Factory_Base;
-//class JG_Factory_AttackWave;
-class JG_AttackWave_Base;
-class JG_Enemy_Crow;
-class JG_AttackWave_AllLinesSequential;
+//class JG_Enemy_Base;
+//class JG_Factory_Base;
+////class JG_Factory_AttackWave;
+//class JG_AttackWave_Base;
+//class JG_Enemy_Crow;
+//class JG_AttackWave_AllLinesSequential;
 
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6

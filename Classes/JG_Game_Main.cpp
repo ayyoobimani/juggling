@@ -127,7 +127,7 @@ bool JG_Game_Main::init()
 	InitGame_AttackWaves();
 
 
-	InitGame();
+	InitRound();
 	this->setTouchEnabled(true);
 	//test
 	//TestMultiTouch();
@@ -161,7 +161,7 @@ void JG_Game_Main::InitGame_AttackWaves()
 	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),8);
 }
 
-void JG_Game_Main::InitGame()
+void JG_Game_Main::InitRound()
 {
 
 
@@ -186,7 +186,7 @@ void JG_Game_Main::InitGame()
 
 	/******************************** /Balls ************************************/
 
-	SetReservedBallCount(5);
+	
 
 	for( int i = 0 ; i< TOUCH_COUNT ; i++)
 	{
@@ -199,6 +199,7 @@ void JG_Game_Main::InitGame()
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
+	SetReservedBallCount(5);
 	bIsGameInited = true;
 }
 
@@ -660,6 +661,7 @@ void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
 void JG_Game_Main::ManagePathScore(JG_Path* path)
 {
 	AddScore(path->GetScore());
+	JG_ScorePopup::CreateScorePopup(this,path->GetScore(),1,path->GetPositionForLengthRatio(0.5));
 }
 
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
@@ -694,13 +696,14 @@ void JG_Game_Main::OnBallLost(JG_Ball* ball)
 	else
 	{
 		RemoveBallFromScreen(ball);
-		DecrementLifeCount();
+		//DecrementLifeCount();
 		if(lifeCount>0)
 		{
 			//AddBallToScreen();
 
 		}
 	}
+	CheckLoseCondition();
 }
 
 void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
@@ -718,6 +721,7 @@ void JG_Game_Main::OnPathLost(JG_Path* path)
 			currentEnemy->SetState(EnemyS_Escaping);
 	}
 	RemovePathFromScreen(path);
+	CheckLoseCondition();
 }
 void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
 {
@@ -727,6 +731,23 @@ void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
 {
 	ball->ResetComboChain();
+}
+
+bool JG_Game_Main::IsThereAnyBallLeft()
+{
+	return (reservedBallCount >0 || ballsArray->count()>0);
+}
+
+bool JG_Game_Main::IsThereAnyPathLeft()
+{
+	JG_Path* currentPath;
+	for(int i = 0 ; i< pathsArray->count(); i++)
+	{
+		currentPath = (JG_Path*) pathsArray->objectAtIndex(i);
+		if(currentPath->IsPathEnabled())
+			return true;
+	}
+	return false;
 }
 
 int JG_Game_Main::GetScore()
@@ -769,7 +790,7 @@ void JG_Game_Main::DecrementLifeCount()
 {
 	--lifeCount;
 	if(lifeCount<=0)
-		EndGame();
+		EndRound();
 }
 
 void JG_Game_Main::IncrementLifeCount()
@@ -782,16 +803,19 @@ void JG_Game_Main::IncrementLifeCount()
 void JG_Game_Main::IncrementReservedBallCount()
 {
 	reservedBallCount++;
+	gameHUD->UpdateReservedBall();
 }
 
 void JG_Game_Main::DecrementReservedBallCount()
 {
 	reservedBallCount--;
+	gameHUD->UpdateReservedBall();
 }
 
 void JG_Game_Main::SetReservedBallCount( int newCount)
 {
 	reservedBallCount = newCount;
+	gameHUD->UpdateReservedBall();
 }
 
 
@@ -931,7 +955,6 @@ void JG_Game_Main::UpdateBallThrowTrace()
 				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),rightHand->getPosition(),leftHand->getPosition());
 			else
 				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),leftHand->getPosition(),rightHand->getPosition());
-
 		}
 
 	}
@@ -1080,7 +1103,7 @@ CCArray* JG_Game_Main::GetBallArray()
 
 void JG_Game_Main::PauseGame(CCObject* pSender)
 {
-	gameHUD->SetPauseScreen(true);
+	gameHUD->ShowPauseScreen(true);
 	CCDirector::sharedDirector()->pause();
 }
 
@@ -1099,24 +1122,25 @@ void JG_Game_Main::ExitGame(CCObject* pSender)
 void JG_Game_Main::ResumeGame(CCObject* pSender)
 {
 	CCDirector::sharedDirector()->resume();
-	gameHUD->SetPauseScreen(false);
+	gameHUD->ShowPauseScreen(false);
 }
 
 void JG_Game_Main::ResetGame(CCObject* pSender)
 {
 	RemoveAllBallsFromScreen();
 	RemoveAllFruitsFromScreen();
-	InitGame();
+	InitRound();
 	ResumeGame(pSender);
 }
 
-void JG_Game_Main::EndGame()
+void JG_Game_Main::EndRound()
 {
+	//********************** Temporary ****************/
+	gameHUD->ShowEndRoundScreen(true);
+	CCDirector::sharedDirector()->pause();
+	//********************** /Temporary ****************/
 
-	//	CCTimer::timerWithTarget( this,SEL_CallFuncO(JG_Game_Main::RestartGame),2);
-	//CCTimer::timerWithTarget(
 
-	//ballsArray->autorelease();
 
 }
 
@@ -1191,11 +1215,13 @@ void JG_Game_Main::TestSingleTouch()
 
 void JG_Game_Main::CheckLoseCondition()
 {
-	if(pathsArray->count()==0 || ( reservedBallCount<=0 && ballsArray->count()==0))
+	if(!IsThereAnyBallLeft() || !IsThereAnyPathLeft())
 	{
-		//TODO: implement
+		EndRound();
 	}
 }
+
+
 
 void JG_Game_Main::TestMultiTouch()
 {

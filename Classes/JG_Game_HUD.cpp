@@ -42,6 +42,10 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 	scoreLabel->setPosition(ccp(mainGame->screenSize.width * 0.85 ,mainGame->screenSize.height * 0.80) );
 	this->addChild(scoreLabel);
 
+	reservedBallLabel =CCLabelBMFont::create ("0", "fonts/font.fnt", mainGame->screenSize.height * 0.3f);
+	reservedBallLabel->setPosition(ccp(mainGame->screenSize.width * 0.2 ,mainGame->screenSize.height * 0.80));
+	this->addChild(reservedBallLabel);
+
 	ScoreGainAnimation = CCSequence::create(
 		CCEaseInOut::create(CCScaleTo::create(0.3,2,2),0.5)
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
@@ -127,18 +131,25 @@ void JG_Game_HUD::Init_PauseMenu()
 	gameMenu->addChild(exitButton);
 	gameMenu->addChild(ballAddButton);
 	
-	SetPauseScreen(false);
+	ShowPauseScreen(false);
 
 }
 
 
-void JG_Game_HUD::SetPauseScreen(bool bShow)
+void JG_Game_HUD::ShowPauseScreen(bool bShow)
 {
-
 	pauseButton->setVisible(!bShow);
 	resumeButton->setVisible(bShow);
 	resetButton->setVisible(bShow);
 	exitButton->setVisible(bShow);	
+}
+
+void JG_Game_HUD::ShowEndRoundScreen(bool bShow)
+{
+	
+	resetButton->setVisible(bShow);
+	exitButton->setVisible(bShow);
+	pauseButton->setVisible(!bShow);
 }
 JG_Game_HUD::~JG_Game_HUD(void)
 {
@@ -148,7 +159,7 @@ void JG_Game_HUD::draw()
 {
 	if(mainGame!=NULL)
 	{
-		DrawLife();
+		//DrawLife();
 	}
 }
 
@@ -167,8 +178,17 @@ void JG_Game_HUD::DrawLife()
 	
 }
 
+
+
 void JG_Game_HUD::UpdateScore()
 {
 	scoreLabel->setString(CCString::createWithFormat("%i", mainGame->score)->getCString());
 	scoreLabel->runAction((CCAction *)ScoreGainAnimation->copy());
+}
+
+void JG_Game_HUD::UpdateReservedBall()
+{
+	reservedBallLabel->setString(CCString::createWithFormat("%i", mainGame->reservedBallCount)->getCString());
+	reservedBallLabel->runAction((CCAction *)ScoreGainAnimation->copy());
+
 }

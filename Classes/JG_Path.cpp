@@ -133,7 +133,7 @@ int JG_Path::GetScore()
 
 float JG_Path::CalculateScoreInterval()
 {
-	return SCOREINTERVAL_BASE;
+	return SCOREINTERVAL_BASE + (SCOREINTERVAL_RANDOM_OFFSET * CCRANDOM_0_1());
 }
 
 int JG_Path::CalculateScore()

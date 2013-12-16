@@ -122,12 +122,7 @@ bool JG_Game_Main::init()
 	tempDestination->retain();
 	this->addChild((CCNode*) tempDestination);
 
-	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
-	tempEnemy->InitialEnemy(this,ccp(100,100));
-	tempEnemy->retain();
-	this->addChild((CCNode*) tempEnemy);
-	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.5);
-	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
+	
 
 	InitGame_AttackWaves();
 
@@ -144,15 +139,26 @@ bool JG_Game_Main::init()
 void JG_Game_Main::InitGame_AttackWaves()
 {
 	
-	/*************************** /enemy Array ****************************/
+	
 	enemyArray = CCArray::create();
 	enemyArray->retain();
 
 	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
 
 	attackWaveCount =1;
+	
 
-	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),3);
+	//************************* Delete This Later **************/
+	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
+	tempEnemy->InitialEnemy(this,ccp(100,100));
+	this->addChild((CCNode*) tempEnemy);
+	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.5);
+	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
+	enemyArray->addObject(tempEnemy);
+	//************************* /Delete This Later **************/
+
+
+	//schedule(schedule_selector(JG_Game_Main::ManageDifficulty),3);
 }
 
 void JG_Game_Main::InitGame()
@@ -677,15 +683,7 @@ void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 	
 }
 
-void JG_Game_Main::RemoveEnemyFromScreen(JG_Enemy_Base* enemy)
-{
-	//enemyArray->removeObject(enemy,false);
-	//removeChild(enemy,true);
-	//CC_SAFE_RELEASE(enemy);
-	//onenemylost
-	tempEnemy=NULL;
 
-}
 
 void JG_Game_Main::OnBallLost(JG_Ball* ball)
 {
@@ -712,10 +710,12 @@ void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
 
 void JG_Game_Main::OnPathLost(JG_Path* path)
 {
+	JG_Enemy_Base* currentEnemy;
 	for(int i=0;i<enemyArray->count();i++)
 	{
-		if(((JG_Enemy_Base*)enemyArray->objectAtIndex(i))->getPath()==path)
-			((JG_Enemy_Base*)enemyArray->objectAtIndex(i))->SetState(EnemyS_Escaping);
+		currentEnemy = (JG_Enemy_Base*)enemyArray->objectAtIndex(i);
+		if(currentEnemy->GetTargetPath() == path)
+			currentEnemy->SetState(EnemyS_Escaping);
 	}
 	RemovePathFromScreen(path);
 }
@@ -839,6 +839,16 @@ void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
 	pathsArray->removeObject(path,false);
 	removeChild(path,true);
 	CC_SAFE_RELEASE(path);
+}
+
+void JG_Game_Main::RemoveEnemyFromScreen(JG_Enemy_Base* enemy)
+{
+	//enemyArray->removeObject(enemy,false);
+	//removeChild(enemy,true);
+	//CC_SAFE_RELEASE(enemy);
+	//onenemylost
+	tempEnemy=NULL;
+
 }
 
 void JG_Game_Main::ReleaseBall(CCObject* pSender)

@@ -113,6 +113,7 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 {
 	this->unschedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking));
 	this->unschedule(schedule_selector(JG_Enemy_Base::Attack));
+	state=newState;
 	switch (newState)
 	{
 	case EnemyS_Inited:
@@ -128,11 +129,12 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 		break;
 	case EnemyS_Waiting:
 		GotoState_Waiting();
+		break;
 	case EnemyS_Dying:
 		GotoState_Dying();
 		break;
 	}
-	state=newState;
+	
 }
 void JG_Enemy_Base::GotoState_Intending()
 {
@@ -151,7 +153,6 @@ void JG_Enemy_Base::GotoState_Waiting()
 {
 	CCLog("In state Waiting");
 	
-
 	this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,waitingTime);
 	
 }
@@ -159,6 +160,7 @@ void JG_Enemy_Base::GotoState_Escaping()
 {
 	CCLog("In state Escaping");
 	SetDestinationPosition(ccp(mainGame->screenSize.width+10,mainGame->screenSize.height+10));
+	targetPath = NULL;
 
 
 	
@@ -200,7 +202,7 @@ float JG_Enemy_Base::GetDifficulty()
 	return 70;
 }
 
-JG_Path* JG_Enemy_Base::getPath()
+JG_Path* JG_Enemy_Base::GetTargetPath()
 {
 	return targetPath;
 }

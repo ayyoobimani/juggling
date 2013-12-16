@@ -28,5 +28,9 @@ public:
 	JG_Enemy_Base* addEnemy();
 	void initiateEnemyAttack(float dt);
 	float generateEnemyPositionRatio();
+
+	void clalculateEnemyAddInterval();
+
+	JG_Path* selectPath(int pathcount);
 };
 

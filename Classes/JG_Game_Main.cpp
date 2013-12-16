@@ -158,7 +158,7 @@ void JG_Game_Main::InitGame_AttackWaves()
 	//************************* /Delete This Later **************/
 
 
-	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),3);
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),8);
 }
 
 void JG_Game_Main::InitGame()
@@ -1337,7 +1337,7 @@ void JG_Game_Main::ManageDifficulty(float dt)
 {
 	CCLOG("called manage difficulty");
 	int attackWaveIndex = getAttackWaveType();
-	CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
+	//CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
 	JG_AttackWave_Base* currentAttackWave;
 	currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
 	//currentAttackWave = (JG_AttackWave_Base*) new JG_AttackWave_AllLinesSequential();

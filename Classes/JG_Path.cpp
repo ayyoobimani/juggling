@@ -99,7 +99,7 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 void JG_Path::TakeDamage(float damage)
 {
 	health-= damage;
-	CCLOG("health is %f",health);
+	//CCLOG("health is %f",health);
 	if(health<=0)
 	{
 		mainGame->OnPathLost(this);

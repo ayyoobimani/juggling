@@ -8,7 +8,7 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 	SetState(EnemyS_Inited);
 	targetPath = NULL;
 	attackInterval=0.5;
-	damagePerSecond=50;
+	damagePerSecond=10;
 	damagePerInterval=damagePerSecond*attackInterval;
 	radius=15;
 }
@@ -138,27 +138,27 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 }
 void JG_Enemy_Base::GotoState_Intending()
 {
-	CCLog("In state Intending");
+	//CCLog("In state Intending");
 	
 	
 }
 void JG_Enemy_Base::GotoState_Attacking()
 {
-	CCLog("In state Attacking");
+	//CCLog("In state Attacking");
 	this->schedule(schedule_selector(JG_Enemy_Base::Attack),attackInterval);
 	
 
 }
 void JG_Enemy_Base::GotoState_Waiting()
 {
-	CCLog("In state Waiting");
+	//CCLog("In state Waiting");
 	if(targetPath!=NULL)
 		this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,waitingTime);
 	
 }
 void JG_Enemy_Base::GotoState_Escaping()
 {
-	CCLog("In state Escaping");
+	//CCLog("In state Escaping");
 	SetDestinationPosition(ccp(mainGame->screenSize.width+10,mainGame->screenSize.height+300));
 	targetPath = NULL;
 
@@ -168,7 +168,7 @@ void JG_Enemy_Base::GotoState_Escaping()
 }
 void JG_Enemy_Base::GotoState_Dying()
 {
-	CCLog("In state dying");
+	//CCLog("In state dying");
 	//it is falling so the initial speed is zero
 	speed=0;
 	

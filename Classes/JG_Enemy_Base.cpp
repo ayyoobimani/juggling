@@ -7,7 +7,10 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 	waitingTime = 2.0;
 	SetState(EnemyS_Inited);
 	targetPath = NULL;
+	attackInterval=2.0;
+	damagePerSecond=10.0;
 	damagePerInterval=damagePerSecond*attackInterval;
+	radius=15;
 }
 
 
@@ -41,21 +44,6 @@ void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
 
 }
 
-void JG_Enemy_Base::CheckCollisionWithBall()
-{
-	JG_Ball* tempCurrentBall;
-	for(int i=0;i<mainGame->GetBallArray()->count();i++)
-	{
-		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
-		float collision_radius=this->radius+tempCurrentBall->radius;
-		if(mainGame->ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
-		{
-			//mainGame->OnFruitHit(this, tempCurrentBall);
-			return;
-		}
-
-	}
-}
 void JG_Enemy_Base::MoveTo(float dt)
 {
 	//this->SetDestination(this->destination);
@@ -94,10 +82,21 @@ void JG_Enemy_Base::SetDestination(CCPoint destination, JG_Path * newTargetPath)
 	SetState(EnemyS_Intending);
 }
 
+void JG_Enemy_Base::Fall(float dt)
+{
+	speed+=GRAVITY*dt;
+	setPositionY(-speed*dt+getPositionY());
+}
+
 void JG_Enemy_Base::update(float dt)
 {
 	if(state==EnemyS_Intending&&bIsDirectionSet==true)
 		MoveTo(dt);
+
+	CheckCollisionWithBall();
+
+	if(state==EnemyS_Dying)
+		Fall(dt);
 
 }
 //nonesense
@@ -120,6 +119,8 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 		break;
 	case EnemyS_Waiting:
 		GotoState_Waiting();
+	case EnemyS_Dying:
+		GotoState_Dying();
 		break;
 	}
 	state=newState;
@@ -152,6 +153,13 @@ void JG_Enemy_Base::GotoState_Escaping()
 	
 	
 }
+void JG_Enemy_Base::GotoState_Dying()
+{
+	CCLog("In state dying");
+	//it is falling so the initial speed is zero
+	speed=0;
+	
+}
 void JG_Enemy_Base::HandleWaitingToAttacking(float dt)
 {
 	SetState(EnemyS_Attacking);
@@ -182,4 +190,20 @@ float JG_Enemy_Base::GetDifficulty()
 JG_Path* JG_Enemy_Base::getPath()
 {
 	return targetPath;
+}
+
+void JG_Enemy_Base::CheckCollisionWithBall()
+{
+	JG_Ball* tempCurrentBall;
+	for(int i=0;i<mainGame->GetBallArray()->count();i++)
+	{
+		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
+		float collision_radius=this->radius+tempCurrentBall->radius;
+		if(mainGame->ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
+		{
+			mainGame->OnEnemyHit(this, tempCurrentBall);
+			return;
+		}
+
+	}
 }

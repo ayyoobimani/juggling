@@ -9,7 +9,7 @@ class JG_Path;
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {
-	EnemyS_Inited,EnemyS_Intending,EnemyS_Attacking,EnemyS_Waiting,EnemyS_Escaping
+	EnemyS_Inited,EnemyS_Intending,EnemyS_Attacking,EnemyS_Waiting,EnemyS_Escaping,EnemyS_Dying
 };
 
 #define BASE_WAITING_TIME 5
@@ -22,6 +22,7 @@ class JG_Enemy_Base:
 {
 private:
 	float speed;
+	
 	float radius;
 	float waitingTime;
 	EEnemyState state;
@@ -44,11 +45,7 @@ private:
 	void GotoState_Attacking();
 	void GotoState_Waiting();
 	void GotoState_Escaping();
-
-
-
-	
-
+	void GotoState_Dying();
 	
 public:
 	JG_Enemy_Base(void);
@@ -61,6 +58,8 @@ public:
 	
 	void SetState(EEnemyState state);
 
+	void Fall(float dt);
+
 	static JG_Enemy_Base* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition);
 
 	void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition);
@@ -68,6 +67,7 @@ public:
 	void update(float dt);
 	//checking collision with ball
 	void CheckCollisionWithBall();
+
 
 	void ProcessMove(float dt);
 

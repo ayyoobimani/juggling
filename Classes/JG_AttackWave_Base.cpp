@@ -4,7 +4,7 @@
 
 JG_AttackWave_Base::JG_AttackWave_Base()
 {
-
+	CCLOG("parent attackwave created");
 }
 
 
@@ -35,7 +35,7 @@ int JG_AttackWave_Base::selectEnemyType()
 	return 0;
 }
 
-void JG_AttackWave_Base::initAttacWave(JG_Game_Main * _mainGame,float _attackDifficulty, int _attackCount)
+void JG_AttackWave_Base::initAttackWave(JG_Game_Main * _mainGame,float _attackDifficulty, int _attackCount)
 {
 	CCLOG("called parent attack wave init");
 	

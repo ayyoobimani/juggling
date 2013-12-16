@@ -251,7 +251,7 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		tempDestination->setPosition(touch->getLocation());
 		if(tempEnemy!=NULL)
 		{
-			tempEnemy->SetDestinationPath(tempDestination->getPosition(),NULL);
+			//tempEnemy->SetDestinationPath(tempDestination->getPosition(),NULL);
 		}
 		if(touch) 
 		{
@@ -836,9 +836,10 @@ void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
 
 void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
 {
-	pathsArray->removeObject(path,false);
-	removeChild(path,true);
-	CC_SAFE_RELEASE(path);
+	path->SetPathEnable(false);
+	//pathsArray->removeObject(path,false);
+	//removeChild(path,true);
+	//CC_SAFE_RELEASE(path);
 }
 
 void JG_Game_Main::RemoveEnemyFromScreen(JG_Enemy_Base* enemy)

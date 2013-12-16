@@ -32,7 +32,7 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 	while( totalDifficulty < attackDifficulty)
 	{
 
-		
+
 		currentEnemy=addEnemy();
 
 		currentPath = ((JG_Path*) mainGame->pathsArray->objectAtIndex( pathCounter % mainGame->pathsArray->count() ) );
@@ -84,7 +84,10 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	enemyQueue.front()->SetDestinationPath(enemyPath->GetPositionForLengthRatio(generateEnemyPositionRatio()),enemyPath);
 	enemyQueue.pop();
 	if(enemyQueue.size()>0)
-	schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),0,0,enemeyAddInterval);
+	{
+		CCLOG("enemy queue is ok");
+		schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),0,0,enemeyAddInterval);
+	}
 }
 
 float JG_AttackWave_AllLinesSequential::generateEnemyPositionRatio()
@@ -95,7 +98,7 @@ float JG_AttackWave_AllLinesSequential::generateEnemyPositionRatio()
 void JG_AttackWave_AllLinesSequential::clalculateEnemyAddInterval()
 {
 	if(attackCount<31)
-		enemeyAddInterval = 3.0 - ( (1.0/15) * attackCount );
+		enemeyAddInterval = 1.0 - ( (1.0/15) * attackCount );
 	else 
 		enemeyAddInterval = 1;
 }
@@ -107,8 +110,10 @@ JG_Path * JG_AttackWave_AllLinesSequential::selectPath(int pathCount)
 	{
 		tempPath = (JG_Path*)mainGame->pathsArray->objectAtIndex(pathCount % mainGame->pathsArray->count());
 		if(tempPath->IsPathEnabled())
+		{
+			CCLOG(CCString::createWithFormat("selected paht:%d",pathCount % mainGame->pathsArray->count())->getCString());
 			return tempPath;
-
+		}
 		pathCount++;
 	}
 }

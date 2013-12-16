@@ -54,7 +54,9 @@ public:
 	//move to  function
 	void MoveTo(float dt);
 	
-	void SetDestination(CCPoint destination, JG_Path * newTargetPath);
+	void SetDestinationPath(CCPoint destinationPos, JG_Path * newTargetPath);
+	void SetDestinationPosition(CCPoint destinaionPos);
+	void CheckOutOfScreen();
 	
 	void SetState(EEnemyState state);
 

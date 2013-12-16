@@ -3,7 +3,7 @@
 
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
-	speed = 20;
+	speed = 300;
 	waitingTime = 2.0;
 	SetState(EnemyS_Inited);
 	targetPath = NULL;
@@ -62,10 +62,18 @@ void JG_Enemy_Base::MoveTo(float dt)
 
 }
 
-void JG_Enemy_Base::SetDestination(CCPoint destination, JG_Path * newTargetPath)
+void JG_Enemy_Base::SetDestinationPath(CCPoint destination, JG_Path * newTargetPath)
 {
-	this->destination=destination;
+	SetDestinationPosition(destination);
 	targetPath = newTargetPath;
+	
+	SetState(EnemyS_Intending);
+}
+
+void JG_Enemy_Base::SetDestinationPosition(CCPoint destinaionPos)
+{
+	this->destination=destinaionPos;
+	
 	bIsDirectionSet=true;
 	CCPoint direction = destination- getPosition();
 
@@ -78,8 +86,8 @@ void JG_Enemy_Base::SetDestination(CCPoint destination, JG_Path * newTargetPath)
 	//if(directionRad<0)
 		//directionRad+= CC_DEGREES_TO_RADIANS(360);
 
-	CCLog("Direction is : %f ", CC_RADIANS_TO_DEGREES(directionRadian));
-	SetState(EnemyS_Intending);
+	//CCLog("Direction is : %f ", CC_RADIANS_TO_DEGREES(directionRadian));
+	
 }
 
 void JG_Enemy_Base::Fall(float dt)
@@ -94,6 +102,7 @@ void JG_Enemy_Base::update(float dt)
 		MoveTo(dt);
 
 	CheckCollisionWithBall();
+	CheckOutOfScreen();
 
 	if(state==EnemyS_Dying)
 		Fall(dt);
@@ -149,6 +158,8 @@ void JG_Enemy_Base::GotoState_Waiting()
 void JG_Enemy_Base::GotoState_Escaping()
 {
 	CCLog("In state Escaping");
+	SetDestinationPosition(ccp(mainGame->screenSize.width+10,mainGame->screenSize.height+10));
+
 
 	
 	
@@ -206,4 +217,18 @@ void JG_Enemy_Base::CheckCollisionWithBall()
 		}
 
 	}
+}
+//TODO:clean this nonesense
+void JG_Enemy_Base::CheckOutOfScreen()
+{
+	
+	if(state==EnemyS_Escaping)
+		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20||getPositionY()<mainGame->screenSize.height+30)
+			mainGame->OnEnemyLost(this);
+	else
+	{
+		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
+			mainGame->OnEnemyLost(this);
+	}
+
 }

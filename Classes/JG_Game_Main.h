@@ -183,6 +183,8 @@ public:
 	void OnBallLost(JG_Ball* lostBall);
 	//when path is destroyed
 	void OnPathLost(JG_Path* path);
+
+	void OnEnemyLost(JG_Enemy_Base* enemy);
 	/*! this event is called when two balls are collided */
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 	/*! this event is called when a ball is collided with a fruit*/

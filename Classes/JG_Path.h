@@ -52,7 +52,7 @@ class JG_Path :
 	void DrawPath();
 public:
 	JG_Path(void);
-	~JG_Path(void);
+	virtual ~JG_Path(void);
 
 	static JG_Path* CreatePath(JG_Game_Main* game,float power,CCPoint origin , CCPoint destination);
 

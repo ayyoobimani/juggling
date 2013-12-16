@@ -32,7 +32,7 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 						
 		currentEnemy=addEnemy();
 		currentEnemyDifficulty = currentEnemy->GetDifficulty();
-		currentEnemyDifficulty *= (1 + ( (100 - currentEnemy->getPath()->getHealth() )/100 ));
+		currentEnemyDifficulty *= (1 + ( (100 - currentEnemy->getPath()->GetHealth() )/100 ));
 		for(int i=0; i<mainGame->enemyArray->count(); i++)
 		{
 			if(currentEnemy->getPath() != ( (JG_Enemy_Base *) mainGame->enemyArray->objectAtIndex(i) )->getPath() ) 
@@ -67,7 +67,7 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 {
 	JG_Path * currentPath = (JG_Path*)mainGame->pathsArray->objectAtIndex(pathCounter);
 	
-	currentEnemy->SetDestination(currentPath->GetPositionForLengthRatio(generateEnemyPositionRatio()),currentPath);
+	currentEnemy->SetDestinationPath(currentPath->GetPositionForLengthRatio(generateEnemyPositionRatio()),currentPath);
 	pathCounter ++;
 	//TODO divide by zero exception handling
 	pathCounter %= (mainGame->pathsArray->count()-1);

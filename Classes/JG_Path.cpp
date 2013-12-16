@@ -10,6 +10,9 @@ JG_Path::JG_Path(void)
 
 JG_Path::~JG_Path(void)
 {
+	//CCSprite::~CCSprite();
+	unscheduleAllSelectors();
+
 }
 
 JG_Path * JG_Path::CreatePath(JG_Game_Main* game,float power,CCPoint origin , CCPoint destination)
@@ -97,8 +100,8 @@ void JG_Path::TakeDamage(float damage)
 	CCLOG("health is %f",health);
 	if(health<=0)
 	{
-		
-		//TODO: implement here
+		mainGame->OnPathLost(this);
+	
 	}
 }
 

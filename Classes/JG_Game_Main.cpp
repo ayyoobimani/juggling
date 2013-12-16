@@ -104,6 +104,7 @@ bool JG_Game_Main::init()
 			, leftHand->getPosition()
 			, rightHand->getPosition()));
 		this->addChild((CCNode*)pathsArray->objectAtIndex(i),2);
+		//pathsArray->objectAtIndex(i)->retain();
 	}
 
 	/*************************** /Paths ****************************/
@@ -122,11 +123,11 @@ bool JG_Game_Main::init()
 	this->addChild((CCNode*) tempDestination);
 
 	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
-	tempEnemy->InitialEnemy(this,ccp(50,50));
+	tempEnemy->InitialEnemy(this,ccp(100,100));
 	tempEnemy->retain();
 	this->addChild((CCNode*) tempEnemy);
 	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.5);
-	tempEnemy->SetDestination(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
+	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
 
 	InitGame_AttackWaves();
 
@@ -243,7 +244,7 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		tempDestination->setPosition(touch->getLocation());
 		if(tempEnemy!=NULL)
 		{
-			tempEnemy->SetDestination(tempDestination->getPosition(),NULL);
+			tempEnemy->SetDestinationPath(tempDestination->getPosition(),NULL);
 		}
 		if(touch) 
 		{
@@ -710,7 +711,16 @@ void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
 
 void JG_Game_Main::OnPathLost(JG_Path* path)
 {
+	for(int i=0;i<enemyArray->count();i++)
+	{
+		if(((JG_Enemy_Base*)enemyArray->objectAtIndex(i))->getPath()==path)
+			((JG_Enemy_Base*)enemyArray->objectAtIndex(i))->SetState(EnemyS_Escaping);
+	}
 	RemovePathFromScreen(path);
+}
+void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
+{
+	RemoveEnemyFromScreen(enemy);
 }
 
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
@@ -825,6 +835,7 @@ void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
 
 void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
 {
+	pathsArray->removeObject(path,false);
 	removeChild(path,true);
 	CC_SAFE_RELEASE(path);
 }

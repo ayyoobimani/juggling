@@ -4,11 +4,11 @@
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
 	speed = 300;
-	waitingTime = 2.0;
+	waitingTime = 1.0;
 	SetState(EnemyS_Inited);
 	targetPath = NULL;
-	attackInterval=2.0;
-	damagePerSecond=10.0;
+	attackInterval=0.5;
+	damagePerSecond=50;
 	damagePerInterval=damagePerSecond*attackInterval;
 	radius=15;
 }
@@ -98,7 +98,7 @@ void JG_Enemy_Base::Fall(float dt)
 
 void JG_Enemy_Base::update(float dt)
 {
-	if(state==EnemyS_Intending&&bIsDirectionSet==true)
+	if((state==EnemyS_Intending || state==EnemyS_Escaping) &&bIsDirectionSet==true)
 		MoveTo(dt);
 
 	CheckCollisionWithBall();
@@ -152,14 +152,14 @@ void JG_Enemy_Base::GotoState_Attacking()
 void JG_Enemy_Base::GotoState_Waiting()
 {
 	CCLog("In state Waiting");
-	
-	this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,waitingTime);
+	if(targetPath!=NULL)
+		this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,waitingTime);
 	
 }
 void JG_Enemy_Base::GotoState_Escaping()
 {
 	CCLog("In state Escaping");
-	SetDestinationPosition(ccp(mainGame->screenSize.width+10,mainGame->screenSize.height+10));
+	SetDestinationPosition(ccp(mainGame->screenSize.width+10,mainGame->screenSize.height+300));
 	targetPath = NULL;
 
 

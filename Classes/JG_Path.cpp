@@ -4,6 +4,7 @@
 JG_Path::JG_Path(void)
 {
 	health = 100;
+	bIsPathEnabled = true;
 	
 }
 
@@ -51,7 +52,8 @@ void JG_Path::InitialPath(JG_Game_Main* game,float power,CCPoint origin , CCPoin
 
 void JG_Path::draw()
 {
-	DrawPath();
+	if(IsPathEnabled())
+		DrawPath();
 }
 
 void JG_Path::DrawPath()
@@ -109,6 +111,7 @@ void JG_Path::TakeDamage(float damage)
 void JG_Path::SetHighlight(bool newHighlight)
 {
 	bMustHighlight = newHighlight;
+
 }
 
 
@@ -142,4 +145,27 @@ int JG_Path::CalculateScore()
 float JG_Path::GetHealth()
 {
 	return health;
+}
+
+void JG_Path::SetPathEnable(bool enable)
+{
+	bIsPathEnabled = enable;
+	if(!bIsPathEnabled)
+		DisablePath();
+
+}
+
+bool JG_Path::IsPathEnabled()
+{
+	return bIsPathEnabled;
+}
+
+void JG_Path::DisablePath()
+{
+	unschedule(schedule_selector(JG_Path::GiveScoreToPlayer));
+}
+
+void JG_Path::EnablePath()
+{
+
 }

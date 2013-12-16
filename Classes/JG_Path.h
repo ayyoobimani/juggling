@@ -26,6 +26,8 @@ class JG_Path :
 	/*! the power that ball will be thrown in this path */
 	float pathThrowPower;
 
+	bool bIsPathEnabled;
+
 	float pathThrowRadian;
 
 	float pathThrowSpeed;
@@ -49,6 +51,9 @@ class JG_Path :
 
 	bool bMustHighlight;
 
+	void DisablePath();
+	void EnablePath();
+
 	void DrawPath();
 public:
 	JG_Path(void);
@@ -68,6 +73,11 @@ public:
 
 	void TakeDamage(float damage);
 	float GetHealth();
+
+	void SetPathEnable(bool enable);
+	bool IsPathEnabled();
+
+	
 
 	int GetScore();
 

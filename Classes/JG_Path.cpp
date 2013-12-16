@@ -80,7 +80,7 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 	CCPoint PointPosition;
 	lenghtRatio = clampf(lenghtRatio,0,1);
 	PointPosition.x=abs(destinationPoint.x-originPoint.x)*lenghtRatio+originPoint.x;
-	PointPosition.y=(PointPosition.x*atan(pathThrowRadian))-(0.5*GRAVITY*pow(PointPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2))+destinationPoint.y;
+	PointPosition.y=(PointPosition.x*tan(pathThrowRadian))-(0.5*GRAVITY*pow(PointPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2))+destinationPoint.y;
 
 	return PointPosition;
 
@@ -89,8 +89,10 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 void JG_Path::TakeDamage(float damage)
 {
 	health-= damage;
+	CCLOG("health is %f",health);
 	if(health<=0)
 	{
+		
 		//TODO: implement here
 	}
 }

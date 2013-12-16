@@ -182,12 +182,15 @@ public:
 	/*! this event is called when a ball is lost ( for now when it is out of screen ) */
 	//TODO:change the name to OnBallLost
 	void OnBallLost(JG_Ball* lostBall);
+	//when path is destroyed
+	void OnPathLost(JG_Path* path);
 	/*! this event is called when two balls are collided */
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 	/*! this event is called when a ball is collided with a fruit*/
 	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
 	//when a ball hit an enemy
 	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
+	
 	
 	/*! this event is called when fruit is out of screen */
 	void OnFruitLost(JG_Fruit* fruit);
@@ -226,6 +229,8 @@ public:
 	
 	/*! handles ball removing */
 	void RemoveBallFromScreen(JG_Ball* ball);
+	//remove path from screen
+	void RemovePathFromScreen(JG_Path* path);
 	/*! Remove all balls from screen */
 	void RemoveAllBallsFromScreen();
 	/*! Adding new ball to screen */

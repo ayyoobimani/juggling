@@ -122,8 +122,10 @@ bool JG_Game_Main::init()
 
 	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
 	tempEnemy->InitialEnemy(this,ccp(50,50));
-
+	tempEnemy->retain();
 	this->addChild((CCNode*) tempEnemy);
+	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.5);
+	tempEnemy->SetDestination(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
 
 	InitGame_AttackWaves();
 
@@ -162,7 +164,7 @@ void JG_Game_Main::InitGame()
 	//TempAddBall(0);
 	//this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	//fruit
-	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
+	//this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
 
 
 	/******************************** /Balls ************************************/
@@ -231,7 +233,10 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		
 		touch = (CCTouch*) (*i);
 		tempDestination->setPosition(touch->getLocation());
-		tempEnemy->SetDestination(tempDestination->getPosition(),NULL);
+		if(tempEnemy!=NULL)
+		{
+			tempEnemy->SetDestination(tempDestination->getPosition(),NULL);
+		}
 		if(touch) 
 		{
 			BallTouchHandler_Init(touch);
@@ -652,9 +657,19 @@ void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 {
 	//maybe score for hitting enemy
 	//when a ball hit the enemy it goes for state dying
-	enemy->SetState(EnemyS_Escaping);
-	//RemoveEnemyFromScreen(enemy)
+	enemy->SetState(EnemyS_Dying);
 	
+	
+}
+
+void JG_Game_Main::RemoveEnemyFromScreen(JG_Enemy_Base* enemy)
+{
+	//enemyArray->removeObject(enemy,false);
+	//removeChild(enemy,true);
+	//CC_SAFE_RELEASE(enemy);
+	//onenemylost
+	tempEnemy=NULL;
+
 }
 
 void JG_Game_Main::OnBallLost(JG_Ball* ball)
@@ -678,6 +693,11 @@ void JG_Game_Main::OnBallLost(JG_Ball* ball)
 void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
 {
 	RemoveFruitFromScreen(fruit);
+}
+
+void JG_Game_Main::OnPathLost(JG_Path* path)
+{
+	RemovePathFromScreen(path);
 }
 
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
@@ -788,6 +808,12 @@ void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
 	fruitsArray->removeObject(fruit,false);
 	removeChild(fruit,true);
 	CC_SAFE_RELEASE(fruit);
+}
+
+void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
+{
+	removeChild(path,true);
+	CC_SAFE_RELEASE(path);
 }
 
 void JG_Game_Main::ReleaseBall(CCObject* pSender)

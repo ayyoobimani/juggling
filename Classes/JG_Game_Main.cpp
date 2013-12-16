@@ -140,7 +140,15 @@ bool JG_Game_Main::init()
 
 void JG_Game_Main::InitGame_AttackWaves()
 {
+	
+	/*************************** /enemy Array ****************************/
+	enemyArray = CCArray::create();
+
 	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
+
+	attackWaveCount =1;
+
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),3);
 }
 
 void JG_Game_Main::InitGame()
@@ -214,7 +222,6 @@ void JG_Game_Main::CheckBallsThrowPath()
 				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
 			{
 				int ballPath = CalculateThrowPower(i,true)/ powerRange;
-				//CCLOG("power level : %f",ballPath);
 				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
 			}
 		}
@@ -367,7 +374,7 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{
-						CCLog("it's all in your minde, tap location ");
+				//		CCLog("it's all in your minde, tap location ");
 
 						criticalBall = tempBall;
 						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
@@ -653,6 +660,14 @@ void JG_Game_Main::OnFruitHit(JG_Fruit* fruit, JG_Ball* ball)
 {
 	ManageFruitScore(fruit,ball);
 	RemoveFruitFromScreen(fruit);
+}
+void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
+{
+	//maybe score for hitting enemy
+	//when a ball hit the enemy it goes for state dying
+	enemy->SetState(EnemyS_Escaping);
+	//RemoveEnemyFromScreen(enemy)
+	
 }
 
 void JG_Game_Main::OnBallLost(JG_Ball* ball)
@@ -1125,6 +1140,13 @@ void JG_Game_Main::TestSingleTouch()
 }
 
 
+void JG_Game_Main::CheckLoseCondition()
+{
+	if(pathsArray->count()==0 || ( reservedBallCount<=0 && ballsArray->count()==0))
+	{
+		//TODO: implement
+	}
+}
 
 void JG_Game_Main::TestMultiTouch()
 {
@@ -1262,16 +1284,17 @@ int JG_Game_Main::getAttackWaveType()
 	return CCRANDOM_0_1()*attackWaveTypes.size();
 }
 
-void JG_Game_Main::ManageDifficulty()
+void JG_Game_Main::ManageDifficulty(float dt)
 {
-	//int attackWaveIndex = getAttackWaveType();
+	CCLOG("called manage difficulty");
+	int attackWaveIndex = getAttackWaveType();
+	CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
+	JG_AttackWave_Base* currentAttackWave;
+	currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
+	
+	float difficulty = 100*attackWaveCount ;
+	CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
+	currentAttackWave->initAttacWave(this,difficulty,attackWaveCount);
 
-	//JG_AttackWave_Base* currentAttackWave;
-	//currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
-
-	//float difficulty = 100*attackWaveCount ;
-
-	//currentAttackWave->initAttacWave(this,difficulty,attackWaveCount);
-
-	//attackWaveCount++;
+	attackWaveCount++;
 }

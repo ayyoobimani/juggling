@@ -1,7 +1,7 @@
 #pragma once
 #include "sprite_nodes\CCSprite.h"
 #include "cocos2d.h"
-//#include "JG_Game_Main.h"
+
 
 
 
@@ -17,7 +17,7 @@ class JG_AttackWave_Base:public CCSprite
 protected:
 	JG_Game_Main* mainGame;
 
-	CCArray* enemyArray;
+	
 
 	float attackDifficulty;
 	int GetTickCount;

@@ -36,9 +36,9 @@ class JG_Path;
 //class JG_Enemy_Base;
 //class JG_Factory_Base;
 ////class JG_Factory_AttackWave;
-//class JG_AttackWave_Base;
+class JG_AttackWave_Base;
 //class JG_Enemy_Crow;
-//class JG_AttackWave_AllLinesSequential;
+class JG_AttackWave_AllLinesSequential;
 
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
@@ -94,7 +94,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCArray* fruitsArray;
 
-
+	
 	CCSprite* tempDestination;
 
 	JG_Enemy_Base* tempEnemy;
@@ -129,10 +129,12 @@ class JG_Game_Main : public cocos2d::CCLayer
 	
 
 
+
 	template<class enemyClass>
 	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
 	
 
+	JG_AttackWave_Base* attackWave;
 	float attackWaveCount;
 	
 public:
@@ -142,7 +144,7 @@ public:
 
 	std::vector<JG_Factory_Base*> attackWaveTypes;
 
-
+	CCArray* enemyArray;
 	CCArray* pathsArray;
 	
 	JG_Game_Main(void);
@@ -183,6 +185,9 @@ public:
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 	/*! this event is called when a ball is collided with a fruit*/
 	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
+	//when a ball hit an enemy
+	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
+	
 	/*! this event is called when fruit is out of screen */
 	void OnFruitLost(JG_Fruit* fruit);
 	/*! this event is called when ball is successfully throwed*/
@@ -233,6 +238,8 @@ public:
 
 	void RemoveFruitFromScreen(JG_Fruit* fruit);
 	void RemoveAllFruitsFromScreen();
+
+	void RemoveEnemyFromScreen(JG_Enemy_Base* enemy);
 
 	void AddFruitToScreen();
 	void TempAddFruitToScreen(float time);
@@ -384,13 +391,13 @@ public:
 	
 
 
-	
+	void CheckLoseCondition();
 
 
 
 	void InitGame_AttackWaves();
 	int getAttackWaveType();
-	void ManageDifficulty();
+	void ManageDifficulty(float dt);
 
 };
 

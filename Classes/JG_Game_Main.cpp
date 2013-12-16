@@ -139,7 +139,15 @@ bool JG_Game_Main::init()
 
 void JG_Game_Main::InitGame_AttackWaves()
 {
+	
+	/*************************** /enemy Array ****************************/
+	enemyArray = CCArray::create();
+
 	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
+
+	attackWaveCount =1;
+
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),3);
 }
 
 void JG_Game_Main::InitGame()
@@ -213,7 +221,7 @@ void JG_Game_Main::CheckBallsThrowPath()
 				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
 			{
 				int ballPath = CalculateThrowPower(i,true)/ powerRange;
-				CCLOG("power level : %f",ballPath);
+	//			CCLOG("power level : %f",ballPath);
 				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
 			}
 		}
@@ -366,7 +374,7 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{
-						CCLog("it's all in your minde, tap location ");
+				//		CCLog("it's all in your minde, tap location ");
 
 						criticalBall = tempBall;
 						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
@@ -1264,16 +1272,17 @@ int JG_Game_Main::getAttackWaveType()
 	return CCRANDOM_0_1()*attackWaveTypes.size();
 }
 
-void JG_Game_Main::ManageDifficulty()
+void JG_Game_Main::ManageDifficulty(float dt)
 {
-	//int attackWaveIndex = getAttackWaveType();
+	CCLOG("called manage difficulty");
+	int attackWaveIndex = getAttackWaveType();
+	CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
+	JG_AttackWave_Base* currentAttackWave;
+	currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
+	
+	float difficulty = 100*attackWaveCount ;
+	CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
+	currentAttackWave->initAttacWave(this,difficulty,attackWaveCount);
 
-	//JG_AttackWave_Base* currentAttackWave;
-	//currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
-
-	//float difficulty = 100*attackWaveCount ;
-
-	//currentAttackWave->initAttacWave(this,difficulty,attackWaveCount);
-
-	//attackWaveCount++;
+	attackWaveCount++;
 }

@@ -36,9 +36,9 @@ class JG_Path;
 //class JG_Enemy_Base;
 //class JG_Factory_Base;
 ////class JG_Factory_AttackWave;
-//class JG_AttackWave_Base;
+class JG_AttackWave_Base;
 //class JG_Enemy_Crow;
-//class JG_AttackWave_AllLinesSequential;
+class JG_AttackWave_AllLinesSequential;
 
 
 #define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
@@ -94,7 +94,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCArray* fruitsArray;
 
-	CCArray* enemyArray;
+	
 	CCSprite* tempDestination;
 
 	JG_Enemy_Base* tempEnemy;
@@ -136,6 +136,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
 	
 
+	JG_AttackWave_Base* attackWave;
 	float attackWaveCount;
 	
 public:
@@ -145,7 +146,7 @@ public:
 
 	std::vector<JG_Factory_Base*> attackWaveTypes;
 
-
+	CCArray* enemyArray;
 	CCArray* pathsArray;
 	
 	JG_Game_Main(void);
@@ -394,7 +395,7 @@ public:
 
 	void InitGame_AttackWaves();
 	int getAttackWaveType();
-	void ManageDifficulty();
+	void ManageDifficulty(float dt);
 
 };
 

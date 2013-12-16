@@ -94,7 +94,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCArray* fruitsArray;
 
-
+	CCArray* enemyArray;
 	CCSprite* tempDestination;
 
 	JG_Enemy_Base* tempEnemy;
@@ -130,6 +130,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	/* ! Manages Ball Score for combos */
 	void ManageBallComboScore(JG_Ball* ball);
 	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
+
 
 	template<class enemyClass>
 	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
@@ -185,6 +186,9 @@ public:
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 	/*! this event is called when a ball is collided with a fruit*/
 	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
+	//when a ball hit an enemy
+	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
+	
 	/*! this event is called when fruit is out of screen */
 	void OnFruitLost(JG_Fruit* fruit);
 	/*! this event is called when ball is successfully throwed*/
@@ -231,6 +235,8 @@ public:
 
 	void RemoveFruitFromScreen(JG_Fruit* fruit);
 	void RemoveAllFruitsFromScreen();
+
+	void RemoveEnemyFromScreen(JG_Enemy_Base* enemy);
 
 	void AddFruitToScreen();
 	void TempAddFruitToScreen(float time);

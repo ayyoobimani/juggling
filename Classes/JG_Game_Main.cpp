@@ -146,6 +146,7 @@ void JG_Game_Main::InitGame_AttackWaves()
 	
 	/*************************** /enemy Array ****************************/
 	enemyArray = CCArray::create();
+	enemyArray->retain();
 
 	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
 
@@ -1328,10 +1329,10 @@ void JG_Game_Main::ManageDifficulty(float dt)
 	CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
 	JG_AttackWave_Base* currentAttackWave;
 	currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
-	
+	//currentAttackWave = (JG_AttackWave_Base*) new JG_AttackWave_AllLinesSequential();
 	float difficulty = 100*attackWaveCount ;
 	CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
-	currentAttackWave->initAttacWave(this,difficulty,attackWaveCount);
+	currentAttackWave->initAttackWave(this,difficulty,attackWaveCount);
 
 	attackWaveCount++;
 }

@@ -153,8 +153,8 @@ public:
 	 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
 
-    /*! Initial the game state */
-	void InitGame();
+    /*! Initial the round state */
+	void InitRound();
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::CCScene* scene();
@@ -205,6 +205,9 @@ public:
 	void ManageBallComboScore(JG_Ball* ball);
 	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
 	void ManagePathScore(JG_Path* path);
+
+	bool IsThereAnyBallLeft();
+	bool IsThereAnyPathLeft();
 
 	/*! Return player Score */
 	int GetScore();
@@ -328,7 +331,7 @@ public:
 	
 	
 	/*! End of the game */
-	void EndGame();
+	void EndRound();
 	/*! Pausing the game */
 	void PauseGame(CCObject* pSender);
 	/*! Exit the game */

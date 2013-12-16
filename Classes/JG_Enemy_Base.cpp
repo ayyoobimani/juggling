@@ -8,7 +8,7 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 	SetState(EnemyS_Inited);
 	targetPath = NULL;
 	attackInterval=0.5;
-	damagePerSecond=50;
+	damagePerSecond=10;
 	damagePerInterval=damagePerSecond*attackInterval;
 	radius=15;
 }
@@ -111,6 +111,10 @@ void JG_Enemy_Base::update(float dt)
 //nonesense
 void JG_Enemy_Base::SetState(EEnemyState newState)
 {
+	//No Need To Do anything
+	if(state == newState)
+		return;
+
 	this->unschedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking));
 	this->unschedule(schedule_selector(JG_Enemy_Base::Attack));
 	state=newState;

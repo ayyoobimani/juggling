@@ -661,6 +661,7 @@ void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
 void JG_Game_Main::ManagePathScore(JG_Path* path)
 {
 	AddScore(path->GetScore());
+	JG_ScorePopup::CreateScorePopup(this,path->GetScore(),1,path->GetPositionForLengthRatio(0.5));
 }
 
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)

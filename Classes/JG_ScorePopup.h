@@ -9,7 +9,7 @@ using namespace cocos2d;
 
 class JG_Game_Main;
 
-#define SCORE_EXISTENCE_DURATION 2
+#define SCORE_EXISTENCE_DURATION 1.5
 
 class JG_ScorePopup: public CCNode
 {
@@ -26,7 +26,4 @@ public:
 	~JG_ScorePopup();
 
 	static JG_ScorePopup* CreateScorePopup(JG_Game_Main * game ,int score , int multiplier , CCPoint position );
-
-
-
 };

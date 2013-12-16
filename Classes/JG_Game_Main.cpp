@@ -158,7 +158,7 @@ void JG_Game_Main::InitGame_AttackWaves()
 	//************************* /Delete This Later **************/
 
 
-	//schedule(schedule_selector(JG_Game_Main::ManageDifficulty),3);
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),3);
 }
 
 void JG_Game_Main::InitGame()

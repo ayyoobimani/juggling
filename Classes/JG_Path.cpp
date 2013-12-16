@@ -4,6 +4,7 @@
 JG_Path::JG_Path(void)
 {
 	health = 100;
+	
 }
 
 
@@ -11,14 +12,15 @@ JG_Path::~JG_Path(void)
 {
 }
 
-JG_Path * JG_Path::CreatePath(float power,CCPoint origin , CCPoint destination)
+JG_Path * JG_Path::CreatePath(JG_Game_Main* game,float power,CCPoint origin , CCPoint destination)
 {
 	JG_Path * path = new JG_Path();
 	if (path)
 	{
 		path->autorelease();
-		path->InitialPath(power,origin,destination);
+		path->InitialPath(game,power,origin,destination);
 		path->scheduleUpdate();
+		
 
 
 		return path;
@@ -28,8 +30,9 @@ JG_Path * JG_Path::CreatePath(float power,CCPoint origin , CCPoint destination)
 
 }
 
-void JG_Path::InitialPath(float power,CCPoint origin , CCPoint destination)
+void JG_Path::InitialPath(JG_Game_Main* game,float power,CCPoint origin , CCPoint destination)
 {
+	mainGame = game;
 	bMustHighlight = false;
 	pathThrowPower = power;
 	originPoint = origin;
@@ -39,6 +42,8 @@ void JG_Path::InitialPath(float power,CCPoint origin , CCPoint destination)
 
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
+
+	this->schedule(schedule_selector(JG_Path::GiveScoreToPlayer),CalculateScoreInterval());
 }
 
 void JG_Path::draw()
@@ -102,7 +107,34 @@ void JG_Path::SetHighlight(bool newHighlight)
 }
 
 
-float JG_Path::getHealth()
+void JG_Path::GiveScoreToPlayer(float dt)
+{
+	unschedule(schedule_selector(JG_Path::GiveScoreToPlayer));
+	currentScore = CalculateScore();
+	mainGame->ManagePathScore(this);
+	schedule(schedule_selector(JG_Path::GiveScoreToPlayer),CalculateScoreInterval());
+	
+}
+
+
+int JG_Path::GetScore()
+{
+	return currentScore;
+}
+
+
+float JG_Path::CalculateScoreInterval()
+{
+	return SCOREINTERVAL_BASE;
+}
+
+int JG_Path::CalculateScore()
+{
+	return SCORE_BASE;
+
+}
+
+float JG_Path::GetHealth()
 {
 	return health;
 }

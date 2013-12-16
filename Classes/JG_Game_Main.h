@@ -127,9 +127,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	int ballCounter;
 	int prevballCounter;
 	
-	/* ! Manages Ball Score for combos */
-	void ManageBallComboScore(JG_Ball* ball);
-	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
+
 
 	template<class enemyClass>
 	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
@@ -193,6 +191,10 @@ public:
 	/*!this event called when a ball is collided with an enemy*/
 	//void OnEnemyHit(JG_E
 
+	/* ! Manages Ball Score for combos */
+	void ManageBallComboScore(JG_Ball* ball);
+	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
+	void ManagePathScore(JG_Path* path);
 
 	/*! Return player Score */
 	int GetScore();

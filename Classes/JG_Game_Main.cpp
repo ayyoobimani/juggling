@@ -99,7 +99,8 @@ bool JG_Game_Main::init()
 	pathsArray->retain();
 	for( int i= 0 ; i< DISCRETE_PARTS_COUNT ; i++)
 	{
-		pathsArray->addObject(JG_Path::CreatePath(i * powerRange
+		pathsArray->addObject(JG_Path::CreatePath(this
+			,i * powerRange
 			, leftHand->getPosition()
 			, rightHand->getPosition()));
 		this->addChild((CCNode*)pathsArray->objectAtIndex(i),2);
@@ -162,7 +163,7 @@ void JG_Game_Main::InitGame()
 	//TempAddBall(0);
 	//this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	//fruit
-	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
+	//this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
 
 
 	/******************************** /Balls ************************************/
@@ -213,7 +214,7 @@ void JG_Game_Main::CheckBallsThrowPath()
 				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
 			{
 				int ballPath = CalculateThrowPower(i,true)/ powerRange;
-				CCLOG("power level : %f",ballPath);
+				//CCLOG("power level : %f",ballPath);
 				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
 			}
 		}
@@ -634,6 +635,11 @@ void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
 		, ball->GetComboChain()
 		, fruit->getPosition());
 	
+}
+
+void JG_Game_Main::ManagePathScore(JG_Path* path)
+{
+	AddScore(path->GetScore());
 }
 
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)

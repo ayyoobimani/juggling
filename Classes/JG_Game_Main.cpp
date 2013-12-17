@@ -152,7 +152,7 @@ void JG_Game_Main::InitGame_AttackWaves()
 	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
 	tempEnemy->InitialEnemy(this,ccp(100,100));
 	this->addChild((CCNode*) tempEnemy);
-	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.5);
+	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
 	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
 	enemyArray->addObject(tempEnemy);
 	//************************* /Delete This Later **************/

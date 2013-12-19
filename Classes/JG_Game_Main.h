@@ -76,6 +76,9 @@ struct STouchInfo
 	CCPoint initialTouchPosition;
 };
 
+
+
+
 /*! The main class for controlling the game */
 class JG_Game_Main : public cocos2d::CCLayer
 {
@@ -329,6 +332,7 @@ public:
 	/*! Update Ball Throw Trace for all touched balls */
 	void UpdateBallThrowTrace();
 	
+	int GetPathLevelByPower(float pathPower);
 	
 	/*! End of the game */
 	void EndRound();

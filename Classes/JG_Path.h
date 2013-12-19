@@ -2,6 +2,7 @@
 #include "sprite_nodes\CCSprite.h"
 #include "cocos2d.h"
 #include "JG_Game_Main.h"
+#include <vector>
 
 class JG_Game_Main;
 
@@ -13,7 +14,13 @@ class JG_Game_Main;
 #define SCOREINTERVAL_RANDOM_OFFSET 0.5
 #define SCOREINTERVAL_BASE 4.0
 
+#define MAX_HEALTH 100 
 
+
+struct PathHealthStatesForEachLevel
+{
+	std::vector<CCTexture2D*> healthStateTextures;
+};
 
 
 using namespace cocos2d;
@@ -21,9 +28,13 @@ class JG_Path :
 	public CCSprite
 {
 
+	std::vector<CCString> healthStateTextures;
+
 	JG_Game_Main* mainGame;
 	/*! the power that ball will be thrown in this path */
 	float pathThrowPower;
+
+	int pathLevel;
 
 	bool bIsPathEnabled;
 
@@ -34,9 +45,18 @@ class JG_Path :
 	CCPoint originPoint;
 	CCPoint destinationPoint;
 
-	float health; 
+	float pathHealth; 
 
 	int currentScore;
+
+	
+	// trace texture for drawing throw paths
+	CCTexture2D* tracePointTexture;
+	CCTexture2D* traceLivePointTexture;
+
+	bool bMustHighlight;
+
+	void InitPath_HealthStateTextures();
 
 		
 	void GiveScoreToPlayer(float dt);
@@ -44,16 +64,14 @@ class JG_Path :
 	int CalculateScore();
 
 
-	// trace texture for drawing throw paths
-	CCTexture2D* tracePointTexture;
-	CCTexture2D* traceLivePointTexture;
-
-	bool bMustHighlight;
 
 	void DisablePath();
 	void EnablePath();
 
 	void DrawPath();
+
+
+	
 public:
 	JG_Path(void);
 	virtual ~JG_Path(void);
@@ -76,9 +94,16 @@ public:
 	void SetPathEnable(bool enable);
 	bool IsPathEnabled();
 
+	void UpdatePathHealthStateTexture();
+
 	
 
 	int GetScore();
 
+	static std::vector<PathHealthStatesForEachLevel> pathHealthStatesForEachLevel;
+	static void InitialPathHealthStatesForEachLevel();
+	
+
 };
+
 

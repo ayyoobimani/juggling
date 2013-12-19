@@ -47,6 +47,7 @@ bool JG_Game_Main::init()
 	//call update for every frame
 	this->schedule(schedule_selector(JG_Game_Main::update));
 
+	JG_Path::InitialPathHealthStatesForEachLevel();
 
 	gameHUD = JG_Game_HUD::create(this);
 	gameHUD->retain();
@@ -661,7 +662,7 @@ void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
 void JG_Game_Main::ManagePathScore(JG_Path* path)
 {
 	AddScore(path->GetScore());
-	JG_ScorePopup::CreateScorePopup(this,path->GetScore(),1,path->GetPositionForLengthRatio(0.5));
+	JG_ScorePopup::CreateScorePopup(this,path->GetScore(),1,path->GetPositionForLengthRatio(0.8));
 }
 
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
@@ -1095,6 +1096,10 @@ void JG_Game_Main:: CheckBallCollisionWithHand()
 }
 
 
+int JG_Game_Main::GetPathLevelByPower(float pathPower)
+{
+	return pathPower/powerRange;
+}
 CCArray* JG_Game_Main::GetBallArray()
 {
 	return this->ballsArray;

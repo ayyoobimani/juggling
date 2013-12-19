@@ -32,5 +32,7 @@ public:
 	void clalculateEnemyAddInterval();
 
 	JG_Path* selectPath(int pathcount);
+
+	void update(float dt);
 };
 

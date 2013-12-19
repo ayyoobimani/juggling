@@ -12,7 +12,7 @@ class JG_Game_Main;
 
 
 
-class JG_AttackWave_Base:public CCSprite
+class JG_AttackWave_Base:public CCNode
 {
 protected:
 	JG_Game_Main* mainGame;

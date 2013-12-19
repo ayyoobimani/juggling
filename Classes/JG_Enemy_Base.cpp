@@ -216,7 +216,7 @@ float JG_Enemy_Base::GetDifficulty()
 
 	//return ( ( waitingTimeFactor * FIRST_HIT_COEFFICIENT + intervalFactor )*damagePerInterval ) ;
 
-	return 70;
+	return 30;
 }
 
 JG_Path* JG_Enemy_Base::GetTargetPath()

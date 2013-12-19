@@ -19,14 +19,52 @@ JG_Path::~JG_Path(void)
 
 void JG_Path::InitialPathHealthStatesForEachLevel()
 {
+	pathHealthStatesForEachLevel.push_back(PathHealthStatesForEachLevel());
+	pathHealthStatesForEachLevel.push_back(PathHealthStatesForEachLevel());
+	pathHealthStatesForEachLevel.push_back(PathHealthStatesForEachLevel());
+	pathHealthStatesForEachLevel.push_back(PathHealthStatesForEachLevel());
 
+	pathHealthStatesForEachLevel[0].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/1-1.png"));
+	pathHealthStatesForEachLevel[0].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/1-2.png"));
+	pathHealthStatesForEachLevel[0].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/1-3.png"));
+	pathHealthStatesForEachLevel[0].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/1-4.png"));
 
+	pathHealthStatesForEachLevel[1].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-1.png"));
+	pathHealthStatesForEachLevel[1].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-2.png"));
+	pathHealthStatesForEachLevel[1].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-3.png"));
+	pathHealthStatesForEachLevel[1].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-4.png"));
+
+	pathHealthStatesForEachLevel[2].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-1.png"));
+	pathHealthStatesForEachLevel[2].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-2.png"));
+	pathHealthStatesForEachLevel[2].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-3.png"));
+	pathHealthStatesForEachLevel[2].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-4.png"));
+
+	pathHealthStatesForEachLevel[3].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-1.png"));
+	pathHealthStatesForEachLevel[3].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-2.png"));
+	pathHealthStatesForEachLevel[3].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-3.png"));
+	pathHealthStatesForEachLevel[3].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-4.png"));
 }
 
 JG_Path * JG_Path::CreatePath(JG_Game_Main* game,float power,CCPoint origin , CCPoint destination)
 {
 	JG_Path * path = new JG_Path();
-	if (path)
+	if (path && path->initWithFile("cross.png"))
 	{
 		path->autorelease();
 		path->InitialPath(game,power,origin,destination);
@@ -57,6 +95,11 @@ void JG_Path::InitialPath(JG_Game_Main* game,float power,CCPoint origin , CCPoin
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
+	setPosition(originPoint);
+
+	//initWithFile("Paths/4-1.png");
+	setAnchorPoint(ccp(0,0));
+	UpdatePathHealthStateTexture();
 	
 
 	this->schedule(schedule_selector(JG_Path::GiveScoreToPlayer),CalculateScoreInterval());
@@ -70,19 +113,21 @@ void JG_Path::UpdatePathHealthStateTexture()
 		if(healthStateTexturesLength==0)
 			return;
 	
-		int currentHealthStateIndex = int((pathHealth/MAX_HEALTH))*healthStateTexturesLength;
+		int currentHealthStateIndex = healthStateTexturesLength- ((pathHealth/MAX_HEALTH)*healthStateTexturesLength);
 		setTexture(pathHealthStatesForEachLevel[pathLevel].healthStateTextures[currentHealthStateIndex]);
 	}
 }
 
 void JG_Path::draw()
 {
+	
 	if(IsPathEnabled())
 		DrawPath();
 }
 
 void JG_Path::DrawPath()
 {
+	getTexture()->drawAtPoint(ccp(0,0));
 	//CCLOG(CCString::createWithFormat("chosen:%f",_power)->getCString());
 
 	float tempSpeedX,tempSpeedY;
@@ -103,8 +148,8 @@ void JG_Path::DrawPath()
 
 		if(bMustHighlight)
 			traceLivePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
-		else
-			tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+		//else
+			//tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
 	}
 
 }
@@ -127,12 +172,16 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 void JG_Path::TakeDamage(float damage)
 {
 	pathHealth-= damage;
-	UpdatePathHealthStateTexture();
+	
 	//CCLOG("health is %f",health);
 	if(pathHealth<=0)
 	{
 		mainGame->OnPathLost(this);
 	
+	}
+	else
+	{
+		UpdatePathHealthStateTexture();
 	}
 }
 

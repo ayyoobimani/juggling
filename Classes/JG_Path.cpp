@@ -1,10 +1,11 @@
 #include "JG_Path.h"
 
+std::vector<PathHealthStatesForEachLevel> JG_Path::pathHealthStatesForEachLevel;
 
 JG_Path::JG_Path(void)
 {
-	health = 100;
-	bIsPathEnabled = true;
+
+
 	
 }
 
@@ -13,6 +14,12 @@ JG_Path::~JG_Path(void)
 {
 	//CCSprite::~CCSprite();
 	unscheduleAllSelectors();
+
+}
+
+void JG_Path::InitialPathHealthStatesForEachLevel()
+{
+
 
 }
 
@@ -37,7 +44,10 @@ JG_Path * JG_Path::CreatePath(JG_Game_Main* game,float power,CCPoint origin , CC
 void JG_Path::InitialPath(JG_Game_Main* game,float power,CCPoint origin , CCPoint destination)
 {
 	mainGame = game;
+	pathLevel = mainGame->GetPathLevelByPower(power);
+	pathHealth = MAX_HEALTH;
 	bMustHighlight = false;
+	bIsPathEnabled = true;
 	pathThrowPower = power;
 	originPoint = origin;
 	destinationPoint = destination;
@@ -47,7 +57,22 @@ void JG_Path::InitialPath(JG_Game_Main* game,float power,CCPoint origin , CCPoin
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
+	
+
 	this->schedule(schedule_selector(JG_Path::GiveScoreToPlayer),CalculateScoreInterval());
+}
+
+void JG_Path::UpdatePathHealthStateTexture()
+{
+	if( pathHealthStatesForEachLevel.size()>pathLevel)
+	{
+		int healthStateTexturesLength = pathHealthStatesForEachLevel[pathLevel].healthStateTextures.size();
+		if(healthStateTexturesLength==0)
+			return;
+	
+		int currentHealthStateIndex = int((pathHealth/MAX_HEALTH))*healthStateTexturesLength;
+		setTexture(pathHealthStatesForEachLevel[pathLevel].healthStateTextures[currentHealthStateIndex]);
+	}
 }
 
 void JG_Path::draw()
@@ -101,9 +126,10 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 
 void JG_Path::TakeDamage(float damage)
 {
-	health-= damage;
+	pathHealth-= damage;
+	UpdatePathHealthStateTexture();
 	//CCLOG("health is %f",health);
-	if(health<=0)
+	if(pathHealth<=0)
 	{
 		mainGame->OnPathLost(this);
 	
@@ -147,7 +173,7 @@ int JG_Path::CalculateScore()
 
 float JG_Path::GetHealth()
 {
-	return health;
+	return pathHealth;
 }
 
 void JG_Path::SetPathEnable(bool enable)

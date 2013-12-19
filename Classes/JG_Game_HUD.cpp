@@ -120,6 +120,7 @@ void JG_Game_HUD::Init_PauseMenu()
 	ballAddButton = CCMenuItemSprite::create(CCSprite::create("BallAdder_Normal.png"),CCSprite::create("BallAdder_Selected.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ReleaseBall));
+	ballAddButton->setOpacity(170);
 	ballAddButton->retain();
 	ballAddButton->setPosition(ccp(mainGame->screenSize.width * 0.1 ,mainGame->screenSize.height * 0.8));
 

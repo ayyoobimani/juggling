@@ -112,12 +112,15 @@ void JG_Path::DrawPath()
 CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 {
 	//TODO: implement this
-	CCPoint PointPosition;
+	CCPoint localPosition;
+	CCPoint globalPosition;
 	lenghtRatio = clampf(lenghtRatio,0,1);
-	PointPosition.x=abs(destinationPoint.x-originPoint.x)*lenghtRatio+originPoint.x;
-	PointPosition.y=(PointPosition.x*tan(pathThrowRadian))-(0.5*GRAVITY*pow(PointPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2))+destinationPoint.y;
 
-	return PointPosition;
+	localPosition.x=abs(destinationPoint.x-originPoint.x)*lenghtRatio;
+	localPosition.y=(localPosition.x*tan(pathThrowRadian))-(0.5*GRAVITY*pow(localPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2));
+
+	globalPosition=originPoint+localPosition;
+	return globalPosition;
 
 }
 

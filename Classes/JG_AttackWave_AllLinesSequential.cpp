@@ -19,7 +19,7 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 
 
 	clalculateEnemyAddInterval();
-	CCLOG(CCString::createWithFormat("interval: %f", enemeyAddInterval)->getCString());
+	//CCLOG(CCString::createWithFormat("interval: %f", enemeyAddInterval)->getCString());
 	pathCounter =0;
 	JG_Path* currentPath;
 

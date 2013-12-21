@@ -120,15 +120,15 @@ bool JG_Game_Main::init()
 
 
 	
-	tempDestination = new CCSprite();
+	/*tempDestination = new CCSprite();
 	tempDestination->initWithFile("cross.png");
 	tempDestination->retain();
 	this->addChild((CCNode*) tempDestination,200);
-	tempDestination->setPosition(leftHand->getPosition());
+	tempDestination->setPosition(leftHand->getPosition());*/
 
 	
 
-	InitGame_AttackWaves();
+	//InitGame_AttackWaves();
 
 	
 
@@ -145,10 +145,12 @@ bool JG_Game_Main::init()
 void JG_Game_Main::InitGame_AttackWaves()
 {
 	
-	
+	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
+	attackWaveTypes.clear();
+
 	enemyArray = CCArray::create();
 	enemyArray->retain();
-
+	
 	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
 
 	attackWaveCount =1;
@@ -207,6 +209,7 @@ void JG_Game_Main::InitRound()
 		touchInfos[i].bIsDirValid = false;
 	}
 
+	InitGame_AttackWaves();
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
@@ -260,7 +263,7 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 	{
 		
 		touch = (CCTouch*) (*i);
-		tempDestination->setPosition(touch->getLocation());
+		//tempDestination->setPosition(touch->getLocation());
 		if(tempEnemy!=NULL)
 		{
 			//tempEnemy->SetDestinationPath(tempDestination->getPosition(),NULL);
@@ -843,6 +846,8 @@ void JG_Game_Main::RemoveAllBallsFromScreen()
 
 }
 
+
+
 void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 {
 
@@ -879,11 +884,22 @@ void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
 
 void JG_Game_Main::RemoveEnemyFromScreen(JG_Enemy_Base* enemy)
 {
-	//enemyArray->removeObject(enemy,false);
-	//removeChild(enemy,true);
-	//CC_SAFE_RELEASE(enemy);
+	enemyArray->removeObject(enemy,false);
+	removeChild(enemy,true);
+	CC_SAFE_RELEASE(enemy);
 	//onenemylost
 	tempEnemy=NULL;
+}
+
+void JG_Game_Main::RemoveAllEnemiesFromScreen()
+{
+	JG_Enemy_Base* tempEnemy;
+
+
+	while(enemyArray->count()>0)
+	{
+		RemoveEnemyFromScreen((JG_Enemy_Base*)enemyArray->randomObject());
+	}
 
 }
 
@@ -903,7 +919,7 @@ void JG_Game_Main::AddBallToScreen()
 		,screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5)
 		,Dir_RightHandToUp
 		,DISCRETE_PARTS_COUNT);
-	this->addChild(newBall,6);
+	this->addChild(newBall,75);
 	ballsArray->addObject(newBall);
 
 }
@@ -1144,6 +1160,7 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 {
 	RemoveAllBallsFromScreen();
 	RemoveAllFruitsFromScreen();
+	RemoveAllEnemiesFromScreen();
 	InitRound();
 	ResumeGame(pSender);
 }
@@ -1386,7 +1403,7 @@ void JG_Game_Main::ManageDifficulty(float dt)
 	currentAttackWave->retain();
 	//currentAttackWave = (JG_AttackWave_Base*) new JG_AttackWave_AllLinesSequential();
 	float difficulty = 100*attackWaveCount ;
-	CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
+	//CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
 	currentAttackWave->initAttackWave(this,difficulty,attackWaveCount);
 
 	attackWaveCount++;

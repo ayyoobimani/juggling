@@ -98,7 +98,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	CCArray* fruitsArray;
 
 	
-	CCSprite* tempDestination;
+	//CCSprite* tempDestination;
 
 	JG_Enemy_Base* tempEnemy;
 	
@@ -251,6 +251,8 @@ public:
 
 	void RemoveFruitFromScreen(JG_Fruit* fruit);
 	void RemoveAllFruitsFromScreen();
+
+	void RemoveAllEnemiesFromScreen();
 
 	void RemoveEnemyFromScreen(JG_Enemy_Base* enemy);
 

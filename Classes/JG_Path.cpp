@@ -232,8 +232,8 @@ void JG_Path::SetHealth(float newHealth)
 void JG_Path::SetPathEnable(bool enable)
 {
 	bIsPathEnabled = enable;
-	if(!bIsPathEnabled)
-		DisablePath();
+	SetScoringEnable(enable);
+	
 
 }
 
@@ -242,9 +242,13 @@ bool JG_Path::IsPathEnabled()
 	return bIsPathEnabled;
 }
 
-void JG_Path::DisablePath()
+void JG_Path::SetScoringEnable(bool bEnable)
 {
-	unschedule(schedule_selector(JG_Path::GiveScoreToPlayer));
+	if(bEnable)
+		schedule(schedule_selector(JG_Path::GiveScoreToPlayer),CalculateScoreInterval());
+	else
+		unschedule(schedule_selector(JG_Path::GiveScoreToPlayer));
+
 }
 
 

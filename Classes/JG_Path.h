@@ -64,8 +64,8 @@ class JG_Path :
 	int CalculateScore();
 
 
-	//TODO: change its name
-	void DisablePath();
+	
+	void SetScoringEnable(bool bEnable);
 	
 
 	void DrawPath();

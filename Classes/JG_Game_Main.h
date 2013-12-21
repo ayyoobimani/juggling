@@ -344,6 +344,8 @@ public:
 	void ResumeGame(CCObject* pSender);
 	/*! Reseting the game */
 	void ResetGame(CCObject* pSender);
+	//reset path
+	
 
 	/* Calculate the throw power for a touched ball 
 	 * @Param unsigned int index : the index of the ball 

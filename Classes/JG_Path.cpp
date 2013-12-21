@@ -114,6 +114,8 @@ void JG_Path::UpdatePathHealthStateTexture()
 			return;
 	
 		int currentHealthStateIndex = healthStateTexturesLength- ((pathHealth/MAX_HEALTH)*healthStateTexturesLength);
+		currentHealthStateIndex=clampf(currentHealthStateIndex,0,healthStateTexturesLength-1);
+			
 		setTexture(pathHealthStatesForEachLevel[pathLevel].healthStateTextures[currentHealthStateIndex]);
 	}
 }
@@ -172,16 +174,12 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 void JG_Path::TakeDamage(float damage)
 {
 	pathHealth-= damage;
-	
+	SetHealth(pathHealth-damage);
 	//CCLOG("health is %f",health);
 	if(pathHealth<=0)
 	{
 		mainGame->OnPathLost(this);
 	
-	}
-	else
-	{
-		UpdatePathHealthStateTexture();
 	}
 }
 
@@ -225,6 +223,12 @@ float JG_Path::GetHealth()
 	return pathHealth;
 }
 
+void JG_Path::SetHealth(float newHealth)
+{
+	pathHealth=newHealth;
+	UpdatePathHealthStateTexture();
+}
+
 void JG_Path::SetPathEnable(bool enable)
 {
 	bIsPathEnabled = enable;
@@ -243,7 +247,9 @@ void JG_Path::DisablePath()
 	unschedule(schedule_selector(JG_Path::GiveScoreToPlayer));
 }
 
-void JG_Path::EnablePath()
-{
 
+void JG_Path::ResetPath()
+{
+	SetPathEnable(true);
+	SetHealth(MAX_HEALTH);
 }

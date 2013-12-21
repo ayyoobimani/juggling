@@ -57,16 +57,16 @@ class JG_Path :
 	bool bMustHighlight;
 
 	void InitPath_HealthStateTextures();
-
+	
 		
 	void GiveScoreToPlayer(float dt);
 	float CalculateScoreInterval();
 	int CalculateScore();
 
 
-
+	//TODO: change its name
 	void DisablePath();
-	void EnablePath();
+	
 
 	void DrawPath();
 
@@ -102,7 +102,9 @@ public:
 
 	static std::vector<PathHealthStatesForEachLevel> pathHealthStatesForEachLevel;
 	static void InitialPathHealthStatesForEachLevel();
-	
+	//to reset path
+	void ResetPath();
+	void SetHealth(float newHealth);
 
 };
 

@@ -185,7 +185,10 @@ void JG_Game_Main::InitRound()
 	fruitsArray= CCArray::create();
 	fruitsArray->retain();
 
-
+	for (int i=0;i<pathsArray->count();i++)
+	{
+		((JG_Path* )pathsArray->objectAtIndex(i))->ResetPath();
+	}
 	//TempAddBall(0);
 	//this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	//fruit
@@ -1144,6 +1147,8 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 	InitRound();
 	ResumeGame(pSender);
 }
+
+
 
 void JG_Game_Main::EndRound()
 {

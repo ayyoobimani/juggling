@@ -1160,7 +1160,7 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 {
 	RemoveAllBallsFromScreen();
 	RemoveAllFruitsFromScreen();
-	RemoveAllEnemiesFromScreen();
+	//RemoveAllEnemiesFromScreen();
 	InitRound();
 	ResumeGame(pSender);
 }

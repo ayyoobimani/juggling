@@ -13,7 +13,7 @@ public:
 	JG_Factory_Base(void);
 	virtual ~JG_Factory_Base(void);
 
-	//Warning : this factory only works when objects are derived from CCSprite 
+	//Warning : this factory only works when objects are derived from CCNODe 
 	virtual CCNode* Create()= 0;
 };
 

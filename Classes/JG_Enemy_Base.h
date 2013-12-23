@@ -75,8 +75,22 @@ public:
 
 	void HandleWaitingToAttacking(float time);
 
-	
-
+	//animation controlling
+	CCAnimation* intendingAnimation;
+	CCAnimation* attackingAnimation;
+	CCAnimation* waitingAnimation;
+	CCAnimation* escapingAnimation;
+	CCAnimation* dyingAnimation;
+	//here is the action, we will attack animation to this action to run
+	CCAnimate* animationAction;
+	//functions to create upward animation
+	void InitialIntendingAnimation();
+	void InitialAttackingAnimation();
+	void InitialWaitingAnimation();
+	void InitialEscapingAnimation();
+	void InitialDyingAnimation();
+	//Functions to run actions of the animations 
+	void RunAnimation(CCAnimation* animation);
 	
 	//void CheckOutOfScreen();
 

@@ -37,6 +37,15 @@ JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(JG_Game_Main* game,CCPoint initialPosi
 void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
 {
 	initWithFile("crow.png");
+	//here we create animations
+	InitialIntendingAnimation();
+	InitialAttackingAnimation();
+	InitialWaitingAnimation();
+	InitialEscapingAnimation();
+	InitialDyingAnimation();
+
+
+
 	autorelease();
 	setPosition(initialPosition);
 	scheduleUpdate();
@@ -143,6 +152,7 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 void JG_Enemy_Base::GotoState_Intending()
 {
 	//CCLog("In state Intending");
+	RunAnimation(intendingAnimation);
 	
 	
 }
@@ -150,7 +160,7 @@ void JG_Enemy_Base::GotoState_Attacking()
 {
 	//CCLog("In state Attacking");
 	this->schedule(schedule_selector(JG_Enemy_Base::Attack),attackInterval);
-	
+	RunAnimation(attackingAnimation);
 
 }
 void JG_Enemy_Base::GotoState_Waiting()
@@ -159,6 +169,7 @@ void JG_Enemy_Base::GotoState_Waiting()
 	if(targetPath!=NULL)
 		this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,waitingTime);
 	
+	RunAnimation(waitingAnimation);
 }
 void JG_Enemy_Base::GotoState_Escaping()
 {
@@ -167,7 +178,7 @@ void JG_Enemy_Base::GotoState_Escaping()
 	targetPath = NULL;
 
 
-	
+	RunAnimation(escapingAnimation);
 	
 }
 void JG_Enemy_Base::GotoState_Dying()
@@ -175,6 +186,8 @@ void JG_Enemy_Base::GotoState_Dying()
 	//CCLog("In state dying");
 	//it is falling so the initial speed is zero
 	speed=0;
+
+	RunAnimation(dyingAnimation);
 	
 }
 void JG_Enemy_Base::HandleWaitingToAttacking(float dt)
@@ -203,7 +216,7 @@ float JG_Enemy_Base::GetDifficulty()
 
 	//return ( ( waitingTimeFactor * FIRST_HIT_COEFFICIENT + intervalFactor )*damagePerInterval ) ;
 
-	return 70;
+	return 30;
 }
 
 JG_Path* JG_Enemy_Base::GetTargetPath()
@@ -231,12 +244,49 @@ void JG_Enemy_Base::CheckOutOfScreen()
 {
 	
 	if(state==EnemyS_Escaping)
-		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20||getPositionY()<mainGame->screenSize.height+30)
+		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20||getPositionY()>mainGame->screenSize.height+30)
 			mainGame->OnEnemyLost(this);
 	else
 	{
+		
 		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
 			mainGame->OnEnemyLost(this);
 	}
 
 }
+/*---------------------------Animation controling--------------------------*/
+/*	Animations function
+	Here we make animations and we attack files to them*/
+void JG_Enemy_Base::InitialIntendingAnimation()
+{
+	intendingAnimation=CCAnimation::create();
+	//loading images from local file system
+	//for loop over files
+	//intendingAnimation->setDelayPerUnit()
+}
+void JG_Enemy_Base::InitialAttackingAnimation()
+{
+	attackingAnimation=CCAnimation::create();
+}
+void JG_Enemy_Base::InitialWaitingAnimation()
+{
+	waitingAnimation=CCAnimation::create();
+}
+void JG_Enemy_Base::InitialEscapingAnimation()
+{
+	escapingAnimation=CCAnimation::create();
+}
+void JG_Enemy_Base::InitialDyingAnimation()
+{
+	dyingAnimation=CCAnimation::create();
+}
+//function to run animation on the sprite
+
+void JG_Enemy_Base::RunAnimation(CCAnimation* animation)
+{
+	return;
+	animationAction=CCAnimate::create(animation);
+	this->runAction(animationAction);
+
+}
+/*---------------------------Animation controling--------------------------*/

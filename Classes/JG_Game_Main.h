@@ -76,6 +76,9 @@ struct STouchInfo
 	CCPoint initialTouchPosition;
 };
 
+
+
+
 /*! The main class for controlling the game */
 class JG_Game_Main : public cocos2d::CCLayer
 {
@@ -95,7 +98,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	CCArray* fruitsArray;
 
 	
-	CCSprite* tempDestination;
+	//CCSprite* tempDestination;
 
 	JG_Enemy_Base* tempEnemy;
 	
@@ -249,6 +252,8 @@ public:
 	void RemoveFruitFromScreen(JG_Fruit* fruit);
 	void RemoveAllFruitsFromScreen();
 
+	void RemoveAllEnemiesFromScreen();
+
 	void RemoveEnemyFromScreen(JG_Enemy_Base* enemy);
 
 	void AddFruitToScreen();
@@ -329,6 +334,7 @@ public:
 	/*! Update Ball Throw Trace for all touched balls */
 	void UpdateBallThrowTrace();
 	
+	int GetPathLevelByPower(float pathPower);
 	
 	/*! End of the game */
 	void EndRound();
@@ -340,6 +346,8 @@ public:
 	void ResumeGame(CCObject* pSender);
 	/*! Reseting the game */
 	void ResetGame(CCObject* pSender);
+	//reset path
+	
 
 	/* Calculate the throw power for a touched ball 
 	 * @Param unsigned int index : the index of the ball 

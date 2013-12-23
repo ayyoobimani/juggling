@@ -19,7 +19,7 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 
 
 	clalculateEnemyAddInterval();
-	CCLOG(CCString::createWithFormat("interval: %f", enemeyAddInterval)->getCString());
+	//CCLOG(CCString::createWithFormat("interval: %f", enemeyAddInterval)->getCString());
 	pathCounter =0;
 	JG_Path* currentPath;
 
@@ -55,10 +55,16 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 
 
 	}
-
+	//schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),0,1,0.1);
+	//this->schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),0.5);
 	initiateEnemyAttack(2);
 
 
+}
+
+void JG_AttackWave_AllLinesSequential::update(float dt)
+{
+	CCLOG("UPDATE");
 }
 
 JG_Enemy_Base* JG_AttackWave_AllLinesSequential::addEnemy()
@@ -69,7 +75,7 @@ JG_Enemy_Base* JG_AttackWave_AllLinesSequential::addEnemy()
 	mainGame->enemyArray->addObject(tempEnemy);
 	//remember to initial enemies
 
-	mainGame->addChild((CCNode*) tempEnemy);
+	mainGame->addChild((CCNode*) tempEnemy,50);
 	pathQueue.push(pathCounter);
 	enemyQueue.push(tempEnemy);
 	return tempEnemy;
@@ -78,6 +84,7 @@ JG_Enemy_Base* JG_AttackWave_AllLinesSequential::addEnemy()
 void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 {
 	CCLOG("start attack");
+	unschedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack));
 
 	JG_Path * enemyPath = selectPath(pathQueue.front());
 	pathQueue.pop();
@@ -85,8 +92,12 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	enemyQueue.pop();
 	if(enemyQueue.size()>0)
 	{
+
 		CCLOG("enemy queue is ok");
 		schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),0,0,enemeyAddInterval);
+
+//		schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),enemeyAddInterval);
+
 	}
 }
 

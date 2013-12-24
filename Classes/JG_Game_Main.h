@@ -416,6 +416,8 @@ public:
 	void InitGame_AttackWaves();
 	int getAttackWaveType();
 	void ManageDifficulty(float dt);
+	void initiateNewAttackWave();
+	int getAvailablePathCount();
 
 };
 

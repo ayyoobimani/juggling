@@ -42,7 +42,7 @@ void JG_AttackWave_Base::initAttackWave(JG_Game_Main * _mainGame,float _attackDi
 	mainGame = _mainGame;
 	attackDifficulty = _attackDifficulty;
 	attackCount = _attackCount;
-	mainGame->addChild(this);
+	//mainGame->addChild(this);
 
 	
 }

@@ -167,8 +167,8 @@ void JG_Game_Main::InitGame_AttackWaves()
 
 
 
-
-	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),8);
+	
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,3);
 }
 
 void JG_Game_Main::InitRound()
@@ -1387,7 +1387,7 @@ SEnemyTypes JG_Game_Main::CreateEnemyType(int baseChance,int chaceIncrease)
 	return enemyType;
 }
 
-
+//difficulty control and 
 int JG_Game_Main::getAttackWaveType()
 {
 	return CCRANDOM_0_1()*attackWaveTypes.size();
@@ -1401,10 +1401,32 @@ void JG_Game_Main::ManageDifficulty(float dt)
 	JG_AttackWave_Base* currentAttackWave;
 	currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
 	currentAttackWave->retain();
+	addChild(currentAttackWave);
 	//currentAttackWave = (JG_AttackWave_Base*) new JG_AttackWave_AllLinesSequential();
 	float difficulty = 100*attackWaveCount ;
 	//CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
 	currentAttackWave->initAttackWave(this,difficulty,attackWaveCount);
 
 	attackWaveCount++;
+}
+
+void JG_Game_Main::initiateNewAttackWave()
+{
+	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
+
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,CCRANDOM_0_1()*3);
+}
+
+int JG_Game_Main::getAvailablePathCount()
+{
+	int tempPathCounter=0;
+	for(int i=0;i<pathsArray->count(); i++)
+	{
+		if( ( (JG_Path*)pathsArray->objectAtIndex(i) )->IsPathEnabled() )
+		{
+			tempPathCounter++;
+		}
+	}
+
+	return tempPathCounter;
 }

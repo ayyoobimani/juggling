@@ -1430,3 +1430,9 @@ int JG_Game_Main::getAvailablePathCount()
 
 	return tempPathCounter;
 }
+
+void JG_Game_Main::restartAttackWaves()
+{
+	attackWaveCount=1;
+
+}

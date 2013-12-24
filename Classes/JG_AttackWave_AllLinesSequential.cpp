@@ -37,20 +37,13 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 
 		currentEnemy=addEnemy();
 
-		//temporary examine enemies path to calculate difficulty added to enemy because of its path health
-		currentPath = ((JG_Path*) mainGame->pathsArray->objectAtIndex( pathCounter % mainGame->pathsArray->count() ) );
+		
 		CCLOG("enemy added");
 		currentEnemyDifficulty = currentEnemy->GetDifficulty();
+		
 		//difficulty added because of path health
-		currentEnemyDifficulty *= (1 + ( (100 - currentPath->GetHealth() )/100 ));
+		currentEnemyDifficulty *= (1 + ( (100 - selectPath(pathCounter)->GetHealth() )/100 ));
 
-		//int h = mainGame->enemyArray->count();
-		/*for(int i=0; i<enemyQueue.size(); i++)
-		{
-			if(currentPath !=  selectPath(i) ) 
-				currentEnemyDifficulty *= ( 1 + 1.0/((mainGame->enemyArray->count() - i) * enemeyAddInterval) );
-
-		}*/
 		//defficulty added because of concurrent path attack
 		currentEnemyDifficulty *= pathCounter > currentTotalPathExist ? currentTotalPathExist:pathCounter;
 		
@@ -121,7 +114,7 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 
 float JG_AttackWave_AllLinesSequential::generateEnemyPositionRatio()
 {
-	return CCRANDOM_0_1();
+	return (CCRANDOM_0_1()* 0.6) +0.2;
 }
 
 void JG_AttackWave_AllLinesSequential::clalculateEnemyAddInterval()

@@ -418,6 +418,7 @@ public:
 	void ManageDifficulty(float dt);
 	void initiateNewAttackWave();
 	int getAvailablePathCount();
+	void restartAttackWaves();
 
 };
 

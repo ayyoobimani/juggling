@@ -25,6 +25,8 @@ public:
 	CCMenuItemSprite* resumeButton;
 	CCMenuItemSprite* exitButton;
 
+	CCMenuItemSprite* ballAddButton;
+
 	CCMenu* gameMenu;
 	
 	JG_Game_HUD(void);
@@ -37,11 +39,12 @@ public:
 	
 	CCPoint lifeDrawPosition;
 	int lifeDrawPacing;
-	CCTexture2D * lifeTexture_Active;
-	CCTexture2D * lifeTexture_Diactive;
+	CCTexture2D* lifeTexture_Active;
+	CCTexture2D* lifeTexture_Diactive;
 		
 
-	CCLabelBMFont * scoreLabel;
+	CCLabelBMFont* scoreLabel;
+	CCLabelBMFont* reservedBallLabel;
 
 	CCLabelTTF* debugLabel;
 	CCLabelTTF* balldepict;
@@ -49,10 +52,14 @@ public:
 	CCLabelTTF* prevballcount;
 	CCFiniteTimeAction* ScoreGainAnimation;
 	
-	void SetPauseScreen(bool bShow);
+	void ShowPauseScreen(bool bShow);
+	void ShowEndRoundScreen(bool bShow);
 	
 	void draw();
 	void DrawLife();
+
+
+	void UpdateReservedBall();
 	void UpdateScore();
 };
 

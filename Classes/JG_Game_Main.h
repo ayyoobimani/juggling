@@ -7,19 +7,41 @@
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
-#include "JG_ScorePopup.h"
 
+#include "JG_ScorePopup.h"
+#include "JG_Path.h"
+
+#include "JG_Enemy_Base.h"
+#include "JG_Factory_Base.h"
+//#include "JG_AttackWave_Base.h"
+
+#include "JG_Factory_AttackWave.h"
+#include "JG_AttackWave_AllLinesSequential.h"
+#include "JG_Factory_Enemy.h"
+
+#include <vector>
 #include  "JG_Game_HUD.h"
 #include "JG_GUI_Bar.h"
+
+
 using namespace cocos2d;
+
 
 class JG_Game_HUD;
 class JG_Ball;
 class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
+class JG_Path;
+//class JG_Enemy_Base;
+//class JG_Factory_Base;
+////class JG_Factory_AttackWave;
+class JG_AttackWave_Base;
+//class JG_Enemy_Crow;
+class JG_AttackWave_AllLinesSequential;
 
 
+#define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
 
 // define how many touches can be supported at the same time
 #define TOUCH_COUNT 2
@@ -36,6 +58,14 @@ class JG_ScorePopup;
 
 #define DISCRETE_PARTS_COUNT 4
 
+
+struct SEnemyTypes
+{
+	JG_Factory_Base * factory;
+	int currentChance;
+	int chanceIncreasePerRound;
+};
+
 struct STouchInfo
 {
 	CCTouch * touch;
@@ -46,9 +76,17 @@ struct STouchInfo
 	CCPoint initialTouchPosition;
 };
 
+
+
+
 /*! The main class for controlling the game */
 class JG_Game_Main : public cocos2d::CCLayer
 {
+	
+
+	bool bIsGameInited; 
+
+
 	
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
@@ -57,7 +95,12 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	CCArray* ballsArray;
 
-	CCArray* fruitArray;
+	CCArray* fruitsArray;
+
+	
+	//CCSprite* tempDestination;
+
+	JG_Enemy_Base* tempEnemy;
 	
 	// store touch infos. 
 	STouchInfo touchInfos[TOUCH_COUNT];
@@ -72,6 +115,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 
 
+
 	float chosenPathPower;
 	float powerRange;
 	float discretedValue;
@@ -81,19 +125,30 @@ class JG_Game_Main : public cocos2d::CCLayer
 	/*! return proper discrete value */
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
 
-	bool bIsGameInited; 
-
 
 
 	int ballCounter;
 	int prevballCounter;
 	
-	/* ! Manages Ball Score for combos */
-	void ManageBallComboScore(JG_Ball* ball);
-	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
+
+
+
+	template<class enemyClass>
+	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
 	
+
+	JG_AttackWave_Base* attackWave;
+	float attackWaveCount;
 	
 public:
+
+	std::vector<SEnemyTypes> enemyTypes;
+	
+
+	std::vector<JG_Factory_Base*> attackWaveTypes;
+
+	CCArray* enemyArray;
+	CCArray* pathsArray;
 	
 	JG_Game_Main(void);
 	virtual ~JG_Game_Main(void);
@@ -101,8 +156,8 @@ public:
 	 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
 
-    /*! Initial the game state */
-	void InitGame();
+    /*! Initial the round state */
+	void InitRound();
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::CCScene* scene();
@@ -115,11 +170,13 @@ public:
 	/*! finds best ball in balls that are touched in a hand */
 	JG_Ball* FindBestBallMatching(JG_Hand*  hand);
 
+
+	//TODO: move them to private
 	/**************** game rule members *************/
 	int lifeCount;
 	int score;
+	int reservedBallCount;
 	/**************** /game rule members *************/
-
 	
 
 	/**************** game rule methods *************/
@@ -127,15 +184,33 @@ public:
 	/*! this event is called when a ball is lost ( for now when it is out of screen ) */
 	//TODO:change the name to OnBallLost
 	void OnBallLost(JG_Ball* lostBall);
+	//when path is destroyed
+	void OnPathLost(JG_Path* path);
+
+	void OnEnemyLost(JG_Enemy_Base* enemy);
 	/*! this event is called when two balls are collided */
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 	/*! this event is called when a ball is collided with a fruit*/
 	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
+	//when a ball hit an enemy
+	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
+	
+	
 	/*! this event is called when fruit is out of screen */
 	void OnFruitLost(JG_Fruit* fruit);
 	/*! this event is called when ball is successfully throwed*/
 	void OnBallThrow(JG_Ball* ball);
 
+	/*!this event called when a ball is collided with an enemy*/
+	//void OnEnemyHit(JG_E
+
+	/* ! Manages Ball Score for combos */
+	void ManageBallComboScore(JG_Ball* ball);
+	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
+	void ManagePathScore(JG_Path* path);
+
+	bool IsThereAnyBallLeft();
+	bool IsThereAnyPathLeft();
 
 	/*! Return player Score */
 	int GetScore();
@@ -156,9 +231,17 @@ public:
 	/*! Increment the life count of player */
 	void IncrementLifeCount();
 
+	void IncrementReservedBallCount();
+	void DecrementReservedBallCount();
+	void SetReservedBallCount(int newCount);
+	void ReleaseBall(CCObject* pSender);
+
+
 	
 	/*! handles ball removing */
 	void RemoveBallFromScreen(JG_Ball* ball);
+	//remove path from screen
+	void RemovePathFromScreen(JG_Path* path);
 	/*! Remove all balls from screen */
 	void RemoveAllBallsFromScreen();
 	/*! Adding new ball to screen */
@@ -168,6 +251,10 @@ public:
 
 	void RemoveFruitFromScreen(JG_Fruit* fruit);
 	void RemoveAllFruitsFromScreen();
+
+	void RemoveAllEnemiesFromScreen();
+
+	void RemoveEnemyFromScreen(JG_Enemy_Base* enemy);
 
 	void AddFruitToScreen();
 	void TempAddFruitToScreen(float time);
@@ -247,9 +334,10 @@ public:
 	/*! Update Ball Throw Trace for all touched balls */
 	void UpdateBallThrowTrace();
 	
+	int GetPathLevelByPower(float pathPower);
 	
 	/*! End of the game */
-	void EndGame();
+	void EndRound();
 	/*! Pausing the game */
 	void PauseGame(CCObject* pSender);
 	/*! Exit the game */
@@ -258,6 +346,8 @@ public:
 	void ResumeGame(CCObject* pSender);
 	/*! Reseting the game */
 	void ResetGame(CCObject* pSender);
+	//reset path
+	
 
 	/* Calculate the throw power for a touched ball 
 	 * @Param unsigned int index : the index of the ball 
@@ -302,6 +392,9 @@ public:
 	/*! check to see if a ball may be throw in this curve! */
 	bool checkCurvesLife(float power);
 
+	/*! checks throw path for each ball and activated them */
+	void CheckBallsThrowPath();
+
 	
 	/*!checks whether distance of the two point are lesser than distance or not*/
 	//TODO: find a better name
@@ -316,11 +409,16 @@ public:
 	
 
 
-	
+	void CheckLoseCondition();
 
 
 
-
+	void InitGame_AttackWaves();
+	int getAttackWaveType();
+	void ManageDifficulty(float dt);
+	void initiateNewAttackWave();
+	int getAvailablePathCount();
+	void restartAttackWaves();
 
 };
 

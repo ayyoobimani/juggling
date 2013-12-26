@@ -19,11 +19,11 @@ JG_ScorePopup* JG_ScorePopup::CreateScorePopup(JG_Game_Main* game, int score , i
 		scorePopup->autorelease();
 		scorePopup->setPosition(position);
 		scorePopup->mainGame = game;
-		scorePopup->mainGame->addChild(scorePopup);
+		scorePopup->mainGame->addChild(scorePopup,100);
 		scorePopup->retain();
 		scorePopup->scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt",  CCDirector::sharedDirector()->getWinSize().height * 0.1f);
 		scorePopup->setScale(0.5);
-		scorePopup->addChild(scorePopup->scoreLabel);
+		scorePopup->addChild(scorePopup->scoreLabel,1);
 
 		scorePopup->ScoreGainAnimation = CCSequence::create(
 			CCEaseInOut::create(CCScaleTo::create(0.3,2,2),0.5)

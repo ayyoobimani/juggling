@@ -65,6 +65,37 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 	return NULL;
 }
 
+void JG_Ball::CalculateSpeedBoundriesBaseOnLength(float deltaX)
+{
+	//TODO: wtf +2 needed
+	minSpeed = sqrt( GRAVITY * abs(deltaX))+ 2;
+	//TODO: calculate maxSpeed
+	maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
+}
+
+void JG_Ball::InitialBallLevelInformation()
+{
+	ballScoreByLevel[MAX_BALL_LEVELS-1] = 50;
+	ballScoreByLevel[MAX_BALL_LEVELS-2] = 100;
+	ballScoreByLevel[MAX_BALL_LEVELS-3] = 200;
+	ballScoreByLevel[MAX_BALL_LEVELS-4] = 400;
+	ballScoreByLevel[MAX_BALL_LEVELS-5] = 800;
+	ballScoreByLevel[MAX_BALL_LEVELS-6] = 1600;
+
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-1] = "Gem1.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-2] = "Gem3.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-3] = "Gem4.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-4] = "Gem5.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-5] = "Gem6.png";
+	ballTextureNamesByLevel[MAX_BALL_LEVELS-6] = "Gem7.png";
+
+	for( int i = 0 ; i<MAX_BALL_LEVELS; i++)
+	{
+		ballTexturesByLevel[i] = CCTextureCache::sharedTextureCache()->addImage(ballTextureNamesByLevel[i].getCString());
+	}
+
+}
+
 void JG_Ball::Throw(float force, CCPoint destination)
 {
 	mainGame->OnBallThrow(this);
@@ -96,28 +127,28 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 		
 		
 
-		/* because there are two radians the have the same range (they can both reach the 
-			destination in same time), we choose the bigger one for better curve.
-			we can throw the ball with 30 deg and 60 deg and they will reach the destination
-			but we choose the 60 deg.
-			*/
-		//if(abs(CC_RADIANS_TO_DEGREES(curveRadian))<45)
-			//curveRadian = (curveRadian/abs(curveRadian)) *CC_DEGREES_TO_RADIANS(90)- curveRadian;
-		//TODO : Do it for reverse direction
-		if( CC_RADIANS_TO_DEGREES(tempCurveRad)>-45)
-			tempCurveRad = CC_DEGREES_TO_RADIANS(-90) - tempCurveRad;
+	/* because there are two radians the have the same range (they can both reach the 
+		destination in same time), we choose the bigger one for better curve.
+		we can throw the ball with 30 deg and 60 deg and they will reach the destination
+		but we choose the 60 deg.
+		*/
+	//if(abs(CC_RADIANS_TO_DEGREES(curveRadian))<45)
+		//curveRadian = (curveRadian/abs(curveRadian)) *CC_DEGREES_TO_RADIANS(90)- curveRadian;
+	//TODO : Do it for reverse direction
+	if( CC_RADIANS_TO_DEGREES(tempCurveRad)>-45)
+		tempCurveRad = CC_DEGREES_TO_RADIANS(-90) - tempCurveRad;
 
 	
-		/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
-		if(tempCurveRad<0)
-			tempCurveRad = CC_DEGREES_TO_RADIANS(180) + tempCurveRad;
+	/* because asinf returns a radian in portion 1 and 4, we convert the portion 4 radian to portaion 2 (between 90 and 180 )*/
+	if(tempCurveRad<0)
+		tempCurveRad = CC_DEGREES_TO_RADIANS(180) + tempCurveRad;
 
-		//CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(tempCurveRad));
+	//CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(tempCurveRad));
 
-		return tempCurveRad;
-		//curveRadian = CC_DEGREES_TO_RADIANS(135);
-		//mainGame->gameHUD->debugLabel->setString("");
-		//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curveRadian))->getCString());
+	return tempCurveRad;
+	//curveRadian = CC_DEGREES_TO_RADIANS(135);
+	//mainGame->gameHUD->debugLabel->setString("");
+	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curveRadian))->getCString());
 }
 
 float JG_Ball::GetNewSpeedByForce(float force)
@@ -192,7 +223,7 @@ void JG_Ball::DrawThrowPath()
 	//CCLog("throw Force %f", throwPath_Force);
 	float tempSpeed = GetNewSpeedByForce(throwPath_Force);
 	//CCLog("tempForce %f" , throwPath_Force);
-	CCLog("tempSpeed %f" , tempSpeed);
+//	CCLog("tempSpeed %f" , tempSpeed);
 	float tempSpeedX,tempSpeedY;
 	CCPoint tracePoint;
 
@@ -271,8 +302,8 @@ void JG_Ball::ProcessMove(float dt)
 		tempBallSpeedY = -GRAVITY* dt + tempBallSpeedY;
 
 		// calculat new positions based on new speeds
-		tempBallNewX = tempBallSpeedX * dt + getPositionX();
-		tempBallNewY = tempBallSpeedY * dt + getPositionY();
+		tempBallNewX = (tempBallSpeedX * dt + getPositionX());
+		tempBallNewY = (tempBallSpeedY * dt + getPositionY());
 
 		// calculate the total speed based on new speeds on each direction
 		currentSpeed = sqrt(pow(tempBallSpeedY,2)+pow(tempBallSpeedX,2));

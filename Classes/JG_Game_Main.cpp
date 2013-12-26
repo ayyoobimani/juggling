@@ -47,12 +47,15 @@ bool JG_Game_Main::init()
 	//call update for every frame
 	this->schedule(schedule_selector(JG_Game_Main::update));
 
+	JG_Path::InitialPathHealthStatesForEachLevel();
 
 	gameHUD = JG_Game_HUD::create(this);
 	gameHUD->retain();
 	gameHUD->setPosition(CCPointZero);
 	this->addChild(gameHUD,100);
 	//gameHUD->draw();
+
+
 
 	/*********************** Background **************************/
 	CCSprite * backGround = CCSprite::create("background2.png");
@@ -81,13 +84,56 @@ bool JG_Game_Main::init()
 
 	for( int i = 0 ; i<handsArray->count();i++)
 	{
-		this->addChild((CCNode*)handsArray->objectAtIndex(i));
+		this->addChild((CCNode*)handsArray->objectAtIndex(i),5);
 		this->addChild((CCNode*)handsPowerBarArray->objectAtIndex(i),2);
 	}
 	/*************************** /Hands *************************************/
 
+	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
+	JG_Ball::InitialBallLevelInformation();
+	//it is import we call calculatethrowpower after jg_ball calculate
+	InitialThrowPowerVariables();
 
-	InitGame();
+	/*************************** Paths ****************************/
+
+	pathsArray = CCArray::create();
+	pathsArray->retain();
+	for( int i= 0 ; i< DISCRETE_PARTS_COUNT ; i++)
+	{
+		pathsArray->addObject(JG_Path::CreatePath(this
+			,i * powerRange
+			, leftHand->getPosition()
+			, rightHand->getPosition()));
+		this->addChild((CCNode*)pathsArray->objectAtIndex(i),20);
+
+		//CCLOG("Y is %f  ",((JG_Path*)pathsArray->objectAtIndex(i))->GetPositionForLengthRatio(0.5).y - leftHand->getPositionY());
+		//pathsArray->objectAtIndex(i)->retain();
+	}
+
+	/*************************** /Paths ****************************/
+
+	/************************* Enemy Factories ********************/
+
+	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Base>(6,2));
+
+	/************************* /Enemy Factories ********************/
+
+
+	
+	/*tempDestination = new CCSprite();
+	tempDestination->initWithFile("cross.png");
+	tempDestination->retain();
+	this->addChild((CCNode*) tempDestination,200);
+	tempDestination->setPosition(leftHand->getPosition());*/
+
+	
+
+	//InitGame_AttackWaves();
+
+	
+
+
+	InitRound();
 	this->setTouchEnabled(true);
 	//test
 	//TestMultiTouch();
@@ -96,7 +142,36 @@ bool JG_Game_Main::init()
 	
 }
 
-void JG_Game_Main::InitGame()
+void JG_Game_Main::InitGame_AttackWaves()
+{
+	
+	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
+	attackWaveTypes.clear();
+
+	enemyArray = CCArray::create();
+	enemyArray->retain();
+	
+	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
+
+	attackWaveCount =1;
+	
+
+	////************************* Delete This Later **************/
+	//tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
+	//tempEnemy->InitialEnemy(this,ccp(100,100));
+	//this->addChild((CCNode*) tempEnemy);
+	//CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
+	//tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
+	//enemyArray->addObject(tempEnemy);
+	////************************* /Delete This Later **************/
+
+
+
+	
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,3);
+}
+
+void JG_Game_Main::InitRound()
 {
 
 
@@ -104,26 +179,27 @@ void JG_Game_Main::InitGame()
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
 	/****************************** Balls ************************************/
-	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
-	JG_Ball::InitialBallLevelInformation();
-	//it is import we call calculatethrowpower after jg_ball calculate
-	InitialThrowPowerVariables();
+
 	// initing  one ball for test
 	ballsArray=CCArray::create();
 	ballsArray->retain();
 
-	fruitArray= CCArray::create();
-	fruitArray->retain();
+	fruitsArray= CCArray::create();
+	fruitsArray->retain();
 
-
+	for (int i=0;i<pathsArray->count();i++)
+	{
+		((JG_Path* )pathsArray->objectAtIndex(i))->ResetPath();
+	}
 	//TempAddBall(0);
-	this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
+	//this->schedule(schedule_selector(JG_Game_Main::TempAddBall),1.75,2,1.5);
 	//fruit
-	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
+	//this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1());
 
 
 	/******************************** /Balls ************************************/
 
+	
 
 	for( int i = 0 ; i< TOUCH_COUNT ; i++)
 	{
@@ -133,9 +209,11 @@ void JG_Game_Main::InitGame()
 		touchInfos[i].bIsDirValid = false;
 	}
 
+	InitGame_AttackWaves();
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
+	SetReservedBallCount(5);
 	bIsGameInited = true;
 }
 
@@ -149,7 +227,30 @@ void JG_Game_Main::update(float dt)
 
 	//TestSingleTouch();
 	CheckBallCollisionWithHand();
+	CheckBallsThrowPath();
 
+}
+
+void JG_Game_Main::CheckBallsThrowPath()
+{
+
+	for( int i = 0; i < pathsArray->count() ; i++)
+	{
+		((JG_Path * ) pathsArray->objectAtIndex(i))->SetHighlight(false);
+	}
+
+	for( int i = 0 ; i< TOUCH_COUNT; i++)
+	{
+		if( touchInfos[i].ball!=NULL)
+		{
+			if(touchInfos[i].ball->GetBallDirection() == Dir_RighHandtToLeft
+				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
+			{
+				int ballPath = CalculateThrowPower(i,true)/ powerRange;
+				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
+			}
+		}
+	}
 }
 
 void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
@@ -160,12 +261,20 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 
 	for( i = pTouches->begin(); i != pTouches->end(); i++) 
 	{
+		
 		touch = (CCTouch*) (*i);
+		//tempDestination->setPosition(touch->getLocation());
+		if(tempEnemy!=NULL)
+		{
+			//tempEnemy->SetDestinationPath(tempDestination->getPosition(),NULL);
+		}
 		if(touch) 
 		{
 			BallTouchHandler_Init(touch);
 		}
 	}
+
+
 }
 
 void JG_Game_Main::ccTouchesMoved(CCSet* pTouches, CCEvent* event)
@@ -264,9 +373,9 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				{
 					
 					ballCounter++;
-					if(ballCounter == 1);
+					//if(ballCounter == 1);
 						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
-					if(ballCounter == 2);
+					//if(ballCounter == 2);
 						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
 					if( absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) <criticalTime  )
 					{
@@ -286,14 +395,14 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				if(tempBall->GetBallDirection() == Dir_LeftHandToRight)
 				{
 					ballCounter++;
-					if(ballCounter == 1);
+					//if(ballCounter == 1);
 						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-					if(ballCounter == 2);
+					//if(ballCounter == 2);
 						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
 
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{
-						CCLog("it's all in your minde, tap location ");
+				//		CCLog("it's all in your minde, tap location ");
 
 						criticalBall = tempBall;
 						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
@@ -456,9 +565,10 @@ float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bI
 	//CCLOG("discrete value %f", (floor(rawInput/powerRange)*powerRange));
 	float powerLevel=floor(rawInput/powerRange);
 
+
 	discretedValue=powerLevel*powerRange;
 
-	CCLOG("power level : %f",powerLevel);
+	//CCLOG("power level : %f",powerLevel);
 
 	// set ball level only when it is thrown up
 	//if(!bIsDemo)
@@ -562,10 +672,16 @@ void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
 	
 }
 
+void JG_Game_Main::ManagePathScore(JG_Path* path)
+{
+	AddScore(path->GetScore());
+	JG_ScorePopup::CreateScorePopup(this,path->GetScore(),1,path->GetPositionForLengthRatio(0.7));
+}
+
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 {
-	RemoveBallFromScreen(ballOne);
-	AddBallToScreen();
+	//RemoveBallFromScreen(ballOne);
+	//AddBallToScreen();
 }
 
 //collision of the ball and fruit
@@ -574,6 +690,16 @@ void JG_Game_Main::OnFruitHit(JG_Fruit* fruit, JG_Ball* ball)
 	ManageFruitScore(fruit,ball);
 	RemoveFruitFromScreen(fruit);
 }
+void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
+{
+	//maybe score for hitting enemy
+	//when a ball hit the enemy it goes for state dying
+	enemy->SetState(EnemyS_Dying);
+	
+	
+}
+
+
 
 void JG_Game_Main::OnBallLost(JG_Ball* ball)
 {
@@ -584,13 +710,14 @@ void JG_Game_Main::OnBallLost(JG_Ball* ball)
 	else
 	{
 		RemoveBallFromScreen(ball);
-		DecrementLifeCount();
+		//DecrementLifeCount();
 		if(lifeCount>0)
 		{
-			AddBallToScreen();
+			//AddBallToScreen();
 
 		}
 	}
+	CheckLoseCondition();
 }
 
 void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
@@ -598,9 +725,43 @@ void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
 	RemoveFruitFromScreen(fruit);
 }
 
+void JG_Game_Main::OnPathLost(JG_Path* path)
+{
+	JG_Enemy_Base* currentEnemy;
+	for(int i=0;i<enemyArray->count();i++)
+	{
+		currentEnemy = (JG_Enemy_Base*)enemyArray->objectAtIndex(i);
+		if(currentEnemy->GetTargetPath() == path)
+			currentEnemy->SetState(EnemyS_Escaping);
+	}
+	RemovePathFromScreen(path);
+	CheckLoseCondition();
+}
+void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
+{
+	RemoveEnemyFromScreen(enemy);
+}
+
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
 {
 	ball->ResetComboChain();
+}
+
+bool JG_Game_Main::IsThereAnyBallLeft()
+{
+	return (reservedBallCount >0 || ballsArray->count()>0);
+}
+
+bool JG_Game_Main::IsThereAnyPathLeft()
+{
+	JG_Path* currentPath;
+	for(int i = 0 ; i< pathsArray->count(); i++)
+	{
+		currentPath = (JG_Path*) pathsArray->objectAtIndex(i);
+		if(currentPath->IsPathEnabled())
+			return true;
+	}
+	return false;
 }
 
 int JG_Game_Main::GetScore()
@@ -643,13 +804,34 @@ void JG_Game_Main::DecrementLifeCount()
 {
 	--lifeCount;
 	if(lifeCount<=0)
-		EndGame();
+		EndRound();
 }
 
 void JG_Game_Main::IncrementLifeCount()
 {
 	++lifeCount;
 }
+
+
+
+void JG_Game_Main::IncrementReservedBallCount()
+{
+	reservedBallCount++;
+	gameHUD->UpdateReservedBall();
+}
+
+void JG_Game_Main::DecrementReservedBallCount()
+{
+	reservedBallCount--;
+	gameHUD->UpdateReservedBall();
+}
+
+void JG_Game_Main::SetReservedBallCount( int newCount)
+{
+	reservedBallCount = newCount;
+	gameHUD->UpdateReservedBall();
+}
+
 
 
 void JG_Game_Main::RemoveAllBallsFromScreen()
@@ -664,6 +846,8 @@ void JG_Game_Main::RemoveAllBallsFromScreen()
 
 }
 
+
+
 void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 {
 
@@ -675,19 +859,57 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 void JG_Game_Main::RemoveAllFruitsFromScreen()
 {
 	JG_Fruit* tempFruit;
-	int temp = fruitArray->count();
+	int temp = fruitsArray->count();
 
-	while(fruitArray->count()>0)
+	while(fruitsArray->count()>0)
 	{
-		RemoveFruitFromScreen((JG_Fruit*)fruitArray->randomObject());
+		RemoveFruitFromScreen((JG_Fruit*)fruitsArray->randomObject());
 	}
 }
 
 void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
 {
-	fruitArray->removeObject(fruit,false);
+	fruitsArray->removeObject(fruit,false);
 	removeChild(fruit,true);
 	CC_SAFE_RELEASE(fruit);
+}
+
+void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
+{
+	path->SetPathEnable(false);
+	//pathsArray->removeObject(path,false);
+	//removeChild(path,true);
+	//CC_SAFE_RELEASE(path);
+}
+
+void JG_Game_Main::RemoveEnemyFromScreen(JG_Enemy_Base* enemy)
+{
+	enemyArray->removeObject(enemy,false);
+	removeChild(enemy,true);
+	CC_SAFE_RELEASE(enemy);
+	//onenemylost
+	tempEnemy=NULL;
+}
+
+void JG_Game_Main::RemoveAllEnemiesFromScreen()
+{
+	JG_Enemy_Base* tempEnemy;
+
+
+	while(enemyArray->count()>0)
+	{
+		RemoveEnemyFromScreen((JG_Enemy_Base*)enemyArray->randomObject());
+	}
+
+}
+
+void JG_Game_Main::ReleaseBall(CCObject* pSender)
+{
+	if(reservedBallCount>0)
+	{
+		AddBallToScreen();
+		DecrementReservedBallCount();
+	}
 }
 
 void JG_Game_Main::AddBallToScreen()
@@ -697,7 +919,7 @@ void JG_Game_Main::AddBallToScreen()
 		,screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5)
 		,Dir_RightHandToUp
 		,DISCRETE_PARTS_COUNT);
-	this->addChild(newBall,6);
+	this->addChild(newBall,75);
 	ballsArray->addObject(newBall);
 
 }
@@ -718,7 +940,7 @@ void JG_Game_Main::AddFruitToScreen()
 	JG_Fruit* newFruit = JG_Fruit::CreateFruit(this,tempPoint,(-1)*(CCRANDOM_0_1()*10+15));
 	
 	this->addChild(newFruit);
-	fruitArray->addObject(newFruit);
+	fruitsArray->addObject(newFruit);
 	
 }
 
@@ -726,6 +948,7 @@ void JG_Game_Main::TempAddFruitToScreen(float time)
 {
 
 	AddFruitToScreen();
+	this->unschedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen));
 	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1()*5);
 }
 
@@ -759,7 +982,6 @@ void JG_Game_Main::UpdateBallThrowTrace()
 				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),rightHand->getPosition(),leftHand->getPosition());
 			else
 				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),leftHand->getPosition(),rightHand->getPosition());
-
 		}
 
 	}
@@ -785,8 +1007,8 @@ void JG_Game_Main::InitialThrowPowerVariables()
 
 void JG_Game_Main::draw()
 {
-	if(bIsGameInited)
-		DrawThrowPaths();
+	//if(bIsGameInited)
+		//DrawThrowPaths();
 }
 
 void JG_Game_Main::DrawThrowPaths()
@@ -866,14 +1088,8 @@ bool JG_Game_Main::checkCurvesLife(float _power)
 		if(hand->getThrowPower() == _power)
 			return true;
 	}
-	
-
 	return false;
 }
-
-
-
-
 
 
 void JG_Game_Main:: CheckBallCollisionWithHand()
@@ -899,15 +1115,17 @@ void JG_Game_Main:: CheckBallCollisionWithHand()
 			if(ArePointsColliding(currentBall->getPosition() ,currentHand->getPosition() , currentHand->GetRadius()))
 			{
 				currentHand->SetAreaVisibility(true);
-				currentBall->SetShineVisibility(true);
-				
+				currentBall->SetShineVisibility(true);			
 			}
 		}
 	}
-
 }
 
 
+int JG_Game_Main::GetPathLevelByPower(float pathPower)
+{
+	return pathPower/powerRange;
+}
 CCArray* JG_Game_Main::GetBallArray()
 {
 	return this->ballsArray;
@@ -916,7 +1134,7 @@ CCArray* JG_Game_Main::GetBallArray()
 
 void JG_Game_Main::PauseGame(CCObject* pSender)
 {
-	gameHUD->SetPauseScreen(true);
+	gameHUD->ShowPauseScreen(true);
 	CCDirector::sharedDirector()->pause();
 }
 
@@ -935,24 +1153,28 @@ void JG_Game_Main::ExitGame(CCObject* pSender)
 void JG_Game_Main::ResumeGame(CCObject* pSender)
 {
 	CCDirector::sharedDirector()->resume();
-	gameHUD->SetPauseScreen(false);
+	gameHUD->ShowPauseScreen(false);
 }
 
 void JG_Game_Main::ResetGame(CCObject* pSender)
 {
 	RemoveAllBallsFromScreen();
 	RemoveAllFruitsFromScreen();
-	InitGame();
+	//RemoveAllEnemiesFromScreen();
+	InitRound();
 	ResumeGame(pSender);
 }
 
-void JG_Game_Main::EndGame()
+
+
+void JG_Game_Main::EndRound()
 {
+	//********************** Temporary ****************/
+	gameHUD->ShowEndRoundScreen(true);
+	CCDirector::sharedDirector()->pause();
+	//********************** /Temporary ****************/
 
-	//	CCTimer::timerWithTarget( this,SEL_CallFuncO(JG_Game_Main::RestartGame),2);
-	//CCTimer::timerWithTarget(
 
-	//ballsArray->autorelease();
 
 }
 
@@ -1025,6 +1247,15 @@ void JG_Game_Main::TestSingleTouch()
 }
 
 
+void JG_Game_Main::CheckLoseCondition()
+{
+	if(!IsThereAnyBallLeft() || !IsThereAnyPathLeft())
+	{
+		EndRound();
+	}
+}
+
+
 
 void JG_Game_Main::TestMultiTouch()
 {
@@ -1070,7 +1301,7 @@ void JG_Game_Main::TestMultiTouch_InitiTouchGen(float dt)
 	ccTouchesBegan(testTouchSet,NULL);
 
 	TestMultiTouchesSet->addObject(testTouch);
-
+	
 	//scheduleOnce(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.1);
 	schedule(schedule_selector(JG_Game_Main::TestMultiTouch_InitiTouchGen),CCRANDOM_0_1()*0.01,1,0);
 }
@@ -1146,4 +1377,62 @@ float JG_Game_Main::absf(float input)
 
 }
 
+template<class enemyClass>
+SEnemyTypes JG_Game_Main::CreateEnemyType(int baseChance,int chaceIncrease)
+{
+	SEnemyTypes enemyType;
+	enemyType.factory = new JG_Factory_Enemy<enemyClass>;
+	enemyType.currentChance = baseChance;
+	enemyType.chanceIncreasePerRound = chaceIncrease;
+	return enemyType;
+}
 
+//difficulty control and 
+int JG_Game_Main::getAttackWaveType()
+{
+	return CCRANDOM_0_1()*attackWaveTypes.size();
+}
+
+void JG_Game_Main::ManageDifficulty(float dt)
+{
+	CCLOG("called manage difficulty");
+	int attackWaveIndex = getAttackWaveType();
+	//CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
+	JG_AttackWave_Base* currentAttackWave;
+	currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
+	currentAttackWave->retain();
+	addChild(currentAttackWave);
+	//currentAttackWave = (JG_AttackWave_Base*) new JG_AttackWave_AllLinesSequential();
+	float difficulty = 100*attackWaveCount ;
+	//CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
+	currentAttackWave->initAttackWave(this,difficulty,attackWaveCount);
+
+	attackWaveCount++;
+}
+
+void JG_Game_Main::initiateNewAttackWave()
+{
+	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
+
+	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,CCRANDOM_0_1()*3);
+}
+
+int JG_Game_Main::getAvailablePathCount()
+{
+	int tempPathCounter=0;
+	for(int i=0;i<pathsArray->count(); i++)
+	{
+		if( ( (JG_Path*)pathsArray->objectAtIndex(i) )->IsPathEnabled() )
+		{
+			tempPathCounter++;
+		}
+	}
+
+	return tempPathCounter;
+}
+
+void JG_Game_Main::restartAttackWaves()
+{
+	attackWaveCount=1;
+
+}

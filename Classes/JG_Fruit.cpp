@@ -15,6 +15,7 @@ void JG_Fruit::update(float dt)
 {
 	ProcessMove(dt);
 	CheckCollisionWithBall();
+	CheckOutOfScreen();
 }
 
 void JG_Fruit::ProcessMove(float dt)

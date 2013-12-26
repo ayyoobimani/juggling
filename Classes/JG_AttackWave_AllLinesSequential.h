@@ -1,7 +1,7 @@
 #pragma once
 #include "JG_AttackWave_Base.h"
 #include "JG_Enemy_Base.h"
-#include <queue>
+
 //#include "JG_Game_Main.h"
 
 
@@ -18,14 +18,14 @@ class JG_AttackWave_AllLinesSequential: public JG_AttackWave_Base
 	std::queue<int> pathQueue; 
 	JG_Enemy_Base* currentEnemy;
 	int pathCounter;
-	std::queue<JG_Enemy_Base *> enemyQueue;
+	
 
-	void distributeRewards(); //TODO find a better name
+	
 public:
 	JG_AttackWave_AllLinesSequential();
 	~JG_AttackWave_AllLinesSequential(void);
 
-	void initAttackWave(JG_Game_Main *_mainGame, float attackDifficulty, int attackCount, int _bonusBallCount );
+	void initAttackWave(JG_Game_Main *_mainGame, float attackDifficulty, int attackCount );
 	JG_Enemy_Base* addEnemy();
 	void initiateEnemyAttack(float dt);
 	float generateEnemyPositionRatio();

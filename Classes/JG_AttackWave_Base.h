@@ -1,7 +1,7 @@
 #pragma once
 #include "sprite_nodes\CCSprite.h"
 #include "cocos2d.h"
-
+#include <queue>
 
 
 
@@ -22,7 +22,10 @@ protected:
 	float attackDifficulty;
 	int GetTickCount;
 	int attackCount;
-	int bonusBallCount;
+	
+	int enemyCounter;
+
+	std::queue<JG_Enemy_Base *> enemyQueue;
 
 public:
 	JG_AttackWave_Base();
@@ -31,6 +34,6 @@ public:
 	
 
 	int selectEnemyType();
-	virtual void initAttackWave(JG_Game_Main * _mainGame, float attackDifficulty,int attackCount ,int bonusBallCount);
+	virtual void initAttackWave(JG_Game_Main * _mainGame, float attackDifficulty,int attackCount );
 };
 

@@ -144,7 +144,7 @@ bool JG_Game_Main::init()
 
 void JG_Game_Main::InitGame_difficultyControl()
 {
-	ballsToRewardCount = 0;
+	ballsToRewardCounter = 0;
 	
 	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
 	attackWaveTypes.clear();
@@ -157,14 +157,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 	attackWaveCount =1;
 	
 
-	////************************* Delete This Later **************/
-	//tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
-	//tempEnemy->InitialEnemy(this,ccp(100,100));
-	//this->addChild((CCNode*) tempEnemy);
-	//CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
-	//tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
-	//enemyArray->addObject(tempEnemy);
-	////************************* /Delete This Later **************/
+	
 
 
 
@@ -216,6 +209,17 @@ void JG_Game_Main::InitRound()
 	SetScore(0);
 	SetReservedBallCount(INIT_BALL_COUNT);
 	bIsGameInited = true;
+
+
+	////************************* Delete This Later **************/
+	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
+	tempEnemy->InitialEnemy(this,ccp(100,100),EnemyBonus_ExtraBall);
+	this->addChild((CCNode*) tempEnemy,100);
+	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
+	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
+	//((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
+	enemyArray->addObject(tempEnemy);
+	////************************* /Delete This Later **************/
 }
 
 
@@ -244,11 +248,15 @@ void JG_Game_Main::CheckBallsThrowPath()
 	{
 		if( touchInfos[i].ball!=NULL)
 		{
-			if(touchInfos[i].ball->GetBallDirection() == Dir_RighHandtToLeft
-				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
+			if(touchInfos[i].bIsDirValid)
 			{
-				int ballPath = CalculateThrowPower(i,true)/ powerRange;
-				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
+				if(touchInfos[i].ball->GetBallDirection() == Dir_RighHandtToLeft
+					|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
+				{
+					int ballPath = CalculateThrowPower(i,true)/ powerRange;
+				
+					((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
+				}
 			}
 		}
 	}
@@ -391,20 +399,11 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 			}
 			else // if rightHand
 			{
-
-
 				if(tempBall->GetBallDirection() == Dir_LeftHandToRight)
 				{
 					ballCounter++;
-					//if(ballCounter == 1);
-						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-					//if(ballCounter == 2);
-						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{
-				//		CCLog("it's all in your minde, tap location ");
-
 						criticalBall = tempBall;
 						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
 					}
@@ -424,14 +423,17 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 
 void JG_Game_Main::BallTouchHandler_CheckDirection(unsigned int index)
 {
+	if(touchInfos[index].ball == NULL)
+		return;
 	if(!touchInfos[index].bIsDirValid)
 	{
 		touchInfos[index].bIsDirValid = SetTouchDirectionForBall(index);
 	}
 	else
 	{
-		touchInfos[index].bIsDirValid = SetTouchDirectionForBall(index);
-		if(!touchInfos[index].bIsDirValid)
+		
+		//bool tempDirIsValid = ;
+		if(!SetTouchDirectionForBall(index))
 		{
 			BallTouchHandler_End(index);
 		}
@@ -521,11 +523,11 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 {
 	if(!touchInfos[index].bIsDirValid)
 	{
+
 		ResetTouchInfo(index);
 		return;
 	}
 	JG_Hand * destHand;
-
 
 	touchInfos[index].ball->setPosition(touchInfos[index].hand->getPosition());
 	if(touchInfos[index].hand==leftHand)
@@ -679,6 +681,25 @@ void JG_Game_Main::ManagePathScore(JG_Path* path)
 	JG_ScorePopup::CreateScorePopup(this,path->GetScore(),1,path->GetPositionForLengthRatio(0.7));
 }
 
+
+void JG_Game_Main::ManageEnemyBonus(EEnemyBonus bonus)
+{
+	switch (bonus)
+	{
+	case EnemyBonus_None:
+		break;
+	case EnemyBonus_ExtraBall:
+		IncrementReservedBallCount();
+		break;
+	case EnemyBonus_PathHealth:
+		HealPath();
+		break;
+	default:
+		break;
+	}
+		
+}
+
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 {
 	//RemoveBallFromScreen(ballOne);
@@ -695,10 +716,12 @@ void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 {
 	//maybe score for hitting enemy
 	//when a ball hit the enemy it goes for state dying
+	//CCLog("!!!!OnEnemyHit!!!!!!");
 	enemy->SetState(EnemyS_Dying);
-	
+	ManageEnemyBonus(enemy->GetEnemyBonus());
 	
 }
+
 
 
 
@@ -833,7 +856,43 @@ void JG_Game_Main::SetReservedBallCount( int newCount)
 	gameHUD->UpdateReservedBall();
 }
 
+void JG_Game_Main::HealPath()
+{
+	JG_Path * desiredPath;
 
+	desiredPath = FindADestroyedPath();
+
+	if(desiredPath==NULL)
+		desiredPath= FindMostDamagedPath();
+
+	desiredPath->ResetPath();
+}
+
+JG_Path* JG_Game_Main::FindADestroyedPath()
+{
+	JG_Path* path;
+	for(int i= 0 ; i<pathsArray->count();i++)
+	{
+		path = (JG_Path*)pathsArray->objectAtIndex(i);
+		if( !path->IsPathEnabled() )
+			return path;
+	}
+	return NULL;
+}
+
+JG_Path* JG_Game_Main::FindMostDamagedPath()
+{
+	JG_Path* path;
+	JG_Path* mostDamaged=NULL;
+	for(int i= 0 ; i<pathsArray->count();i++)
+	{
+		path = (JG_Path*)pathsArray->objectAtIndex(i);
+		if( mostDamaged==NULL || mostDamaged->GetHealth()> path->GetHealth() )
+			mostDamaged = path;
+	}
+	return mostDamaged;
+
+}
 
 void JG_Game_Main::RemoveAllBallsFromScreen()
 {
@@ -1396,7 +1455,9 @@ int JG_Game_Main::getAttackWaveType()
 
 void JG_Game_Main::ManageDifficulty(float dt)
 {
-	CCLOG("called manage difficulty");
+
+	manageBallRewards();
+	//CCLOG("called manage difficulty");
 	int attackWaveIndex = getAttackWaveType();
 	//CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
 	JG_AttackWave_Base* currentAttackWave;
@@ -1435,12 +1496,30 @@ int JG_Game_Main::getAvailablePathCount()
 void JG_Game_Main::restartAttackWaves()
 {
 	attackWaveCount=1;
+	ballsToRewardCounter = 0;
 
 }
+
 
 void JG_Game_Main::manageBallRewards()
 {
 	int lostBallCount =  (INIT_BALL_COUNT - reservedBallCount-ballsArray->count())  ;
 	float attackWave_count_effect = attackWaveCount > 10 ? 1.0 : ( attackWaveCount / 5);
-	ballsToRewardCount = lostBallCount > 0 ? lostBallCount * attackWave_count_effect : 0;
+	ballsToRewardCounter = lostBallCount > 0 ? lostBallCount * attackWave_count_effect : 0;
+}
+
+void JG_Game_Main::dicreaseBallsToRewardCount(int value=1)
+{
+	if(value < 1)
+		return;
+
+	if(ballsToRewardCounter  >= value)
+	{
+		ballsToRewardCounter -= value;
+	}
+}
+
+int JG_Game_Main::getBallsToRewardCount()
+{
+	return ballsToRewardCounter;
 }

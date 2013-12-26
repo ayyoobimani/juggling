@@ -5,7 +5,7 @@
 
 class JG_Path;
 
-
+enum EEnemyBonus;
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {
@@ -26,6 +26,7 @@ private:
 	float radius;
 	float waitingTime;
 	EEnemyState state;
+	EEnemyBonus bonus;
 	bool bIsDirectionSet;
 	CCPoint destination;
 	float directionRadian;
@@ -65,6 +66,7 @@ public:
 	static JG_Enemy_Base* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition);
 
 	void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition);
+	void InitialEnemyTestBonus(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus);
 
 	void update(float dt);
 	//checking collision with ball
@@ -94,6 +96,15 @@ public:
 	
 	//void CheckOutOfScreen();
 
+	//set texture based on bonus
+	CCTexture2D* ballBonusTexture;
+	
+	void InitialBonusTexture(EEnemyBonus bonus);
+	void DrawBonusTexture();
+	void SetEnemyBonus(EEnemyBonus bonus);
+	void draw();
+	
+	EEnemyBonus GetEnemyBonus();
 	
 
 	//float GetScore();

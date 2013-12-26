@@ -693,8 +693,14 @@ void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 	//maybe score for hitting enemy
 	//when a ball hit the enemy it goes for state dying
 	enemy->SetState(EnemyS_Dying);
+	BonusHitAction(enemy->GetEnemyBonus());
 	
-	
+}
+
+void JG_Game_Main::BonusHitAction(EEnemyBonus bonus)
+{
+	if(bonus==EnemyP_Ball)
+		IncrementReservedBallCount();
 }
 
 

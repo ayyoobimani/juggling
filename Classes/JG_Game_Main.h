@@ -28,7 +28,7 @@ using namespace cocos2d;
 
 enum EEnemyBonus
 {
-	EnemyP_None,EnemyP_Ball,EnemyP_Path
+	EnemyBonus_None,EnemyBonus_ExtraBall,EnemyBonus_PathHealth
 };
 
 
@@ -145,6 +145,8 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	JG_AttackWave_Base* attackWave;
 	float attackWaveCount;
+
+	
 	
 public:
 
@@ -200,8 +202,7 @@ public:
 	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
 	//when a ball hit an enemy
 	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
-	//action when ball hit a enemy with a bonus
-	void BonusHitAction(EEnemyBonus bonus);
+	
 	
 	
 	/*! this event is called when fruit is out of screen */
@@ -216,6 +217,7 @@ public:
 	void ManageBallComboScore(JG_Ball* ball);
 	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
 	void ManagePathScore(JG_Path* path);
+	void ManageEnemyBonus(EEnemyBonus bonus);
 
 	bool IsThereAnyBallLeft();
 	bool IsThereAnyPathLeft();
@@ -238,6 +240,10 @@ public:
 	void DecrementLifeCount();
 	/*! Increment the life count of player */
 	void IncrementLifeCount();
+
+	void HealPath();
+	JG_Path* FindADestroyedPath();
+	JG_Path* FindMostDamagedPath();
 
 	void IncrementReservedBallCount();
 	void DecrementReservedBallCount();

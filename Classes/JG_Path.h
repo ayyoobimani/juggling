@@ -106,6 +106,7 @@ public:
 	void ResetPath();
 	void SetHealth(float newHealth);
 
+
 };
 
 

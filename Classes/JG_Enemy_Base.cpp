@@ -11,7 +11,7 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 	damagePerSecond=10;
 	damagePerInterval=damagePerSecond*attackInterval;
 	radius=15;
-	SetEnemyBonus(EnemyP_None);
+	SetEnemyBonus(EnemyBonus_None);
 }
 
 
@@ -46,7 +46,7 @@ void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
 	InitialDyingAnimation();
 
 	//Bonus Inti
-	SetEnemyBonus(EnemyP_None);
+	SetEnemyBonus(EnemyBonus_None);
 	
 	autorelease();
 	setPosition(initialPosition);
@@ -55,7 +55,7 @@ void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
 
 }
 
-void JG_Enemy_Base::InitialEnemyTestBonus(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus)
+void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus)
 {
 	initWithFile("crow.png");
 	//here we create animations
@@ -65,7 +65,7 @@ void JG_Enemy_Base::InitialEnemyTestBonus(JG_Game_Main* game,CCPoint initialPosi
 	InitialEscapingAnimation();
 	InitialDyingAnimation();
 
-	//Bonus Inti
+	
 	SetEnemyBonus(bonus);
 	
 
@@ -75,6 +75,15 @@ void JG_Enemy_Base::InitialEnemyTestBonus(JG_Game_Main* game,CCPoint initialPosi
 	scheduleUpdate();
 	mainGame=game;
 
+}
+
+
+
+void JG_Enemy_Base::SetEnemyBonus(EEnemyBonus bonus)
+{
+	this->bonus=bonus;
+	SetBonusTexture(bonus);
+	
 }
 
 void JG_Enemy_Base::MoveTo(float dt)
@@ -250,6 +259,8 @@ JG_Path* JG_Enemy_Base::GetTargetPath()
 
 void JG_Enemy_Base::CheckCollisionWithBall()
 {
+	if(state ==EnemyS_Dying)
+		return;
 	JG_Ball* tempCurrentBall;
 	for(int i=0;i<mainGame->GetBallArray()->count();i++)
 	{
@@ -316,20 +327,24 @@ void JG_Enemy_Base::RunAnimation(CCAnimation* animation)
 /*---------------------------Animation controling--------------------------*/
 
 //drawing texture for enemy
-void JG_Enemy_Base::InitialBonusTexture(EEnemyBonus bonus)
+void JG_Enemy_Base::SetBonusTexture(EEnemyBonus bonus)
 {
-	if (bonus==EnemyP_None)
+
+	switch (bonus)
 	{
+	case EnemyBonus_None:
 		ballBonusTexture=NULL;
+		break;
+	case EnemyBonus_ExtraBall:
+		ballBonusTexture=CCTextureCache::sharedTextureCache()->addImage("Bonus_ExtraBall.png");
+		break;
+	case EnemyBonus_PathHealth:
+		ballBonusTexture=CCTextureCache::sharedTextureCache()->addImage("Bonus_PathHealth.png");
+		break;
+	default:
+		break;
 	}
-	else
-	{
-		if(bonus==EnemyP_Ball)
-		{
-			//set texture for ball
-			ballBonusTexture=CCTextureCache::sharedTextureCache()->addImage("ballbonus.png");
-		}
-	}
+
 }
 
 void JG_Enemy_Base::DrawBonusTexture()
@@ -346,11 +361,4 @@ void JG_Enemy_Base::draw()
 EEnemyBonus JG_Enemy_Base::GetEnemyBonus()
 {
 	return bonus;
-}
-
-void JG_Enemy_Base::SetEnemyBonus(EEnemyBonus bonus)
-{
-	this->bonus=bonus;
-	InitialBonusTexture(bonus);
-	
 }

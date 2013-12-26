@@ -156,14 +156,7 @@ void JG_Game_Main::InitGame_AttackWaves()
 	attackWaveCount =1;
 	
 
-	////************************* Delete This Later **************/
-	//tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
-	//tempEnemy->InitialEnemy(this,ccp(100,100));
-	//this->addChild((CCNode*) tempEnemy);
-	//CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
-	//tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
-	//enemyArray->addObject(tempEnemy);
-	////************************* /Delete This Later **************/
+	
 
 
 
@@ -215,6 +208,17 @@ void JG_Game_Main::InitRound()
 	SetScore(0);
 	SetReservedBallCount(5);
 	bIsGameInited = true;
+
+
+	////************************* Delete This Later **************/
+	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
+	tempEnemy->InitialEnemy(this,ccp(100,100),EnemyBonus_ExtraBall);
+	this->addChild((CCNode*) tempEnemy,100);
+	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
+	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
+	//((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
+	enemyArray->addObject(tempEnemy);
+	////************************* /Delete This Later **************/
 }
 
 
@@ -676,6 +680,25 @@ void JG_Game_Main::ManagePathScore(JG_Path* path)
 	JG_ScorePopup::CreateScorePopup(this,path->GetScore(),1,path->GetPositionForLengthRatio(0.7));
 }
 
+
+void JG_Game_Main::ManageEnemyBonus(EEnemyBonus bonus)
+{
+	switch (bonus)
+	{
+	case EnemyBonus_None:
+		break;
+	case EnemyBonus_ExtraBall:
+		IncrementReservedBallCount();
+		break;
+	case EnemyBonus_PathHealth:
+		HealPath();
+		break;
+	default:
+		break;
+	}
+		
+}
+
 void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 {
 	//RemoveBallFromScreen(ballOne);
@@ -692,16 +715,12 @@ void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 {
 	//maybe score for hitting enemy
 	//when a ball hit the enemy it goes for state dying
+	//CCLog("!!!!OnEnemyHit!!!!!!");
 	enemy->SetState(EnemyS_Dying);
-	BonusHitAction(enemy->GetEnemyBonus());
+	ManageEnemyBonus(enemy->GetEnemyBonus());
 	
 }
 
-void JG_Game_Main::BonusHitAction(EEnemyBonus bonus)
-{
-	if(bonus==EnemyP_Ball)
-		IncrementReservedBallCount();
-}
 
 
 
@@ -836,7 +855,43 @@ void JG_Game_Main::SetReservedBallCount( int newCount)
 	gameHUD->UpdateReservedBall();
 }
 
+void JG_Game_Main::HealPath()
+{
+	JG_Path * desiredPath;
 
+	desiredPath = FindADestroyedPath();
+
+	if(desiredPath==NULL)
+		desiredPath= FindMostDamagedPath();
+
+	desiredPath->ResetPath();
+}
+
+JG_Path* JG_Game_Main::FindADestroyedPath()
+{
+	JG_Path* path;
+	for(int i= 0 ; i<pathsArray->count();i++)
+	{
+		path = (JG_Path*)pathsArray->objectAtIndex(i);
+		if( !path->IsPathEnabled() )
+			return path;
+	}
+	return NULL;
+}
+
+JG_Path* JG_Game_Main::FindMostDamagedPath()
+{
+	JG_Path* path;
+	JG_Path* mostDamaged=NULL;
+	for(int i= 0 ; i<pathsArray->count();i++)
+	{
+		path = (JG_Path*)pathsArray->objectAtIndex(i);
+		if( mostDamaged==NULL || mostDamaged->GetHealth()> path->GetHealth() )
+			mostDamaged = path;
+	}
+	return mostDamaged;
+
+}
 
 void JG_Game_Main::RemoveAllBallsFromScreen()
 {
@@ -1440,3 +1495,4 @@ void JG_Game_Main::restartAttackWaves()
 	attackWaveCount=1;
 
 }
+

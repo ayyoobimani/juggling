@@ -41,6 +41,10 @@ private:
 	float damagePerInterval;
 	void Attack(float dt);
 
+	void SetBonusTexture(EEnemyBonus bonus);
+	void SetEnemyBonus(EEnemyBonus bonus);
+	void DrawBonusTexture();
+
 	
 	void GotoState_Intending();
 	void GotoState_Attacking();
@@ -65,8 +69,8 @@ public:
 
 	static JG_Enemy_Base* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition);
 
-	void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition);
-	void InitialEnemyTestBonus(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus);
+	virtual void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition);
+	virtual void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus);
 
 	void update(float dt);
 	//checking collision with ball
@@ -99,9 +103,7 @@ public:
 	//set texture based on bonus
 	CCTexture2D* ballBonusTexture;
 	
-	void InitialBonusTexture(EEnemyBonus bonus);
-	void DrawBonusTexture();
-	void SetEnemyBonus(EEnemyBonus bonus);
+
 	void draw();
 	
 	EEnemyBonus GetEnemyBonus();

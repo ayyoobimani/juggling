@@ -26,6 +26,12 @@
 
 using namespace cocos2d;
 
+enum EEnemyBonus
+{
+	EnemyP_None,EnemyP_Ball,EnemyP_Path
+};
+
+
 
 class JG_Game_HUD;
 class JG_Ball;
@@ -194,6 +200,8 @@ public:
 	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
 	//when a ball hit an enemy
 	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
+	//action when ball hit a enemy with a bonus
+	void BonusHitAction(EEnemyBonus bonus);
 	
 	
 	/*! this event is called when fruit is out of screen */

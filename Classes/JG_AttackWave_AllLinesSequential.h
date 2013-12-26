@@ -24,7 +24,7 @@ public:
 	JG_AttackWave_AllLinesSequential();
 	~JG_AttackWave_AllLinesSequential(void);
 
-	void initAttackWave(JG_Game_Main *_mainGame, float attackDifficulty, int attackCount );
+	void initAttackWave(JG_Game_Main *_mainGame, float attackDifficulty, int attackCount, int _bonusBallCount );
 	JG_Enemy_Base* addEnemy();
 	void initiateEnemyAttack(float dt);
 	float generateEnemyPositionRatio();

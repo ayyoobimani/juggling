@@ -58,6 +58,8 @@ class JG_AttackWave_AllLinesSequential;
 
 #define DISCRETE_PARTS_COUNT 4
 
+#define INIT_BALL_COUNT 5
+
 
 struct SEnemyTypes
 {
@@ -140,6 +142,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	JG_AttackWave_Base* attackWave;
 	float attackWaveCount;
 	
+
 public:
 
 	std::vector<SEnemyTypes> enemyTypes;
@@ -413,12 +416,15 @@ public:
 
 
 
-	void InitGame_AttackWaves();
+	void InitGame_difficultyControl();
 	int getAttackWaveType();
 	void ManageDifficulty(float dt);
 	void initiateNewAttackWave();
 	int getAvailablePathCount();
 	void restartAttackWaves();
+	void manageBallRewards();
+
+	int ballsToRewardCount;
 
 };
 

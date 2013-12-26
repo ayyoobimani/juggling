@@ -22,6 +22,7 @@ protected:
 	float attackDifficulty;
 	int GetTickCount;
 	int attackCount;
+	int bonusBallCount;
 
 public:
 	JG_AttackWave_Base();
@@ -30,6 +31,6 @@ public:
 	
 
 	int selectEnemyType();
-	virtual void initAttackWave(JG_Game_Main * _mainGame, float attackDifficulty,int attackCount );
+	virtual void initAttackWave(JG_Game_Main * _mainGame, float attackDifficulty,int attackCount ,int bonusBallCount);
 };
 

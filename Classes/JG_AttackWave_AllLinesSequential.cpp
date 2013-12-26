@@ -12,10 +12,10 @@ JG_AttackWave_AllLinesSequential::~JG_AttackWave_AllLinesSequential(void)
 }
 
 
-void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, float attackDifficulty, int attackCount)
+void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, float attackDifficulty, int attackCount, int _bonusBallCount)
 {
 
-	JG_AttackWave_Base::initAttackWave(mainGame, attackDifficulty, attackCount);
+	JG_AttackWave_Base::initAttackWave(mainGame, attackDifficulty, attackCount, _bonusBallCount);
 
 
 	clalculateEnemyAddInterval();

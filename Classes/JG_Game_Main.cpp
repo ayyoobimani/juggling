@@ -128,7 +128,7 @@ bool JG_Game_Main::init()
 
 	
 
-	//InitGame_AttackWaves();
+	//InitGame_difficultyControl();
 
 	
 
@@ -142,8 +142,9 @@ bool JG_Game_Main::init()
 	
 }
 
-void JG_Game_Main::InitGame_AttackWaves()
+void JG_Game_Main::InitGame_difficultyControl()
 {
+	ballsToRewardCount = 0;
 	
 	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
 	attackWaveTypes.clear();
@@ -209,11 +210,11 @@ void JG_Game_Main::InitRound()
 		touchInfos[i].bIsDirValid = false;
 	}
 
-	InitGame_AttackWaves();
+	InitGame_difficultyControl();
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
-	SetReservedBallCount(5);
+	SetReservedBallCount(INIT_BALL_COUNT);
 	bIsGameInited = true;
 }
 
@@ -1435,4 +1436,11 @@ void JG_Game_Main::restartAttackWaves()
 {
 	attackWaveCount=1;
 
+}
+
+void JG_Game_Main::manageBallRewards()
+{
+	int lostBallCount =  (INIT_BALL_COUNT - reservedBallCount-ballsArray->count())  ;
+	float attackWave_count_effect = attackWaveCount > 10 ? 1.0 : ( attackWaveCount / 5);
+	ballsToRewardCount = lostBallCount > 0 ? lostBallCount * attackWave_count_effect : 0;
 }

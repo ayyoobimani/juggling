@@ -4,10 +4,10 @@
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
 	speed = 300;
-	waitingTime = 1.0;
+	waitingTime = 2.0;
 	SetState(EnemyS_Inited);
 	targetPath = NULL;
-	attackInterval=0.5;
+	attackInterval=1.5;
 	damagePerSecond=10;
 	damagePerInterval=damagePerSecond*attackInterval;
 	radius=15;

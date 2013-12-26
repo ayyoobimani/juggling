@@ -243,11 +243,15 @@ void JG_Game_Main::CheckBallsThrowPath()
 	{
 		if( touchInfos[i].ball!=NULL)
 		{
-			if(touchInfos[i].ball->GetBallDirection() == Dir_RighHandtToLeft
-				|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
+			if(touchInfos[i].bIsDirValid)
 			{
-				int ballPath = CalculateThrowPower(i,true)/ powerRange;
-				((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
+				if(touchInfos[i].ball->GetBallDirection() == Dir_RighHandtToLeft
+					|| touchInfos[i].ball->GetBallDirection() == Dir_LeftHandToRight)
+				{
+					int ballPath = CalculateThrowPower(i,true)/ powerRange;
+				
+					((JG_Path * ) pathsArray->objectAtIndex(ballPath))->SetHighlight(true);
+				}
 			}
 		}
 	}
@@ -390,20 +394,11 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 			}
 			else // if rightHand
 			{
-
-
 				if(tempBall->GetBallDirection() == Dir_LeftHandToRight)
 				{
 					ballCounter++;
-					//if(ballCounter == 1);
-						//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-					//if(ballCounter == 2);
-						//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf( tempBall->getPositionX()))->getCString());
-
 					if( ( abs(tempBall->getPositionX())) <criticalTime)
 					{
-				//		CCLog("it's all in your minde, tap location ");
-
 						criticalBall = tempBall;
 						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
 					}
@@ -423,14 +418,17 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 
 void JG_Game_Main::BallTouchHandler_CheckDirection(unsigned int index)
 {
+	if(touchInfos[index].ball == NULL)
+		return;
 	if(!touchInfos[index].bIsDirValid)
 	{
 		touchInfos[index].bIsDirValid = SetTouchDirectionForBall(index);
 	}
 	else
 	{
-		touchInfos[index].bIsDirValid = SetTouchDirectionForBall(index);
-		if(!touchInfos[index].bIsDirValid)
+		
+		//bool tempDirIsValid = ;
+		if(!SetTouchDirectionForBall(index))
 		{
 			BallTouchHandler_End(index);
 		}
@@ -520,11 +518,11 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 {
 	if(!touchInfos[index].bIsDirValid)
 	{
+
 		ResetTouchInfo(index);
 		return;
 	}
 	JG_Hand * destHand;
-
 
 	touchInfos[index].ball->setPosition(touchInfos[index].hand->getPosition());
 	if(touchInfos[index].hand==leftHand)
@@ -1395,7 +1393,7 @@ int JG_Game_Main::getAttackWaveType()
 
 void JG_Game_Main::ManageDifficulty(float dt)
 {
-	CCLOG("called manage difficulty");
+	//CCLOG("called manage difficulty");
 	int attackWaveIndex = getAttackWaveType();
 	//CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
 	JG_AttackWave_Base* currentAttackWave;

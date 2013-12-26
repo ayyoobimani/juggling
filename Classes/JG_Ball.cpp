@@ -98,9 +98,11 @@ void JG_Ball::InitialBallLevelInformation()
 
 void JG_Ball::Throw(float force, CCPoint destination)
 {
+
 	mainGame->OnBallThrow(this);
 	// Note: the order is important 
 	ballThrowDirection = GetNewThrowDirection(ballThrowDirection);
+
 	moveMode = GetNewMoveMode(moveMode);
 	currentSpeed = GetNewSpeedByForce(force);
 
@@ -176,6 +178,7 @@ float JG_Ball::GetNewSpeedByForce(float force)
 
 EThrowDirection JG_Ball::GetNewThrowDirection(EThrowDirection preDir)
 {
+	//TODO: convert it into switch case
 	if (preDir==Dir_LeftHandToRight)
 		return Dir_RightHandToUp;
 	else if(preDir==Dir_RighHandtToLeft)

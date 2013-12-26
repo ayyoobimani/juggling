@@ -38,7 +38,7 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 		currentEnemy=addEnemy();
 
 		
-		CCLOG("enemy added");
+		//CCLOG("enemy added");
 		currentEnemyDifficulty = currentEnemy->GetDifficulty();
 		
 		//difficulty added because of path health
@@ -66,7 +66,7 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 
 void JG_AttackWave_AllLinesSequential::update(float dt)
 {
-	CCLOG("UPDATE");
+	//CCLOG("UPDATE");
 }
 
 JG_Enemy_Base* JG_AttackWave_AllLinesSequential::addEnemy()
@@ -85,15 +85,15 @@ JG_Enemy_Base* JG_AttackWave_AllLinesSequential::addEnemy()
 
 void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 {
-	CCLOG("start attack");
+	//CCLOG("start attack");
 	//unschedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack));
-	CCLOG(CCString::createWithFormat("enemy path count: %d", pathQueue.size())->getCString());
+	//CCLOG(CCString::createWithFormat("enemy path count: %d", pathQueue.size())->getCString());
 	JG_Path * enemyPath = selectPath(pathQueue.front());
 	pathQueue.pop();
-	CCLOG("path queue ok");
+	//CCLOG("path queue ok");
 	enemyQueue.front()->SetDestinationPath(enemyPath->GetPositionForLengthRatio(generateEnemyPositionRatio()),enemyPath);
 	enemyQueue.pop();
-	CCLOG("enemt queue ok");
+	//CCLOG("enemt queue ok");
 	
 	//if more enemie(s) -> schedule next enemy attack
 	if(enemyQueue.size()==0)
@@ -133,7 +133,7 @@ JG_Path * JG_AttackWave_AllLinesSequential::selectPath(int pathCount)
 		tempPath = (JG_Path*)mainGame->pathsArray->objectAtIndex(pathCount % mainGame->pathsArray->count());
 		if(tempPath->IsPathEnabled())
 		{
-			CCLOG(CCString::createWithFormat("selected paht:%d",pathCount % mainGame->pathsArray->count())->getCString());
+			//CCLOG(CCString::createWithFormat("selected paht:%d",pathCount % mainGame->pathsArray->count())->getCString());
 			return tempPath;
 		}
 		pathCount++;

@@ -20,6 +20,7 @@ class JG_AttackWave_AllLinesSequential: public JG_AttackWave_Base
 	int pathCounter;
 	std::queue<JG_Enemy_Base *> enemyQueue;
 
+	void distributeRewards(); //TODO find a better name
 public:
 	JG_AttackWave_AllLinesSequential();
 	~JG_AttackWave_AllLinesSequential(void);
@@ -34,6 +35,7 @@ public:
 	JG_Path* selectPath(int pathcount);
 
 	void update(float dt);
+	
 
 	
 };

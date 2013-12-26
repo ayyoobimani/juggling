@@ -139,3 +139,11 @@ JG_Path * JG_AttackWave_AllLinesSequential::selectPath(int pathCount)
 		pathCount++;
 	}
 }
+
+void JG_AttackWave_AllLinesSequential::distributeRewards()
+{
+	for(int i=0; i<bonusBallCount; i++)
+	{
+		
+	}
+}

@@ -92,30 +92,35 @@ void JG_Game_HUD::Init_PauseMenu()
 
 	gameMenu->retain();
 
-	pauseButton = CCMenuItemSprite::create(CCSprite::create("Pause_Normal.png"),CCSprite::create("Pause_Selected.png")
+	pauseButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Pause_Normal.png"),CCSprite::create("Buttons/Game/Pause_Selected.png")
 		 ,mainGame
 		,menu_selector(JG_Game_Main::PauseGame));
 	pauseButton->retain();
 	pauseButton->setPosition(ccp(mainGame->screenSize.width * 0.85 ,mainGame->screenSize.height * 0.90) );
 
-	resumeButton = CCMenuItemSprite::create(CCSprite::create("Resume_Normal.png"),CCSprite::create("Resume_Selected.png")
+	resumeButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Resume_Normal.png"),CCSprite::create("Buttons/Game/Resume_Selected.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ResumeGame));
 	resumeButton->retain();
-	resumeButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.7));
+	resumeButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.8));
 
-	resetButton = CCMenuItemSprite::create(CCSprite::create("Reset_Normal.png"),CCSprite::create("Reset_Selected.png")
+	resetButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Reset_Normal.png"),CCSprite::create("Buttons/Game/Reset_Selected.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ResetGame));
 	resetButton->retain();
-	resetButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.5));
+	resetButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.6));
 
+	exitToMainMenuButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png"),CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png")
+		 ,mainGame
+		 ,menu_selector(JG_Game_Main::ExitToMainMenu));
+	exitToMainMenuButton->retain();
+	exitToMainMenuButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.4));
 
-	exitButton = CCMenuItemSprite::create(CCSprite::create("Exit_Normal.png"),CCSprite::create("Exit_Selected.png")
+	exitGameButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitGame_Normal.png"),CCSprite::create("Buttons/Game/ExitGame_Selected.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ExitGame));
-	exitButton->retain();
-	exitButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.3));
+	exitGameButton->retain();
+	exitGameButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.2));
 
 	ballAddButton = CCMenuItemSprite::create(CCSprite::create("BallAdder_Normal.png"),CCSprite::create("BallAdder_Selected.png")
 		 ,mainGame
@@ -129,7 +134,8 @@ void JG_Game_HUD::Init_PauseMenu()
 	gameMenu->addChild(pauseButton);
 	gameMenu->addChild(resumeButton);
 	gameMenu->addChild(resetButton);
-	gameMenu->addChild(exitButton);
+	gameMenu->addChild(exitGameButton);
+	gameMenu->addChild(exitToMainMenuButton);
 	gameMenu->addChild(ballAddButton);
 	
 	ShowPauseScreen(false);
@@ -142,14 +148,16 @@ void JG_Game_HUD::ShowPauseScreen(bool bShow)
 	pauseButton->setVisible(!bShow);
 	resumeButton->setVisible(bShow);
 	resetButton->setVisible(bShow);
-	exitButton->setVisible(bShow);	
+	exitToMainMenuButton->setVisible(bShow);
+	exitGameButton->setVisible(bShow);	
 }
 
 void JG_Game_HUD::ShowEndRoundScreen(bool bShow)
 {
 	
 	resetButton->setVisible(bShow);
-	exitButton->setVisible(bShow);
+	exitToMainMenuButton->setVisible(bShow);
+	exitGameButton->setVisible(bShow);	
 	pauseButton->setVisible(!bShow);
 }
 JG_Game_HUD::~JG_Game_HUD(void)

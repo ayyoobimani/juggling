@@ -1198,6 +1198,12 @@ void JG_Game_Main::PauseGame(CCObject* pSender)
 	CCDirector::sharedDirector()->pause();
 }
 
+void JG_Game_Main::ExitToMainMenu(CCObject* pSender)
+{
+	CCDirector::sharedDirector()->replaceScene(JG_Menu_Main::scene());
+}
+
+
 void JG_Game_Main::ExitGame(CCObject* pSender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)

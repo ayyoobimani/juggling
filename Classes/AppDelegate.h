@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "JG_Game_Main.h"
+#include "JG_Menu_Main.h"
 
 /**
 @brief    The cocos2d Application.

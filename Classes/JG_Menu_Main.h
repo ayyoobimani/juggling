@@ -2,15 +2,36 @@
 #define __MainMenu_SCENE_H__
 
 #include "cocos2d.h"
+#include "JG_Menu_GUI.h"
+#include "JG_Game_Main.h"
 
+class JG_Game_Main;
+class JG_Menu_GUI;
+
+using namespace cocos2d;
 class JG_Menu_Main : public cocos2d::CCLayer
 {
+
+	JG_Menu_GUI* menuGUI;
+
+	void InitMainMenu();
+
 public:
+
+	CCSize screenSize ;
+
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();  
 
+	
+
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::CCScene* scene();
+
+	void StartGame(CCObject* pSender);
+	void ShowOption(CCObject* pSender);
+	void ShowHighScores(CCObject* pSender);
+	void ExitGame(CCObject* pSender);
     
     // a selector callback
     void menuCloseCallback(CCObject* pSender);

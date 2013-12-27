@@ -57,7 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = JG_Game_Main::scene();
+	CCScene *pScene = JG_Menu_Main::scene();
 
     // run
     pDirector->runWithScene(pScene);

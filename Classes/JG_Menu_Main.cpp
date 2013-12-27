@@ -30,10 +30,42 @@ bool JG_Menu_Main::init()
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
 
-    
+    InitMainMenu();
     return true;
 }
 
+void JG_Menu_Main::InitMainMenu()
+{
+	screenSize = CCDirector::sharedDirector()->getWinSize();
+	menuGUI = JG_Menu_GUI::CreateMenuGUI(this);
+	this->addChild(menuGUI,100);
+
+}
+
+void JG_Menu_Main::StartGame(CCObject* pSender)
+{
+	CCLOG("----------- Menu: StartGame -------------");
+	CCDirector::sharedDirector()->replaceScene(JG_Game_Main::scene());
+
+}
+
+void JG_Menu_Main::ShowOption(CCObject* pSender)
+{
+	CCLOG("----------- Menu: ShowOption -------------");
+
+}
+
+void JG_Menu_Main::ShowHighScores(CCObject* pSender)
+{
+	CCLOG("----------- Menu: ShowHighScores -------------");
+
+}
+
+void JG_Menu_Main::ExitGame(CCObject* pSender)
+{
+	CCLOG("----------- Menu: ExitGame -------------");
+	menuCloseCallback(pSender);
+}
 
 void JG_Menu_Main::menuCloseCallback(CCObject* pSender)
 {

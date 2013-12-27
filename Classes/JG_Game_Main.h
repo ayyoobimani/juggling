@@ -4,6 +4,8 @@
 
 #include "cocos2d.h"
 
+#include "JG_Menu_Main.h"
+
 #include "JG_Hand.h"
 #include "JG_Ball.h"
 #include "JG_Fruit.h"
@@ -32,7 +34,7 @@ enum EEnemyBonus
 };
 
 
-
+class JG_Menu_Main;
 class JG_Game_HUD;
 class JG_Ball;
 class JG_Hand;
@@ -359,6 +361,8 @@ public:
 	void PauseGame(CCObject* pSender);
 	/*! Exit the game */
 	void ExitGame(CCObject* pSender);
+	/*! Exit To Main Menu */
+	void ExitToMainMenu(CCObject* pSender);
 	/*! Resuming the game */
 	void ResumeGame(CCObject* pSender);
 	/*! Reseting the game */

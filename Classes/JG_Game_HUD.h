@@ -23,7 +23,8 @@ public:
 	CCMenuItemSprite* pauseButton;
 	CCMenuItemSprite* resetButton;
 	CCMenuItemSprite* resumeButton;
-	CCMenuItemSprite* exitButton;
+	CCMenuItemSprite* exitGameButton;
+	CCMenuItemSprite* exitToMainMenuButton;
 
 	CCMenuItemSprite* ballAddButton;
 

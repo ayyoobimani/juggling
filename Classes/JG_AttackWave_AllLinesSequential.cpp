@@ -91,10 +91,10 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	//CCLOG(CCString::createWithFormat("enemy path count: %d", pathQueue.size())->getCString());
 	JG_Path * enemyPath = selectPath(pathQueue.front());
 	pathQueue.pop();
-	CCLOG("moving new enemy");
+	//CCLOG("moving new enemy");
 	if(mainGame->getBallsToRewardCount() >0 )
 	{
-		CCLOG("enemy with ball bonus");
+	//	CCLOG("enemy with ball bonus");
 		enemyQueue.front()->SetEnemyBonus(EnemyBonus_ExtraBall);
 		mainGame->dicreaseBallsToRewardCount();
 	}

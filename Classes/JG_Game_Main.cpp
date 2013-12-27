@@ -1502,7 +1502,7 @@ void JG_Game_Main::restartAttackWaves()
 
 void JG_Game_Main::manageBallRewards(float dt)
 {
-	CCLOG(CCString::createWithFormat("balls count: %d",reservedBallCount+ballsArray->count())->getCString());
+	//CCLOG(CCString::createWithFormat("balls count: %d",reservedBallCount+ballsArray->count())->getCString());
 	int lostBallCount =  (INIT_BALL_COUNT - (reservedBallCount + ballsArray->count()) )  ;
 	if(lostBallCount < 1 )
 	{
@@ -1527,7 +1527,7 @@ void JG_Game_Main::manageBallRewards(float dt)
 		ballsToRewardCounter = lostBallCount;
 	}
 
-	CCLOG(CCString::createWithFormat("to be added balls: %d", ballsToRewardCounter)->getCString());
+	//CCLOG(CCString::createWithFormat("to be added balls: %d", ballsToRewardCounter)->getCString());
 
 }
 

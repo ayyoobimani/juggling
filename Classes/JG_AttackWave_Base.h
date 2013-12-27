@@ -1,7 +1,7 @@
 #pragma once
 #include "sprite_nodes\CCSprite.h"
 #include "cocos2d.h"
-#include <queue>
+
 
 
 
@@ -25,7 +25,7 @@ protected:
 	
 	int enemyCounter;
 
-	std::queue<JG_Enemy_Base *> enemyQueue;
+	
 
 public:
 	JG_AttackWave_Base();

@@ -436,11 +436,13 @@ public:
 	void initiateNewAttackWave();
 	int getAvailablePathCount();
 	void restartAttackWaves();
-	void manageBallRewards();
+	void manageBallRewards(float dt);
 
-	void dicreaseBallsToRewardCount(int value);
+	void dicreaseBallsToRewardCount(int value=1);
 
 	int getBallsToRewardCount();
+
+	
 
 };
 

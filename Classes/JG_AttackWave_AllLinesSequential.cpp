@@ -21,14 +21,14 @@ void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, f
 	clalculateEnemyAddInterval();
 	//CCLOG(CCString::createWithFormat("interval: %f", enemeyAddInterval)->getCString());
 	pathCounter =0;
-	JG_Path* currentPath;
+	
 
 	int currentTotalPathExist = mainGame->getAvailablePathCount();
 
 	float totalDifficulty = 0.0;
 	float currentEnemyDifficulty;
 
-	JG_Path * tempPath;
+
 
 
 	while( totalDifficulty < attackDifficulty)
@@ -91,7 +91,13 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	//CCLOG(CCString::createWithFormat("enemy path count: %d", pathQueue.size())->getCString());
 	JG_Path * enemyPath = selectPath(pathQueue.front());
 	pathQueue.pop();
-	//CCLOG("path queue ok");
+	CCLOG("moving new enemy");
+	if(mainGame->getBallsToRewardCount() >0 )
+	{
+		CCLOG("enemy with ball bonus");
+		enemyQueue.front()->SetEnemyBonus(EnemyBonus_ExtraBall);
+		mainGame->dicreaseBallsToRewardCount();
+	}
 	enemyQueue.front()->SetDestinationPath(enemyPath->GetPositionForLengthRatio(generateEnemyPositionRatio()),enemyPath);
 	enemyQueue.pop();
 	//CCLOG("enemt queue ok");

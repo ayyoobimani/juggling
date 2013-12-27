@@ -1,7 +1,7 @@
 #pragma once
 #include "JG_AttackWave_Base.h"
 #include "JG_Enemy_Base.h"
-
+#include <queue>
 //#include "JG_Game_Main.h"
 
 
@@ -20,7 +20,7 @@ class JG_AttackWave_AllLinesSequential: public JG_AttackWave_Base
 	int pathCounter;
 	
 
-	
+	std::queue<JG_Enemy_Base *> enemyQueue;
 public:
 	JG_AttackWave_AllLinesSequential();
 	~JG_AttackWave_AllLinesSequential(void);

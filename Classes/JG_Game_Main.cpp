@@ -161,7 +161,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 
 
 
-	schedule(schedule_selector(JG_Game_Main::manageBallRewards),10);
+	schedule(schedule_selector(JG_Game_Main::manageBallRewards),7);
 	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,3);
 }
 

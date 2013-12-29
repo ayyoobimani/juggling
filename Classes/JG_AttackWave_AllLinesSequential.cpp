@@ -95,7 +95,7 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 
 	if(mainGame->getHealthsToRewardCount() > 0 )
 	{
-		CCLOG(CCString::createWithFormat("healths to reward counter is: ", mainGame->getHealthsToRewardCount())->getCString());
+		//CCLOG(CCString::createWithFormat("healths to reward counter is: ", mainGame->getHealthsToRewardCount())->getCString());
 		enemyQueue.front()->SetEnemyBonus(EnemyBonus_PathHealth);
 		mainGame->dicreaseHealsToRewardCount();
 	}

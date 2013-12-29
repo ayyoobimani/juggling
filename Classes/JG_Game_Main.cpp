@@ -1541,7 +1541,7 @@ void JG_Game_Main::manageBallRewards(float dt)
 	//health bonus algorithm
 
 	float lostHealthFactor = calculateLostHealth() / 100;
-	CCLOG(CCString::createWithFormat("losthealth factor: %f\n attackwave effect: %f" , lostHealthFactor, attackWaveCountEffect)->getCString());
+	//CCLOG(CCString::createWithFormat("losthealth factor: %f\n attackwave effect: %f" , lostHealthFactor, attackWaveCountEffect)->getCString());
 	if(lostHealthFactor <1)
 	{
 		lostHealthFactor = 0.5;
@@ -1555,8 +1555,8 @@ void JG_Game_Main::manageBallRewards(float dt)
 	{
 		healthsToRewardCounter =2;
 	}
-	CCLOG(CCString::createWithFormat(" totalhealthrewards:%i" , totalhealthsRewarded)->getCString());
-	CCLOG(CCString::createWithFormat("healthto be rewarded: %i" , healthsToRewardCounter)->getCString());
+	//CCLOG(CCString::createWithFormat(" totalhealthrewards:%i" , totalhealthsRewarded)->getCString());
+	//CCLOG(CCString::createWithFormat("healthto be rewarded: %i" , healthsToRewardCounter)->getCString());
 	//CCLOG(CCString::createWithFormat("healths to reward: %f\n totalhealthrewards:%i" , healthsToRewardCounter, totalhealthsRewarded)->getCString());
 	totalhealthsRewarded += healthsToRewardCounter;
 	

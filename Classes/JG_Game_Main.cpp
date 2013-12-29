@@ -144,7 +144,14 @@ bool JG_Game_Main::init()
 
 void JG_Game_Main::InitGame_difficultyControl()
 {
-	ballsToRewardCounter = 0;
+	ballsToRewardCounter = 0 ;
+	totalBallsRewarded = 0 ;
+	
+	totalhealthsRewarded = 0;
+	CCLOG(CCString::createWithFormat("initial total healths rewarded: %i",totalBallsRewarded)->getCString());
+	healthsToRewardCounter = 0;
+
+	initialTotalHealth = DISCRETE_PARTS_COUNT * 100;
 
 	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
 	attackWaveTypes.clear();
@@ -161,7 +168,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 
 
 
-	schedule(schedule_selector(JG_Game_Main::manageBallRewards),7);
+	schedule(schedule_selector(JG_Game_Main::manageBallRewards),5);
 	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,3);
 }
 
@@ -1502,37 +1509,57 @@ void JG_Game_Main::restartAttackWaves()
 {
 	attackWaveCount=1;
 	ballsToRewardCounter = 0;
+	healthsToRewardCounter = 0;
 
 }
 
 
 void JG_Game_Main::manageBallRewards(float dt)
 {
-	//CCLOG(CCString::createWithFormat("balls count: %d",reservedBallCount+ballsArray->count())->getCString());
-	int lostBallCount =  (INIT_BALL_COUNT - (reservedBallCount + ballsArray->count()) )  ;
+	//balls reward algorithm
+	int a = INIT_BALL_COUNT - (ballsArray->count() + reservedBallCount);
+	
+	float lostBallCount =  a;
 	if(lostBallCount < 1 )
 	{
-		return;
+		lostBallCount = 0.5;
 	}
 
 	//float attackWave_count_effect = attackWaveCount / 4 ;
-	float attackWaveCountEffect = 1;
-	if(attackWaveCount > 5)
-	{
-		attackWaveCountEffect = 1.5;
-	}
-	if(attackWaveCount > 15)
-	{
-		attackWaveCountEffect = 2;
-	}
+	float attackWaveCountEffect = attackWaveCount / 4;
 	
-	ballsToRewardCounter =  lostBallCount * ( attackWaveCountEffect * CCRANDOM_0_1() ) ;
-
-	if( ballsToRewardCounter > lostBallCount)
+	
+	ballsToRewardCounter =  lostBallCount * ( attackWaveCountEffect * CCRANDOM_0_1() ) * 1/ (1+ totalBallsRewarded) ;
+	if(ballsToRewardCounter >2)
 	{
-		ballsToRewardCounter = lostBallCount;
+		ballsToRewardCounter =2;
+	}
+	totalBallsRewarded += ballsToRewardCounter;
+
+
+	//health bonus algorithm
+
+	float lostHealthFactor = calculateLostHealth() / 100;
+	CCLOG(CCString::createWithFormat("losthealth factor: %f\n attackwave effect: %f" , lostHealthFactor, attackWaveCountEffect)->getCString());
+	if(lostHealthFactor <1)
+	{
+		lostHealthFactor = 0.5;
 	}
 
+	//healthsToRewardCounter = lostHealthFactor * (attackWaveCountEffect * CCRANDOM_0_1() ) * ( 1/ (1 + totalhealthsRewarded) );
+	float chanceFactor = CCRANDOM_0_1();
+	healthsToRewardCounter = lostHealthFactor * attackWaveCountEffect * chanceFactor * (1.0/(1+totalhealthsRewarded));
+	
+	if(healthsToRewardCounter > 2)
+	{
+		healthsToRewardCounter =2;
+	}
+	CCLOG(CCString::createWithFormat(" totalhealthrewards:%i" , totalhealthsRewarded)->getCString());
+	CCLOG(CCString::createWithFormat("healthto be rewarded: %i" , healthsToRewardCounter)->getCString());
+	//CCLOG(CCString::createWithFormat("healths to reward: %f\n totalhealthrewards:%i" , healthsToRewardCounter, totalhealthsRewarded)->getCString());
+	totalhealthsRewarded += healthsToRewardCounter;
+	
+	
 	//CCLOG(CCString::createWithFormat("to be added balls: %d", ballsToRewardCounter)->getCString());
 
 }
@@ -1551,4 +1578,29 @@ void JG_Game_Main::dicreaseBallsToRewardCount(int value)
 int JG_Game_Main::getBallsToRewardCount()
 {
 	return ballsToRewardCounter;
+}
+
+float JG_Game_Main::calculateLostHealth()
+{
+	float currentTotalHealth=0;
+
+	for(int i=0; i<DISCRETE_PARTS_COUNT; i++)
+	{
+		if( ((JG_Path*) pathsArray->objectAtIndex(i))->IsPathEnabled())
+		{
+			currentTotalHealth += ((JG_Path*) pathsArray->objectAtIndex(i))->GetHealth();
+		}
+	}
+	
+	return initialTotalHealth - currentTotalHealth;
+}
+
+int JG_Game_Main::getHealthsToRewardCount()
+{
+	return healthsToRewardCounter;
+}
+
+void JG_Game_Main::dicreaseHealsToRewardCount(int value)
+{
+	healthsToRewardCounter -= value;
 }

@@ -151,6 +151,11 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float attackWaveCount;
 
 	int ballsToRewardCounter;
+	int totalBallsRewarded;
+	float calculateLostHealth();
+	float initialTotalHealth;
+	int healthsToRewardCounter;
+	int totalhealthsRewarded;
 	
 
 public:
@@ -446,6 +451,8 @@ public:
 
 	int getBallsToRewardCount();
 
+	void dicreaseHealsToRewardCount(int value = 1);
+	int getHealthsToRewardCount();
 	
 
 };

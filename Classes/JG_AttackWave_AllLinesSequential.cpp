@@ -92,7 +92,14 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	JG_Path * enemyPath = selectPath(pathQueue.front());
 	pathQueue.pop();
 	//CCLOG("moving new enemy");
-	if(mainGame->getBallsToRewardCount() >0 )
+
+	if(mainGame->getHealthsToRewardCount() > 0 )
+	{
+		CCLOG(CCString::createWithFormat("healths to reward counter is: ", mainGame->getHealthsToRewardCount())->getCString());
+		enemyQueue.front()->SetEnemyBonus(EnemyBonus_PathHealth);
+		mainGame->dicreaseHealsToRewardCount();
+	}
+	else if(mainGame->getBallsToRewardCount() >0 )
 	{
 	//	CCLOG("enemy with ball bonus");
 		enemyQueue.front()->SetEnemyBonus(EnemyBonus_ExtraBall);

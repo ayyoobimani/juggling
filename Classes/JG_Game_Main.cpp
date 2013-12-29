@@ -49,11 +49,11 @@ bool JG_Game_Main::init()
 
 	JG_Path::InitialPathHealthStatesForEachLevel();
 
-	gameHUD = JG_Game_HUD::create(this);
-	gameHUD->retain();
-	gameHUD->setPosition(CCPointZero);
-	this->addChild(gameHUD,100);
-	//gameHUD->draw();
+	gameGUI = JG_Game_GUI::create(this);
+	gameGUI->retain();
+	gameGUI->setPosition(CCPointZero);
+	this->addChild(gameGUI,100);
+	//gameGUI->draw();
 
 
 
@@ -135,6 +135,7 @@ bool JG_Game_Main::init()
 
 	InitRound();
 	this->setTouchEnabled(true);
+	this->setKeypadEnabled(true);
 	//test
 	//TestMultiTouch();
 	return true;
@@ -156,11 +157,6 @@ void JG_Game_Main::InitGame_difficultyControl()
 
 	attackWaveCount =1;
 
-
-
-
-
-
 	schedule(schedule_selector(JG_Game_Main::manageBallRewards),7);
 	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,3);
 }
@@ -168,7 +164,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 void JG_Game_Main::InitRound()
 {
 
-
+	gameGUI->SetHUDVisibility(true);
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
@@ -324,8 +320,8 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 			}
 		}
 	}
-	//gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
-	//gameHUD->prevballcount->setString(CCString::createWithFormat("%d",prevballCounter)->getCString());
+	//gameGUI->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
+	//gameGUI->prevballcount->setString(CCString::createWithFormat("%d",prevballCounter)->getCString());
 	prevballCounter = ballCounter;
 
 }
@@ -353,7 +349,7 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 				SetTouchInfo(touch,currentHand,criticalBall);
 			}
 
-			//gameHUD->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
+			//gameGUI->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
 		}// end of hand collision checking
 	}// end of hand looping	
 
@@ -383,9 +379,9 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 
 					ballCounter++;
 					//if(ballCounter == 1);
-					//gameHUD->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					//gameGUI->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
 					//if(ballCounter == 2);
-					//gameHUD->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					//gameGUI->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
 					if( absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) <criticalTime  )
 					{
 						criticalBall = tempBall;
@@ -796,7 +792,7 @@ int JG_Game_Main::GetScore()
 void JG_Game_Main::SetScore( int newScore)
 {
 	score = newScore;
-	gameHUD->UpdateScore();
+	gameGUI->UpdateScore();
 
 }
 
@@ -804,14 +800,14 @@ void JG_Game_Main::AddScore(int amount)
 {
 
 	score+= amount;
-	gameHUD->UpdateScore();
+	gameGUI->UpdateScore();
 
 }
 
 void JG_Game_Main::ReduceScore(int amount)
 {
 	score-= amount;
-	gameHUD->UpdateScore();
+	gameGUI->UpdateScore();
 }
 
 int JG_Game_Main::GetLifeCount()
@@ -841,19 +837,19 @@ void JG_Game_Main::IncrementLifeCount()
 void JG_Game_Main::IncrementReservedBallCount()
 {
 	reservedBallCount++;
-	gameHUD->UpdateReservedBall();
+	gameGUI->UpdateReservedBall();
 }
 
 void JG_Game_Main::DecrementReservedBallCount()
 {
 	reservedBallCount--;
-	gameHUD->UpdateReservedBall();
+	gameGUI->UpdateReservedBall();
 }
 
 void JG_Game_Main::SetReservedBallCount( int newCount)
 {
 	reservedBallCount = newCount;
-	gameHUD->UpdateReservedBall();
+	gameGUI->UpdateReservedBall();
 }
 
 void JG_Game_Main::HealPath()
@@ -1194,7 +1190,7 @@ CCArray* JG_Game_Main::GetBallArray()
 
 void JG_Game_Main::PauseGame(CCObject* pSender)
 {
-	gameHUD->ShowPauseScreen(true);
+	gameGUI->SetPauseScreenVisibility(true);
 	CCDirector::sharedDirector()->pause();
 }
 
@@ -1219,7 +1215,7 @@ void JG_Game_Main::ExitGame(CCObject* pSender)
 void JG_Game_Main::ResumeGame(CCObject* pSender)
 {
 	CCDirector::sharedDirector()->resume();
-	gameHUD->ShowPauseScreen(false);
+	gameGUI->SetPauseScreenVisibility(false);
 }
 
 void JG_Game_Main::ResetGame(CCObject* pSender)
@@ -1236,14 +1232,17 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 void JG_Game_Main::EndRound()
 {
 	//********************** Temporary ****************/
-	gameHUD->ShowEndRoundScreen(true);
+	if(IsPlayerGetHighScore())
+		gameGUI->SetHighScoreScreenVisibility(true);
+	gameGUI->SetEndRoundScreenVisibility(true);
 	CCDirector::sharedDirector()->pause();
 	//********************** /Temporary ****************/
-
-
-
 }
 
+bool JG_Game_Main::IsPlayerGetHighScore()
+{
+	return true;
+}
 
 void JG_Game_Main::menuCloseCallback(CCObject* pSender)
 {

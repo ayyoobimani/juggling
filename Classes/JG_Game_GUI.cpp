@@ -1,40 +1,63 @@
-#include "JG_Game_HUD.h"
+#include "JG_Game_GUI.h"
 
 
 using namespace cocos2d;
 
-JG_Game_HUD::JG_Game_HUD(void)
+JG_Game_GUI::JG_Game_GUI(void)
 {
 
 	mainGame = NULL;
 }
 
-
-JG_Game_HUD * JG_Game_HUD::create(JG_Game_Main* game)
+JG_Game_GUI::~JG_Game_GUI(void)
 {
-	JG_Game_HUD * HUD = new JG_Game_HUD();
-	if (HUD && HUD->init(game))
+
+}
+
+
+JG_Game_GUI * JG_Game_GUI::create(JG_Game_Main* game)
+{
+	JG_Game_GUI * GUI = new JG_Game_GUI();
+	if (GUI && GUI->init(game))
 	{
-		HUD->autorelease();
-		return HUD;
+		GUI->autorelease();
+		return GUI;
 	}
-	CC_SAFE_DELETE(HUD);
+	CC_SAFE_DELETE(GUI);
 	return NULL;
 }
 
 
-bool JG_Game_HUD::init(JG_Game_Main* game)
+bool JG_Game_GUI::init(JG_Game_Main* game)
 {
 	mainGame=game;
 
+	gameMenu = CCMenu::create();
+	this->addChild(gameMenu);
+	gameMenu->setPosition(CCPointZero);
+
+	gameMenu->retain();
+
+	InitHUDItems();
+	InitPauseMenuItems();
+	InitEndRoundMenuItems();
+	InitHighScoreMenuItems();
+
+	HideGUIScreens();
+
+	return true;
+}
+
+void JG_Game_GUI::InitHUDItems()
+{
 	lifeTexture_Active =CCTextureCache::sharedTextureCache()->addImage("heart_active.png");
 	lifeTexture_Active->retain();
 
 	lifeTexture_Diactive = CCTextureCache::sharedTextureCache()->addImage("heart_deactive.png");
 	lifeTexture_Diactive->retain();
 
-	lifeDrawPosition = ccp(game->screenSize.width * 0.05
-		,game->screenSize.height-(lifeTexture_Active->getContentSizeInPixels().height * 1.1 ));
+	lifeDrawPosition = ccp(mainGame->screenSize.width * 0.05
+		,mainGame->screenSize.height-(lifeTexture_Active->getContentSizeInPixels().height * 1.1 ));
 
 	lifeDrawPacing = lifeTexture_Active->getContentSizeInPixels().width + 2;
 
@@ -51,46 +74,20 @@ bool JG_Game_HUD::init(JG_Game_Main* game)
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
 	ScoreGainAnimation->retain();
 
-	debugLabel = CCLabelTTF::create();
-	this->addChild(debugLabel);
-	debugLabel->setScale(2);
-	debugLabel->setColor(ccWHITE);
-	debugLabel->setPosition( mainGame->screenSize * 0.8);
-
-	balldepict = CCLabelTTF::create();
-	handdepict = CCLabelTTF::create();
-
-	this->addChild(balldepict);
-	balldepict->setScale(2);
-	balldepict->setColor(ccWHITE);
-	balldepict->setPosition( mainGame->screenSize * 0.3);
-
-	this->addChild(handdepict);
-	handdepict->setScale(2);
-	handdepict->setColor(ccWHITE);
-	handdepict->setPosition(mainGame->screenSize * 0.5);
-	
-	prevballcount = CCLabelTTF::create();
-
-	this->addChild(prevballcount);
-	prevballcount->setScale(2);
-	prevballcount->setColor(ccWHITE);
-	prevballcount->setPosition(mainGame->screenSize * 0.6);
-	
-
-	Init_PauseMenu();
-
-	return true;
+	ballAddButton = CCMenuItemSprite::create(CCSprite::create("BallAdder_Normal.png"),CCSprite::create("BallAdder_Selected.png")
+		 ,mainGame
+		 ,menu_selector(JG_Game_Main::ReleaseBall));
+	ballAddButton->setOpacity(170);
+	ballAddButton->retain();
+	ballAddButton->setPosition(ccp(mainGame->screenSize.width * 0.1 ,mainGame->screenSize.height * 0.8));
+	gameMenu->addChild(ballAddButton);
 
 }
 
-void JG_Game_HUD::Init_PauseMenu()
-{		
-	gameMenu = CCMenu::create();
-	this->addChild(gameMenu);
-	gameMenu->setPosition(CCPointZero);
 
-	gameMenu->retain();
+void JG_Game_GUI::InitPauseMenuItems()
+{		
+	
 
 	pauseButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Pause_Normal.png"),CCSprite::create("Buttons/Game/Pause_Selected.png")
 		 ,mainGame
@@ -122,49 +119,93 @@ void JG_Game_HUD::Init_PauseMenu()
 	exitGameButton->retain();
 	exitGameButton->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.2));
 
-	ballAddButton = CCMenuItemSprite::create(CCSprite::create("BallAdder_Normal.png"),CCSprite::create("BallAdder_Selected.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ReleaseBall));
-	ballAddButton->setOpacity(170);
-	ballAddButton->retain();
-	ballAddButton->setPosition(ccp(mainGame->screenSize.width * 0.1 ,mainGame->screenSize.height * 0.8));
+	
 
-
+	
 	
 	gameMenu->addChild(pauseButton);
 	gameMenu->addChild(resumeButton);
 	gameMenu->addChild(resetButton);
 	gameMenu->addChild(exitGameButton);
 	gameMenu->addChild(exitToMainMenuButton);
-	gameMenu->addChild(ballAddButton);
 	
-	ShowPauseScreen(false);
-
-}
-
-
-void JG_Game_HUD::ShowPauseScreen(bool bShow)
-{
-	pauseButton->setVisible(!bShow);
-	resumeButton->setVisible(bShow);
-	resetButton->setVisible(bShow);
-	exitToMainMenuButton->setVisible(bShow);
-	exitGameButton->setVisible(bShow);	
-}
-
-void JG_Game_HUD::ShowEndRoundScreen(bool bShow)
-{
 	
-	resetButton->setVisible(bShow);
-	exitToMainMenuButton->setVisible(bShow);
-	exitGameButton->setVisible(bShow);	
-	pauseButton->setVisible(!bShow);
-}
-JG_Game_HUD::~JG_Game_HUD(void)
-{
+
 }
 
-void JG_Game_HUD::draw()
+void JG_Game_GUI::InitEndRoundMenuItems()
+{
+	highestScoreLabel =CCLabelBMFont::create ("High Score: ", "fonts/font.fnt", mainGame->screenSize.height * 0.3f);
+	highestScoreLabel->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.80) );
+	this->addChild(highestScoreLabel);
+
+	endRoundScoreLabel = CCLabelBMFont::create ("High Score: ", "fonts/font.fnt", mainGame->screenSize.height * 0.3f);
+	endRoundScoreLabel->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.80) );
+	this->addChild(endRoundScoreLabel);
+
+	
+}
+
+void JG_Game_GUI::InitHighScoreMenuItems()
+{
+	playerRankLabel  = CCLabelBMFont::create ("High Score: ", "fonts/font.fnt", mainGame->screenSize.height * 0.3f);
+	playerRankLabel->setPosition(ccp(mainGame->screenSize.width * 0.5 ,mainGame->screenSize.height * 0.80) );
+	this->addChild(playerRankLabel);
+
+	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("Enter Your Name", "", 25);
+	playerNameTextBox->setPosition(ccp(mainGame->screenSize.width*0.5,mainGame->screenSize.height*0.5));
+	this->addChild(playerNameTextBox,100);
+}
+
+void JG_Game_GUI::SetHUDVisibility(bool bVisible)
+{
+	scoreLabel->setVisible(bVisible);
+	reservedBallLabel->setVisible(bVisible);
+	ballAddButton->setVisible(bVisible);
+
+}
+void JG_Game_GUI::SetPauseScreenVisibility(bool bVisible)
+{
+
+	pauseButton->setVisible(!bVisible);
+	resumeButton->setVisible(bVisible);
+	resetButton->setVisible(bVisible);
+	exitToMainMenuButton->setVisible(bVisible);
+	exitGameButton->setVisible(bVisible);	
+}
+
+void JG_Game_GUI::SetEndRoundScreenVisibility(bool bVisible)
+{
+
+	resetButton->setVisible(bVisible);
+	exitToMainMenuButton->setVisible(bVisible);
+	exitGameButton->setVisible(bVisible);	
+	pauseButton->setVisible(!bVisible);
+}
+
+void JG_Game_GUI::SetHighScoreScreenVisibility(bool bVisible)
+{
+	playerRankLabel->setVisible(bVisible);
+	playerNameTextBox->setVisible(bVisible);
+	if(bVisible)
+		playerNameTextBox->attachWithIME();
+	else
+		playerNameTextBox->detachWithIME();
+	
+
+}
+
+void JG_Game_GUI::HideGUIScreens()
+{
+	SetPauseScreenVisibility(false);
+	SetEndRoundScreenVisibility(false);
+	SetHighScoreScreenVisibility(false);
+
+}
+
+
+
+void JG_Game_GUI::draw()
 {
 	if(mainGame!=NULL)
 	{
@@ -173,7 +214,7 @@ void JG_Game_HUD::draw()
 }
 
 
-void JG_Game_HUD::DrawLife()
+void JG_Game_GUI::DrawLife()
 {
 	int i;
 	for(i = 0 ; i< mainGame->lifeCount ; ++i)
@@ -189,15 +230,16 @@ void JG_Game_HUD::DrawLife()
 
 
 
-void JG_Game_HUD::UpdateScore()
+void JG_Game_GUI::UpdateScore()
 {
 	scoreLabel->setString(CCString::createWithFormat("%i", mainGame->score)->getCString());
 	scoreLabel->runAction((CCAction *)ScoreGainAnimation->copy());
 }
 
-void JG_Game_HUD::UpdateReservedBall()
+void JG_Game_GUI::UpdateReservedBall()
 {
 	reservedBallLabel->setString(CCString::createWithFormat("%i", mainGame->reservedBallCount)->getCString());
 	reservedBallLabel->runAction((CCAction *)ScoreGainAnimation->copy());
 
 }
+

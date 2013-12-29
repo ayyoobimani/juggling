@@ -22,7 +22,7 @@
 #include "JG_Factory_Enemy.h"
 
 #include <vector>
-#include  "JG_Game_HUD.h"
+#include  "JG_Game_GUI.h"
 #include "JG_GUI_Bar.h"
 
 
@@ -35,7 +35,7 @@ enum EEnemyBonus
 
 
 class JG_Menu_Main;
-class JG_Game_HUD;
+class JG_Game_GUI;
 class JG_Ball;
 class JG_Hand;
 class JG_Fruit;
@@ -176,8 +176,8 @@ public:
     static cocos2d::CCScene* scene();
 
 	CCSize screenSize ;
-	// refrenece to the Game HUD
-	JG_Game_HUD * gameHUD;
+	// refrenece to the Game GUI
+	JG_Game_GUI * gameGUI;
 
 
 	/*! finds best ball in balls that are touched in a hand */
@@ -445,6 +445,8 @@ public:
 	void dicreaseBallsToRewardCount(int value=1);
 
 	int getBallsToRewardCount();
+
+	bool IsPlayerGetHighScore();
 
 	
 

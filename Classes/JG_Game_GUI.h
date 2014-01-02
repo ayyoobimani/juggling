@@ -16,8 +16,16 @@ class JG_Game_Main;
 class JG_Game_GUI :
 	public CCNode
 {
-	JG_Game_Main* mainGame;
+	int playerScore;
+	int playerReservedBallCount;
+	int playerLifeCount;
+
+	CCSize screenSize;
 	CCMenu* gameMenu;
+	JG_Game_Main* mainGame;
+
+	void UpdatePlayerScore();
+	void UpdatePlayerReservedBall();
 
 public:
 		
@@ -35,15 +43,19 @@ public:
 	CCMenuItemSprite* ballAddButton;
 
 	CCLabelBMFont* scoreLabel;
+
 	CCLabelBMFont* reservedBallLabel;
 	CCLabelBMFont* highestScoreLabel;
-	CCLabelBMFont* endRoundScoreLabel;
+
+	CCLabelBMFont* playerFinalScoreLabel;
 	CCLabelBMFont* playerRankLabel;
-
-
-
-
 	CCTextFieldTTF* playerNameTextBox;
+
+
+
+
+
+	
 
 		
 	CCPoint lifeDrawPosition;
@@ -82,7 +94,8 @@ public:
 	void DrawLife();
 
 
-	void UpdateReservedBall();
-	void UpdateScore();
+	void SetPlayerScore(int score);
+	void SetPlayerReservedBall(int ballCount);
+	
 };
 

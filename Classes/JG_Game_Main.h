@@ -26,6 +26,13 @@
 #include "JG_GUI_Bar.h"
 
 
+
+
+//here is to test score handling
+#include "JG_Score_Handler.h"
+
+
+
 using namespace cocos2d;
 
 enum EEnemyBonus
@@ -445,6 +452,12 @@ public:
 	void dicreaseBallsToRewardCount(int value=1);
 
 	int getBallsToRewardCount();
+
+
+	//score handling and file saving
+	JG_Score_Handler* scoreFileSaving;
+
+
 
 	
 

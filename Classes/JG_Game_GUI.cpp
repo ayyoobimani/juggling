@@ -42,9 +42,7 @@ bool JG_Game_GUI::init(JG_Game_Main* game)
 	
 	screenSize = CCDirector::sharedDirector()->getWinSize();
 
-	debugLabel = CCLabelBMFont::create ("debug: ", "fonts/font.fnt", screenSize.height * 0.3f);
-	debugLabel->setPosition(ccp(screenSize.width * 0.0 ,screenSize.height * 0.80) );
-	this->addChild(debugLabel);
+	
 
 	InitHUDItems();
 	InitPauseMenuItems();
@@ -52,6 +50,10 @@ bool JG_Game_GUI::init(JG_Game_Main* game)
 	InitHighScoreMenuItems();
 
 	HideGUIScreens();
+
+	debugLabel = CCLabelBMFont::create ("0", "fonts/font.fnt", screenSize.height * 0.3f);
+	debugLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.10) );
+	this->addChild(debugLabel);
 
 	return true;
 }
@@ -162,7 +164,6 @@ void JG_Game_GUI::InitEndRoundMenuItems()
 	playerFinalScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.80) );
 	this->addChild(playerFinalScoreLabel);
 
-	
 }
 
 void JG_Game_GUI::InitHighScoreMenuItems()
@@ -299,3 +300,8 @@ void JG_Game_GUI::UpdatePlayerReservedBall()
 
 }
 
+void JG_Game_GUI::SetDebugLabelInfo(string debug)
+{
+	debugLabel->setString(debug.c_str());
+	debugLabel->setVisible(true);
+}

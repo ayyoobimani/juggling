@@ -135,6 +135,7 @@ bool JG_Game_Main::init()
 
 	vector<ScoreTableRecord>* highScoreVector=scoreFileSaving->GetHighScoreTable();
 	CCLOG("this is the score %i",(*highScoreVector)[0].score);
+	gameGUI->SetDebugLabelInfo(CCString::createWithFormat(" %i", (*highScoreVector)[0].score)->getCString());
 
 
 
@@ -145,9 +146,6 @@ bool JG_Game_Main::init()
 
 
 
-	
-
->>>>>>> ffs2
 	//test
 	//TestMultiTouch();
 	return true;

@@ -98,7 +98,7 @@ public:
 	
 	void HideGUIScreens();
 	
-	
+	void SetDebugLabelInfo(string debug);
 	void ResetInfos();
 	
 	void draw();

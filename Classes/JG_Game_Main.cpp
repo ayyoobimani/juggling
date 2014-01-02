@@ -134,11 +134,11 @@ bool JG_Game_Main::init()
 	//InitGame_difficultyControl();
 
 
-	scoreFileSaving->InsertRecord("testuser",12000,1);
+	//scoreFileSaving->InsertRecord("testuser",12000,1);
 
-	vector<ScoreTableRecord>* highScoreVector=scoreFileSaving->GetHighScoreTable();
-	CCLOG("this is the score %i",(*highScoreVector)[0].score);
-	gameGUI->SetDebugLabelInfo(CCString::createWithFormat(" %i", (*highScoreVector)[0].score)->getCString());
+	//vector<ScoreTableRecord>* highScoreVector=scoreFileSaving->GetHighScoreTable();
+	//CCLOG("this is the score %i",(*highScoreVector)[0].score);
+	//gameGUI->SetDebugLabelInfo(CCString::createWithFormat(" %i", (*highScoreVector)[0].score)->getCString());
 
 
 

@@ -28,10 +28,6 @@
 
 using namespace cocos2d;
 
-enum EEnemyBonus
-{
-	EnemyBonus_None,EnemyBonus_ExtraBall,EnemyBonus_PathHealth
-};
 
 
 class JG_Menu_Main;
@@ -41,7 +37,7 @@ class JG_Hand;
 class JG_Fruit;
 class JG_ScorePopup;
 class JG_Path;
-//class JG_Enemy_Base;
+class JG_Enemy_Base;
 //class JG_Factory_Base;
 ////class JG_Factory_AttackWave;
 class JG_AttackWave_Base;
@@ -68,7 +64,7 @@ class JG_AttackWave_AllLinesSequential;
 
 #define INIT_BALL_COUNT 5
 
-
+enum EEnemyBonus;
 struct SEnemyTypes
 {
 	JG_Factory_Base * factory;

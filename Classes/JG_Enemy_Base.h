@@ -5,7 +5,11 @@
 
 class JG_Path;
 
-enum EEnemyBonus;
+enum EEnemyBonus
+{
+	EnemyBonus_None,EnemyBonus_ExtraBall,EnemyBonus_PathHealth
+};
+
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {

@@ -38,10 +38,14 @@ bool JG_Game_GUI::init(JG_Game_Main* game)
 
 	gameMenu->retain();
 
-	playerScore =0 ;
-	playerReservedBallCount = 0;
-	playerLifeCount = 0;
+	ResetInfos();
+	
 	screenSize = CCDirector::sharedDirector()->getWinSize();
+
+	debugLabel = CCLabelBMFont::create ("debug: ", "fonts/font.fnt", screenSize.height * 0.3f);
+	debugLabel->setPosition(ccp(screenSize.width * 0.0 ,screenSize.height * 0.80) );
+	this->addChild(debugLabel);
+
 	InitHUDItems();
 	InitPauseMenuItems();
 	InitEndRoundMenuItems();
@@ -50,6 +54,17 @@ bool JG_Game_GUI::init(JG_Game_Main* game)
 	HideGUIScreens();
 
 	return true;
+}
+void JG_Game_GUI::ResetInfos()
+{
+	playerScore =0 ;
+	playerReservedBallCount = 0;
+	playerLifeCount = 0;
+	playerRank = 0;
+	highestScore = 0;
+	highestScorePlayerName = "";
+
+
 }
 
 void JG_Game_GUI::InitHUDItems()
@@ -232,6 +247,32 @@ void JG_Game_GUI::DrawLife()
 	
 }
 
+void JG_Game_GUI::SetEndRoundMenuInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName)
+{
+	playerScore = _playerScore;
+	highestScore = _highestScore;
+	highestScorePlayerName = _highestScorePlayerName;
+	UpdateEndRoundMenu();
+}
+
+void JG_Game_GUI::UpdateEndRoundMenu()
+{
+	playerFinalScoreLabel->setString(CCString::createWithFormat("%i", playerScore)->getCString());
+	highestScoreLabel->setString(CCString::createWithFormat("HighScore: %s %i", highestScorePlayerName, playerScore)->getCString());
+}
+
+
+void JG_Game_GUI::SetHighScoreMenuInfos(int _playerRank)
+{
+	playerRank = _playerRank;
+	UpdateHighScoreMenu();
+
+}
+
+void JG_Game_GUI::UpdateHighScoreMenu()
+{
+
+}
 
 void JG_Game_GUI::SetPlayerScore(int score)
 {
@@ -239,16 +280,16 @@ void JG_Game_GUI::SetPlayerScore(int score)
 	UpdatePlayerScore();
 }
 
-void JG_Game_GUI::SetPlayerReservedBall(int count)
-{
-	playerReservedBallCount = count;
-	UpdatePlayerReservedBall();
-}
-
 void JG_Game_GUI::UpdatePlayerScore()
 {
 	scoreLabel->setString(CCString::createWithFormat("%i", playerScore)->getCString());
 	scoreLabel->runAction((CCAction *)ScoreGainAnimation->copy());
+}
+
+void JG_Game_GUI::SetPlayerReservedBall(int count)
+{
+	playerReservedBallCount = count;
+	UpdatePlayerReservedBall();
 }
 
 void JG_Game_GUI::UpdatePlayerReservedBall()

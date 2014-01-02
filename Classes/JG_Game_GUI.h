@@ -19,13 +19,21 @@ class JG_Game_GUI :
 	int playerScore;
 	int playerReservedBallCount;
 	int playerLifeCount;
+	int playerRank;
+	
+	int highestScore;
+	CCString highestScorePlayerName;
 
 	CCSize screenSize;
 	CCMenu* gameMenu;
 	JG_Game_Main* mainGame;
 
+	void UpdateEndRoundMenu();
+	void UpdateHighScoreMenu();
 	void UpdatePlayerScore();
 	void UpdatePlayerReservedBall();
+
+	void DrawLife();
 
 public:
 		
@@ -50,6 +58,9 @@ public:
 	CCLabelBMFont* playerFinalScoreLabel;
 	CCLabelBMFont* playerRankLabel;
 	CCTextFieldTTF* playerNameTextBox;
+
+
+	CCLabelBMFont* debugLabel;
 
 
 
@@ -88,12 +99,13 @@ public:
 	void HideGUIScreens();
 	
 	
-	
+	void ResetInfos();
 	
 	void draw();
-	void DrawLife();
-
-
+	
+	//TODO: find a better categories for When Player reach a high score and when not
+	void SetEndRoundMenuInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName);
+	void SetHighScoreMenuInfos(int _playerRank);
 	void SetPlayerScore(int score);
 	void SetPlayerReservedBall(int ballCount);
 	

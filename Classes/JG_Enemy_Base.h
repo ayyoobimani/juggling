@@ -3,7 +3,7 @@
 
 #include "sprite_nodes\CCSprite.h"
 #include "JG_Game_Main.h"
-#include "JG_Enums.h";
+#include "JG_Enums.h"
 //#include "JG_Path.h"
 
 class JG_Path;

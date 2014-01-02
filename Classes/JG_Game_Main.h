@@ -22,6 +22,8 @@
 #include "JG_AttackWave_AllLinesSequential.h"
 #include "JG_Factory_Enemy.h"
 
+#include "JG_Score_Handler.h"
+
 #include <vector>
 #include  "JG_Game_GUI.h"
 #include "JG_GUI_Bar.h"

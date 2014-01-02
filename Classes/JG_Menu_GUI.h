@@ -21,7 +21,7 @@ class JG_Menu_GUI :
 
 	//TODO: find a better name
 	CCMenu* ccMenu;
-
+	
 	void InitMenuGUI(JG_Menu_Main* menu);
 	void CreateCCMenu();
 	void CreateMenuButtons(JG_Menu_Main* menu);

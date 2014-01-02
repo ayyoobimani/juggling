@@ -1241,16 +1241,20 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 void JG_Game_Main::EndRound()
 {
 	//********************** Temporary ****************/
-	if(IsPlayerGetHighScore())
-		gameGUI->SetHighScoreScreenVisibility(true);
+	gameGUI->SetEndRoundMenuInfos(score,5000,"iman");
 	gameGUI->SetEndRoundScreenVisibility(true);
+	if(IsPlayerGetHighScore())
+	{
+		gameGUI->SetHighScoreScreenVisibility(true);
+	}
+	
 	CCDirector::sharedDirector()->pause();
 	//********************** /Temporary ****************/
 }
 
 bool JG_Game_Main::IsPlayerGetHighScore()
 {
-	return true;
+	return false;
 }
 
 void JG_Game_Main::menuCloseCallback(CCObject* pSender)

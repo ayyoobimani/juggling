@@ -131,11 +131,23 @@ bool JG_Game_Main::init()
 	//InitGame_difficultyControl();
 
 
+	scoreFileSaving->InsertRecord("testuser",12000,1);
+
+	vector<ScoreTableRecord>* highScoreVector=scoreFileSaving->GetHighScoreTable();
+	CCLOG("this is the score %i",(*highScoreVector)[0].score);
+
 
 
 	InitRound();
 	this->setTouchEnabled(true);
+
 	this->setKeypadEnabled(true);
+
+
+
+	
+
+>>>>>>> ffs2
 	//test
 	//TestMultiTouch();
 	return true;

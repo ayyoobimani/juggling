@@ -29,6 +29,13 @@
 #include "JG_GUI_Bar.h"
 
 
+
+
+//here is to test score handling
+#include "JG_Score_Handler.h"
+
+
+
 using namespace cocos2d;
 
 
@@ -452,11 +459,18 @@ public:
 	int getBallsToRewardCount();
 
 
+
 	bool IsPlayerGetHighScore();
 
 
 	void dicreaseHealsToRewardCount(int value = 1);
 	int getHealthsToRewardCount();
+
+	//score handling and file saving
+	JG_Score_Handler* scoreFileSaving;
+
+
+
 
 	
 

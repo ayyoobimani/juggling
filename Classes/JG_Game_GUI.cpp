@@ -171,18 +171,29 @@ void JG_Game_GUI::InitEndRoundMenuItems()
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ResetGame));
 	endRound_RetryButton->retain();
-	endRound_RetryButton->setPosition(ccp(screenSize.width * 0.1 ,screenSize.height * 0.2));
+	endRound_RetryButton->setPosition(ccp(screenSize.width * 0.75 ,screenSize.height * 0.2));
 	gameMenu->addChild(endRound_RetryButton);
+
+	endRound_ExitToMenuButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png"),CCSprite::create("Buttons/Game/ExitToMainMenu_Selected.png")
+		 ,mainGame
+		 ,menu_selector(JG_Game_Main::ExitToMainMenu));
+	endRound_ExitToMenuButton->retain();
+	endRound_ExitToMenuButton->setPosition(ccp(screenSize.width * 0.15 ,screenSize.height * 0.2));
+	gameMenu->addChild(endRound_ExitToMenuButton);
+
+
+
 
 }
 
 void JG_Game_GUI::InitHighScoreMenuItems()
 {
-	playerRankLabel  = CCLabelBMFont::create ("", "fonts/font.fnt", screenSize.height * 0.3f);
-	playerRankLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.80) );
+	playerRankLabel  = CCLabelBMFont::create ("", "fonts/arial16.fnt", screenSize.height * 0.3f);
+	playerRankLabel->setPosition(ccp(screenSize.width * 0.4 ,screenSize.height * 0.5) );
 	this->addChild(playerRankLabel);
 
-	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "", 25);
+	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "", screenSize.height * 0.05f);
+	playerNameTextBox->setString("Player");
 	playerNameTextBox->setPosition(ccp(screenSize.width*0.5,screenSize.height*0.5));
 	this->addChild(playerNameTextBox,100);
 }
@@ -196,7 +207,7 @@ void JG_Game_GUI::SetHUDVisibility(bool bVisible)
 }
 void JG_Game_GUI::SetPauseScreenVisibility(bool bVisible)
 {
-
+	//TODO: wtf is this shit heare ?!!pauseButton->setVisible(!bVisible);
 	pauseButton->setVisible(!bVisible);
 	resumeButton->setVisible(bVisible);
 	resetButton->setVisible(bVisible);
@@ -206,11 +217,10 @@ void JG_Game_GUI::SetPauseScreenVisibility(bool bVisible)
 
 void JG_Game_GUI::SetEndRoundScreenVisibility(bool bVisible)
 {
-
-	resetButton->setVisible(bVisible);
-	exitToMainMenuButton->setVisible(bVisible);
-	exitGameButton->setVisible(bVisible);	
+	//TODO: wtf is this shit heare ?!!pauseButton->setVisible(!bVisible);
 	pauseButton->setVisible(!bVisible);
+	endRound_ExitToMenuButton->setVisible(bVisible);
+	endRound_RetryButton->setVisible(bVisible);	
 	playerFinalScoreLabel->setVisible(bVisible);
 	highestScoreLabel->setVisible(bVisible);
 }
@@ -270,7 +280,7 @@ void JG_Game_GUI::SetEndRoundScreenInfos(int _playerScore,int _highestScore, CCS
 void JG_Game_GUI::UpdateEndRoundScreen()
 {
 	playerFinalScoreLabel->setString(CCString::createWithFormat("Score: %i", playerScore)->getCString());
-	highestScoreLabel->setString(CCString::createWithFormat("HighScore: %s %i", highestScorePlayerName.getCString(), playerScore)->getCString());
+	highestScoreLabel->setString(CCString::createWithFormat("HighScore: %s %i", highestScorePlayerName.getCString(), highestScore)->getCString());
 }
 
 

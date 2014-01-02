@@ -30,7 +30,7 @@ public:
 	
 	
 
-	void InsertRecord(string name,int score,int rank);
+	void InsertRecord(CCString name,int score,int rank);
 	vector<ScoreTableRecord>* GetHighScoreTable();
 
 };

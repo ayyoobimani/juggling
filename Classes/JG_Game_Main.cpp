@@ -226,7 +226,7 @@ void JG_Game_Main::InitRound()
 	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
 	//((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
 	enemyArray->addObject(tempEnemy);
-	CCLOG(CCString::createWithFormat("an enemy added, size: %d",enemyArray->count())->getCString());
+	
 	////************************* /Delete This Later **************/
 }
 
@@ -768,12 +768,12 @@ void JG_Game_Main::OnPathLost(JG_Path* path)
 	}
 	RemovePathFromScreen(path);
 	CheckLoseCondition();
-	CCLOG("a path lost");
+	
 	
 }
 void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
 {
-	CCLOG("an enemy lost");
+	
 	
 	RemoveEnemyFromScreen(enemy);
 	ManageDifficulty();
@@ -1498,7 +1498,7 @@ void JG_Game_Main::initialNewAttackWave(float dt)
 
 void JG_Game_Main::ManageDifficulty()
 {
-	CCLOG(CCString::createWithFormat("manage diff - enemycount: %d",enemyArray->count())->getCString());
+	
 	if(enemyArray->count() == 0)
 	{
 		unschedule(schedule_selector(JG_Game_Main::initialNewAttackWave));

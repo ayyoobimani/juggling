@@ -97,13 +97,13 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	{
 		//CCLOG(CCString::createWithFormat("healths to reward counter is: ", mainGame->getHealthsToRewardCount())->getCString());
 		enemyQueue.front()->SetEnemyBonus(EnemyBonus_PathHealth);
-		mainGame->dicreaseHealsToRewardCount();
+		mainGame->onHealthRewarded();
 	}
 	else if(mainGame->getBallsToRewardCount() >0 )
 	{
 	//	CCLOG("enemy with ball bonus");
 		enemyQueue.front()->SetEnemyBonus(EnemyBonus_ExtraBall);
-		mainGame->dicreaseBallsToRewardCount();
+		mainGame->onBallRewarded();
 	}
 	enemyQueue.front()->SetDestinationPath(enemyPath->GetPositionForLengthRatio(generateEnemyPositionRatio()),enemyPath);
 	enemyQueue.pop();
@@ -112,7 +112,7 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	//if more enemie(s) -> schedule next enemy attack
 	if(enemyQueue.size()==0)
 	{
-		mainGame->initiateNewAttackWave();
+		mainGame->onAttackWaveFinished();
 		//CCLOG("enemy queue is ok");
 		//schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),0,0,enemeyAddInterval);
 		//scheduleOnce(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack), enemeyAddInterval);

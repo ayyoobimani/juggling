@@ -153,7 +153,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	SEnemyTypes CreateEnemyType(int baseChance,int chaceIncrease);
 	
 
-	JG_AttackWave_Base* attackWave;
+	
 	float attackWaveCount;
 
 	int ballsToRewardCounter;
@@ -162,7 +162,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float initialTotalHealth;
 	int healthsToRewardCounter;
 	int totalhealthsRewarded;
-	
+	JG_AttackWave_Base* currentAttackWave;
 
 public:
 
@@ -441,27 +441,41 @@ public:
 
 	void CheckLoseCondition();
 
+	/* game difficulty methods */
 
-
+	/* initials parameters related to difficulty control */
 	void InitGame_difficultyControl();
+	/* returns attackwave type to be created */
 	int getAttackWaveType();
-	void ManageDifficulty(float dt);
-	void initiateNewAttackWave();
+	/* manage difficulty function */
+	void ManageDifficulty();
+	void initialNewAttackWave(float dt);
+	/* when an attackwave (currentAttackWave) finishes its job this event occures */
+	void onAttackWaveFinished();
+	/* return number of currently available paths */
 	int getAvailablePathCount();
-	void restartAttackWaves();
-	void manageBallRewards(float dt);
-
-	void dicreaseBallsToRewardCount(int value=1);
-
+	/* reset parameters related to difficulty control*/
+	void resetDifficulty();
+	/* manages rewards */
+	void manageRewards(float dt);
+	/* when a attack wave (currentAttackWave) rewards a ball to the user this event happens 
+	* @this event dicreases number of balls calculated to be rewarded 
+	*/
+	void onBallRewarded(int value=1);
+	/* returns number of balls to be rewarded to the user */
 	int getBallsToRewardCount();
 
 
 
 	bool IsPlayerGetHighScore();
 
-
-	void dicreaseHealsToRewardCount(int value = 1);
+	/* when a attack wave (currentAttackWave) rewards a health bonus to the user this event happens 
+	* @this event dicreases number of healths calculated to be rewarded 
+	*/
+	void onHealthRewarded(int value = 1);
+	/* returns number of balls to be rewarded to the user */
 	int getHealthsToRewardCount();
+
 
 	//score handling and file saving
 	JG_Score_Handler* scoreFileSaving;

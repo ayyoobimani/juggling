@@ -2,6 +2,7 @@
 #define __MainGame_SCENE_H__
 
 
+
 #include "cocos2d.h"
 #include "JG_Enums.h"
 
@@ -92,8 +93,6 @@ struct STouchInfo
 	float remainingTime;
 	CCPoint initialTouchPosition;
 };
-
-
 
 
 /*! The main class for controlling the game */
@@ -432,12 +431,10 @@ public:
 	/*!checks whether distance of the two point are lesser than distance or not*/
 	//TODO: find a better name
 	bool ArePointsColliding (CCPoint point1,CCPoint point2,float distance);
-	
-	float absf(float );
 
 	inline float getSign(float num)
 	{
-		return num/abs(num);
+		return num/JG_abs(num);
 	}
 	
 
@@ -469,6 +466,15 @@ public:
 	//score handling and file saving
 	JG_Score_Handler* scoreFileSaving;
 
+
+	static float JG_abs(float input)
+	{
+		if(input > 0.0)
+			return input;
+
+		return 0.0 - input;
+
+	}
 
 
 

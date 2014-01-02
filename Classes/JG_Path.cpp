@@ -163,7 +163,7 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 	CCPoint globalPosition;
 	lenghtRatio = clampf(lenghtRatio,0,1);
 
-	localPosition.x=abs(destinationPoint.x-originPoint.x)*lenghtRatio;
+	localPosition.x=JG_Game_Main::JG_abs(destinationPoint.x-originPoint.x)*lenghtRatio;
 	localPosition.y=(localPosition.x*tan(pathThrowRadian))-(0.5*GRAVITY*pow(localPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2));
 
 	globalPosition=originPoint+localPosition;

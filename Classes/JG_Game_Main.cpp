@@ -403,10 +403,10 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 
 					ballCounter++;
 					//if(ballCounter == 1);
-					//gameGUI->debugLabel->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					//gameGUI->debugLabel->setString(CCString::createWithFormat("%f",JG_abs(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
 					//if(ballCounter == 2);
-					//gameGUI->balldepict->setString(CCString::createWithFormat("%f",absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
-					if( absf(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) <criticalTime  )
+					//gameGUI->balldepict->setString(CCString::createWithFormat("%f",JG_abs(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()))->getCString());
+					if( JG_abs(tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) <criticalTime  )
 					{
 						criticalBall = tempBall;
 						criticalTime = (tempBall->getPositionY()/ tempBall->GetCurrentSpeedY()) ;
@@ -422,10 +422,10 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				if(tempBall->GetBallDirection() == Dir_LeftHandToRight)
 				{
 					ballCounter++;
-					if( ( abs(tempBall->getPositionX())) <criticalTime)
+					if( ( JG_abs(tempBall->getPositionX())) <criticalTime)
 					{
 						criticalBall = tempBall;
-						criticalTime = absf((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
+						criticalTime = JG_abs((screenSize.width - tempBall->getPositionX())/tempBall->GetCurrentSpeedX());
 					}
 				}
 				//TODO ayyoob : implement this
@@ -571,7 +571,7 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 float JG_Game_Main::CalculateThrowPower(unsigned int index, bool bIsDemo)
 {
 
-	float touchLenght=abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
+	float touchLenght=JG_abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
 	float currentRawPower=(touchLenght/maxTouchLenght)*maxThrowPower;
 
 	return DiscretedPowerValueGen(currentRawPower,touchInfos[index].ball,bIsDemo);
@@ -1462,14 +1462,7 @@ bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float distan
 }
 
 
-float JG_Game_Main::absf(float input)
-{
-	if(input > 0.0)
-		return input;
 
-	return 0.0 - input;
-
-}
 
 template<class enemyClass>
 SEnemyTypes JG_Game_Main::CreateEnemyType(int baseChance,int chaceIncrease)

@@ -68,9 +68,9 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 void JG_Ball::CalculateSpeedBoundriesBaseOnLength(float deltaX)
 {
 	//TODO: wtf +2 needed
-	minSpeed = sqrt( GRAVITY * abs(deltaX))+ 2;
+	minSpeed = sqrt( GRAVITY *JG_Game_Main::JG_abs(deltaX))+ 2;
 	//TODO: calculate maxSpeed
-	maxSpeed = sqrt(GRAVITY *abs(deltaX)/sin(2 *MAX_THROW_RAD));
+	maxSpeed = sqrt(GRAVITY *JG_Game_Main::JG_abs(deltaX)/sin(2 *MAX_THROW_RAD));
 }
 
 void JG_Ball::InitialBallLevelInformation()
@@ -110,7 +110,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 	//CCLog(" Throw",0);
 
-	MoveDirX = (destination.x-getPositionX())/abs(destination.x-getPositionX()) ;
+	MoveDirX = (destination.x-getPositionX())/JG_Game_Main::JG_abs(destination.x-getPositionX()) ;
 
 	if(moveMode == Move_Curve)
 	{
@@ -134,8 +134,8 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 		we can throw the ball with 30 deg and 60 deg and they will reach the destination
 		but we choose the 60 deg.
 		*/
-	//if(abs(CC_RADIANS_TO_DEGREES(curveRadian))<45)
-		//curveRadian = (curveRadian/abs(curveRadian)) *CC_DEGREES_TO_RADIANS(90)- curveRadian;
+	//if(JG_abs(CC_RADIANS_TO_DEGREES(curveRadian))<45)
+		//curveRadian = (curveRadian/JG_abs(curveRadian)) *CC_DEGREES_TO_RADIANS(90)- curveRadian;
 	//TODO : Do it for reverse direction
 	if( CC_RADIANS_TO_DEGREES(tempCurveRad)>-45)
 		tempCurveRad = CC_DEGREES_TO_RADIANS(-90) - tempCurveRad;

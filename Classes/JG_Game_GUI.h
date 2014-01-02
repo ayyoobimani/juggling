@@ -28,8 +28,8 @@ class JG_Game_GUI :
 	CCMenu* gameMenu;
 	JG_Game_Main* mainGame;
 
-	void UpdateEndRoundMenu();
-	void UpdateHighScoreMenu();
+	void UpdateEndRoundScreen();
+	void UpdateHighScoreScreen();
 	void UpdatePlayerScore();
 	void UpdatePlayerReservedBall();
 
@@ -49,6 +49,9 @@ public:
 	CCMenuItemSprite* exitGameButton;
 	CCMenuItemSprite* exitToMainMenuButton;
 	CCMenuItemSprite* ballAddButton;
+
+	CCMenuItemSprite* endRound_RetryButton;
+	CCMenuItemSprite* endRound_ExitToMenuButton;
 
 	CCLabelBMFont* scoreLabel;
 
@@ -104,8 +107,8 @@ public:
 	void draw();
 	
 	//TODO: find a better categories for When Player reach a high score and when not
-	void SetEndRoundMenuInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName);
-	void SetHighScoreMenuInfos(int _playerRank);
+	void SetEndRoundScreenInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName);
+	void SetHighScoreScreenInfos(int _playerRank);
 	void SetPlayerScore(int score);
 	void SetPlayerReservedBall(int ballCount);
 	

@@ -155,6 +155,8 @@ bool JG_Game_Main::init()
 
 void JG_Game_Main::InitGame_difficultyControl()
 {
+	gameGUI->HideGUIScreens();
+	gameGUI->SetHUDVisibility(true);
 	ballsToRewardCounter = 0 ;
 	totalBallsRewarded = 0 ;
 	
@@ -1251,10 +1253,11 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 void JG_Game_Main::EndRound()
 {
 	//********************** Temporary ****************/
-	gameGUI->SetEndRoundMenuInfos(score,5000,"iman");
+	gameGUI->SetEndRoundScreenInfos(score,5000,"iman");
 	gameGUI->SetEndRoundScreenVisibility(true);
 	if(IsPlayerGetHighScore())
 	{
+		gameGUI->SetHighScoreScreenInfos(5);
 		gameGUI->SetHighScoreScreenVisibility(true);
 	}
 	
@@ -1264,7 +1267,7 @@ void JG_Game_Main::EndRound()
 
 bool JG_Game_Main::IsPlayerGetHighScore()
 {
-	return false;
+	return true;
 }
 
 void JG_Game_Main::menuCloseCallback(CCObject* pSender)

@@ -156,13 +156,23 @@ void JG_Game_GUI::InitPauseMenuItems()
 
 void JG_Game_GUI::InitEndRoundMenuItems()
 {
-	highestScoreLabel =CCLabelBMFont::create ("High Score: ", "fonts/font.fnt", screenSize.height * 0.3f);
-	highestScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.80) );
+	highestScoreLabel =CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.height * 0.3f);
+	highestScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.90) );
+	highestScoreLabel->setAnchorPoint(ccp(0.5,0.5));
+	highestScoreLabel->setAlignment(kCCTextAlignmentCenter);
 	this->addChild(highestScoreLabel);
 
-	playerFinalScoreLabel = CCLabelBMFont::create ("High Score: ", "fonts/font.fnt", screenSize.height * 0.3f);
-	playerFinalScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.80) );
+	playerFinalScoreLabel = CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.height * 0.3f);
+	playerFinalScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.70) );
+	highestScoreLabel->setAnchorPoint(ccp(0.5,0.5));
 	this->addChild(playerFinalScoreLabel);
+
+	endRound_RetryButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Reset_Normal.png"),CCSprite::create("Buttons/Game/Reset_Selected.png")
+		 ,mainGame
+		 ,menu_selector(JG_Game_Main::ResetGame));
+	endRound_RetryButton->retain();
+	endRound_RetryButton->setPosition(ccp(screenSize.width * 0.1 ,screenSize.height * 0.2));
+	gameMenu->addChild(endRound_RetryButton);
 
 }
 
@@ -202,6 +212,7 @@ void JG_Game_GUI::SetEndRoundScreenVisibility(bool bVisible)
 	exitGameButton->setVisible(bVisible);	
 	pauseButton->setVisible(!bVisible);
 	playerFinalScoreLabel->setVisible(bVisible);
+	highestScoreLabel->setVisible(bVisible);
 }
 
 void JG_Game_GUI::SetHighScoreScreenVisibility(bool bVisible)
@@ -248,31 +259,31 @@ void JG_Game_GUI::DrawLife()
 	
 }
 
-void JG_Game_GUI::SetEndRoundMenuInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName)
+void JG_Game_GUI::SetEndRoundScreenInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName)
 {
 	playerScore = _playerScore;
 	highestScore = _highestScore;
 	highestScorePlayerName = _highestScorePlayerName;
-	UpdateEndRoundMenu();
+	UpdateEndRoundScreen();
 }
 
-void JG_Game_GUI::UpdateEndRoundMenu()
+void JG_Game_GUI::UpdateEndRoundScreen()
 {
-	playerFinalScoreLabel->setString(CCString::createWithFormat("%i", playerScore)->getCString());
-	highestScoreLabel->setString(CCString::createWithFormat("HighScore: %s %i", highestScorePlayerName, playerScore)->getCString());
+	playerFinalScoreLabel->setString(CCString::createWithFormat("Score: %i", playerScore)->getCString());
+	highestScoreLabel->setString(CCString::createWithFormat("HighScore: %s %i", highestScorePlayerName.getCString(), playerScore)->getCString());
 }
 
 
-void JG_Game_GUI::SetHighScoreMenuInfos(int _playerRank)
+void JG_Game_GUI::SetHighScoreScreenInfos(int _playerRank)
 {
 	playerRank = _playerRank;
-	UpdateHighScoreMenu();
+	UpdateHighScoreScreen();
 
 }
 
-void JG_Game_GUI::UpdateHighScoreMenu()
+void JG_Game_GUI::UpdateHighScoreScreen()
 {
-
+	playerRankLabel->setString(CCString::createWithFormat("%i : ", playerRank)->getCString());
 }
 
 void JG_Game_GUI::SetPlayerScore(int score)

@@ -149,12 +149,12 @@ void JG_Game_Main::InitGame_difficultyControl()
 	totalBallsRewarded = 0 ;
 	
 	totalhealthsRewarded = 0;
-	CCLOG(CCString::createWithFormat("initial total healths rewarded: %i",totalBallsRewarded)->getCString());
+	
 	healthsToRewardCounter = 0;
 
 	initialTotalHealth = DISCRETE_PARTS_COUNT * 100;
 
-	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
+	
 	attackWaveTypes.clear();
 
 	enemyArray = CCArray::create();
@@ -162,12 +162,14 @@ void JG_Game_Main::InitGame_difficultyControl()
 
 	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
 
-	attackWaveCount =1;
+	attackWaveCount = 0;
 
 
-	schedule(schedule_selector(JG_Game_Main::manageBallRewards),5);
+	
+	
+	ManageDifficulty();
 
-	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,3);
+	
 }
 
 void JG_Game_Main::InitRound()
@@ -224,6 +226,7 @@ void JG_Game_Main::InitRound()
 	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
 	//((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
 	enemyArray->addObject(tempEnemy);
+	CCLOG(CCString::createWithFormat("an enemy added, size: %d",enemyArray->count())->getCString());
 	////************************* /Delete This Later **************/
 }
 
@@ -765,10 +768,15 @@ void JG_Game_Main::OnPathLost(JG_Path* path)
 	}
 	RemovePathFromScreen(path);
 	CheckLoseCondition();
+	CCLOG("a path lost");
+	
 }
 void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
 {
+	CCLOG("an enemy lost");
+	
 	RemoveEnemyFromScreen(enemy);
+	ManageDifficulty();
 }
 
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
@@ -949,6 +957,7 @@ void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
 
 void JG_Game_Main::RemoveEnemyFromScreen(JG_Enemy_Base* enemy)
 {
+
 	enemyArray->removeObject(enemy,false);
 	removeChild(enemy,true);
 	CC_SAFE_RELEASE(enemy);
@@ -1231,9 +1240,11 @@ void JG_Game_Main::ResetGame(CCObject* pSender)
 {
 	RemoveAllBallsFromScreen();
 	RemoveAllFruitsFromScreen();
+	RemoveAllEnemiesFromScreen();
 	//RemoveAllEnemiesFromScreen();
 	InitRound();
 	ResumeGame(pSender);
+	resetDifficulty();
 }
 
 
@@ -1467,29 +1478,48 @@ int JG_Game_Main::getAttackWaveType()
 	return CCRANDOM_0_1()*attackWaveTypes.size();
 }
 
-void JG_Game_Main::ManageDifficulty(float dt)
+void JG_Game_Main::initialNewAttackWave(float dt)
 {
 
 	//CCLOG("called manage difficulty");
 	int attackWaveIndex = getAttackWaveType();
 	//CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
-	JG_AttackWave_Base* currentAttackWave;
+	
 	currentAttackWave = (JG_AttackWave_Base*)  attackWaveTypes[attackWaveIndex]->Create();
 	currentAttackWave->retain();
 	addChild(currentAttackWave);
 	//currentAttackWave = (JG_AttackWave_Base*) new JG_AttackWave_AllLinesSequential();
-	float difficulty = 100*attackWaveCount ;
+	float difficulty = 100 * (attackWaveCount+1) ;
 	//CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
-	currentAttackWave->initAttackWave(this,difficulty,attackWaveCount);
+	currentAttackWave->initAttackWave(this, difficulty, (attackWaveCount+1) );
 
 	attackWaveCount++;
 }
 
-void JG_Game_Main::initiateNewAttackWave()
+void JG_Game_Main::ManageDifficulty()
 {
-	unschedule(schedule_selector(JG_Game_Main::ManageDifficulty));
+	CCLOG(CCString::createWithFormat("manage diff - enemycount: %d",enemyArray->count())->getCString());
+	if(enemyArray->count() == 0)
+	{
+		unschedule(schedule_selector(JG_Game_Main::initialNewAttackWave));
+		schedule(schedule_selector(JG_Game_Main::initialNewAttackWave),0,0,3);
+	}
 
-	schedule(schedule_selector(JG_Game_Main::ManageDifficulty),0,0,CCRANDOM_0_1()*3);
+	if(attackWaveCount == 0)
+	{
+		schedule(schedule_selector(JG_Game_Main::manageRewards),5);
+	}
+
+}
+
+void JG_Game_Main::onAttackWaveFinished()
+{
+
+	removeChild(currentAttackWave,true);
+	CC_SAFE_RELEASE(currentAttackWave);
+	currentAttackWave = NULL;
+
+	
 }
 
 int JG_Game_Main::getAvailablePathCount()
@@ -1506,16 +1536,20 @@ int JG_Game_Main::getAvailablePathCount()
 	return tempPathCounter;
 }
 
-void JG_Game_Main::restartAttackWaves()
+void JG_Game_Main::resetDifficulty()
 {
-	attackWaveCount=1;
+	attackWaveCount= 0;
 	ballsToRewardCounter = 0;
 	healthsToRewardCounter = 0;
+	totalBallsRewarded = 0;
+	totalhealthsRewarded = 0;
+	onAttackWaveFinished();
 
+	ManageDifficulty();
 }
 
 
-void JG_Game_Main::manageBallRewards(float dt)
+void JG_Game_Main::manageRewards(float dt)
 {
 	//balls reward algorithm
 	int a = INIT_BALL_COUNT - (ballsArray->count() + reservedBallCount);
@@ -1527,7 +1561,7 @@ void JG_Game_Main::manageBallRewards(float dt)
 	}
 
 	//float attackWave_count_effect = attackWaveCount / 4 ;
-	float attackWaveCountEffect = attackWaveCount / 4;
+	float attackWaveCountEffect = (attackWaveCount+1) / 4;
 	
 	
 	ballsToRewardCounter =  lostBallCount * ( attackWaveCountEffect * CCRANDOM_0_1() ) * 1/ (1+ totalBallsRewarded) ;
@@ -1565,7 +1599,7 @@ void JG_Game_Main::manageBallRewards(float dt)
 
 }
 
-void JG_Game_Main::dicreaseBallsToRewardCount(int value)
+void JG_Game_Main::onBallRewarded(int value)
 {
 	if(value < 1)
 		return;
@@ -1601,7 +1635,7 @@ int JG_Game_Main::getHealthsToRewardCount()
 	return healthsToRewardCounter;
 }
 
-void JG_Game_Main::dicreaseHealsToRewardCount(int value)
+void JG_Game_Main::onHealthRewarded(int value)
 {
 	healthsToRewardCounter -= value;
 }

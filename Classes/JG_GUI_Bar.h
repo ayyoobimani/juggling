@@ -15,8 +15,12 @@ public:
 	~JG_GUI_Bar(void);
 
 
+	
+
 	static JG_GUI_Bar* CreateBar(CCPoint intialPosition,float newMaxScale);
 	void InitBar(CCPoint initialPosition,float newMaxScale);
 	void SetBarScale(float scale);
+
+
 };
 

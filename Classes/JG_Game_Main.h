@@ -3,6 +3,7 @@
 
 
 #include "cocos2d.h"
+#include "JG_Enums.h"
 
 #include "JG_Menu_Main.h"
 
@@ -64,7 +65,8 @@ class JG_AttackWave_AllLinesSequential;
 
 #define INIT_BALL_COUNT 5
 
-enum EEnemyBonus;
+//enum EEnemyBonus;
+
 struct SEnemyTypes
 {
 	JG_Factory_Base * factory;

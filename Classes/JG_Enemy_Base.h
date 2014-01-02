@@ -1,11 +1,14 @@
-#pragma once
+#ifndef __Enemy_Base_H__
+#define __Enemy_Base_H__
+
 #include "sprite_nodes\CCSprite.h"
 #include "JG_Game_Main.h"
-#include "JG_Path.h"
+#include "JG_Enums.h";
+//#include "JG_Path.h"
 
 class JG_Path;
 
-enum EEnemyBonus;
+
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {
@@ -117,3 +120,4 @@ public:
 	void SetEnemyBonus(EEnemyBonus bonus);
 };
 
+#endif 

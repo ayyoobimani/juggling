@@ -813,7 +813,7 @@ int JG_Game_Main::GetScore()
 void JG_Game_Main::SetScore( int newScore)
 {
 	score = newScore;
-	gameGUI->UpdateScore();
+	gameGUI->SetPlayerScore(score);
 
 }
 
@@ -821,14 +821,14 @@ void JG_Game_Main::AddScore(int amount)
 {
 
 	score+= amount;
-	gameGUI->UpdateScore();
+	gameGUI->SetPlayerScore(score);
 
 }
 
 void JG_Game_Main::ReduceScore(int amount)
 {
 	score-= amount;
-	gameGUI->UpdateScore();
+	gameGUI->SetPlayerScore(score);
 }
 
 int JG_Game_Main::GetLifeCount()
@@ -858,19 +858,19 @@ void JG_Game_Main::IncrementLifeCount()
 void JG_Game_Main::IncrementReservedBallCount()
 {
 	reservedBallCount++;
-	gameGUI->UpdateReservedBall();
+	gameGUI->SetPlayerReservedBall(reservedBallCount);
 }
 
 void JG_Game_Main::DecrementReservedBallCount()
 {
 	reservedBallCount--;
-	gameGUI->UpdateReservedBall();
+	gameGUI->SetPlayerReservedBall(reservedBallCount);
 }
 
 void JG_Game_Main::SetReservedBallCount( int newCount)
 {
 	reservedBallCount = newCount;
-	gameGUI->UpdateReservedBall();
+	gameGUI->SetPlayerReservedBall(reservedBallCount);
 }
 
 void JG_Game_Main::HealPath()

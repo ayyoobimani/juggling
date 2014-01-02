@@ -1,3 +1,4 @@
+
 #include "JG_Enemy_Base.h"
 
 
@@ -37,6 +38,7 @@ JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(JG_Game_Main* game,CCPoint initialPosi
 
 void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
 {
+	mainGame=game;
 	initWithFile("crow.png");
 	//here we create animations
 	InitialIntendingAnimation();
@@ -51,7 +53,7 @@ void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
 	autorelease();
 	setPosition(initialPosition);
 	scheduleUpdate();
-	mainGame=game;
+	
 
 }
 

@@ -1,5 +1,5 @@
 #include "JG_Game_Main.h"
-
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -54,6 +54,9 @@ bool JG_Game_Main::init()
 	gameGUI->setPosition(CCPointZero);
 	this->addChild(gameGUI,100);
 	//gameGUI->draw();
+
+	/**********************BackGroundSound***********************/
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("./Sounds/BackMusic.wav",true);
 
 
 

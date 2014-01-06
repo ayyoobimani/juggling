@@ -28,7 +28,7 @@ public:
 	~JG_Score_Handler(void);
 
 	void InsertRecord(CCString name,int score,int rank);
-	int GetHighScoreTable();
+	vector<ScoreTableRecord>* GetHighScoreTable();
 
 };
 

@@ -2,6 +2,11 @@
 #include "JG_Enemy_Base.h"
 
 
+OnLostHandler JG_Enemy_Base::onLostFunction;
+OnHitHandler JG_Enemy_Base::onHitFunction;
+GetBallsHandler JG_Enemy_Base::getBallFunction;
+CCObject* JG_Enemy_Base::listenerObj;
+
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
 	speed = 300;
@@ -13,6 +18,8 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 	damagePerInterval=damagePerSecond*attackInterval;
 	radius=15;
 	SetEnemyBonus(EnemyBonus_None);
+
+	screenSize = CCDirector::sharedDirector()->getWinSize();
 }
 
 
@@ -20,14 +27,14 @@ JG_Enemy_Base::~JG_Enemy_Base(void)
 {
 }
 
-JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(JG_Game_Main* game,CCPoint initialPosition)
+JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(CCPoint initialPosition)
 {
 	
 	JG_Enemy_Base * enemy = new JG_Enemy_Base();
 	
 	if (enemy )
 	{
-		enemy->InitialEnemy(game,initialPosition);
+		enemy->InitialEnemy(initialPosition);
 		
 		return enemy;
 
@@ -36,9 +43,8 @@ JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(JG_Game_Main* game,CCPoint initialPosi
 	return NULL;	 
 }
 
-void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
+void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition)
 {
-	mainGame=game;
 	initWithFile("crow.png");
 	//here we create animations
 	InitialIntendingAnimation();
@@ -57,7 +63,7 @@ void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition)
 
 }
 
-void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus)
+void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus)
 {
 	initWithFile("crow.png");
 	//here we create animations
@@ -75,7 +81,6 @@ void JG_Enemy_Base::InitialEnemy(JG_Game_Main* game,CCPoint initialPosition,EEne
 	autorelease();
 	setPosition(initialPosition);
 	scheduleUpdate();
-	mainGame=game;
 
 }
 
@@ -209,7 +214,10 @@ void JG_Enemy_Base::GotoState_Waiting()
 void JG_Enemy_Base::GotoState_Escaping()
 {
 	//CCLog("In state Escaping");
-	SetDestinationPosition(ccp(mainGame->screenSize.width+10,mainGame->screenSize.height+300));
+	
+	//TODO : Fix this
+	//SetDestinationPosition(ccp(mainGame->screenSize.width+10,mainGame->screenSize.height+300));
+	SetDestinationPosition(CCPointMake(400,600));
 	targetPath = NULL;
 
 
@@ -264,13 +272,14 @@ void JG_Enemy_Base::CheckCollisionWithBall()
 	if(state ==EnemyS_Dying)
 		return;
 	JG_Ball* tempCurrentBall;
-	for(int i=0;i<mainGame->GetBallArray()->count();i++)
+	CCArray* ballArray = CALL_MEMBER_FN(listenerObj,getBallFunction)();
+	for(int i=0;i<ballArray->count();i++)
 	{
-		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
+		tempCurrentBall=(JG_Ball*)ballArray->objectAtIndex(i);
 		float collision_radius=this->radius+tempCurrentBall->radius;
-		if(mainGame->ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
+		if(JG_Game_Main::ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
 		{
-			mainGame->OnEnemyHit(this, tempCurrentBall);
+			CALL_MEMBER_FN(listenerObj,onHitFunction)(this, tempCurrentBall);
 			return;
 		}
 
@@ -282,14 +291,14 @@ void JG_Enemy_Base::CheckOutOfScreen()
 	
 	if(state==EnemyS_Escaping)
 	{
-		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20||getPositionY()>mainGame->screenSize.height+30)
-			mainGame->OnEnemyLost(this);
+		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > screenSize.width + 20||getPositionY()>screenSize.height+30)
+			CALL_MEMBER_FN(listenerObj,onLostFunction)(this);
 	}
 
 	else
 	{
-		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
-			mainGame->OnEnemyLost(this);
+		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > screenSize.width + 20)
+			CALL_MEMBER_FN(listenerObj,onLostFunction)(this);
 	}
 
 }
@@ -365,4 +374,23 @@ void JG_Enemy_Base::draw()
 EEnemyBonus JG_Enemy_Base::GetEnemyBonus()
 {
 	return bonus;
+}
+
+
+void JG_Enemy_Base::SetOnLostFunctionPointer(CCObject* obj,OnLostHandler handler)
+{
+	onLostFunction = handler;
+	listenerObj = obj;
+}
+
+void JG_Enemy_Base::SetGetBallsFunctionPointer(CCObject* obj,GetBallsHandler handler)
+{
+	getBallFunction = handler;
+	listenerObj = obj;
+}
+
+void JG_Enemy_Base::SetOnHitFunctionPointer(CCObject* obj,OnHitHandler handler )
+{
+	onHitFunction = handler;
+	listenerObj = obj;
 }

@@ -2,12 +2,22 @@
 #define __Enemy_Base_H__
 
 #include "sprite_nodes\CCSprite.h"
-#include "JG_Game_Main.h"
+#include "JG_Path.h"
 #include "JG_Enums.h"
-//#include "JG_Path.h"
 
 class JG_Path;
 
+class JG_Ball;
+class JG_Enemy_Base;
+
+typedef void (CCObject::*OnLostHandler)(JG_Enemy_Base*);
+typedef void (CCObject::*OnHitHandler)(JG_Enemy_Base* , JG_Ball*);
+typedef CCArray* (CCObject::*GetBallsHandler)();
+
+#define OnHitSelector(_SELECTOR) (OnHitHandler)(&_SELECTOR)
+
+
+#define CALL_MEMBER_FN(object,ptrToMember)  ((object)->*(ptrToMember))
 
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
@@ -19,11 +29,17 @@ enum EEnemyState
 #define BASE_INTERVAL 5
 #define FIRST_HIT_COEFFICIENT 2
 
-
+using namespace cocos2d;
 class JG_Enemy_Base:
 	public CCSprite
 {
 private:
+	CCSize screenSize;
+	static OnLostHandler onLostFunction;
+	static OnHitHandler onHitFunction;
+	static GetBallsHandler getBallFunction;
+	static CCObject* listenerObj;
+
 	float speed;
 	
 	float radius;
@@ -34,7 +50,6 @@ private:
 	CCPoint destination;
 	float directionRadian;
 
-	JG_Game_Main* mainGame;
 	float score;
 
 	JG_Path* targetPath;
@@ -59,6 +74,10 @@ public:
 	JG_Enemy_Base(void);
 	~JG_Enemy_Base(void);
 
+	static void SetOnLostFunctionPointer(CCObject* rec,OnLostHandler);
+	static void SetOnHitFunctionPointer(CCObject* rec, OnHitHandler);
+	static void SetGetBallsFunctionPointer(CCObject* obj,GetBallsHandler);
+
 	//move to  function
 	void MoveTo(float dt);
 	
@@ -70,10 +89,10 @@ public:
 
 	void Fall(float dt);
 
-	static JG_Enemy_Base* CreateEnemy(JG_Game_Main* game,CCPoint initialPosition);
+	static JG_Enemy_Base* CreateEnemy(CCPoint initialPosition);
 
-	virtual void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition);
-	virtual void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus);
+	virtual void InitialEnemy(CCPoint initialPosition);
+	virtual void InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus);
 
 	void update(float dt);
 	//checking collision with ball

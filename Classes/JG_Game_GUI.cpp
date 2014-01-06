@@ -112,31 +112,31 @@ void JG_Game_GUI::InitPauseMenuItems()
 
 	pauseButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Pause_Normal.png"),CCSprite::create("Buttons/Game/Pause_Selected.png")
 		 ,mainGame
-		,menu_selector(JG_Game_Main::PauseGame));
+		 ,menu_selector(JG_Game_Main::HandlePauseGame));
 	pauseButton->retain();
 	pauseButton->setPosition(ccp(screenSize.width * 0.85 ,screenSize.height * 0.90) );
 
 	resumeButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Resume_Normal.png"),CCSprite::create("Buttons/Game/Resume_Selected.png")
 		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ResumeGame));
+		 ,menu_selector(JG_Game_Main::HandleResumeGame));
 	resumeButton->retain();
 	resumeButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.8));
 
 	resetButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Reset_Normal.png"),CCSprite::create("Buttons/Game/Reset_Selected.png")
 		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ResetGame));
+		 ,menu_selector(JG_Game_Main::HandleResetGame));
 	resetButton->retain();
 	resetButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.6));
 
 	exitToMainMenuButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png"),CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png")
 		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ExitToMainMenu));
+		 ,menu_selector(JG_Game_Main::HandleExitToMainMenu));
 	exitToMainMenuButton->retain();
 	exitToMainMenuButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.4));
 
 	exitGameButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitGame_Normal.png"),CCSprite::create("Buttons/Game/ExitGame_Selected.png")
 		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ExitGame));
+		 ,menu_selector(JG_Game_Main::HandleExitGame));
 	exitGameButton->retain();
 	exitGameButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.2));
 
@@ -169,14 +169,14 @@ void JG_Game_GUI::InitEndRoundMenuItems()
 
 	endRound_RetryButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Reset_Normal.png"),CCSprite::create("Buttons/Game/Reset_Selected.png")
 		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ResetGame));
+		 ,menu_selector(JG_Game_Main::HandleEndRoundScreenResetGame));
 	endRound_RetryButton->retain();
 	endRound_RetryButton->setPosition(ccp(screenSize.width * 0.75 ,screenSize.height * 0.2));
 	gameMenu->addChild(endRound_RetryButton);
 
 	endRound_ExitToMenuButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png"),CCSprite::create("Buttons/Game/ExitToMainMenu_Selected.png")
 		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ExitToMainMenu));
+		 ,menu_selector(JG_Game_Main::HandleEndRoundScreenResetGame));
 	endRound_ExitToMenuButton->retain();
 	endRound_ExitToMenuButton->setPosition(ccp(screenSize.width * 0.15 ,screenSize.height * 0.2));
 	gameMenu->addChild(endRound_ExitToMenuButton);
@@ -195,6 +195,7 @@ void JG_Game_GUI::InitHighScoreMenuItems()
 	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "", screenSize.height * 0.05f);
 	playerNameTextBox->setString("Player");
 	playerNameTextBox->setPosition(ccp(screenSize.width*0.5,screenSize.height*0.5));
+	
 	this->addChild(playerNameTextBox,100);
 }
 
@@ -229,10 +230,10 @@ void JG_Game_GUI::SetHighScoreScreenVisibility(bool bVisible)
 {
 	playerRankLabel->setVisible(bVisible);
 	playerNameTextBox->setVisible(bVisible);
-	if(bVisible)
+	/*if(bVisible)
 		playerNameTextBox->attachWithIME();
 	else
-		playerNameTextBox->detachWithIME();
+		playerNameTextBox->detachWithIME();*/
 	
 
 }
@@ -325,4 +326,24 @@ void JG_Game_GUI::SetDebugLabelInfo(string debug)
 {
 	debugLabel->setString(debug.c_str());
 	debugLabel->setVisible(true);
+}
+
+
+
+bool JG_Game_GUI::IsPlayerNameTextBoxVisible()
+{
+	return playerNameTextBox->isVisible();
+}
+
+void JG_Game_GUI::CheckPlayerNameTextBoxTouched(CCTouch* touch)
+{
+	if(playerNameTextBox->boundingBox().containsPoint(touch->getLocation()))
+		playerNameTextBox->attachWithIME();
+		
+}
+
+std::string JG_Game_GUI::GetPlayerName()
+{
+	std::string temp =  playerNameTextBox->getString();
+	return playerNameTextBox->getString();
 }

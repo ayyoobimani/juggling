@@ -27,13 +27,8 @@ public:
 	JG_Score_Handler(void);
 	~JG_Score_Handler(void);
 
-
-
-	
-	
-
 	void InsertRecord(CCString name,int score,int rank);
-	vector<ScoreTableRecord>* GetHighScoreTable();
+	int GetHighScoreTable();
 
 };
 

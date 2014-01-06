@@ -9,6 +9,7 @@
 
 
 using namespace std;
+using namespace cocos2d;
 
 #define HIGH_SCORE_RECORD_NUMBERS 5
 
@@ -28,7 +29,7 @@ public:
 	~JG_Score_Handler(void);
 
 	void InsertRecord(CCString name,int score,int rank);
-	int GetHighScoreTable();
+	vector<ScoreTableRecord>* GetHighScoreTable();
 
 };
 

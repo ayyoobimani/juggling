@@ -51,7 +51,7 @@ bool JG_Game_GUI::init(JG_Game_Main* game)
 
 	HideGUIScreens();
 
-	debugLabel = CCLabelBMFont::create ("0", "fonts/font.fnt", screenSize.height * 0.3f);
+	debugLabel = CCLabelBMFont::create ("0", "fonts/arial16.fnt", screenSize.height * 0.3f);
 	debugLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.10) );
 	this->addChild(debugLabel);
 

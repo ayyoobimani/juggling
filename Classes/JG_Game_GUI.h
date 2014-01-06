@@ -35,6 +35,9 @@ class JG_Game_GUI :
 
 	void DrawLife();
 
+	
+	
+
 public:
 		
 	JG_Game_GUI(void);
@@ -111,6 +114,13 @@ public:
 	void SetHighScoreScreenInfos(int _playerRank);
 	void SetPlayerScore(int score);
 	void SetPlayerReservedBall(int ballCount);
+
+	bool IsPlayerNameTextBoxVisible();
+	void CheckPlayerNameTextBoxTouched(CCTouch* touch);
+
+	std::string GetPlayerName();
+
+
 	
 };
 

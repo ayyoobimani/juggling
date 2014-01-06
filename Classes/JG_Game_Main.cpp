@@ -56,8 +56,8 @@ bool JG_Game_Main::init()
 	//gameGUI->draw();
 
 	/**********************BackGroundSound***********************/
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("./Sounds/BackMusic.wav",true);
-
+	
+	playMusic("BackMusic.wav");
 
 
 	/*********************** Background **************************/
@@ -138,11 +138,17 @@ bool JG_Game_Main::init()
 
 	vector<ScoreTableRecord>* scorevector=scoreFileSaving->GetHighScoreTable();
 	//CCLOG("this is the score %i",(*highScoreVector)[0].score);
+
 	string temp=scorevector->at(0).name;
 	gameGUI->SetDebugLabelInfo(CCString::createWithFormat("%i",scorevector->at(0).score)->getCString());
+
+	//gameGUI->SetDebugLabelInfo(CCString::createWithFormat(" %i", highScoreVector)->getCString());
 	//CCLOG("the highscore is %i",highScoreVector);
 
 
+	//gameGUI->SetDebugLabelInfo(CCString::createWithFormat("%s", (*highScoreVector)[0].name.c_str())->getCString());
+
+	ResumeGame();
 	InitRound();
 	this->setTouchEnabled(true);
 
@@ -227,6 +233,7 @@ void JG_Game_Main::InitRound()
 	}
 
 	InitGame_difficultyControl();
+	
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
@@ -304,8 +311,18 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		if(touch) 
 		{
 			BallTouchHandler_Init(touch);
+
+			/*********** Sorry for this shit *******************/
+			if(gameGUI->IsPlayerNameTextBoxVisible())
+			{
+				gameGUI->CheckPlayerNameTextBoxTouched(touch);
+			}
+			/*************************************************/
+
 		}
 	}
+
+
 
 
 }
@@ -1222,19 +1239,19 @@ CCArray* JG_Game_Main::GetBallArray()
 }
 
 
-void JG_Game_Main::PauseGame(CCObject* pSender)
+void JG_Game_Main::PauseGame()
 {
-	gameGUI->SetPauseScreenVisibility(true);
+	
 	CCDirector::sharedDirector()->pause();
 }
 
-void JG_Game_Main::ExitToMainMenu(CCObject* pSender)
+void JG_Game_Main::ExitToMainMenu()
 {
 	CCDirector::sharedDirector()->replaceScene(JG_Menu_Main::scene());
 }
 
 
-void JG_Game_Main::ExitGame(CCObject* pSender)
+void JG_Game_Main::ExitGame()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
@@ -1246,22 +1263,65 @@ void JG_Game_Main::ExitGame(CCObject* pSender)
 #endif
 }
 
-void JG_Game_Main::ResumeGame(CCObject* pSender)
+void JG_Game_Main::ResumeGame()
 {
 	CCDirector::sharedDirector()->resume();
 	gameGUI->SetPauseScreenVisibility(false);
 }
 
-void JG_Game_Main::ResetGame(CCObject* pSender)
+void JG_Game_Main::ResetGame()
 {
 	RemoveAllBallsFromScreen();
 	RemoveAllFruitsFromScreen();
 	RemoveAllEnemiesFromScreen();
 	//RemoveAllEnemiesFromScreen();
 	InitRound();
-	ResumeGame(pSender);
+	ResumeGame();
 	resetDifficulty();
+
 }
+
+void JG_Game_Main::HandlePauseGame(CCObject* pSender)
+{
+	gameGUI->SetPauseScreenVisibility(true);
+	PauseGame();
+}
+
+void JG_Game_Main::HandleExitGame(CCObject* pSender)
+{
+	ExitGame();
+}
+
+void JG_Game_Main::HandleExitToMainMenu(CCObject* pSender)
+{
+	ExitToMainMenu();
+	ResumeGame();
+	
+
+}
+
+void JG_Game_Main::HandleResumeGame(CCObject* pSender)
+{
+	ResumeGame();
+}
+
+void JG_Game_Main::HandleResetGame(CCObject* pSender)
+{
+	ResetGame();
+}
+
+void JG_Game_Main::HandleEndRoundScreenResetGame(CCObject* pSender)
+{
+	InsertPlayerHighScore();
+	ResetGame();
+}
+
+void JG_Game_Main::HandleEndRoundScreenExitToMainMenu(CCObject* pSender)
+{
+	InsertPlayerHighScore();
+	ExitToMainMenu();
+}
+
 
 
 
@@ -1276,13 +1336,20 @@ void JG_Game_Main::EndRound()
 		gameGUI->SetHighScoreScreenVisibility(true);
 	}
 	
-	CCDirector::sharedDirector()->pause();
+	PauseGame();
 	//********************** /Temporary ****************/
 }
 
 bool JG_Game_Main::IsPlayerGetHighScore()
 {
 	return true;
+}
+
+void JG_Game_Main::InsertPlayerHighScore()
+{
+	if(IsPlayerGetHighScore())
+		CCLOG("Player Name is %s " , gameGUI->GetPlayerName().c_str());
+
 }
 
 void JG_Game_Main::menuCloseCallback(CCObject* pSender)
@@ -1528,6 +1595,9 @@ void JG_Game_Main::ManageDifficulty()
 
 void JG_Game_Main::onAttackWaveFinished()
 {
+	//TODO ayoob: fix this
+	if(currentAttackWave==NULL)
+		return;
 
 	removeChild(currentAttackWave,true);
 	CC_SAFE_RELEASE(currentAttackWave);
@@ -1652,4 +1722,24 @@ int JG_Game_Main::getHealthsToRewardCount()
 void JG_Game_Main::onHealthRewarded(int value)
 {
 	healthsToRewardCounter -= value;
+}
+
+void JG_Game_Main::playMusic(CCString backsound)
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(backsound.getCString(),true);
+}
+
+void JG_Game_Main::stopMusic()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+}
+
+void JG_Game_Main::resumeMusic()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+}
+
+void JG_Game_Main::pauseMusic()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }

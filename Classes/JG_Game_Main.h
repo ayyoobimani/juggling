@@ -364,19 +364,31 @@ public:
 	
 	int GetPathLevelByPower(float pathPower);
 	
+
+
 	/*! End of the game */
 	void EndRound();
 	/*! Pausing the game */
-	void PauseGame(CCObject* pSender);
+	void PauseGame();
 	/*! Exit the game */
-	void ExitGame(CCObject* pSender);
+	void ExitGame();
 	/*! Exit To Main Menu */
-	void ExitToMainMenu(CCObject* pSender);
+	void ExitToMainMenu();
 	/*! Resuming the game */
-	void ResumeGame(CCObject* pSender);
+	void ResumeGame();
 	/*! Reseting the game */
-	void ResetGame(CCObject* pSender);
+	void ResetGame();
 	//reset path
+
+	void HandlePauseGame(CCObject* pSender);
+	void HandleExitGame(CCObject* pSender);
+	void HandleExitToMainMenu(CCObject* pSender);
+	void HandleResumeGame(CCObject* pSender);
+	void HandleResetGame(CCObject* pSender);
+
+	void HandleEndRoundScreenResetGame(CCObject* pSender);
+	void HandleEndRoundScreenExitToMainMenu(CCObject* pSender);
+
 	
 
 	/* Calculate the throw power for a touched ball 
@@ -466,6 +478,7 @@ public:
 
 
 	bool IsPlayerGetHighScore();
+	void InsertPlayerHighScore();
 
 	/* when a attack wave (currentAttackWave) rewards a health bonus to the user this event happens 
 	* @this event dicreases number of healths calculated to be rewarded 
@@ -488,7 +501,11 @@ public:
 
 	}
 
-
+	//Sound Setting Function
+	void playMusic(CCString backsound);
+	void stopMusic();
+	void resumeMusic();
+	void pauseMusic();
 
 	
 

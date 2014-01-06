@@ -9,6 +9,7 @@
 
 
 using namespace std;
+using namespace cocos2d;
 
 #define HIGH_SCORE_RECORD_NUMBERS 5
 

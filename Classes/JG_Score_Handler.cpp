@@ -65,14 +65,18 @@ vector<ScoreTableRecord>* JG_Score_Handler::GetHighScoreTable()
 		recordItem.score=temp.intValue();
 
 		////vector initializing
-		CCLOG("the score is %i ***********************************",recordItem.score);
+		//CCLOG("the score is %i ***********************************",recordItem.score);
 		
+		//CCString tempName=recordItem.name;
 		
-		highScoreVector->push_back(recordItem);
+	
+		highScoreVector->at(i-1)=recordItem;
+		
 		
 	}
 	//return highScoreVector;
 	//int high= CCUserDefault::sharedUserDefault()->getIntegerForKey("high");
+	
 	return highScoreVector;
 	
 }

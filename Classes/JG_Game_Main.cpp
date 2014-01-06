@@ -138,9 +138,8 @@ bool JG_Game_Main::init()
 
 	vector<ScoreTableRecord>* scorevector=scoreFileSaving->GetHighScoreTable();
 	//CCLOG("this is the score %i",(*highScoreVector)[0].score);
-
-	string temp=scorevector->at(0).name;
-	gameGUI->SetDebugLabelInfo(CCString::createWithFormat("%i",scorevector->at(0).score)->getCString());
+	
+	gameGUI->SetDebugLabelInfo(CCString::createWithFormat("%s",scorevector->at(0).name.c_str())->getCString());
 
 	//gameGUI->SetDebugLabelInfo(CCString::createWithFormat(" %i", highScoreVector)->getCString());
 	//CCLOG("the highscore is %i",highScoreVector);

@@ -6,6 +6,7 @@
 #include "textures\CCTextureCache.h"
 #include "label_nodes\CCLabelBMFont.h"
 #include "text_input_node\CCTextFieldTTF.h"
+#include <string>
 
 using namespace cocos2d;
 
@@ -104,7 +105,7 @@ public:
 	
 	void HideGUIScreens();
 	
-	void SetDebugLabelInfo(string debug);
+	void SetDebugLabelInfo(std::string debug);
 	void ResetInfos();
 	
 	void draw();

@@ -32,11 +32,15 @@ vector<ScoreTableRecord>* JG_Score_Handler::GetHighScoreTable()
 		if(record.empty())
 			break;
 		recordItem.rank=i;
-		stringstream nameBYscore(record);
-		getline(nameBYscore,recordItem.name,' ');
-		string tempScore;
-		getline(nameBYscore,tempScore,' ');
-		recordItem.score=stoi(tempScore);
+		//stringstream nameBYscore(record);
+		//getline(nameBYscore,recordItem.name,' ');
+		//string tempScore;
+		//getline(nameBYscore,tempScore,' ');
+		//recordItem.score=stoi(tempScore);
+
+		recordItem.name=record;
+		recordItem.score=1000;
+
 
 		//vector initializing
 		highScoreVector->push_back(recordItem);

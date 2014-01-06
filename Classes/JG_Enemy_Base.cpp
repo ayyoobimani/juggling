@@ -281,11 +281,13 @@ void JG_Enemy_Base::CheckOutOfScreen()
 {
 	
 	if(state==EnemyS_Escaping)
+	{
 		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20||getPositionY()>mainGame->screenSize.height+30)
 			mainGame->OnEnemyLost(this);
+	}
+
 	else
 	{
-		
 		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
 			mainGame->OnEnemyLost(this);
 	}

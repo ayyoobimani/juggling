@@ -226,7 +226,7 @@ void JG_Game_Main::InitRound()
 	}
 
 	InitGame_difficultyControl();
-	resetDifficulty();
+	
 
 	SetLifeCount(MAX_LIFE_COUNT);
 	SetScore(0);
@@ -1270,6 +1270,7 @@ void JG_Game_Main::ResetGame()
 	//RemoveAllEnemiesFromScreen();
 	InitRound();
 	ResumeGame();
+	resetDifficulty();
 
 }
 
@@ -1587,6 +1588,9 @@ void JG_Game_Main::ManageDifficulty()
 
 void JG_Game_Main::onAttackWaveFinished()
 {
+	//TODO ayoob: fix this
+	if(currentAttackWave==NULL)
+		return;
 
 	removeChild(currentAttackWave,true);
 	CC_SAFE_RELEASE(currentAttackWave);

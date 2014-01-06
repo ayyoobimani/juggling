@@ -30,6 +30,8 @@ public:
 
 	void InsertRecord(CCString name,int score,int rank);
 	vector<ScoreTableRecord>* GetHighScoreTable();
+	ScoreTableRecord InitializingRecord(int rank,string nameWithScore);
+	void SplitBySpace(string input,string& firstPart,int& SecondPart);
 
 };
 

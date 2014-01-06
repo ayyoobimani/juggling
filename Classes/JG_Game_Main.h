@@ -488,7 +488,11 @@ public:
 
 	}
 
-
+	//Sound Setting Function
+	void playMusic(CCString backsound);
+	void stopMusic();
+	void resumeMusic();
+	void pauseMusic();
 
 	
 

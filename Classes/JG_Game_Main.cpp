@@ -56,8 +56,8 @@ bool JG_Game_Main::init()
 	//gameGUI->draw();
 
 	/**********************BackGroundSound***********************/
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("./Sounds/BackMusic.wav",true);
-
+	
+	playMusic("BackMusic.wav");
 
 
 	/*********************** Background **************************/
@@ -138,9 +138,7 @@ bool JG_Game_Main::init()
 
 	vector<ScoreTableRecord>* highScoreVector=scoreFileSaving->GetHighScoreTable();
 	//CCLOG("this is the score %i",(*highScoreVector)[0].score);
-	gameGUI->SetDebugLabelInfo(CCString::createWithFormat(" %i", (*highScoreVector)[0].score)->getCString());
-
-
+	gameGUI->SetDebugLabelInfo(CCString::createWithFormat("%s", (*highScoreVector)[0].name.c_str())->getCString());
 
 	InitRound();
 	this->setTouchEnabled(true);
@@ -1651,4 +1649,24 @@ int JG_Game_Main::getHealthsToRewardCount()
 void JG_Game_Main::onHealthRewarded(int value)
 {
 	healthsToRewardCounter -= value;
+}
+
+void JG_Game_Main::playMusic(CCString backsound)
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(backsound.getCString(),true);
+}
+
+void JG_Game_Main::stopMusic()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+}
+
+void JG_Game_Main::resumeMusic()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+}
+
+void JG_Game_Main::pauseMusic()
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }

@@ -8,7 +8,7 @@ public:
 	JG_Enemy_QuickAttakc(void);
 	~JG_Enemy_QuickAttakc(void);
 
-	//void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition);
-	//void InitialEnemy(JG_Game_Main* game,CCPoint initialPosition,EEnemyBonus bonus);
+	//void InitialEnemy(CCPoint initialPosition);
+	//void InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus);
 };
 

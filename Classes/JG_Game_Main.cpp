@@ -134,6 +134,7 @@ bool JG_Game_Main::init()
 	/************************* Enemy Factories ********************/
 
 	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Crow>(6,2));
+	enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
 
 	/************************* /Enemy Factories ********************/
 

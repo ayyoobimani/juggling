@@ -24,6 +24,7 @@ typedef CCArray* (CCObject::*GetBallsHandler)();
 
 #define CALL_MEMBER_FN(object,ptrToMember)  ((object)->*(ptrToMember))
 
+
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {
@@ -46,10 +47,9 @@ private:
 	static DamagePathHandler damagePathFunction;
 	static CCObject* listenerObj;
 
-	float speed;
 	
 	float radius;
-	float waitingTime;
+	
 	EEnemyState state;
 	EEnemyBonus bonus;
 	bool bIsDirectionSet;
@@ -60,9 +60,7 @@ private:
 
 	JG_Path* targetPath;
 
-	float attackInterval;
-	float damagePerSecond;
-	float damagePerInterval;
+	
 	void Attack(float dt);
 
 	void SetBonusTexture(EEnemyBonus bonus);
@@ -75,7 +73,17 @@ private:
 	void GotoState_Waiting();
 	void GotoState_Escaping();
 	void GotoState_Dying();
+
+protected:
+	float attackInterval;
+	float damagePerSecond;
+	float damagePerInterval;
+
+	float speed;
+
+	float waitingTime;
 	
+
 public:
 	JG_Enemy_Base(void);
 	~JG_Enemy_Base(void);

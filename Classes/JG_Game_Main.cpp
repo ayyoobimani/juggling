@@ -1770,7 +1770,7 @@ CCArray* JG_Game_Main::getpathsArray()
 void JG_Game_Main::addEnemy(JG_Enemy_Base* enemy)
 {
 	enemyArray->addObject(enemy);
-	addChild((CCNode*) enemy,10);
+	addChild((CCNode*) enemy,50);
 }
 
 /////////////////////////////////////////////////////////////////////

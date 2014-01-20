@@ -12,18 +12,18 @@ JG_AttackWave_AllLinesSequential::~JG_AttackWave_AllLinesSequential(void)
 }
 
 
-void JG_AttackWave_AllLinesSequential::initAttackWave( JG_Game_Main* mainGame, float attackDifficulty, int attackCount)
+void JG_AttackWave_AllLinesSequential::initAttackWave(float attackDifficulty, int attackCount)
 {
 
-	JG_AttackWave_Base::initAttackWave(mainGame, attackDifficulty, attackCount);
+	JG_AttackWave_Base::initAttackWave( attackDifficulty, attackCount);
 
-
+	CCLOG("new attack wave initialized");
 	clalculateEnemyAddInterval();
 	//CCLOG(CCString::createWithFormat("interval: %f", enemeyAddInterval)->getCString());
 	pathCounter =0;
 	
 
-	int currentTotalPathExist = mainGame->getAvailablePathCount();
+	int currentTotalPathExist = CALL_MEMBER_FN(listenerObj,getAvailablePathCountFunction)();
 
 	float totalDifficulty = 0.0;
 	float currentEnemyDifficulty;
@@ -73,12 +73,16 @@ void JG_AttackWave_AllLinesSequential::update(float dt)
 JG_Enemy_Base* JG_AttackWave_AllLinesSequential::addEnemy()
 {
 	JG_Enemy_Base* tempEnemy;
-	tempEnemy = (JG_Enemy_Base*) mainGame->enemyTypes[selectEnemyType()].factory->Create();
-	tempEnemy->InitialEnemy(ccp(mainGame->screenSize.width,mainGame->screenSize.height), EnemyBonus_None);
-	mainGame->enemyArray->addObject(tempEnemy);
+	std::vector<SEnemyTypes> enemyTypes = CALL_MEMBER_FN(listenerObj, getEnemyTypesFunction)();
+	tempEnemy = (JG_Enemy_Base*) enemyTypes[selectEnemyType()].factory->Create();
+	CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+	tempEnemy->InitialEnemy(ccp(screenSize.width,screenSize.height), EnemyBonus_None);
+	
+	//mainGame->enemyArray->addObject(tempEnemy);
+	CALL_MEMBER_FN(listenerObj,addEnemyFunction)(tempEnemy);
 	//remember to initial enemies
 
-	mainGame->addChild((CCNode*) tempEnemy,50);
+	//mainGame->addChild((CCNode*) tempEnemy,50);
 	pathQueue.push(pathCounter);
 	enemyQueue.push(tempEnemy);
 	return tempEnemy;
@@ -93,17 +97,17 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	pathQueue.pop();
 	//CCLOG("moving new enemy");
 
-	if(mainGame->getHealthsToRewardCount() > 0 )
+	if(CALL_MEMBER_FN(listenerObj,getHealthesToRewardCountFunction)() > 0 )
 	{
 		//CCLOG(CCString::createWithFormat("healths to reward counter is: ", mainGame->getHealthsToRewardCount())->getCString());
 		enemyQueue.front()->SetEnemyBonus(EnemyBonus_PathHealth);
-		mainGame->onHealthRewarded();
+		CALL_MEMBER_FN(listenerObj,onHealthRewardedFunction)();
 	}
-	else if(mainGame->getBallsToRewardCount() >0 )
+	else if(CALL_MEMBER_FN(listenerObj,getBallsToRewardCountFunction)()>0 )
 	{
 	//	CCLOG("enemy with ball bonus");
 		enemyQueue.front()->SetEnemyBonus(EnemyBonus_ExtraBall);
-		mainGame->onBallRewarded();
+		CALL_MEMBER_FN(listenerObj,onBallRewardedFunction)();
 	}
 	enemyQueue.front()->SetDestinationPath(enemyPath->GetPositionForLengthRatio(generateEnemyPositionRatio()),enemyPath);
 	enemyQueue.pop();
@@ -112,7 +116,7 @@ void JG_AttackWave_AllLinesSequential::initiateEnemyAttack(float dt)
 	//if more enemie(s) -> schedule next enemy attack
 	if(enemyQueue.size()==0)
 	{
-		mainGame->onAttackWaveFinished();
+		CALL_MEMBER_FN(listenerObj,onAttackWaveFinishedFunction)();
 		//CCLOG("enemy queue is ok");
 		//schedule(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack),0,0,enemeyAddInterval);
 		//scheduleOnce(schedule_selector(JG_AttackWave_AllLinesSequential::initiateEnemyAttack), enemeyAddInterval);
@@ -144,7 +148,8 @@ JG_Path * JG_AttackWave_AllLinesSequential::selectPath(int pathCount)
 	JG_Path  * tempPath;
 	while(true)
 	{
-		tempPath = (JG_Path*)mainGame->pathsArray->objectAtIndex(pathCount % mainGame->pathsArray->count());
+		CCArray* pathsArray = CALL_MEMBER_FN(listenerObj,getPathesArrayFunction)();
+		tempPath = (JG_Path*)pathsArray->objectAtIndex(pathCount % pathsArray->count());
 		if(tempPath->IsPathEnabled())
 		{
 			//CCLOG(CCString::createWithFormat("selected paht:%d",pathCount % mainGame->pathsArray->count())->getCString());

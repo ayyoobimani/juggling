@@ -75,12 +75,6 @@ class JG_AttackWave_AllLinesSequential;
 
 //enum EEnemyBonus;
 
-struct SEnemyTypes
-{
-	JG_Factory_Base * factory;
-	int currentChance;
-	int chanceIncreasePerRound;
-};
 
 struct STouchInfo
 {
@@ -471,7 +465,7 @@ public:
 	/* when a attack wave (currentAttackWave) rewards a ball to the user this event happens 
 	* @this event dicreases number of balls calculated to be rewarded 
 	*/
-	void onBallRewarded(int value=1);
+	void onBallRewarded();
 	/* returns number of balls to be rewarded to the user */
 	int getBallsToRewardCount();
 
@@ -483,9 +477,14 @@ public:
 	/* when a attack wave (currentAttackWave) rewards a health bonus to the user this event happens 
 	* @this event dicreases number of healths calculated to be rewarded 
 	*/
-	void onHealthRewarded(int value = 1);
+	void onHealthRewarded();
 	/* returns number of balls to be rewarded to the user */
 	int getHealthsToRewardCount();
+
+	std::vector<SEnemyTypes> getEnemyTypes();
+	CCArray* getpathsArray();
+	void addEnemy(JG_Enemy_Base*);
+	///////////////////////////////////////////////////////////////////
 
 
 	//score handling and file saving

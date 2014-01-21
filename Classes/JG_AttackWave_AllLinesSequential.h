@@ -2,6 +2,7 @@
 #include "JG_AttackWave_Base.h"
 #include "JG_Enemy_Base.h"
 #include <queue>
+
 //#include "JG_Game_Main.h"
 
 
@@ -11,6 +12,8 @@ using namespace cocos2d;
 
 class JG_Enemy_Base;
 class JG_Game_Main;
+class JG_Path;
+
 
 class JG_AttackWave_AllLinesSequential: public JG_AttackWave_Base
 {

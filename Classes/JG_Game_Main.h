@@ -100,7 +100,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 
 	bool bIsGameInited; 
 
-
+	
 	
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
@@ -440,7 +440,7 @@ public:
 	
 	/*!checks whether distance of the two point are lesser than distance or not*/
 	//TODO: find a better name
-	bool ArePointsColliding (CCPoint point1,CCPoint point2,float distance);
+	static bool ArePointsColliding (CCPoint point1,CCPoint point2,float distance);
 
 	inline float getSign(float num)
 	{

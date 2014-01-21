@@ -31,7 +31,11 @@ CCScene* JG_Game_Main::scene()
 // on "init" you need to initialize your instance
 bool JG_Game_Main::init()
 {
+
 	prevballCounter =0 ;
+	JG_Enemy_Base::SetOnHitFunctionPointer(this,OnHitHandler(&JG_Game_Main::OnEnemyHit));
+	JG_Enemy_Base::SetOnLostFunctionPointer(this,OnLostHandler(&JG_Game_Main::OnEnemyLost));
+	JG_Enemy_Base::SetGetBallsFunctionPointer(this,GetBallsHandler(&JG_Game_Main::GetBallArray));
 
 	//////////////////////////////
 	// 1. super init first
@@ -238,7 +242,7 @@ void JG_Game_Main::InitRound()
 
 	////************************* Delete This Later **************/
 	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
-	tempEnemy->InitialEnemy(this,ccp(100,100),EnemyBonus_ExtraBall);
+	tempEnemy->InitialEnemy(ccp(100,100),EnemyBonus_ExtraBall);
 	this->addChild((CCNode*) tempEnemy,100);
 	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
 	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));

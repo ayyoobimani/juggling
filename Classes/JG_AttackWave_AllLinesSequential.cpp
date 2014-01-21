@@ -74,7 +74,7 @@ JG_Enemy_Base* JG_AttackWave_AllLinesSequential::addEnemy()
 {
 	JG_Enemy_Base* tempEnemy;
 	tempEnemy = (JG_Enemy_Base*) mainGame->enemyTypes[selectEnemyType()].factory->Create();
-	tempEnemy->InitialEnemy(mainGame, ccp(mainGame->screenSize.width,mainGame->screenSize.height), EnemyBonus_None);
+	tempEnemy->InitialEnemy(ccp(mainGame->screenSize.width,mainGame->screenSize.height), EnemyBonus_None);
 	mainGame->enemyArray->addObject(tempEnemy);
 	//remember to initial enemies
 

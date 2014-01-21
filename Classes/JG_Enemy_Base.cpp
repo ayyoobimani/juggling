@@ -438,7 +438,15 @@ void JG_Enemy_Base::AddSpritesForAnimation(CCAnimation* animation, CCString fold
 
 CCString JG_Enemy_Base::GetSpriteAddress(CCString folder,int spriteIndex)
 {
-	CCString* spriteFileName = CCString::createWithFormat(+"_0000%d.png",spriteIndex);
+	CCString* spriteFileName;
+	//TODO: clean this shit
+	if(spriteIndex<10)
+		spriteFileName = CCString::createWithFormat(+"_0000%d.png",spriteIndex);
+	else if(spriteIndex<100)
+		spriteFileName = CCString::createWithFormat(+"_000%d.png",spriteIndex);
+	else if(spriteIndex<1000)
+		spriteFileName = CCString::createWithFormat(+"_00%d.png",spriteIndex);
+	
 	(*spriteFileName) = folder.m_sString+spriteFileName->m_sString;
 	return *spriteFileName;
 }

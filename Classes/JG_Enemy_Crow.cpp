@@ -11,6 +11,7 @@ JG_Enemy_Crow::JG_Enemy_Crow(void)
 	intendingAnimationFolder = "Enemies/UFO/Intending/";
 	landingAnimationFolder = "Enemies/UFO/Landing/";
 	waitingAnimationFolder = "Enemies/UFO/Waiting/";
+	landingTime = 2;
 }
 
 

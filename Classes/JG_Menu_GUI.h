@@ -4,6 +4,7 @@
 #include "textures\CCTextureCache.h"
 #include "label_nodes\CCLabelBMFont.h"
 
+
 #include "JG_Menu_Main.h"
 
 class JG_Menu_Main;
@@ -16,6 +17,8 @@ class JG_Menu_GUI :
 	CCMenuItemSprite* ExitGameButton;
 	CCMenuItemSprite* ShowOptionButton;
 	CCMenuItemSprite* ShowHighScoresButton;
+
+	
 
 	JG_Menu_Main* mainMenu;
 
@@ -34,6 +37,8 @@ public:
 	virtual ~JG_Menu_GUI(void);
 
 	static JG_Menu_GUI* CreateMenuGUI(JG_Menu_Main* menu);
+
+	void InsertHighScore(CCString playerName, int score, int rank);
 
 	
 

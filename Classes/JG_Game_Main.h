@@ -24,6 +24,7 @@
 
 #include "JG_Factory_AttackWave.h"
 #include "JG_AttackWave_AllLinesSequential.h"
+#include "JG_AttackWave_AllLinesTogether.h"
 #include "JG_Factory_Enemy.h"
 
 #include <vector>

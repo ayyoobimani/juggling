@@ -193,6 +193,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 	enemyArray->retain();
 
 	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesSequential>);
+	attackWaveTypes.push_back(new JG_Factory_AttackWave<JG_AttackWave_AllLinesTogether>);
 
 	attackWaveCount = 0;
 

@@ -86,6 +86,10 @@ private:
 	void GotoState_Dying();
 	void GotoState_Landing();
 
+	void AddSpritesForAnimation(CCAnimation* animation, CCString folder);
+
+	CCString GetSpriteAddress(CCString folder,int spriteIndex);
+
 protected:
 	float attackInterval;
 	float damagePerSecond;
@@ -94,6 +98,13 @@ protected:
 	float speed;
 
 	float landingTime;
+
+	CCString intendingAnimationFolder;
+	CCString attackingAnimationFolder;
+	CCString waitingAnimationFolder;
+	CCString escapingAnimationFolder;
+	CCString dyingAnimationFolder;
+	CCString landingAnimationFolder;
 	
 
 public:
@@ -144,7 +155,7 @@ public:
 	//here is the action, we will attack animation to this action to run
 	//CCAnimate* animationAction;
 	//functions to create upward animation
-	void InitialAnimations();
+	virtual void InitialAnimations();
 	virtual void InitialIntendingAnimation();
 	virtual void InitialAttackingAnimation();
 	virtual void InitialWaitingAnimation();

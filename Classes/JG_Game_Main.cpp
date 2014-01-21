@@ -135,7 +135,7 @@ bool JG_Game_Main::init()
 	/************************* Enemy Factories ********************/
 
 	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Crow>(6,2));
-	enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
+	//enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
 
 	/************************* /Enemy Factories ********************/
 
@@ -164,7 +164,7 @@ bool JG_Game_Main::init()
 
 	this->setKeypadEnabled(true);
 
-
+	//TestOutOfRangeRankForHighScore();
 
 	//test
 	//TestMultiTouch();
@@ -256,7 +256,7 @@ void JG_Game_Main::InitRound()
 	////************************* Delete This Later **************/
 	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
 	tempEnemy->InitialEnemy(ccp(100,100),EnemyBonus_ExtraBall);
-	this->addChild((CCNode*) tempEnemy,100);
+	this->addChild((CCNode*) tempEnemy,20);
 	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
 	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
 	//((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
@@ -1049,7 +1049,7 @@ void JG_Game_Main::AddBallToScreen()
 		,screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5)
 		,Dir_RightHandToUp
 		,DISCRETE_PARTS_COUNT);
-	this->addChild(newBall,75);
+	this->addChild(newBall,100);
 	ballsArray->addObject(newBall);
 
 }
@@ -1341,13 +1341,17 @@ void JG_Game_Main::HandleResetGame(CCObject* pSender)
 
 void JG_Game_Main::HandleEndRoundScreenResetGame(CCObject* pSender)
 {
-	InsertPlayerHighScore();
+	InsertPlayerHighScore(gameGUI->GetPlayerName()
+		,rank
+		,score);
 	ResetGame();
 }
 
 void JG_Game_Main::HandleEndRoundScreenExitToMainMenu(CCObject* pSender)
 {
-	InsertPlayerHighScore();
+	InsertPlayerHighScore(gameGUI->GetPlayerName()
+		,rank
+		,score);
 	ExitToMainMenu();
 }
 
@@ -1386,23 +1390,19 @@ int JG_Game_Main::DeterminePlayerRank()
 	return -1;
 }
 
-void JG_Game_Main::InsertPlayerHighScore()
+void JG_Game_Main::InsertPlayerHighScore(CCString _playerName, int _rank, int _score)
 {
 	//extra check
 	if(IsPlayerGetHighScore())
 	{
-		CCString playerName = gameGUI->GetPlayerName();
-		for( int i = rank-1 ; i < scoreTable->size(); i++)
+		for( int i = _rank ; i < scoreTable->size(); i++)
 		{
 			scoreFileHandler->InsertRecord(scoreTable->at(i).name
 				,scoreTable->at(i).score
 				,scoreTable->at(i).rank+1);
 		}
-		scoreFileHandler->InsertRecord(playerName,score,rank);
-
+		scoreFileHandler->InsertRecord(_playerName, _score,_rank);
 	}
-	
-
 }
 
 void JG_Game_Main::menuCloseCallback(CCObject* pSender)
@@ -1775,7 +1775,7 @@ CCArray* JG_Game_Main::getpathsArray()
 void JG_Game_Main::addEnemy(JG_Enemy_Base* enemy)
 {
 	enemyArray->addObject(enemy);
-	addChild((CCNode*) enemy,50);
+	addChild((CCNode*) enemy,20);
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -1812,4 +1812,17 @@ void JG_Game_Main::pauseMusic()
 void JG_Game_Main::playSoundEffect(CCString effectsound)
 {
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(effectsound.getCString());
+}
+
+void JG_Game_Main::TestOutOfRangeRankForHighScore()
+{
+	InsertPlayerHighScore("",HIGH_SCORE_RECORD_NUMBERS+1,0);
+	vector<ScoreTableRecord>* table = scoreFileHandler->GetHighScoreTable();
+
+	for( int i =0 ; i<table->size();i++)
+	{
+		if(table->at(i).rank == HIGH_SCORE_RECORD_NUMBERS+1)
+			exit(-1);
+	}
+	exit(0);
 }

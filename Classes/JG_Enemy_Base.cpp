@@ -14,7 +14,7 @@ CCObject* JG_Enemy_Base::listenerObj;
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
 	lastAnimationAction= NULL;
-	spriteFileName = "Enemies/UFO/UFO.png";
+	//spriteFileName = "Enemies/UFO/UFO.png";
 	speed = 300;
 	landingTime = 2.0;
 	SetState(EnemyS_Inited);
@@ -88,12 +88,15 @@ void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus)
 
 void JG_Enemy_Base::InitialAnimations()
 {
+	
+
 	InitialIntendingAnimation();
 	InitialAttackingAnimation();
 	InitialWaitingAnimation();
 	InitialEscapingAnimation();
 	InitialDyingAnimation();
 	InitialLandingAnimation();
+	setAnchorPoint(ccp(0.5,0.5));
 }
 
 void JG_Enemy_Base::SetEnemyBonus(EEnemyBonus bonus)
@@ -355,58 +358,110 @@ void JG_Enemy_Base::CheckOutOfScreen()
 void JG_Enemy_Base::InitialIntendingAnimation()
 {
 	intendingAnimation=CCAnimation::create();
-	//intendingAnimation->setRestoreOriginalFrame(true);
 	intendingAnimation->setLoops(-1);
 	intendingAnimation->retain();
-	//loading images from local file system
-	//for loop over files
-	//intendingAnimation->setDelayPerUnit()
+
+	AddSpritesForAnimation(intendingAnimation,intendingAnimationFolder);
+
+	intendingAnimation->setDelayPerUnit(1.0f/intendingAnimation->getFrames()->count());
 }
+
 void JG_Enemy_Base::InitialAttackingAnimation()
 {
 	attackingAnimation=CCAnimation::create();
 	attackingAnimation->setRestoreOriginalFrame(true);
 	attackingAnimation->retain();
 
+	AddSpritesForAnimation(attackingAnimation,attackingAnimationFolder);
+
+	attackingAnimation->setDelayPerUnit(1.0f/attackingAnimation->getFrames()->count());
 }
+
 void JG_Enemy_Base::InitialWaitingAnimation()
 {
 	waitingAnimation=CCAnimation::create();
 	waitingAnimation->setLoops(-1);
 	waitingAnimation->retain();
 
+	AddSpritesForAnimation(waitingAnimation,waitingAnimationFolder);
+
+	waitingAnimation->setDelayPerUnit(1.0f/waitingAnimation->getFrames()->count());
 }
+
 void JG_Enemy_Base::InitialEscapingAnimation()
 {
 	escapingAnimation=CCAnimation::create();
 	escapingAnimation->setLoops(-1);
-	//escapingAnimation->setRestoreOriginalFrame(true);
 	escapingAnimation->retain();
 
+	AddSpritesForAnimation(escapingAnimation,escapingAnimationFolder);
+
+	escapingAnimation->setDelayPerUnit(1.0f/escapingAnimation->getFrames()->count());
 }
+
 void JG_Enemy_Base::InitialDyingAnimation()
 {
 	dyingAnimation=CCAnimation::create();
 	dyingAnimation->setLoops(-1);
-	dyingAnimation->setRestoreOriginalFrame(true);
 	dyingAnimation->retain();
+
+	AddSpritesForAnimation(dyingAnimation,dyingAnimationFolder);
+
+	dyingAnimation->setDelayPerUnit(1.0f/dyingAnimation->getFrames()->count());
 }
 
 void JG_Enemy_Base::InitialLandingAnimation()
 {
 	landingAnimation=CCAnimation::create();
 	landingAnimation->retain();
+
+	AddSpritesForAnimation(landingAnimation,landingAnimationFolder);
+
+	landingAnimation->setDelayPerUnit(landingTime/landingAnimation->getFrames()->count());
 }
 
+
+void JG_Enemy_Base::AddSpritesForAnimation(CCAnimation* animation, CCString folder)
+{
+	if( folder.getCString() == "")
+		return;
+	//TODO: change it to do while
+	int i=1;
+	CCString spriteAddress = GetSpriteAddress(folder,i);
+	while (CCFileUtils::sharedFileUtils()->isFileExist(spriteAddress.getCString()))
+	{
+		animation->addSpriteFrameWithFileName(spriteAddress.getCString());
+		i++;
+		spriteAddress = GetSpriteAddress(folder,i);
+	}
+}
+
+CCString JG_Enemy_Base::GetSpriteAddress(CCString folder,int spriteIndex)
+{
+	CCString* spriteFileName;
+	//TODO: clean this shit
+	if(spriteIndex<10)
+		spriteFileName = CCString::createWithFormat(+"_0000%d.png",spriteIndex);
+	else if(spriteIndex<100)
+		spriteFileName = CCString::createWithFormat(+"_000%d.png",spriteIndex);
+	else if(spriteIndex<1000)
+		spriteFileName = CCString::createWithFormat(+"_00%d.png",spriteIndex);
+	
+	(*spriteFileName) = folder.m_sString+spriteFileName->m_sString;
+	return *spriteFileName;
+}
 //function to run animation on the sprite
 
 void JG_Enemy_Base::RunAnimation(CCAnimation* animation)
 {
-	//return;
+
+	
+
 	CCAnimate* animationAction=CCAnimate::create(animation);
 	if(lastAnimationAction != NULL)
-		this->stopAction(lastAnimationAction);
-	this->runAction(animationAction);
+		stopAction(lastAnimationAction);
+	runAction(animationAction);
+	
 	lastAnimationAction = animationAction;
 
 }
@@ -435,8 +490,9 @@ void JG_Enemy_Base::SetBonusTexture(EEnemyBonus bonus)
 
 void JG_Enemy_Base::DrawBonusTexture()
 {
+	CCPoint drawPoint = getTexture()->getContentSizeInPixels()/2;
 	if(ballBonusTexture!=NULL)
-		ballBonusTexture->drawAtPoint(ccp(0,0));
+		ballBonusTexture->drawAtPoint(drawPoint);
 }
 void JG_Enemy_Base::draw()
 {

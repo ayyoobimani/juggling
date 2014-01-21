@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "JG_Menu_GUI.h"
 #include "JG_Game_Main.h"
+#include "JG_Score_Handler.h"
 
 class JG_Game_Main;
 class JG_Menu_GUI;

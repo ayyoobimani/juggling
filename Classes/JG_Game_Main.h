@@ -483,7 +483,7 @@ public:
 
 	bool IsPlayerGetHighScore();
 	int	DeterminePlayerRank();
-	void InsertPlayerHighScore();
+	void InsertPlayerHighScore(CCString _playerName, int _rank, int _score);
 
 	/* when a attack wave (currentAttackWave) rewards a health bonus to the user this event happens 
 	* @this event dicreases number of healths calculated to be rewarded 
@@ -507,6 +507,8 @@ public:
 	void resumeMusic();
 	void pauseMusic();
 	void playSoundEffect(CCString effectsound);
+
+	void TestOutOfRangeRankForHighScore();
 
 	
 

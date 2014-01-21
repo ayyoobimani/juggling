@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "JG_Game_Main.h"
 #include "JG_Menu_Main.h"
+#include "JG_Test_ScoreHandler.h"
 
 
 /**
@@ -46,6 +47,10 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+
+	//file saving test
+	
 };
 
 

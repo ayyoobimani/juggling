@@ -38,6 +38,7 @@
 
 //here is to test score handling
 #include "JG_Score_Handler.h"
+#include "JG_Test_ScoreHandler.h"
 
 
 

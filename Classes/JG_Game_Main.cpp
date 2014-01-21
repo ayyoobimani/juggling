@@ -83,7 +83,11 @@ bool JG_Game_Main::init()
 	backGround->setPosition(ccp(screenSize.width/2,screenSize.height/2));
 	this->addChild(backGround,-100);
 	/************************* /Background *************************/
+	
 
+	//testing score saving
+	JG_Test_ScoreHandler test;
+	//test.RunTestFunctions();
 
 
 	/************************** Hands ***********************************/
@@ -214,6 +218,7 @@ void JG_Game_Main::InitRound()
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
 
 	/****************************** Balls ************************************/
+
 
 	// initing  one ball for test
 	ballsArray=CCArray::create();

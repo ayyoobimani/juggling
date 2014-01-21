@@ -41,7 +41,7 @@ void JG_AttackWave_AllLinesTogether::initAttackWave(float attackDifficulty, int 
 		currentEnemyDifficulty *= (1 + ( (100 - selectPath(pathCounter)->GetHealth() )/100 ));
 
 		//defficulty added because of concurrent path attack
-		currentEnemyDifficulty *= ( ( (pathCounter+1) > currentTotalPathExist ? currentTotalPathExist:(pathCounter+1)) *3 );
+		currentEnemyDifficulty *= ( ( (pathCounter+1) > currentTotalPathExist ? currentTotalPathExist:(pathCounter+1)) *2 );
 		
 		totalDifficulty += currentEnemyDifficulty;
 

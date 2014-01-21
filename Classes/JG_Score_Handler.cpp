@@ -27,6 +27,12 @@ vector<ScoreTableRecord>* JG_Score_Handler::GetHighScoreTable()
 	vector<ScoreTableRecord>* highScoreVector=new vector<ScoreTableRecord>(HIGH_SCORE_RECORD_NUMBERS);
 	for(int i=1;i<HIGH_SCORE_RECORD_NUMBERS+1;i++)
 	{
+		highScoreVector->at(i-1).name="";
+		highScoreVector->at(i-1).rank=i;
+		highScoreVector->at(i-1).score=0;
+	}
+	for(int i=1;i<HIGH_SCORE_RECORD_NUMBERS+1;i++)
+	{
 		const char * tempKey=CCString::createWithFormat("%i",i)->getCString();
 		
 		string record=CCUserDefault::sharedUserDefault()->getStringForKey(tempKey);

@@ -14,7 +14,7 @@ CCObject* JG_Enemy_Base::listenerObj;
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
 	lastAnimationAction= NULL;
-	spriteFileName = "Enemies/UFO/UFO.png";
+	//spriteFileName = "Enemies/UFO/UFO.png";
 	speed = 300;
 	landingTime = 2.0;
 	SetState(EnemyS_Inited);
@@ -88,12 +88,15 @@ void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus)
 
 void JG_Enemy_Base::InitialAnimations()
 {
+	
+
 	InitialIntendingAnimation();
 	InitialAttackingAnimation();
 	InitialWaitingAnimation();
 	InitialEscapingAnimation();
 	InitialDyingAnimation();
 	InitialLandingAnimation();
+	setAnchorPoint(ccp(0.5,0.5));
 }
 
 void JG_Enemy_Base::SetEnemyBonus(EEnemyBonus bonus)
@@ -402,11 +405,14 @@ void JG_Enemy_Base::InitialLandingAnimation()
 
 void JG_Enemy_Base::RunAnimation(CCAnimation* animation)
 {
-	//return;
+
+	
+
 	CCAnimate* animationAction=CCAnimate::create(animation);
 	if(lastAnimationAction != NULL)
-		this->stopAction(lastAnimationAction);
-	this->runAction(animationAction);
+		stopAction(lastAnimationAction);
+	runAction(animationAction);
+	
 	lastAnimationAction = animationAction;
 
 }
@@ -435,8 +441,9 @@ void JG_Enemy_Base::SetBonusTexture(EEnemyBonus bonus)
 
 void JG_Enemy_Base::DrawBonusTexture()
 {
+	CCPoint drawPoint = getTexture()->getContentSizeInPixels()/2;
 	if(ballBonusTexture!=NULL)
-		ballBonusTexture->drawAtPoint(ccp(0,0));
+		ballBonusTexture->drawAtPoint(drawPoint);
 }
 void JG_Enemy_Base::draw()
 {

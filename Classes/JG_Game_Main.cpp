@@ -135,7 +135,7 @@ bool JG_Game_Main::init()
 	/************************* Enemy Factories ********************/
 
 	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Crow>(6,2));
-	enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
+	//enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
 
 	/************************* /Enemy Factories ********************/
 
@@ -255,7 +255,7 @@ void JG_Game_Main::InitRound()
 	////************************* Delete This Later **************/
 	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
 	tempEnemy->InitialEnemy(ccp(100,100),EnemyBonus_ExtraBall);
-	this->addChild((CCNode*) tempEnemy,100);
+	this->addChild((CCNode*) tempEnemy,20);
 	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
 	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
 	//((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
@@ -1774,7 +1774,7 @@ CCArray* JG_Game_Main::getpathsArray()
 void JG_Game_Main::addEnemy(JG_Enemy_Base* enemy)
 {
 	enemyArray->addObject(enemy);
-	addChild((CCNode*) enemy,50);
+	addChild((CCNode*) enemy,20);
 }
 
 /////////////////////////////////////////////////////////////////////

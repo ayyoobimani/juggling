@@ -46,7 +46,7 @@ void JG_Fruit::CheckCollisionWithBall()
 	{
 		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
 		float collision_radius=this->radius+tempCurrentBall->radius;
-		if(mainGame->ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
+		if(ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
 		{
 			mainGame->OnFruitHit(this, tempCurrentBall);
 			return;

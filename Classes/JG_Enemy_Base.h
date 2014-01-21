@@ -2,8 +2,12 @@
 #define __Enemy_Base_H__
 
 #include "sprite_nodes\CCSprite.h"
-#include "JG_Path.h"
+#include "cocos2d.h"
 #include "JG_Enums.h"
+#include "Defines.h"
+
+
+using namespace cocos2d;
 
 class JG_Path;
 
@@ -12,6 +16,7 @@ class JG_Enemy_Base;
 
 typedef void (CCObject::*OnLostHandler)(JG_Enemy_Base*);
 typedef void (CCObject::*OnHitHandler)(JG_Enemy_Base* , JG_Ball*);
+typedef void (CCObject::*DamagePathHandler)(JG_Path* , float );
 typedef CCArray* (CCObject::*GetBallsHandler)();
 
 #define OnHitSelector(_SELECTOR) (OnHitHandler)(&_SELECTOR)
@@ -29,7 +34,7 @@ enum EEnemyState
 #define BASE_INTERVAL 5
 #define FIRST_HIT_COEFFICIENT 2
 
-using namespace cocos2d;
+
 class JG_Enemy_Base:
 	public CCSprite
 {
@@ -38,6 +43,7 @@ private:
 	static OnLostHandler onLostFunction;
 	static OnHitHandler onHitFunction;
 	static GetBallsHandler getBallFunction;
+	static DamagePathHandler damagePathFunction;
 	static CCObject* listenerObj;
 
 	float speed;
@@ -77,6 +83,8 @@ public:
 	static void SetOnLostFunctionPointer(CCObject* rec,OnLostHandler);
 	static void SetOnHitFunctionPointer(CCObject* rec, OnHitHandler);
 	static void SetGetBallsFunctionPointer(CCObject* obj,GetBallsHandler);
+	static void SetDamagePathFunctionPointer(CCObject* obj,DamagePathHandler);
+
 
 	//move to  function
 	void MoveTo(float dt);
@@ -137,6 +145,8 @@ public:
 	JG_Path* GetTargetPath();
 
 	void SetEnemyBonus(EEnemyBonus bonus);
+
+	CCString spriteFileName;
 };
 
 #endif 

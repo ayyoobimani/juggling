@@ -36,6 +36,7 @@ bool JG_Game_Main::init()
 	JG_Enemy_Base::SetOnHitFunctionPointer(this,OnHitHandler(&JG_Game_Main::OnEnemyHit));
 	JG_Enemy_Base::SetOnLostFunctionPointer(this,OnLostHandler(&JG_Game_Main::OnEnemyLost));
 	JG_Enemy_Base::SetGetBallsFunctionPointer(this,GetBallsHandler(&JG_Game_Main::GetBallArray));
+	JG_Enemy_Base::SetDamagePathFunctionPointer(this,DamagePathHandler(&JG_Game_Main::DamagePath));
 
 	//////////////////////////////
 	// 1. super init first
@@ -59,7 +60,7 @@ bool JG_Game_Main::init()
 	this->addChild(gameGUI,100);
 	//gameGUI->draw();
 
-	scoreStorer =  new JG_Score_Handler;
+	
 	/**********************BackGroundSound***********************/
 	
 	playMusic("BackMusic.wav");
@@ -122,7 +123,7 @@ bool JG_Game_Main::init()
 
 	/************************* Enemy Factories ********************/
 
-	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Base>(6,2));
+	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Crow>(6,2));
 
 	/************************* /Enemy Factories ********************/
 
@@ -138,11 +139,8 @@ bool JG_Game_Main::init()
 
 	//InitGame_difficultyControl();
 
-	//testing score saving
-	scoreFileSaving->InsertRecord("testuser",12000,1);
-	vector<ScoreTableRecord>* scorevector=scoreFileSaving->GetHighScoreTable();
 	
-	gameGUI->SetDebugLabelInfo(CCString::createWithFormat("%s",scorevector->at(0).name.c_str())->getCString());
+	//gameGUI->SetDebugLabelInfo(CCString::createWithFormat("%s",scorevector->at(0).name.c_str())->getCString());
 
 	//gameGUI->SetDebugLabelInfo(CCString::createWithFormat(" %i", highScoreVector)->getCString());
 
@@ -197,6 +195,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 void JG_Game_Main::InitRound()
 {
 
+	scoreTable = scoreFileHandler->GetHighScoreTable();
 	gameGUI->SetHUDVisibility(true);
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 	traceLivePointTexture = CCTextureCache::sharedTextureCache()->addImage("liveStar.png");
@@ -817,6 +816,11 @@ void JG_Game_Main::OnBallThrow(JG_Ball* ball)
 	ball->ResetComboChain();
 }
 
+void JG_Game_Main::DamagePath(JG_Path* path,float damage)
+{
+	path->TakeDamage(damage);
+}
+
 bool JG_Game_Main::IsThereAnyBallLeft()
 {
 	return (reservedBallCount >0 || ballsArray->count()>0);
@@ -1332,7 +1336,8 @@ void JG_Game_Main::EndRound()
 	gameGUI->SetEndRoundScreenVisibility(true);
 	if(IsPlayerGetHighScore())
 	{
-		gameGUI->SetHighScoreScreenInfos(5);
+		rank = DeterminePlayerRank();
+		gameGUI->SetHighScoreScreenInfos(rank);
 		gameGUI->SetHighScoreScreenVisibility(true);
 	}
 	
@@ -1342,13 +1347,35 @@ void JG_Game_Main::EndRound()
 
 bool JG_Game_Main::IsPlayerGetHighScore()
 {
-	return true;
+	//TODO: this code is not comprehensible
+	return score >= scoreTable->at(scoreTable->size()-1).score;
+}
+
+int JG_Game_Main::DeterminePlayerRank()
+{
+	for(int i = 0 ; i < scoreTable->size(); i++)
+	{
+		if( score >= scoreTable->at(i).score)
+			return i+1;
+	}
+	return -1;
 }
 
 void JG_Game_Main::InsertPlayerHighScore()
 {
+	//extra check
 	if(IsPlayerGetHighScore())
-		CCLOG("Player Name is %s " , gameGUI->GetPlayerName().c_str());
+	{
+		CCString playerName = gameGUI->GetPlayerName();
+		for( int i = rank-1 ; i < scoreTable->size(); i++)
+		{
+			scoreFileHandler->InsertRecord(scoreTable->at(i).name
+				,scoreTable->at(i).score
+				,scoreTable->at(i).rank+1);
+		}
+		scoreFileHandler->InsertRecord(playerName,score,rank);
+
+	}
 	
 
 }
@@ -1536,10 +1563,7 @@ void JG_Game_Main::TestMultiTouch_EndGen(float dt)
 
 
 
-bool JG_Game_Main::ArePointsColliding(CCPoint point1,CCPoint point2,float distance)
-{
-	return point1.getDistance(point2)<distance;
-}
+
 
 
 

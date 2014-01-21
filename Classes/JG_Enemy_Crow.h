@@ -7,5 +7,10 @@ class JG_Enemy_Crow :
 public:
 	JG_Enemy_Crow(void);
 	~JG_Enemy_Crow(void);
+
+	/*void InitialIntendingAnimation();
+	void InitialAttackingAnimation();
+	void InitialDyingAnimation();
+	void Initti*/
 };
 

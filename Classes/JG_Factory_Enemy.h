@@ -1,6 +1,6 @@
 #pragma once
 
-#include "JG_Enemy_Base.h"
+//#include "JG_Enemy_Base.h"
 #include "JG_Factory_Base.h"
 
 class JG_Enemy_Base;

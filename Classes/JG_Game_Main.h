@@ -5,6 +5,7 @@
 
 #include "cocos2d.h"
 #include "JG_Enums.h"
+#include "Defines.h"
 
 #include "JG_Menu_Main.h"
 
@@ -16,6 +17,7 @@
 #include "JG_Path.h"
 
 #include "JG_Enemy_Base.h"
+#include "JG_Enemy_Crow.h"
 #include "JG_Factory_Base.h"
 //#include "JG_AttackWave_Base.h"
 
@@ -27,6 +29,7 @@
 #include  "JG_Game_GUI.h"
 #include "JG_GUI_Bar.h"
 #include "JG_Score_Handler.h"
+#include <vector>
 
 
 
@@ -55,7 +58,7 @@ class JG_AttackWave_Base;
 class JG_AttackWave_AllLinesSequential;
 
 
-#define GRAVITY CCDirector::sharedDirector()->getWinSize().height * 0.6
+
 
 // define how many touches can be supported at the same time
 #define TOUCH_COUNT 2
@@ -98,7 +101,9 @@ struct STouchInfo
 class JG_Game_Main : public cocos2d::CCLayer
 {
 	
-	JG_Score_Handler* scoreStorer;
+	JG_Score_Handler* scoreFileHandler;
+	vector<ScoreTableRecord>* scoreTable;
+
 	bool bIsGameInited; 
 
 	
@@ -198,6 +203,7 @@ public:
 	/**************** game rule members *************/
 	int lifeCount;
 	int score;
+	int rank;
 	int reservedBallCount;
 	/**************** /game rule members *************/
 	
@@ -217,6 +223,8 @@ public:
 	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
 	//when a ball hit an enemy
 	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
+
+	void DamagePath(JG_Path* ,float damage);
 	
 	
 	
@@ -439,9 +447,6 @@ public:
 	void CheckBallsThrowPath();
 
 	
-	/*!checks whether distance of the two point are lesser than distance or not*/
-	//TODO: find a better name
-	static bool ArePointsColliding (CCPoint point1,CCPoint point2,float distance);
 
 	inline float getSign(float num)
 	{
@@ -479,6 +484,7 @@ public:
 
 
 	bool IsPlayerGetHighScore();
+	int	DeterminePlayerRank();
 	void InsertPlayerHighScore();
 
 	/* when a attack wave (currentAttackWave) rewards a health bonus to the user this event happens 
@@ -489,18 +495,8 @@ public:
 	int getHealthsToRewardCount();
 
 
-	//score handling and file saving
-	JG_Score_Handler* scoreFileSaving;
 
 
-	static float JG_abs(float input)
-	{
-		if(input > 0.0)
-			return input;
-
-		return 0.0 - input;
-
-	}
 
 	//Sound Setting Function
 	void playMusic(CCString backsound);

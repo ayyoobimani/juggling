@@ -5,6 +5,7 @@
 #include "JG_Game_Main.h"
 #include "JG_Menu_Main.h"
 
+
 /**
 @brief    The cocos2d Application.
 
@@ -46,6 +47,7 @@ public:
     */
     virtual void applicationWillEnterForeground();
 };
+
 
 #endif // _APP_DELEGATE_H_
 

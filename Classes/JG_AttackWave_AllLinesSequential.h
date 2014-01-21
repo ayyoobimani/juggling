@@ -3,7 +3,7 @@
 #include "JG_Enemy_Base.h"
 #include <queue>
 
-//#include "JG_Game_Main.h"
+#include "JG_Game_Main.h"
 
 
 

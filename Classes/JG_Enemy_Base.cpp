@@ -5,10 +5,13 @@
 OnLostHandler JG_Enemy_Base::onLostFunction;
 OnHitHandler JG_Enemy_Base::onHitFunction;
 GetBallsHandler JG_Enemy_Base::getBallFunction;
+DamagePathHandler JG_Enemy_Base::damagePathFunction;
 CCObject* JG_Enemy_Base::listenerObj;
+
 
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
+	spriteFileName = "Enemies/UFO/UFO.png";
 	speed = 300;
 	waitingTime = 2.0;
 	SetState(EnemyS_Inited);
@@ -45,7 +48,7 @@ JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(CCPoint initialPosition)
 
 void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition)
 {
-	initWithFile("crow.png");
+	initWithFile(spriteFileName.getCString());
 	//here we create animations
 	InitialIntendingAnimation();
 	InitialAttackingAnimation();
@@ -65,7 +68,7 @@ void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition)
 
 void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus)
 {
-	initWithFile("crow.png");
+	initWithFile(spriteFileName.getCString());
 	//here we create animations
 	InitialIntendingAnimation();
 	InitialAttackingAnimation();
@@ -111,7 +114,7 @@ void JG_Enemy_Base::MoveTo(float dt)
 
 }
 
-void JG_Enemy_Base::SetDestinationPath(CCPoint destination, JG_Path * newTargetPath)
+void JG_Enemy_Base::SetDestinationPath(CCPoint destination, JG_Path* newTargetPath)
 {
 	SetDestinationPosition(destination);
 	targetPath = newTargetPath;
@@ -240,7 +243,8 @@ void JG_Enemy_Base::HandleWaitingToAttacking(float dt)
 void JG_Enemy_Base::Attack(float dt)
 {
 	if(targetPath!=NULL)
-		targetPath->TakeDamage(damagePerInterval);
+		CALL_MEMBER_FN(listenerObj,damagePathFunction)(targetPath, damagePerInterval);
+	//targetPath->TakeDamage(damagePerInterval);
 }
 
 float JG_Enemy_Base::GetDifficulty()
@@ -276,8 +280,8 @@ void JG_Enemy_Base::CheckCollisionWithBall()
 	for(int i=0;i<ballArray->count();i++)
 	{
 		tempCurrentBall=(JG_Ball*)ballArray->objectAtIndex(i);
-		float collision_radius=this->radius+tempCurrentBall->radius;
-		if(JG_Game_Main::ArePointsColliding(this->getPosition(),tempCurrentBall->getPosition(),collision_radius))
+		float collision_radius=this->radius+10;
+		if(ArePointsColliding(this->getPosition(),((CCSprite*)tempCurrentBall)->getPosition(),collision_radius))
 		{
 			CALL_MEMBER_FN(listenerObj,onHitFunction)(this, tempCurrentBall);
 			return;
@@ -392,5 +396,12 @@ void JG_Enemy_Base::SetGetBallsFunctionPointer(CCObject* obj,GetBallsHandler han
 void JG_Enemy_Base::SetOnHitFunctionPointer(CCObject* obj,OnHitHandler handler )
 {
 	onHitFunction = handler;
+	listenerObj = obj;
+}
+
+
+void JG_Enemy_Base::SetDamagePathFunctionPointer(CCObject* obj,DamagePathHandler handler )
+{
+	damagePathFunction = handler;
 	listenerObj = obj;
 }

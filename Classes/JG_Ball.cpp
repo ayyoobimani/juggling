@@ -68,9 +68,9 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 void JG_Ball::CalculateSpeedBoundriesBaseOnLength(float deltaX)
 {
 	//TODO: wtf +2 needed
-	minSpeed = sqrt( GRAVITY *JG_Game_Main::JG_abs(deltaX))+ 2;
+	minSpeed = sqrt( GRAVITY *JG_abs(deltaX))+ 2;
 	//TODO: calculate maxSpeed
-	maxSpeed = sqrt(GRAVITY *JG_Game_Main::JG_abs(deltaX)/sin(2 *MAX_THROW_RAD));
+	maxSpeed = sqrt(GRAVITY *JG_abs(deltaX)/sin(2 *MAX_THROW_RAD));
 }
 
 void JG_Ball::InitialBallLevelInformation()
@@ -110,7 +110,7 @@ void JG_Ball::Throw(float force, CCPoint destination)
 
 	//CCLog(" Throw",0);
 
-	MoveDirX = (destination.x-getPositionX())/JG_Game_Main::JG_abs(destination.x-getPositionX()) ;
+	MoveDirX = (destination.x-getPositionX())/JG_abs(destination.x-getPositionX()) ;
 
 	if(moveMode == Move_Curve)
 	{
@@ -445,7 +445,7 @@ void JG_Ball::CheckCollisionWithBall()
 		tempCurrentBall=(JG_Ball*)mainGame->GetBallArray()->objectAtIndex(i);
 		if(this->GetBallDirection()==tempCurrentBall->GetBallDirection() && this!=tempCurrentBall)
 		{
-			if(mainGame->ArePointsColliding(this->getPosition(),(tempCurrentBall)->getPosition(),radius+radius))
+			if(ArePointsColliding(this->getPosition(),(tempCurrentBall)->getPosition(),radius+radius))
 				mainGame->OnBallsCollide(tempCurrentBall,this);
 		}
 		

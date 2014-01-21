@@ -769,6 +769,7 @@ void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 	//CCLog("!!!!OnEnemyHit!!!!!!");
 	enemy->SetState(EnemyS_Dying);
 	ManageEnemyBonus(enemy->GetEnemyBonus());
+	playSoundEffect("hitSound.wav");
 
 }
 
@@ -1299,6 +1300,8 @@ void JG_Game_Main::HandlePauseGame(CCObject* pSender)
 {
 	gameGUI->SetPauseScreenVisibility(true);
 	PauseGame();
+	pauseMusic();
+	playSoundEffect("EffectSound.wav");
 }
 
 void JG_Game_Main::HandleExitGame(CCObject* pSender)
@@ -1317,11 +1320,15 @@ void JG_Game_Main::HandleExitToMainMenu(CCObject* pSender)
 void JG_Game_Main::HandleResumeGame(CCObject* pSender)
 {
 	ResumeGame();
+	playSoundEffect("EffectSound.wav");
+	resumeMusic();
 }
 
 void JG_Game_Main::HandleResetGame(CCObject* pSender)
 {
 	ResetGame();
+	playSoundEffect("EffectSound2.wav");
+	resumeMusic();
 }
 
 void JG_Game_Main::HandleEndRoundScreenResetGame(CCObject* pSender)
@@ -1793,4 +1800,9 @@ void JG_Game_Main::resumeMusic()
 void JG_Game_Main::pauseMusic()
 {
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+}
+
+void JG_Game_Main::playSoundEffect(CCString effectsound)
+{
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(effectsound.getCString());
 }

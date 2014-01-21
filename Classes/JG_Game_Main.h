@@ -502,6 +502,7 @@ public:
 	void stopMusic();
 	void resumeMusic();
 	void pauseMusic();
+	void playSoundEffect(CCString effectsound);
 
 	
 

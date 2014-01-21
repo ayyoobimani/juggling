@@ -38,6 +38,16 @@ bool JG_Game_Main::init()
 	JG_Enemy_Base::SetGetBallsFunctionPointer(this,GetBallsHandler(&JG_Game_Main::GetBallArray));
 	JG_Enemy_Base::SetDamagePathFunctionPointer(this,DamagePathHandler(&JG_Game_Main::DamagePath));
 
+	JG_AttackWave_Base::SetGetEnemyTypesFunctionPointer(this,GetEnemyTypesHandler(&JG_Game_Main::getEnemyTypes));
+	JG_AttackWave_Base::SetGetBallsToRewardFunctionPointer(this,GetBallsToRewardCountHandler(&JG_Game_Main::getBallsToRewardCount));
+	JG_AttackWave_Base::SetGetHealthesToRewardCountFunctionPointer(this,GetHealthesToRewardCountHandler(&JG_Game_Main::getHealthsToRewardCount));
+	JG_AttackWave_Base::SetGetPathesArrayFunctionPointer(this,GetPathesArrayHandler(&JG_Game_Main::getpathsArray));
+	JG_AttackWave_Base::SetOnAttackWaveFinishedFunctionPointer(this,OnAttackWaveFinishedHandler(&JG_Game_Main::onAttackWaveFinished));
+	JG_AttackWave_Base::SetOnBallRewardedFunctionPointer(this,OnBallRewardedHandler(&JG_Game_Main::onBallRewarded));
+	JG_AttackWave_Base::SetOnHealthRewardedFunctionPointer(this,OnHealthRewardedHandler(&JG_Game_Main::onHealthRewarded));
+	JG_AttackWave_Base::SetAddEnemyFunctionPointer(this, AddEnemyHandler(&JG_Game_Main::addEnemy));
+	JG_AttackWave_Base::SetGetAvailablePathCountFunctionPointer(this, GetAvailablePathCountHandler(&JG_Game_Main::getAvailablePathCount));
+
 	//////////////////////////////
 	// 1. super init first
 	if ( !CCLayer::init() )
@@ -1587,7 +1597,8 @@ int JG_Game_Main::getAttackWaveType()
 void JG_Game_Main::initialNewAttackWave(float dt)
 {
 
-	//CCLOG("called manage difficulty");
+
+	CCLOG("called initial new attackwave ");
 	int attackWaveIndex = getAttackWaveType();
 	//CCLOG(CCString::createWithFormat("attackwaveindex: %d" , attackWaveIndex)->getCString());
 	
@@ -1597,9 +1608,10 @@ void JG_Game_Main::initialNewAttackWave(float dt)
 	//currentAttackWave = (JG_AttackWave_Base*) new JG_AttackWave_AllLinesSequential();
 	float difficulty = 100 * (attackWaveCount+1) ;
 	//CCLOG(CCString::createWithFormat("difficulty: %f" , difficulty)->getCString());
-	currentAttackWave->initAttackWave(this, difficulty, (attackWaveCount+1) );
+	currentAttackWave->initAttackWave(difficulty, (attackWaveCount+1) );
 
 	attackWaveCount++;
+	CCLOG("finished initial new attack wave");
 }
 
 void JG_Game_Main::ManageDifficulty()
@@ -1708,15 +1720,12 @@ void JG_Game_Main::manageRewards(float dt)
 
 }
 
-void JG_Game_Main::onBallRewarded(int value)
+void JG_Game_Main::onBallRewarded()
 {
-	if(value < 1)
-		return;
-
-	if(ballsToRewardCounter  >= value)
-	{
-		ballsToRewardCounter -= value;
-	}
+	
+	
+		ballsToRewardCounter -= 1;
+	
 }
 
 int JG_Game_Main::getBallsToRewardCount()
@@ -1739,14 +1748,31 @@ float JG_Game_Main::calculateLostHealth()
 	return initialTotalHealth - currentTotalHealth;
 }
 
+std::vector<SEnemyTypes> JG_Game_Main::getEnemyTypes()
+{
+	return enemyTypes;
+}
+
+CCArray* JG_Game_Main::getpathsArray()
+{
+	return pathsArray;
+}
+
+void JG_Game_Main::addEnemy(JG_Enemy_Base* enemy)
+{
+	enemyArray->addObject(enemy);
+	addChild((CCNode*) enemy,50);
+}
+
+/////////////////////////////////////////////////////////////////////
 int JG_Game_Main::getHealthsToRewardCount()
 {
 	return healthsToRewardCounter;
 }
 
-void JG_Game_Main::onHealthRewarded(int value)
+void JG_Game_Main::onHealthRewarded()
 {
-	healthsToRewardCounter -= value;
+	healthsToRewardCounter -= 1;
 }
 
 void JG_Game_Main::playMusic(CCString backsound)

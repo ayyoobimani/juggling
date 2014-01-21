@@ -1049,7 +1049,7 @@ void JG_Game_Main::AddBallToScreen()
 		,screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5)
 		,Dir_RightHandToUp
 		,DISCRETE_PARTS_COUNT);
-	this->addChild(newBall,75);
+	this->addChild(newBall,100);
 	ballsArray->addObject(newBall);
 
 }

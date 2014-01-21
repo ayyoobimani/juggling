@@ -59,6 +59,7 @@ bool JG_Game_Main::init()
 	this->addChild(gameGUI,100);
 	//gameGUI->draw();
 
+	scoreStorer =  new JG_Score_Handler;
 	/**********************BackGroundSound***********************/
 	
 	playMusic("BackMusic.wav");
@@ -1352,6 +1353,7 @@ void JG_Game_Main::InsertPlayerHighScore()
 {
 	if(IsPlayerGetHighScore())
 		CCLOG("Player Name is %s " , gameGUI->GetPlayerName().c_str());
+	
 
 }
 

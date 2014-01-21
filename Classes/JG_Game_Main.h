@@ -26,6 +26,7 @@
 #include <vector>
 #include  "JG_Game_GUI.h"
 #include "JG_GUI_Bar.h"
+#include "JG_Score_Handler.h"
 
 
 
@@ -97,7 +98,7 @@ struct STouchInfo
 class JG_Game_Main : public cocos2d::CCLayer
 {
 	
-
+	JG_Score_Handler* scoreStorer;
 	bool bIsGameInited; 
 
 	

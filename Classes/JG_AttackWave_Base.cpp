@@ -30,16 +30,20 @@ int JG_AttackWave_Base::selectEnemyType()
 	float coefficintSum = 0;
 
 	std::vector<SEnemyTypes> enemyTypes = CALL_MEMBER_FN(listenerObj, getEnemyTypesFunction)();
+	//CCLOG(CCString::createWithFormat("enemy types size: %d",enemyTypes.size())->getCString());
 	for(int i=0; i< enemyTypes.size() ; i++)
 	{
 		coefficintSum += enemyTypes[i].currentChance;
 	}
 
-	
+	//CCLOG(CCString::createWithFormat("sum: %d",enemyTypes.size())->getCString());
+	int chanceSum = 0;
 	for(int i=0; i< enemyTypes.size() ; i++)
 	{
-		if (randomNumber <= (enemyTypes[i].currentChance / coefficintSum))
+		chanceSum += enemyTypes[i].currentChance ;
+			if (randomNumber <= (chanceSum / coefficintSum))
 		{
+			CCLOG(CCString::createWithFormat("enemy type: %d",i)->getCString());
 			return i;
 		}
 	}

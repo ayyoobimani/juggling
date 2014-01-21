@@ -26,6 +26,7 @@ typedef CCArray* (CCObject::*GetBallsHandler)();
 
 #define CALL_MEMBER_FN(object,ptrToMember)  ((object)->*(ptrToMember))
 
+
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {
@@ -42,8 +43,7 @@ enum EEnemyState
 class JG_Enemy_Base:
 	public CCSprite
 {
-protected:
-	float landingTime;
+
 private:
 	CCSize screenSize;
 	static OnLostHandler onLostFunction;
@@ -53,9 +53,9 @@ private:
 	static GetBallRadiusHandler getBallRadiusFunction;
 	static CCObject* listenerObj;
 
+
 	CCAnimate* lastAnimationAction;
 
-	float speed;
 	
 	float radius;
 	
@@ -69,10 +69,10 @@ private:
 
 	JG_Path* targetPath;
 
-	float attackInterval;
-	float damagePerSecond;
-	float damagePerInterval;
+
 	void Attack();
+	
+
 
 	void SetBonusTexture(EEnemyBonus bonus);
 	
@@ -85,7 +85,17 @@ private:
 	void GotoState_Escaping();
 	void GotoState_Dying();
 	void GotoState_Landing();
+
+protected:
+	float attackInterval;
+	float damagePerSecond;
+	float damagePerInterval;
+
+	float speed;
+
+	float landingTime;
 	
+
 public:
 	JG_Enemy_Base(void);
 	~JG_Enemy_Base(void);

@@ -26,6 +26,7 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 	SetEnemyBonus(EnemyBonus_None);
 
 	screenSize = CCDirector::sharedDirector()->getWinSize();
+	CCLOG("finished enemy father constructor");
 }
 
 

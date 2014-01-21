@@ -18,6 +18,7 @@
 
 #include "JG_Enemy_Base.h"
 #include "JG_Enemy_Crow.h"
+#include "JG_Enemy_QuickAttakc.h"
 #include "JG_Factory_Base.h"
 //#include "JG_AttackWave_Base.h"
 
@@ -504,6 +505,7 @@ public:
 	void stopMusic();
 	void resumeMusic();
 	void pauseMusic();
+	void playSoundEffect(CCString effectsound);
 
 	
 

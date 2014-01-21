@@ -13,8 +13,9 @@ CCTexture2D* JG_Ball::ballTexturesByLevel[MAX_BALL_LEVELS];
 JG_Ball::JG_Ball(void)
 {
 	radius=(CCDirector::sharedDirector()->getWinSize().height* 20/320) ;
-	ballTexture = "ball.png";
-	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
+	ballTexture = "comet.png";
+	//setTexture(CCTextureCache::sharedTextureCache()->addImage("deadStar.png"));
+	//tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 
 	moveMode = Move_Curve;
 	curveRadian = 0;
@@ -22,8 +23,8 @@ JG_Ball::JG_Ball(void)
 	//tempInitialPosition = ccp(50,50);
 	
 	// give a simple rotation to ball
-	action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
-	runAction(action_Rotate);
+	//action_Rotate = CCRepeatForever::create(CCRotateBy::create(1,360));
+	//runAction(action_Rotate);
 }
 
 
@@ -44,7 +45,6 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		CCPoint wtf=  ball->getPosition();
 		ball->ballThrowDirection = initialDirection;
 		ball->ballLevel = initialBallLevel;
-		ball->setTexture(ballTexturesByLevel[ball->ballLevel]);
 		ball->mainGame = game;
 
 		ball->ResetComboChain();
@@ -73,28 +73,6 @@ void JG_Ball::CalculateSpeedBoundriesBaseOnLength(float deltaX)
 	maxSpeed = sqrt(GRAVITY *JG_abs(deltaX)/sin(2 *MAX_THROW_RAD));
 }
 
-void JG_Ball::InitialBallLevelInformation()
-{
-	ballScoreByLevel[MAX_BALL_LEVELS-1] = 50;
-	ballScoreByLevel[MAX_BALL_LEVELS-2] = 100;
-	ballScoreByLevel[MAX_BALL_LEVELS-3] = 200;
-	ballScoreByLevel[MAX_BALL_LEVELS-4] = 400;
-	ballScoreByLevel[MAX_BALL_LEVELS-5] = 800;
-	ballScoreByLevel[MAX_BALL_LEVELS-6] = 1600;
-
-	ballTextureNamesByLevel[MAX_BALL_LEVELS-1] = "Gem1.png";
-	ballTextureNamesByLevel[MAX_BALL_LEVELS-2] = "Gem3.png";
-	ballTextureNamesByLevel[MAX_BALL_LEVELS-3] = "Gem4.png";
-	ballTextureNamesByLevel[MAX_BALL_LEVELS-4] = "Gem5.png";
-	ballTextureNamesByLevel[MAX_BALL_LEVELS-5] = "Gem6.png";
-	ballTextureNamesByLevel[MAX_BALL_LEVELS-6] = "Gem7.png";
-
-	for( int i = 0 ; i<MAX_BALL_LEVELS; i++)
-	{
-		ballTexturesByLevel[i] = CCTextureCache::sharedTextureCache()->addImage(ballTextureNamesByLevel[i].getCString());
-	}
-
-}
 
 void JG_Ball::Throw(float force, CCPoint destination)
 {
@@ -102,22 +80,13 @@ void JG_Ball::Throw(float force, CCPoint destination)
 	mainGame->OnBallThrow(this);
 	// Note: the order is important 
 	ballThrowDirection = GetNewThrowDirection(ballThrowDirection);
-
 	moveMode = GetNewMoveMode(moveMode);
 	currentSpeed = GetNewSpeedByForce(force);
-
-	//CCLOG("Throw force is %f",force);
-
-	//CCLog(" Throw",0);
 
 	MoveDirX = (destination.x-getPositionX())/JG_abs(destination.x-getPositionX()) ;
 
 	if(moveMode == Move_Curve)
-	{
 		curveRadian = CalculateCurveRad(currentSpeed,this->getPosition(),destination);
-			
-	}
-
 }
 
 float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint destPosition)
@@ -255,7 +224,7 @@ void JG_Ball::DrawThrowPath()
 void JG_Ball::draw()
 {
 	CCSprite::draw();
-	DrawBallTexture();
+	//DrawBallTexture();
 	//if(bDrawThrowPath)
 		//DrawThrowPath();
 
@@ -274,18 +243,10 @@ void JG_Ball::draw()
 
 void JG_Ball::update(float dt)
 {
-	
-
-	//CCLog("update " ,0);
-
 	ProcessMove(dt);
-
 	CheckCollisionWithBall();
 	CheckOutOfScreen();
-
-	// temporary for reseting ball
-
-   
+	AdjustTextureRotation(); 
 }
 
 
@@ -345,6 +306,22 @@ void JG_Ball::CheckOutOfScreen()
 	}
 }
 
+void JG_Ball::AdjustTextureRotation()
+{
+
+	setRotation(GetRotationBasedOnDirection());
+}
+
+//TODO: realy dude. WTF is this mess
+float JG_Ball::GetRotationBasedOnDirection()
+{
+	if(moveMode==Move_Straight)
+		return (90-90* MoveDirX);
+	else
+	{
+		return 360-CC_RADIANS_TO_DEGREES(curveRadian);
+	}	
+}
 //
 //void JG_Ball::TempReset()
 //{
@@ -392,7 +369,7 @@ float JG_Ball::GetMinSpeed()
 void JG_Ball::SetBallLevel(int newLevel)
 {
 	ballLevel = newLevel;
-	setTexture(ballTexturesByLevel[ballLevel]);
+	//setTexture(ballTexturesByLevel[ballLevel]);
 }
 
 int JG_Ball::GetBallScore()

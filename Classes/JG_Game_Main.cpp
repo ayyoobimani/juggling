@@ -74,7 +74,7 @@ bool JG_Game_Main::init()
 	
 	/**********************BackGroundSound***********************/
 	
-	playMusic("BackMusic.wav");
+	//playMusic("BackMusic.wav");
 
 
 	/*********************** Background **************************/
@@ -114,7 +114,7 @@ bool JG_Game_Main::init()
 	/*************************** /Hands *************************************/
 
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
-	JG_Ball::InitialBallLevelInformation();
+	//JG_Ball::InitialBallLevelInformation();
 	//it is import we call calculatethrowpower after jg_ball calculate
 	InitialThrowPowerVariables();
 
@@ -211,7 +211,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 
 void JG_Game_Main::InitRound()
 {
-
+	playMusic("BackMusic.wav");
 	scoreTable = scoreFileHandler->GetHighScoreTable();
 	gameGUI->SetHUDVisibility(true);
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
@@ -1340,7 +1340,7 @@ void JG_Game_Main::HandleResumeGame(CCObject* pSender)
 void JG_Game_Main::HandleResetGame(CCObject* pSender)
 {
 	ResetGame();
-	playSoundEffect("EffectSound2.wav");
+	playSoundEffect("EffectSound.wav");
 	resumeMusic();
 }
 

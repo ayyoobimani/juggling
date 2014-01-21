@@ -6,7 +6,12 @@
 using namespace cocos2d;
 
 
-
+static float JG_getSign(float input)
+{
+	if(input > 0.0)
+		1;
+	return -1;
+}
 
 static float JG_abs(float input)
 {

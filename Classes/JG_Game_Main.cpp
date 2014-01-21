@@ -37,6 +37,7 @@ bool JG_Game_Main::init()
 	JG_Enemy_Base::SetOnLostFunctionPointer(this,OnLostHandler(&JG_Game_Main::OnEnemyLost));
 	JG_Enemy_Base::SetGetBallsFunctionPointer(this,GetBallsHandler(&JG_Game_Main::GetBallArray));
 	JG_Enemy_Base::SetDamagePathFunctionPointer(this,DamagePathHandler(&JG_Game_Main::DamagePath));
+	JG_Enemy_Base::SetGetBallRadiusFunctionPointer(this,GetBallRadiusHandler(&JG_Game_Main::GetBallRadius));
 
 	JG_AttackWave_Base::SetGetEnemyTypesFunctionPointer(this,GetEnemyTypesHandler(&JG_Game_Main::getEnemyTypes));
 	JG_AttackWave_Base::SetGetBallsToRewardFunctionPointer(this,GetBallsToRewardCountHandler(&JG_Game_Main::getBallsToRewardCount));
@@ -831,6 +832,11 @@ void JG_Game_Main::DamagePath(JG_Path* path,float damage)
 	path->TakeDamage(damage);
 }
 
+float JG_Game_Main::GetBallRadius(JG_Ball* ball)
+{
+	return ball->radius;
+}
+
 bool JG_Game_Main::IsThereAnyBallLeft()
 {
 	return (reservedBallCount >0 || ballsArray->count()>0);
@@ -1616,7 +1622,6 @@ void JG_Game_Main::initialNewAttackWave(float dt)
 
 void JG_Game_Main::ManageDifficulty()
 {
-	
 	if(enemyArray->count() == 0)
 	{
 		unschedule(schedule_selector(JG_Game_Main::initialNewAttackWave));

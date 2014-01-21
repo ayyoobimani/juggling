@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "JG_Enums.h"
 #include "Defines.h"
+#include "actions\CCAction.h"
 
 
 using namespace cocos2d;
@@ -17,6 +18,7 @@ class JG_Enemy_Base;
 typedef void (CCObject::*OnLostHandler)(JG_Enemy_Base*);
 typedef void (CCObject::*OnHitHandler)(JG_Enemy_Base* , JG_Ball*);
 typedef void (CCObject::*DamagePathHandler)(JG_Path* , float );
+typedef float (CCObject::*GetBallRadiusHandler)(JG_Ball* );
 typedef CCArray* (CCObject::*GetBallsHandler)();
 
 #define OnHitSelector(_SELECTOR) (OnHitHandler)(&_SELECTOR)
@@ -27,10 +29,12 @@ typedef CCArray* (CCObject::*GetBallsHandler)();
 // EnemyS_Inited is just for the moment it is inited
 enum EEnemyState
 {
-	EnemyS_Inited,EnemyS_Intending,EnemyS_Attacking,EnemyS_Waiting,EnemyS_Escaping,EnemyS_Dying
+	EnemyS_Inited, EnemyS_Intending, EnemyS_Attacking
+	, EnemyS_Waiting, EnemyS_Escaping, EnemyS_Dying
+	, EnemyS_Landing
 };
 
-#define BASE_WAITING_TIME 5
+#define BASE_LANDING_TIME 5
 #define BASE_INTERVAL 5
 #define FIRST_HIT_COEFFICIENT 2
 
@@ -38,18 +42,23 @@ enum EEnemyState
 class JG_Enemy_Base:
 	public CCSprite
 {
+protected:
+	float landingTime;
 private:
 	CCSize screenSize;
 	static OnLostHandler onLostFunction;
 	static OnHitHandler onHitFunction;
 	static GetBallsHandler getBallFunction;
 	static DamagePathHandler damagePathFunction;
+	static GetBallRadiusHandler getBallRadiusFunction;
 	static CCObject* listenerObj;
+
+	CCAnimate* lastAnimationAction;
 
 	float speed;
 	
 	float radius;
-	float waitingTime;
+	
 	EEnemyState state;
 	EEnemyBonus bonus;
 	bool bIsDirectionSet;
@@ -63,7 +72,7 @@ private:
 	float attackInterval;
 	float damagePerSecond;
 	float damagePerInterval;
-	void Attack(float dt);
+	void Attack();
 
 	void SetBonusTexture(EEnemyBonus bonus);
 	
@@ -75,6 +84,7 @@ private:
 	void GotoState_Waiting();
 	void GotoState_Escaping();
 	void GotoState_Dying();
+	void GotoState_Landing();
 	
 public:
 	JG_Enemy_Base(void);
@@ -84,6 +94,7 @@ public:
 	static void SetOnHitFunctionPointer(CCObject* rec, OnHitHandler);
 	static void SetGetBallsFunctionPointer(CCObject* obj,GetBallsHandler);
 	static void SetDamagePathFunctionPointer(CCObject* obj,DamagePathHandler);
+	static void SetGetBallRadiusFunctionPointer(CCObject* obj,GetBallRadiusHandler);
 
 
 	//move to  function
@@ -110,6 +121,8 @@ public:
 	void ProcessMove(float dt);
 
 	void HandleWaitingToAttacking(float time);
+	void HandleLandingToWaiting(float time);
+	void HandleAttackingToWaiting(float time);
 
 	//animation controlling
 	CCAnimation* intendingAnimation;
@@ -117,14 +130,17 @@ public:
 	CCAnimation* waitingAnimation;
 	CCAnimation* escapingAnimation;
 	CCAnimation* dyingAnimation;
+	CCAnimation* landingAnimation;
 	//here is the action, we will attack animation to this action to run
-	CCAnimate* animationAction;
+	//CCAnimate* animationAction;
 	//functions to create upward animation
-	void InitialIntendingAnimation();
-	void InitialAttackingAnimation();
-	void InitialWaitingAnimation();
-	void InitialEscapingAnimation();
-	void InitialDyingAnimation();
+	void InitialAnimations();
+	virtual void InitialIntendingAnimation();
+	virtual void InitialAttackingAnimation();
+	virtual void InitialWaitingAnimation();
+	virtual void InitialEscapingAnimation();
+	virtual void InitialDyingAnimation();
+	virtual void InitialLandingAnimation();
 	//Functions to run actions of the animations 
 	void RunAnimation(CCAnimation* animation);
 	

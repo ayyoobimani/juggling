@@ -219,6 +219,8 @@ public:
 	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
 
 	void DamagePath(JG_Path* ,float damage);
+
+	float GetBallRadius(JG_Ball* ball);
 	
 	
 	

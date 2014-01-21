@@ -8,9 +8,11 @@ public:
 	JG_Enemy_Crow(void);
 	~JG_Enemy_Crow(void);
 
-	/*void InitialIntendingAnimation();
+	void InitialIntendingAnimation();
+	void InitialLandingAnimation();
+	void InitialWaitingAnimation();
 	void InitialAttackingAnimation();
 	void InitialDyingAnimation();
-	void Initti*/
+	void InitialEscapingAnimation();
 };
 

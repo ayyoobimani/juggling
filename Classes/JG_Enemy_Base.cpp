@@ -6,14 +6,17 @@ OnLostHandler JG_Enemy_Base::onLostFunction;
 OnHitHandler JG_Enemy_Base::onHitFunction;
 GetBallsHandler JG_Enemy_Base::getBallFunction;
 DamagePathHandler JG_Enemy_Base::damagePathFunction;
+GetBallRadiusHandler JG_Enemy_Base::getBallRadiusFunction;
+
 CCObject* JG_Enemy_Base::listenerObj;
 
 
 JG_Enemy_Base::JG_Enemy_Base(void)
 {
+	lastAnimationAction= NULL;
 	spriteFileName = "Enemies/UFO/UFO.png";
 	speed = 300;
-	waitingTime = 2.0;
+	landingTime = 2.0;
 	SetState(EnemyS_Inited);
 	targetPath = NULL;
 	attackInterval=1.5;
@@ -28,6 +31,8 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 
 JG_Enemy_Base::~JG_Enemy_Base(void)
 {
+	CC_SAFE_RELEASE(intendingAnimation);
+	
 }
 
 JG_Enemy_Base* JG_Enemy_Base::CreateEnemy(CCPoint initialPosition)
@@ -50,11 +55,7 @@ void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition)
 {
 	initWithFile(spriteFileName.getCString());
 	//here we create animations
-	InitialIntendingAnimation();
-	InitialAttackingAnimation();
-	InitialWaitingAnimation();
-	InitialEscapingAnimation();
-	InitialDyingAnimation();
+	InitialAnimations();
 
 	//Bonus Inti
 	SetEnemyBonus(EnemyBonus_None);
@@ -70,11 +71,8 @@ void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus)
 {
 	initWithFile(spriteFileName.getCString());
 	//here we create animations
-	InitialIntendingAnimation();
-	InitialAttackingAnimation();
-	InitialWaitingAnimation();
-	InitialEscapingAnimation();
-	InitialDyingAnimation();
+
+	InitialAnimations();
 
 	
 	SetEnemyBonus(bonus);
@@ -87,7 +85,15 @@ void JG_Enemy_Base::InitialEnemy(CCPoint initialPosition,EEnemyBonus bonus)
 
 }
 
-
+void JG_Enemy_Base::InitialAnimations()
+{
+	InitialIntendingAnimation();
+	InitialAttackingAnimation();
+	InitialWaitingAnimation();
+	InitialEscapingAnimation();
+	InitialDyingAnimation();
+	InitialLandingAnimation();
+}
 
 void JG_Enemy_Base::SetEnemyBonus(EEnemyBonus bonus)
 {
@@ -104,7 +110,8 @@ void JG_Enemy_Base::MoveTo(float dt)
 		
 		setPosition(destination);
 		bIsDirectionSet=false;
-		SetState(EnemyS_Waiting);
+		if(state!=EnemyS_Escaping)
+			SetState(EnemyS_Landing);
 		return;
 	}
 	CCPoint temp;
@@ -163,12 +170,17 @@ void JG_Enemy_Base::update(float dt)
 //nonesense
 void JG_Enemy_Base::SetState(EEnemyState newState)
 {
+
+	
+	this->unschedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking));
+	this->unschedule(schedule_selector(JG_Enemy_Base::HandleLandingToWaiting));
+	this->unschedule(schedule_selector(JG_Enemy_Base::HandleAttackingToWaiting));
+
 	//No Need To Do anything
 	if(state == newState)
 		return;
 
-	this->unschedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking));
-	this->unschedule(schedule_selector(JG_Enemy_Base::Attack));
+	
 	state=newState;
 	switch (newState)
 	{
@@ -189,6 +201,9 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 	case EnemyS_Dying:
 		GotoState_Dying();
 		break;
+	case EnemyS_Landing:
+		GotoState_Landing();
+		break;
 	}
 	
 }
@@ -202,15 +217,21 @@ void JG_Enemy_Base::GotoState_Intending()
 void JG_Enemy_Base::GotoState_Attacking()
 {
 	//CCLog("In state Attacking");
-	this->schedule(schedule_selector(JG_Enemy_Base::Attack),attackInterval);
 	RunAnimation(attackingAnimation);
 
+	this->schedule(schedule_selector(JG_Enemy_Base::HandleAttackingToWaiting)
+		,0
+		,0
+		,attackingAnimation->getDuration());
+	Attack();
+	
+	
 }
 void JG_Enemy_Base::GotoState_Waiting()
 {
 	//CCLog("In state Waiting");
 	if(targetPath!=NULL)
-		this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,waitingTime);
+		this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,attackInterval);
 	
 	RunAnimation(waitingAnimation);
 }
@@ -232,15 +253,36 @@ void JG_Enemy_Base::GotoState_Dying()
 	//CCLog("In state dying");
 	//it is falling so the initial speed is zero
 	speed=0;
-
 	RunAnimation(dyingAnimation);
+}
+
+void JG_Enemy_Base::GotoState_Landing()
+{
+	RunAnimation(landingAnimation);
+	this->schedule(schedule_selector(JG_Enemy_Base::HandleLandingToWaiting)
+		,0
+		,0
+		,landingTime);
 	
 }
+
+
 void JG_Enemy_Base::HandleWaitingToAttacking(float dt)
 {
 	SetState(EnemyS_Attacking);
 }
-void JG_Enemy_Base::Attack(float dt)
+
+void JG_Enemy_Base::HandleLandingToWaiting(float dt)
+{
+	SetState(EnemyS_Waiting);
+}
+
+void JG_Enemy_Base::HandleAttackingToWaiting(float dt)
+{
+	SetState(EnemyS_Waiting);
+}
+
+void JG_Enemy_Base::Attack()
 {
 	if(targetPath!=NULL)
 		CALL_MEMBER_FN(listenerObj,damagePathFunction)(targetPath, damagePerInterval);
@@ -251,8 +293,8 @@ float JG_Enemy_Base::GetDifficulty()
 {
 	float waitingTimeFactor;
 	float intervalFactor;
-	if(BASE_WAITING_TIME >= waitingTime +1)
-		waitingTimeFactor = (BASE_WAITING_TIME - waitingTime);
+	if(BASE_LANDING_TIME >= landingTime +1)
+		waitingTimeFactor = (BASE_LANDING_TIME - landingTime);
 	else
 		waitingTimeFactor = 1;
 
@@ -280,7 +322,7 @@ void JG_Enemy_Base::CheckCollisionWithBall()
 	for(int i=0;i<ballArray->count();i++)
 	{
 		tempCurrentBall=(JG_Ball*)ballArray->objectAtIndex(i);
-		float collision_radius=this->radius+10;
+		float collision_radius=this->radius+CALL_MEMBER_FN(listenerObj,getBallRadiusFunction)(tempCurrentBall);
 		if(ArePointsColliding(this->getPosition(),((CCSprite*)tempCurrentBall)->getPosition(),collision_radius))
 		{
 			CALL_MEMBER_FN(listenerObj,onHitFunction)(this, tempCurrentBall);
@@ -301,7 +343,7 @@ void JG_Enemy_Base::CheckOutOfScreen()
 
 	else
 	{
-		if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > screenSize.width + 20)
+		if( getPositionY() < -100 || getPositionX() < -100 || getPositionX() > screenSize.width + 100)
 			CALL_MEMBER_FN(listenerObj,onLostFunction)(this);
 	}
 
@@ -312,6 +354,9 @@ void JG_Enemy_Base::CheckOutOfScreen()
 void JG_Enemy_Base::InitialIntendingAnimation()
 {
 	intendingAnimation=CCAnimation::create();
+	//intendingAnimation->setRestoreOriginalFrame(true);
+	intendingAnimation->setLoops(-1);
+	intendingAnimation->retain();
 	//loading images from local file system
 	//for loop over files
 	//intendingAnimation->setDelayPerUnit()
@@ -319,26 +364,49 @@ void JG_Enemy_Base::InitialIntendingAnimation()
 void JG_Enemy_Base::InitialAttackingAnimation()
 {
 	attackingAnimation=CCAnimation::create();
+	attackingAnimation->setRestoreOriginalFrame(true);
+	attackingAnimation->retain();
+
 }
 void JG_Enemy_Base::InitialWaitingAnimation()
 {
 	waitingAnimation=CCAnimation::create();
+	waitingAnimation->setLoops(-1);
+	waitingAnimation->retain();
+
 }
 void JG_Enemy_Base::InitialEscapingAnimation()
 {
 	escapingAnimation=CCAnimation::create();
+	escapingAnimation->setLoops(-1);
+	//escapingAnimation->setRestoreOriginalFrame(true);
+	escapingAnimation->retain();
+
 }
 void JG_Enemy_Base::InitialDyingAnimation()
 {
 	dyingAnimation=CCAnimation::create();
+	dyingAnimation->setLoops(-1);
+	dyingAnimation->setRestoreOriginalFrame(true);
+	dyingAnimation->retain();
 }
+
+void JG_Enemy_Base::InitialLandingAnimation()
+{
+	landingAnimation=CCAnimation::create();
+	landingAnimation->retain();
+}
+
 //function to run animation on the sprite
 
 void JG_Enemy_Base::RunAnimation(CCAnimation* animation)
 {
-	return;
-	animationAction=CCAnimate::create(animation);
+	//return;
+	CCAnimate* animationAction=CCAnimate::create(animation);
+	if(lastAnimationAction != NULL)
+		this->stopAction(lastAnimationAction);
 	this->runAction(animationAction);
+	lastAnimationAction = animationAction;
 
 }
 /*---------------------------Animation controling--------------------------*/
@@ -403,5 +471,11 @@ void JG_Enemy_Base::SetOnHitFunctionPointer(CCObject* obj,OnHitHandler handler )
 void JG_Enemy_Base::SetDamagePathFunctionPointer(CCObject* obj,DamagePathHandler handler )
 {
 	damagePathFunction = handler;
+	listenerObj = obj;
+}
+
+void JG_Enemy_Base::SetGetBallRadiusFunctionPointer(CCObject* obj,GetBallRadiusHandler handler)
+{
+	getBallRadiusFunction = handler;
 	listenerObj = obj;
 }

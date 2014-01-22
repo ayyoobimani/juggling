@@ -1,0 +1,387 @@
+\hypertarget{class_j_g___ball}{\section{J\-G\-\_\-\-Ball Class Reference}
+\label{class_j_g___ball}\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}}
+}
+
+
+{\ttfamily \#include $<$J\-G\-\_\-\-Ball.\-h$>$}
+
+Inheritance diagram for J\-G\-\_\-\-Ball\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_j_g___ball}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_j_g___ball_a58db2f725890ccc7099618aeec121022}{Throw} (float force, C\-C\-Point destination)
+\item 
+void \hyperlink{class_j_g___ball_acb61a2ff0b709cad8302935df73fca50}{Process\-Move} (float dt)
+\item 
+void \hyperlink{class_j_g___ball_a21c06d1a10aa8fdcc3d8e63a82f221fe}{update} (float dt)
+\item 
+\hypertarget{class_j_g___ball_ab8f9a9eb9c44dd5f54220a400f20ca73}{float {\bfseries Get\-New\-Speed\-By\-Force} (float force)}\label{class_j_g___ball_ab8f9a9eb9c44dd5f54220a400f20ca73}
+
+\item 
+E\-Throw\-Direction \hyperlink{class_j_g___ball_a37fb865cb8d888be18bac222fd3d329c}{Get\-New\-Throw\-Direction} (E\-Throw\-Direction pre\-Dir)
+\item 
+E\-Move\-Mode \hyperlink{class_j_g___ball_afa4c297cf6304a75c1744493bd35377e}{Get\-New\-Move\-Mode} (E\-Move\-Mode pre\-Move\-Mode)
+\item 
+\hypertarget{class_j_g___ball_a0ec0b664c7b925e6cca4ea91a26bca70}{void {\bfseries draw} ()}\label{class_j_g___ball_a0ec0b664c7b925e6cca4ea91a26bca70}
+
+\item 
+void \hyperlink{class_j_g___ball_ac856b7c263358d42f4a77dc080125b4c}{Draw\-Ball\-Texture} ()
+\item 
+\hypertarget{class_j_g___ball_a504d0786eddf6bce4e142bc5ef21f1ab}{void {\bfseries Draw\-Throw\-Path} ()}\label{class_j_g___ball_a504d0786eddf6bce4e142bc5ef21f1ab}
+
+\item 
+void \hyperlink{class_j_g___ball_aab04571018509cc90311c1cc9c270d4b}{Set\-Throw\-Path\-Info} (float force, C\-C\-Point origin\-Position, C\-C\-Point dest\-Position)
+\item 
+void \hyperlink{class_j_g___ball_aef3a643ab6a6677daa749b3324d058f1}{Reset\-Throw\-Path\-Info} (float dt)
+\item 
+void \hyperlink{class_j_g___ball_aa8072c40481b1552bc532ef315e631db}{Temp\-Reset} ()
+\item 
+void \hyperlink{class_j_g___ball_ac67d3c45ca500fc84f984c77693d50b1}{Set\-Ball\-Level} (int new\-Level)
+\item 
+int \hyperlink{class_j_g___ball_a3837d8b56dcc3f4251a5e5498e93a58a}{Get\-Ball\-Level} ()
+\item 
+int \hyperlink{class_j_g___ball_a421b0c32f767c87d28f48b4f3300bb27}{Get\-Ball\-Score} ()
+\item 
+void \hyperlink{class_j_g___ball_a742f134c0a054ed2ed396fc92df96d62}{Increment\-Combo\-Chain} ()
+\item 
+int \hyperlink{class_j_g___ball_a750a38e2daca94faf663497d7517d42d}{Increment\-And\-Get\-Combo\-Chain} ()
+\item 
+void \hyperlink{class_j_g___ball_a8c145a36d87265a9de6a9e5e609b6e4e}{Reset\-Combo\-Chain} ()
+\item 
+int \hyperlink{class_j_g___ball_a7fa1840bb6a014a4871dc1d2fde5886f}{Get\-Combo\-Chain} ()
+\item 
+void \hyperlink{class_j_g___ball_a9438103f51be5ccce4c9d7e85aca3804}{Check\-Out\-Of\-Screen} ()
+\item 
+void \hyperlink{class_j_g___ball_aa6a59ff90c965a0bb99333b83bb0f7b6}{Check\-Collision\-With\-Ball} ()
+\item 
+E\-Throw\-Direction \hyperlink{class_j_g___ball_a94843b91ab6f8cddbb2b90de6daeb531}{Get\-Ball\-Direction} ()
+\item 
+C\-C\-Point \hyperlink{class_j_g___ball_a0ad42506b43718f14ccb45f163d92999}{Get\-Initial\-Touch\-Position} ()
+\item 
+void \hyperlink{class_j_g___ball_a628e6f457315f1af9d9638834dff91e0}{Set\-Initial\-Touch\-Position} (C\-C\-Point new\-Touch\-Pos)
+\item 
+float \hyperlink{class_j_g___ball_af4db51a3f9dc76e7d811929b52ad3f36}{Get\-Current\-Speed\-X} ()
+\item 
+float \hyperlink{class_j_g___ball_a2fbc3522176f40267110d6072dc42d13}{Get\-Current\-Speed\-Y} ()
+\item 
+E\-Move\-Mode \hyperlink{class_j_g___ball_a3913cb7972086e1ee9b97434d1af81e1}{Get\-Move\-Mode} ()
+\item 
+void \hyperlink{class_j_g___ball_a562155f1d0c2d01485b83104e8de77c1}{Set\-Shine\-Visibility} (bool \-\_\-new\-Shine)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ \hyperlink{class_j_g___ball_abbe12dcab0612bc318c8b5634196ce99}{Create\-Ball} (\hyperlink{class_j_g___game___main}{J\-G\-\_\-\-Game\-\_\-\-Main} $\ast$game, C\-C\-Point initial\-Pos, E\-Throw\-Direction initial\-Direction, int initial\-Ball\-Level)
+\item 
+static float \hyperlink{class_j_g___ball_ad78631bbe37237b14c801b3c919ca5db}{Calculate\-Curve\-Rad} (float speed, C\-C\-Point origin\-Position, C\-C\-Point dest\-Position)
+\item 
+static float \hyperlink{class_j_g___ball_aaa52c9cb759d464568dda65e41556b2f}{Get\-Max\-Speed} ()
+\item 
+static float \hyperlink{class_j_g___ball_a560d13dad6f86db6c28babb5d69d5058}{Get\-Min\-Speed} ()
+\item 
+static void \hyperlink{class_j_g___ball_a76c7ac5979489b8f91ab06ddd7f3560d}{Calculate\-Speed\-Boundries\-Base\-On\-Length} (float delta\-X)
+\item 
+static void \hyperlink{class_j_g___ball_a6f93596e22d858ef50de2914d61387a3}{Initial\-Ball\-Level\-Information} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___ball_a0b9ed799e748904bac614a68cecd6296}{float {\bfseries radius}}\label{class_j_g___ball_a0b9ed799e748904bac614a68cecd6296}
+
+\item 
+\hypertarget{class_j_g___ball_a31660cccfe359fb7ae8448d0abf37e52}{float {\bfseries current\-Speed}}\label{class_j_g___ball_a31660cccfe359fb7ae8448d0abf37e52}
+
+\item 
+\hypertarget{class_j_g___ball_a743ed73473f38e9466f305c3f8efe995}{E\-Throw\-Direction {\bfseries ball\-Throw\-Direction}}\label{class_j_g___ball_a743ed73473f38e9466f305c3f8efe995}
+
+\item 
+float \hyperlink{class_j_g___ball_ac8ba4747fa629e0bd6df7fb7c422397f}{curve\-Radian}
+\item 
+float \hyperlink{class_j_g___ball_a790ad2df70ea24be8b2b01482c16c4f9}{Move\-Dir\-X}
+\item 
+\hypertarget{class_j_g___ball_a8e654f5b766060ae12aa22452f988882}{C\-C\-String {\bfseries ball\-Texture}}\label{class_j_g___ball_a8e654f5b766060ae12aa22452f988882}
+
+\item 
+C\-C\-Point \hyperlink{class_j_g___ball_a2cab0645b2eb4374fbfde0b0399c0e72}{temp\-Initial\-Position}
+\item 
+\hypertarget{class_j_g___ball_a358259dea815fa262327e0af48a6af3c}{E\-Throw\-Direction {\bfseries temp\-Initial\-Throw\-Direction}}\label{class_j_g___ball_a358259dea815fa262327e0af48a6af3c}
+
+\item 
+C\-C\-Repeat\-Forever $\ast$ \hyperlink{class_j_g___ball_a602558390080ce6d8cdfcfdbc09f7b12}{action\-\_\-\-Rotate}
+\item 
+E\-Move\-Mode \hyperlink{class_j_g___ball_a0ad0f2f4b8d03d63c879544111a24506}{move\-Mode}
+\item 
+C\-C\-Point \hyperlink{class_j_g___ball_aaffad54dc6e381ecaac2f3c7087e5dd7}{Initial\-Touch\-Position}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___ball_a0e5845ccdb93030b567b796f6266e517}{static float {\bfseries min\-Speed}}\label{class_j_g___ball_a0e5845ccdb93030b567b796f6266e517}
+
+\item 
+\hypertarget{class_j_g___ball_ad830251662cdf8443962aef638ffefcc}{static float {\bfseries max\-Speed}}\label{class_j_g___ball_ad830251662cdf8443962aef638ffefcc}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The main class for handling ball movement 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_j_g___ball_ad78631bbe37237b14c801b3c919ca5db}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Calculate\-Curve\-Rad@{Calculate\-Curve\-Rad}}
+\index{Calculate\-Curve\-Rad@{Calculate\-Curve\-Rad}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Calculate\-Curve\-Rad}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Ball\-::\-Calculate\-Curve\-Rad (
+\begin{DoxyParamCaption}
+\item[{float}]{speed, }
+\item[{C\-C\-Point}]{origin\-Position, }
+\item[{C\-C\-Point}]{dest\-Position}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___ball_ad78631bbe37237b14c801b3c919ca5db}
+Calculate Curve Radian By the given Speed, Origin Position and destination position \hypertarget{class_j_g___ball_a76c7ac5979489b8f91ab06ddd7f3560d}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Calculate\-Speed\-Boundries\-Base\-On\-Length@{Calculate\-Speed\-Boundries\-Base\-On\-Length}}
+\index{Calculate\-Speed\-Boundries\-Base\-On\-Length@{Calculate\-Speed\-Boundries\-Base\-On\-Length}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Calculate\-Speed\-Boundries\-Base\-On\-Length}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Calculate\-Speed\-Boundries\-Base\-On\-Length (
+\begin{DoxyParamCaption}
+\item[{float}]{delta\-X}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___ball_a76c7ac5979489b8f91ab06ddd7f3560d}
+Calculate the minimum Speed , based on the distance of handes \hypertarget{class_j_g___ball_aa6a59ff90c965a0bb99333b83bb0f7b6}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Check\-Collision\-With\-Ball@{Check\-Collision\-With\-Ball}}
+\index{Check\-Collision\-With\-Ball@{Check\-Collision\-With\-Ball}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Check\-Collision\-With\-Ball}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Check\-Collision\-With\-Ball (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_aa6a59ff90c965a0bb99333b83bb0f7b6}
+Check if there is collision with the ball \hypertarget{class_j_g___ball_a9438103f51be5ccce4c9d7e85aca3804}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Check\-Out\-Of\-Screen@{Check\-Out\-Of\-Screen}}
+\index{Check\-Out\-Of\-Screen@{Check\-Out\-Of\-Screen}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Check\-Out\-Of\-Screen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Check\-Out\-Of\-Screen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a9438103f51be5ccce4c9d7e85aca3804}
+To check if the ball is out of the screen \hypertarget{class_j_g___ball_abbe12dcab0612bc318c8b5634196ce99}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Create\-Ball@{Create\-Ball}}
+\index{Create\-Ball@{Create\-Ball}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Create\-Ball}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\-G\-\_\-\-Ball} $\ast$ J\-G\-\_\-\-Ball\-::\-Create\-Ball (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Game\-\_\-\-Main} $\ast$}]{game, }
+\item[{C\-C\-Point}]{initial\-Pos, }
+\item[{E\-Throw\-Direction}]{initial\-Direction, }
+\item[{int}]{initial\-Ball\-Level}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___ball_abbe12dcab0612bc318c8b5634196ce99}
+Creating ball in a specific position and specific direction \hypertarget{class_j_g___ball_ac856b7c263358d42f4a77dc080125b4c}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Draw\-Ball\-Texture@{Draw\-Ball\-Texture}}
+\index{Draw\-Ball\-Texture@{Draw\-Ball\-Texture}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Draw\-Ball\-Texture}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Draw\-Ball\-Texture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_ac856b7c263358d42f4a77dc080125b4c}
+draws ball texture based on current ball level \hypertarget{class_j_g___ball_a94843b91ab6f8cddbb2b90de6daeb531}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Ball\-Direction@{Get\-Ball\-Direction}}
+\index{Get\-Ball\-Direction@{Get\-Ball\-Direction}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Ball\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}E\-Throw\-Direction J\-G\-\_\-\-Ball\-::\-Get\-Ball\-Direction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a94843b91ab6f8cddbb2b90de6daeb531}
+get the direction of ball \hypertarget{class_j_g___ball_a3837d8b56dcc3f4251a5e5498e93a58a}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Ball\-Level@{Get\-Ball\-Level}}
+\index{Get\-Ball\-Level@{Get\-Ball\-Level}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Ball\-Level}]{\setlength{\rightskip}{0pt plus 5cm}int J\-G\-\_\-\-Ball\-::\-Get\-Ball\-Level (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_j_g___ball_a3837d8b56dcc3f4251a5e5498e93a58a}
+Getting The ball Level based on the level \hypertarget{class_j_g___ball_a421b0c32f767c87d28f48b4f3300bb27}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Ball\-Score@{Get\-Ball\-Score}}
+\index{Get\-Ball\-Score@{Get\-Ball\-Score}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Ball\-Score}]{\setlength{\rightskip}{0pt plus 5cm}int J\-G\-\_\-\-Ball\-::\-Get\-Ball\-Score (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a421b0c32f767c87d28f48b4f3300bb27}
+Getting Ball Score \hypertarget{class_j_g___ball_a7fa1840bb6a014a4871dc1d2fde5886f}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Combo\-Chain@{Get\-Combo\-Chain}}
+\index{Get\-Combo\-Chain@{Get\-Combo\-Chain}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Combo\-Chain}]{\setlength{\rightskip}{0pt plus 5cm}int J\-G\-\_\-\-Ball\-::\-Get\-Combo\-Chain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a7fa1840bb6a014a4871dc1d2fde5886f}
+Getting Combon Chain \hypertarget{class_j_g___ball_af4db51a3f9dc76e7d811929b52ad3f36}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Current\-Speed\-X@{Get\-Current\-Speed\-X}}
+\index{Get\-Current\-Speed\-X@{Get\-Current\-Speed\-X}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Current\-Speed\-X}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Ball\-::\-Get\-Current\-Speed\-X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_af4db51a3f9dc76e7d811929b52ad3f36}
+Getting Current X\-Spped \hypertarget{class_j_g___ball_a2fbc3522176f40267110d6072dc42d13}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Current\-Speed\-Y@{Get\-Current\-Speed\-Y}}
+\index{Get\-Current\-Speed\-Y@{Get\-Current\-Speed\-Y}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Current\-Speed\-Y}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Ball\-::\-Get\-Current\-Speed\-Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a2fbc3522176f40267110d6072dc42d13}
+Getting Current Y\-Speed \hypertarget{class_j_g___ball_a0ad42506b43718f14ccb45f163d92999}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Initial\-Touch\-Position@{Get\-Initial\-Touch\-Position}}
+\index{Get\-Initial\-Touch\-Position@{Get\-Initial\-Touch\-Position}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Initial\-Touch\-Position}]{\setlength{\rightskip}{0pt plus 5cm}C\-C\-Point J\-G\-\_\-\-Ball\-::\-Get\-Initial\-Touch\-Position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a0ad42506b43718f14ccb45f163d92999}
+Getting Initial Touch Position \hypertarget{class_j_g___ball_aaa52c9cb759d464568dda65e41556b2f}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Max\-Speed@{Get\-Max\-Speed}}
+\index{Get\-Max\-Speed@{Get\-Max\-Speed}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Max\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Ball\-::\-Get\-Max\-Speed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___ball_aaa52c9cb759d464568dda65e41556b2f}
+Getting Max Speed \hypertarget{class_j_g___ball_a560d13dad6f86db6c28babb5d69d5058}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Min\-Speed@{Get\-Min\-Speed}}
+\index{Get\-Min\-Speed@{Get\-Min\-Speed}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Min\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Ball\-::\-Get\-Min\-Speed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___ball_a560d13dad6f86db6c28babb5d69d5058}
+Getting Min Speed \hypertarget{class_j_g___ball_a3913cb7972086e1ee9b97434d1af81e1}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-Move\-Mode@{Get\-Move\-Mode}}
+\index{Get\-Move\-Mode@{Get\-Move\-Mode}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-Move\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}E\-Move\-Mode J\-G\-\_\-\-Ball\-::\-Get\-Move\-Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a3913cb7972086e1ee9b97434d1af81e1}
+Getting Move Mode \hypertarget{class_j_g___ball_afa4c297cf6304a75c1744493bd35377e}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-New\-Move\-Mode@{Get\-New\-Move\-Mode}}
+\index{Get\-New\-Move\-Mode@{Get\-New\-Move\-Mode}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-New\-Move\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}E\-Move\-Mode J\-G\-\_\-\-Ball\-::\-Get\-New\-Move\-Mode (
+\begin{DoxyParamCaption}
+\item[{E\-Move\-Mode}]{pre\-Move\-Mode}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_afa4c297cf6304a75c1744493bd35377e}
+Returns the new Move\-Move based on the given previous Mode\-Mode \hypertarget{class_j_g___ball_a37fb865cb8d888be18bac222fd3d329c}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Get\-New\-Throw\-Direction@{Get\-New\-Throw\-Direction}}
+\index{Get\-New\-Throw\-Direction@{Get\-New\-Throw\-Direction}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Get\-New\-Throw\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}E\-Throw\-Direction J\-G\-\_\-\-Ball\-::\-Get\-New\-Throw\-Direction (
+\begin{DoxyParamCaption}
+\item[{E\-Throw\-Direction}]{pre\-Dir}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a37fb865cb8d888be18bac222fd3d329c}
+Returns the new Throw\-Direction based on the given previous direction \hypertarget{class_j_g___ball_a750a38e2daca94faf663497d7517d42d}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Increment\-And\-Get\-Combo\-Chain@{Increment\-And\-Get\-Combo\-Chain}}
+\index{Increment\-And\-Get\-Combo\-Chain@{Increment\-And\-Get\-Combo\-Chain}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Increment\-And\-Get\-Combo\-Chain}]{\setlength{\rightskip}{0pt plus 5cm}int J\-G\-\_\-\-Ball\-::\-Increment\-And\-Get\-Combo\-Chain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a750a38e2daca94faf663497d7517d42d}
+Incrementing And Getting Combo Chain \hypertarget{class_j_g___ball_a742f134c0a054ed2ed396fc92df96d62}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Increment\-Combo\-Chain@{Increment\-Combo\-Chain}}
+\index{Increment\-Combo\-Chain@{Increment\-Combo\-Chain}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Increment\-Combo\-Chain}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Increment\-Combo\-Chain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a742f134c0a054ed2ed396fc92df96d62}
+Incrementing Combo Chain \hypertarget{class_j_g___ball_a6f93596e22d858ef50de2914d61387a3}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Initial\-Ball\-Level\-Information@{Initial\-Ball\-Level\-Information}}
+\index{Initial\-Ball\-Level\-Information@{Initial\-Ball\-Level\-Information}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Initial\-Ball\-Level\-Information}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Initial\-Ball\-Level\-Information (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___ball_a6f93596e22d858ef50de2914d61387a3}
+Getting the initial ball level information \hypertarget{class_j_g___ball_acb61a2ff0b709cad8302935df73fca50}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Process\-Move@{Process\-Move}}
+\index{Process\-Move@{Process\-Move}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Process\-Move}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Process\-Move (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_acb61a2ff0b709cad8302935df73fca50}
+process the movement of ball \hypertarget{class_j_g___ball_a8c145a36d87265a9de6a9e5e609b6e4e}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Reset\-Combo\-Chain@{Reset\-Combo\-Chain}}
+\index{Reset\-Combo\-Chain@{Reset\-Combo\-Chain}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Reset\-Combo\-Chain}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Reset\-Combo\-Chain (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a8c145a36d87265a9de6a9e5e609b6e4e}
+Reseting Combon Chain \hypertarget{class_j_g___ball_aef3a643ab6a6677daa749b3324d058f1}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Reset\-Throw\-Path\-Info@{Reset\-Throw\-Path\-Info}}
+\index{Reset\-Throw\-Path\-Info@{Reset\-Throw\-Path\-Info}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Reset\-Throw\-Path\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Reset\-Throw\-Path\-Info (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_aef3a643ab6a6677daa749b3324d058f1}
+Reset Information of Path Throwing \hypertarget{class_j_g___ball_ac67d3c45ca500fc84f984c77693d50b1}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Set\-Ball\-Level@{Set\-Ball\-Level}}
+\index{Set\-Ball\-Level@{Set\-Ball\-Level}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Set\-Ball\-Level}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Set\-Ball\-Level (
+\begin{DoxyParamCaption}
+\item[{int}]{new\-Level}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_ac67d3c45ca500fc84f984c77693d50b1}
+Setting Ball Level to Specified Level \hypertarget{class_j_g___ball_a628e6f457315f1af9d9638834dff91e0}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Set\-Initial\-Touch\-Position@{Set\-Initial\-Touch\-Position}}
+\index{Set\-Initial\-Touch\-Position@{Set\-Initial\-Touch\-Position}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Set\-Initial\-Touch\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Set\-Initial\-Touch\-Position (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Point}]{new\-Touch\-Pos}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a628e6f457315f1af9d9638834dff91e0}
+Setting Initil Touch Position \hypertarget{class_j_g___ball_a562155f1d0c2d01485b83104e8de77c1}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Set\-Shine\-Visibility@{Set\-Shine\-Visibility}}
+\index{Set\-Shine\-Visibility@{Set\-Shine\-Visibility}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Set\-Shine\-Visibility}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Set\-Shine\-Visibility (
+\begin{DoxyParamCaption}
+\item[{bool}]{\-\_\-new\-Shine}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a562155f1d0c2d01485b83104e8de77c1}
+Setting Shine Visibility \hypertarget{class_j_g___ball_aab04571018509cc90311c1cc9c270d4b}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Set\-Throw\-Path\-Info@{Set\-Throw\-Path\-Info}}
+\index{Set\-Throw\-Path\-Info@{Set\-Throw\-Path\-Info}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Set\-Throw\-Path\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Set\-Throw\-Path\-Info (
+\begin{DoxyParamCaption}
+\item[{float}]{force, }
+\item[{C\-C\-Point}]{origin\-Position, }
+\item[{C\-C\-Point}]{dest\-Position}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_aab04571018509cc90311c1cc9c270d4b}
+Show the Throw Path before being actually thrown by the given power, origin\-Position and destination position \hypertarget{class_j_g___ball_aa8072c40481b1552bc532ef315e631db}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Temp\-Reset@{Temp\-Reset}}
+\index{Temp\-Reset@{Temp\-Reset}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Temp\-Reset}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Temp\-Reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_aa8072c40481b1552bc532ef315e631db}
+temporary reset the ball to it's initial postion when it is out of view \hypertarget{class_j_g___ball_a58db2f725890ccc7099618aeec121022}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Throw@{Throw}}
+\index{Throw@{Throw}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Throw}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::\-Throw (
+\begin{DoxyParamCaption}
+\item[{float}]{force, }
+\item[{C\-C\-Point}]{destination}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a58db2f725890ccc7099618aeec121022}
+Initial Throw movement variables \hypertarget{class_j_g___ball_a21c06d1a10aa8fdcc3d8e63a82f221fe}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!update@{update}}
+\index{update@{update}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Ball\-::update (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___ball_a21c06d1a10aa8fdcc3d8e63a82f221fe}
+Handles the movement based on the current mode 
+
+\subsection{Member Data Documentation}
+\hypertarget{class_j_g___ball_a602558390080ce6d8cdfcfdbc09f7b12}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!action\-\_\-\-Rotate@{action\-\_\-\-Rotate}}
+\index{action\-\_\-\-Rotate@{action\-\_\-\-Rotate}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{action\-\_\-\-Rotate}]{\setlength{\rightskip}{0pt plus 5cm}C\-C\-Repeat\-Forever$\ast$ J\-G\-\_\-\-Ball\-::action\-\_\-\-Rotate}}\label{class_j_g___ball_a602558390080ce6d8cdfcfdbc09f7b12}
+temporary rotation action \hypertarget{class_j_g___ball_ac8ba4747fa629e0bd6df7fb7c422397f}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!curve\-Radian@{curve\-Radian}}
+\index{curve\-Radian@{curve\-Radian}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{curve\-Radian}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Ball\-::curve\-Radian}}\label{class_j_g___ball_ac8ba4747fa629e0bd6df7fb7c422397f}
+radians of falling in E\-Move\-\_\-\-Curve \hypertarget{class_j_g___ball_aaffad54dc6e381ecaac2f3c7087e5dd7}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Initial\-Touch\-Position@{Initial\-Touch\-Position}}
+\index{Initial\-Touch\-Position@{Initial\-Touch\-Position}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Initial\-Touch\-Position}]{\setlength{\rightskip}{0pt plus 5cm}C\-C\-Point J\-G\-\_\-\-Ball\-::\-Initial\-Touch\-Position}}\label{class_j_g___ball_aaffad54dc6e381ecaac2f3c7087e5dd7}
+Stores the touch potsion when ball is touched for first time. This is used for determining the direction of throw (touch) \hypertarget{class_j_g___ball_a790ad2df70ea24be8b2b01482c16c4f9}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!Move\-Dir\-X@{Move\-Dir\-X}}
+\index{Move\-Dir\-X@{Move\-Dir\-X}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{Move\-Dir\-X}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Ball\-::\-Move\-Dir\-X}}\label{class_j_g___ball_a790ad2df70ea24be8b2b01482c16c4f9}
+movement direction in X (-\/1 or 1) \hypertarget{class_j_g___ball_a0ad0f2f4b8d03d63c879544111a24506}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!move\-Mode@{move\-Mode}}
+\index{move\-Mode@{move\-Mode}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{move\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}E\-Move\-Mode J\-G\-\_\-\-Ball\-::move\-Mode}}\label{class_j_g___ball_a0ad0f2f4b8d03d63c879544111a24506}
+The movement mode of the ball \hypertarget{class_j_g___ball_a2cab0645b2eb4374fbfde0b0399c0e72}{\index{J\-G\-\_\-\-Ball@{J\-G\-\_\-\-Ball}!temp\-Initial\-Position@{temp\-Initial\-Position}}
+\index{temp\-Initial\-Position@{temp\-Initial\-Position}!JG_Ball@{J\-G\-\_\-\-Ball}}
+\subsubsection[{temp\-Initial\-Position}]{\setlength{\rightskip}{0pt plus 5cm}C\-C\-Point J\-G\-\_\-\-Ball\-::temp\-Initial\-Position}}\label{class_j_g___ball_a2cab0645b2eb4374fbfde0b0399c0e72}
+temporary storing Initial state for Temp\-Reset function 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+J\-G\-\_\-\-Ball.\-h\item 
+J\-G\-\_\-\-Ball.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['generateenemypositionratio',['generateEnemyPositionRatio',['../class_j_g___attack_wave___all_lines_sequential.html#ab2582130615e79882a153c2572f207c1',1,'JG_AttackWave_AllLinesSequential']]],
+  ['getactualminpower',['GetActualMinPower',['../class_j_g___game___main.html#a50c9a071fc59edf3e05868edf795726d',1,'JG_Game_Main']]],
+  ['getballarray',['GetBallArray',['../class_j_g___game___main.html#a254fa6dd51aa695ae23d4f54b446b1b1',1,'JG_Game_Main']]],
+  ['getballdirection',['GetBallDirection',['../class_j_g___ball.html#a94843b91ab6f8cddbb2b90de6daeb531',1,'JG_Ball']]],
+  ['getballlevel',['GetBallLevel',['../class_j_g___ball.html#a3837d8b56dcc3f4251a5e5498e93a58a',1,'JG_Ball']]],
+  ['getballscore',['GetBallScore',['../class_j_g___ball.html#a421b0c32f767c87d28f48b4f3300bb27',1,'JG_Ball']]],
+  ['getcombochain',['GetComboChain',['../class_j_g___ball.html#a7fa1840bb6a014a4871dc1d2fde5886f',1,'JG_Ball']]],
+  ['getcurrentspeedx',['GetCurrentSpeedX',['../class_j_g___ball.html#af4db51a3f9dc76e7d811929b52ad3f36',1,'JG_Ball']]],
+  ['getcurrentspeedy',['GetCurrentSpeedY',['../class_j_g___ball.html#a2fbc3522176f40267110d6072dc42d13',1,'JG_Ball']]],
+  ['getdifficulty',['GetDifficulty',['../class_j_g___enemy___base.html#a3b1c2a3166cd9dbd3aefc79542f36d16',1,'JG_Enemy_Base']]],
+  ['getenemybonus',['GetEnemyBonus',['../class_j_g___enemy___base.html#af71160543647fad96886e1f87b580896',1,'JG_Enemy_Base']]],
+  ['getinitialtouchposition',['GetInitialTouchPosition',['../class_j_g___ball.html#a0ad42506b43718f14ccb45f163d92999',1,'JG_Ball']]],
+  ['getlifecount',['GetLifeCount',['../class_j_g___game___main.html#a666b141713d126df7e171fc68dd257a2',1,'JG_Game_Main']]],
+  ['getmaxspeed',['GetMaxSpeed',['../class_j_g___ball.html#aaa52c9cb759d464568dda65e41556b2f',1,'JG_Ball']]],
+  ['getmaxthrowpower',['GetMaxThrowPower',['../class_j_g___game___main.html#acb38337ccbd703df64be869986eaab62',1,'JG_Game_Main']]],
+  ['getminspeed',['GetMinSpeed',['../class_j_g___ball.html#a560d13dad6f86db6c28babb5d69d5058',1,'JG_Ball']]],
+  ['getmovemode',['GetMoveMode',['../class_j_g___ball.html#a3913cb7972086e1ee9b97434d1af81e1',1,'JG_Ball']]],
+  ['getnewmovemode',['GetNewMoveMode',['../class_j_g___ball.html#afa4c297cf6304a75c1744493bd35377e',1,'JG_Ball']]],
+  ['getnewthrowdirection',['GetNewThrowDirection',['../class_j_g___ball.html#a37fb865cb8d888be18bac222fd3d329c',1,'JG_Ball']]],
+  ['getpositionforlengthratio',['GetPositionForLengthRatio',['../class_j_g___path.html#a456741c5da849a3c85b7637ba62d4bff',1,'JG_Path']]],
+  ['getscore',['GetScore',['../class_j_g___game___main.html#afa38293cf043c824ccfa4aebe1e1545f',1,'JG_Game_Main']]],
+  ['gettargetpath',['GetTargetPath',['../class_j_g___enemy___base.html#a8ce8d53876f32eea86ed76d6448d5791',1,'JG_Enemy_Base']]],
+  ['gettouchinfoindexbyball',['GetTouchInfoIndexByBall',['../class_j_g___game___main.html#a4af4d54f9da2a785f7c1965dfd5630ec',1,'JG_Game_Main']]]
+];

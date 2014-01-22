@@ -69,6 +69,12 @@ class JG_Ball :
 	/*! how many combo does the ball do */
 	int comboChain;
 
+	
+	void CheckOutOfScreen();
+
+	void AdjustTextureRotation();
+	float GetRotationBasedOnDirection();
+
 public:
 	JG_Ball(void);
 	virtual ~JG_Ball(void);
@@ -154,8 +160,6 @@ public:
 	int IncrementAndGetComboChain();
 	void ResetComboChain();
 	int GetComboChain();
-
-	void CheckOutOfScreen();
 
 	//collision of balls checking
 	void CheckCollisionWithBall();

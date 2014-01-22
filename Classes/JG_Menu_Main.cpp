@@ -58,7 +58,7 @@ void JG_Menu_Main::ShowOption(CCObject* pSender)
 void JG_Menu_Main::ShowHighScores(CCObject* pSender)
 {
 	JG_Score_Handler* scoreHandler;
-	vector<ScoreTableRecord>* table = scoreHandler->GetHighScoreTable();
+	//vector<ScoreTableRecord>* table = scoreHandler->GetHighScoreTable();
 	/*for(int i = 0 ; i<table->size(); i++)
 		menuGUI->InsertHighScore(playerName,*/
 

@@ -110,7 +110,7 @@ bool JG_Game_Main::init()
 	/*************************** /Hands *************************************/
 
 	JG_Ball::CalculateSpeedBoundriesBaseOnLength(rightHand->getPositionX()-leftHand->getPositionX());
-	JG_Ball::InitialBallLevelInformation();
+	//JG_Ball::InitialBallLevelInformation();
 	//it is import we call calculatethrowpower after jg_ball calculate
 	InitialThrowPowerVariables();
 

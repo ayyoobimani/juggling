@@ -25,6 +25,9 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 	radius=15;
 	SetEnemyBonus(EnemyBonus_None);
 
+	ballBonusSprite = "Bonus_ExtraBall.png";
+	healthBonusSprite = "Bonus_PathHealth.png";
+
 	screenSize = CCDirector::sharedDirector()->getWinSize();
 	CCLOG("finished enemy father constructor");
 }
@@ -330,6 +333,7 @@ void JG_Enemy_Base::CheckCollisionWithBall()
 		if(ArePointsColliding(this->getPosition(),((CCSprite*)tempCurrentBall)->getPosition(),collision_radius))
 		{
 			CALL_MEMBER_FN(listenerObj,onHitFunction)(this, tempCurrentBall);
+			SetBonusTexture(EnemyBonus_None);
 			return;
 		}
 
@@ -474,13 +478,13 @@ void JG_Enemy_Base::SetBonusTexture(EEnemyBonus bonus)
 	switch (bonus)
 	{
 	case EnemyBonus_None:
-		ballBonusTexture=NULL;
+		bonusTexture=NULL;
 		break;
 	case EnemyBonus_ExtraBall:
-		ballBonusTexture=CCTextureCache::sharedTextureCache()->addImage("Bonus_ExtraBall.png");
+		bonusTexture=CCTextureCache::sharedTextureCache()->addImage(ballBonusSprite.getCString());
 		break;
 	case EnemyBonus_PathHealth:
-		ballBonusTexture=CCTextureCache::sharedTextureCache()->addImage("Bonus_PathHealth.png");
+		bonusTexture=CCTextureCache::sharedTextureCache()->addImage(healthBonusSprite.getCString());
 		break;
 	default:
 		break;
@@ -490,9 +494,12 @@ void JG_Enemy_Base::SetBonusTexture(EEnemyBonus bonus)
 
 void JG_Enemy_Base::DrawBonusTexture()
 {
-	CCPoint drawPoint = getTexture()->getContentSizeInPixels()/2;
-	if(ballBonusTexture!=NULL)
-		ballBonusTexture->drawAtPoint(drawPoint);
+	
+	if(bonusTexture!=NULL)
+	{
+		CCPoint drawPoint = (getTexture()->getContentSize()-bonusTexture->getContentSize())/2;
+		bonusTexture->drawAtPoint(drawPoint);
+	}
 }
 void JG_Enemy_Base::draw()
 {

@@ -168,7 +168,10 @@ public:
 	//void CheckOutOfScreen();
 
 	//set texture based on bonus
-	CCTexture2D* ballBonusTexture;
+	
+	CCTexture2D* bonusTexture;
+	CCString ballBonusSprite;
+	CCString healthBonusSprite;
 	
 
 	void draw();

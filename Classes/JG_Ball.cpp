@@ -59,10 +59,36 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		//ball->schedule(schedule_selector(JG_Ball::update));
 		ball->scheduleUpdate();
 
+		//ball->InitialAnimation();
+
 		return ball;
 	}
 	CC_SAFE_DELETE(ball);
 	return NULL;
+}
+
+void JG_Ball::InitialAnimation()
+{
+	animation = new CCAnimation();
+	animation->retain();
+
+	animation->addSpriteFrameWithFileName("Ball/1.png");
+	animation->addSpriteFrameWithFileName("Ball/2.png");
+	animation->addSpriteFrameWithFileName("Ball/3.png");
+	animation->addSpriteFrameWithFileName("Ball/4.png");
+	animation->addSpriteFrameWithFileName("Ball/5.png");
+	animation->addSpriteFrameWithFileName("Ball/6.png");
+	animation->addSpriteFrameWithFileName("Ball/7.png");
+	animation->addSpriteFrameWithFileName("Ball/8.png");
+	animation->addSpriteFrameWithFileName("Ball/9.png");
+	animation->addSpriteFrameWithFileName("Ball/10.png");
+	animation->addSpriteFrameWithFileName("Ball/11.png");
+	animation->addSpriteFrameWithFileName("Ball/12.png");
+
+	animation->setLoops(-1);
+	CCAnimate* animationAction=CCAnimate::create(animation);
+	runAction(animationAction);
+	setScale(0.2);
 }
 
 void JG_Ball::CalculateSpeedBoundriesBaseOnLength(float deltaX)

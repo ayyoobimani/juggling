@@ -833,6 +833,7 @@ void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
 {
 	ball->ResetComboChain();
+	playSoundEffect("Throwing.wav");
 }
 
 void JG_Game_Main::DamagePath(JG_Path* path,float damage)

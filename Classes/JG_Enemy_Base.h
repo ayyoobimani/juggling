@@ -144,6 +144,7 @@ public:
 	void HandleWaitingToAttacking(float time);
 	void HandleLandingToWaiting(float time);
 	void HandleAttackingToWaiting(float time);
+	void HandleAttack(float time);
 
 	//animation controlling
 	CCAnimation* intendingAnimation;

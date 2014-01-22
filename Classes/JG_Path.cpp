@@ -32,6 +32,8 @@ void JG_Path::InitialPathHealthStatesForEachLevel()
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/1-3.png"));
 	pathHealthStatesForEachLevel[0].healthStateTextures.push_back
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/1-4.png"));
+	pathHealthStatesForEachLevel[0].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/1-5.png"));
 
 	pathHealthStatesForEachLevel[1].healthStateTextures.push_back
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-1.png"));
@@ -41,6 +43,8 @@ void JG_Path::InitialPathHealthStatesForEachLevel()
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-3.png"));
 	pathHealthStatesForEachLevel[1].healthStateTextures.push_back
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-4.png"));
+	pathHealthStatesForEachLevel[1].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/2-5.png"));
 
 	pathHealthStatesForEachLevel[2].healthStateTextures.push_back
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-1.png"));
@@ -50,6 +54,8 @@ void JG_Path::InitialPathHealthStatesForEachLevel()
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-3.png"));
 	pathHealthStatesForEachLevel[2].healthStateTextures.push_back
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-4.png"));
+	pathHealthStatesForEachLevel[2].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/3-5.png"));
 
 	pathHealthStatesForEachLevel[3].healthStateTextures.push_back
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-1.png"));
@@ -59,6 +65,8 @@ void JG_Path::InitialPathHealthStatesForEachLevel()
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-3.png"));
 	pathHealthStatesForEachLevel[3].healthStateTextures.push_back
 		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-4.png"));
+	pathHealthStatesForEachLevel[3].healthStateTextures.push_back
+		(CCTextureCache::sharedTextureCache()->addImage("Paths/4-5.png"));
 }
 
 JG_Path * JG_Path::CreatePath(JG_Game_Main* game,float power,CCPoint origin , CCPoint destination)

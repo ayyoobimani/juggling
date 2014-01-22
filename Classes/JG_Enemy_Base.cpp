@@ -183,6 +183,7 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 	this->unschedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking));
 	this->unschedule(schedule_selector(JG_Enemy_Base::HandleLandingToWaiting));
 	this->unschedule(schedule_selector(JG_Enemy_Base::HandleAttackingToWaiting));
+	this->unschedule(schedule_selector(JG_Enemy_Base::HandleAttack));
 
 	//No Need To Do anything
 	if(state == newState)
@@ -231,7 +232,11 @@ void JG_Enemy_Base::GotoState_Attacking()
 		,0
 		,0
 		,attackingAnimation->getDuration());
-	Attack();
+
+	this->schedule(schedule_selector(JG_Enemy_Base::HandleAttack)
+		,0
+		,0
+		,attackingAnimation->getDuration()/2);
 	
 	
 }
@@ -288,6 +293,11 @@ void JG_Enemy_Base::HandleLandingToWaiting(float dt)
 void JG_Enemy_Base::HandleAttackingToWaiting(float dt)
 {
 	SetState(EnemyS_Waiting);
+}
+
+void JG_Enemy_Base::HandleAttack(float dt)
+{
+	Attack();
 }
 
 void JG_Enemy_Base::Attack()
@@ -501,6 +511,7 @@ void JG_Enemy_Base::DrawBonusTexture()
 	if(bonusTexture!=NULL)
 	{
 		CCPoint drawPoint = (getTexture()->getContentSize()-bonusTexture->getContentSize())/2;
+		drawPoint = drawPoint+ ccp(0,-5);
 		bonusTexture->drawAtPoint(drawPoint);
 	}
 }

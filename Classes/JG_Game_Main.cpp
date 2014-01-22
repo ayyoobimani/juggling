@@ -129,7 +129,7 @@ bool JG_Game_Main::init()
 			,i * powerRange
 			, leftHand->getPosition()
 			, rightHand->getPosition()));
-		this->addChild((CCNode*)pathsArray->objectAtIndex(i),20);
+		this->addChild((CCNode*)pathsArray->objectAtIndex(i),18);
 
 		//CCLOG("Y is %f  ",((JG_Path*)pathsArray->objectAtIndex(i))->GetPositionForLengthRatio(0.5).y - leftHand->getPositionY());
 		//pathsArray->objectAtIndex(i)->retain();
@@ -138,9 +138,9 @@ bool JG_Game_Main::init()
 	/*************************** /Paths ****************************/
 
 	/************************* Enemy Factories ********************/
-
+	enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
 	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Crow>(6,2));
-	//enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
+	
 
 	/************************* /Enemy Factories ********************/
 
@@ -1054,7 +1054,7 @@ void JG_Game_Main::AddBallToScreen()
 {
 	JG_Ball * newBall = JG_Ball::CreateBall(this
 		,ccp(leftHand->getPositionX()
-		,screenSize.height * 0.5 + CCRANDOM_0_1() *screenSize.height * 0.5)
+		,screenSize.height * 0.8)
 		,Dir_RightHandToUp
 		,DISCRETE_PARTS_COUNT);
 	this->addChild(newBall,100);

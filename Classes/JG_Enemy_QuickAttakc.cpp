@@ -3,7 +3,14 @@
 
 JG_Enemy_QuickAttakc::JG_Enemy_QuickAttakc(void)
 {
-	spriteFileName = "crow.png";
+	spriteFileName = "Enemies/UFO2/UFO.png";
+
+	attackingAnimationFolder = "Enemies/UFO2/Attacking/";
+	dyingAnimationFolder = "Enemies/UFO2/Dying/";
+	escapingAnimationFolder = "Enemies/UFO2/Escaping/";
+	intendingAnimationFolder = "Enemies/UFO2/Intending/";
+	landingAnimationFolder = "Enemies/UFO2/Landing/";
+	waitingAnimationFolder = "Enemies/UFO2/Waiting/";
 	speed = 500;
 	landingTime = 0.5;
 	

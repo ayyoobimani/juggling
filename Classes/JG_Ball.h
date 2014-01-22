@@ -48,6 +48,10 @@ class JG_Ball :
 
 	JG_Game_Main* mainGame;
 
+	CCAnimation* animation;
+
+	void InitialAnimation();
+
 	/******************* temporary variables ****************/
 	/*this are the variables that are used in high frequency functions
 		instead of creating them each time, here we to it once (for performance */

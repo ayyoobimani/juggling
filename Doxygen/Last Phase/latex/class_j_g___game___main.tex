@@ -1,0 +1,760 @@
+\hypertarget{class_j_g___game___main}{\section{J\-G\-\_\-\-Game\-\_\-\-Main Class Reference}
+\label{class_j_g___game___main}\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+}
+
+
+{\ttfamily \#include $<$J\-G\-\_\-\-Game\-\_\-\-Main.\-h$>$}
+
+Inheritance diagram for J\-G\-\_\-\-Game\-\_\-\-Main\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_j_g___game___main}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___game___main_a4d1e63d731fabbe9e57383254a4b21bf}{virtual bool {\bfseries init} ()}\label{class_j_g___game___main_a4d1e63d731fabbe9e57383254a4b21bf}
+
+\item 
+void \hyperlink{class_j_g___game___main_a14c87e281755122878c191ffdb902db4}{Init\-Round} ()
+\item 
+\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ \hyperlink{class_j_g___game___main_a50f256169fed2e1ff3ebc56b6568db56}{Find\-Best\-Ball\-Matching} (\hyperlink{class_j_g___hand}{J\-G\-\_\-\-Hand} $\ast$hand)
+\item 
+void \hyperlink{class_j_g___game___main_afa13ae21a568e417e32653ec985ff21a}{On\-Ball\-Lost} (\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$lost\-Ball)
+\item 
+\hypertarget{class_j_g___game___main_aa6ee140f26cee89e5c640869287e0b4c}{void {\bfseries On\-Path\-Lost} (\hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$path)}\label{class_j_g___game___main_aa6ee140f26cee89e5c640869287e0b4c}
+
+\item 
+\hypertarget{class_j_g___game___main_a9de0b199bc254378821c96158041337c}{void {\bfseries On\-Enemy\-Lost} (\hyperlink{class_j_g___enemy___base}{J\-G\-\_\-\-Enemy\-\_\-\-Base} $\ast$enemy)}\label{class_j_g___game___main_a9de0b199bc254378821c96158041337c}
+
+\item 
+void \hyperlink{class_j_g___game___main_a9fb58ac20271c53d749c5619e5cdf2fd}{On\-Balls\-Collide} (\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball\-One, \hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball\-Two)
+\item 
+void \hyperlink{class_j_g___game___main_af395f20fd9dfc307cfb2d3234cb2b301}{On\-Fruit\-Hit} (\hyperlink{class_j_g___fruit}{J\-G\-\_\-\-Fruit} $\ast$fruit, \hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)
+\item 
+\hypertarget{class_j_g___game___main_a4d785e14155d7d0efe13156d6223a0b9}{void {\bfseries On\-Enemy\-Hit} (\hyperlink{class_j_g___enemy___base}{J\-G\-\_\-\-Enemy\-\_\-\-Base} $\ast$enemy, \hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)}\label{class_j_g___game___main_a4d785e14155d7d0efe13156d6223a0b9}
+
+\item 
+\hypertarget{class_j_g___game___main_a812e0b1a29d91eec2f14019050f218ad}{void {\bfseries Damage\-Path} (\hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$, float damage)}\label{class_j_g___game___main_a812e0b1a29d91eec2f14019050f218ad}
+
+\item 
+void \hyperlink{class_j_g___game___main_aa127943d6acddb67599f5f3c521036d4}{On\-Fruit\-Lost} (\hyperlink{class_j_g___fruit}{J\-G\-\_\-\-Fruit} $\ast$fruit)
+\item 
+void \hyperlink{class_j_g___game___main_a3f4638b76e1e77c65c09da991f650ba6}{On\-Ball\-Throw} (\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)
+\item 
+void \hyperlink{class_j_g___game___main_ab239739c2b97a9142033fb82663d7a06}{Manage\-Ball\-Combo\-Score} (\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)
+\item 
+\hypertarget{class_j_g___game___main_afb2172d8b7a81a333cc80086bd45b602}{void {\bfseries Manage\-Fruit\-Score} (\hyperlink{class_j_g___fruit}{J\-G\-\_\-\-Fruit} $\ast$fruit, \hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)}\label{class_j_g___game___main_afb2172d8b7a81a333cc80086bd45b602}
+
+\item 
+\hypertarget{class_j_g___game___main_a70734f6453c3e3014e0cfc2f501e3963}{void {\bfseries Manage\-Path\-Score} (\hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$path)}\label{class_j_g___game___main_a70734f6453c3e3014e0cfc2f501e3963}
+
+\item 
+\hypertarget{class_j_g___game___main_ac5458eda3344af1f31fa97b5d1000f62}{void {\bfseries Manage\-Enemy\-Bonus} (E\-Enemy\-Bonus bonus)}\label{class_j_g___game___main_ac5458eda3344af1f31fa97b5d1000f62}
+
+\item 
+\hypertarget{class_j_g___game___main_a9c8fad5fdfbf1beb715db909d93e88e5}{bool {\bfseries Is\-There\-Any\-Ball\-Left} ()}\label{class_j_g___game___main_a9c8fad5fdfbf1beb715db909d93e88e5}
+
+\item 
+\hypertarget{class_j_g___game___main_a5230ba7a6a74b943bad2653a522d0d0f}{bool {\bfseries Is\-There\-Any\-Path\-Left} ()}\label{class_j_g___game___main_a5230ba7a6a74b943bad2653a522d0d0f}
+
+\item 
+int \hyperlink{class_j_g___game___main_afa38293cf043c824ccfa4aebe1e1545f}{Get\-Score} ()
+\item 
+void \hyperlink{class_j_g___game___main_a565135339ab0e993ace77fbfc8b39ab2}{Set\-Score} (int new\-Score)
+\item 
+void \hyperlink{class_j_g___game___main_af1018c29931a8569a468b0b7495ca5cc}{Add\-Score} (int amount)
+\item 
+void \hyperlink{class_j_g___game___main_a30a9fb93f7a2a61ce90ab1a77525c006}{Reduce\-Score} (int amount)
+\item 
+int \hyperlink{class_j_g___game___main_a666b141713d126df7e171fc68dd257a2}{Get\-Life\-Count} ()
+\item 
+void \hyperlink{class_j_g___game___main_a80e74d397b65b98182fb5c2054632899}{Set\-Life\-Count} (int new\-Life\-Count)
+\item 
+void \hyperlink{class_j_g___game___main_abffce98f5d7c28791aa13e4d081da6ec}{Decrement\-Life\-Count} ()
+\item 
+void \hyperlink{class_j_g___game___main_a529a8f577bb296cbbe9143f99ae26f1b}{Increment\-Life\-Count} ()
+\item 
+\hypertarget{class_j_g___game___main_a078d9577cbe6ee82bdb518d89f44bff2}{void {\bfseries Heal\-Path} ()}\label{class_j_g___game___main_a078d9577cbe6ee82bdb518d89f44bff2}
+
+\item 
+\hypertarget{class_j_g___game___main_aa55f5f3773c7471676052e0762225244}{\hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$ {\bfseries Find\-A\-Destroyed\-Path} ()}\label{class_j_g___game___main_aa55f5f3773c7471676052e0762225244}
+
+\item 
+\hypertarget{class_j_g___game___main_afc80360326818b771bd22b5dcf07f057}{\hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$ {\bfseries Find\-Most\-Damaged\-Path} ()}\label{class_j_g___game___main_afc80360326818b771bd22b5dcf07f057}
+
+\item 
+\hypertarget{class_j_g___game___main_a713822d4b987824df6d635698fb7cfb9}{void {\bfseries Increment\-Reserved\-Ball\-Count} ()}\label{class_j_g___game___main_a713822d4b987824df6d635698fb7cfb9}
+
+\item 
+\hypertarget{class_j_g___game___main_ada9e01460bcabf904a3f908190598f5b}{void {\bfseries Decrement\-Reserved\-Ball\-Count} ()}\label{class_j_g___game___main_ada9e01460bcabf904a3f908190598f5b}
+
+\item 
+\hypertarget{class_j_g___game___main_a104268d29cacf4bca7912a19fe2cdfd9}{void {\bfseries Set\-Reserved\-Ball\-Count} (int new\-Count)}\label{class_j_g___game___main_a104268d29cacf4bca7912a19fe2cdfd9}
+
+\item 
+\hypertarget{class_j_g___game___main_a2fe9989aefd12882a50e535b04c554fb}{void {\bfseries Release\-Ball} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_a2fe9989aefd12882a50e535b04c554fb}
+
+\item 
+void \hyperlink{class_j_g___game___main_adc1658ea07b4deb55bfe22df04b61aa2}{Remove\-Ball\-From\-Screen} (\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)
+\item 
+\hypertarget{class_j_g___game___main_a0c8d265a7daffcd21337deda74c233f3}{void {\bfseries Remove\-Path\-From\-Screen} (\hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$path)}\label{class_j_g___game___main_a0c8d265a7daffcd21337deda74c233f3}
+
+\item 
+void \hyperlink{class_j_g___game___main_a3b5871764fe94896c274e2a072c00dda}{Remove\-All\-Balls\-From\-Screen} ()
+\item 
+void \hyperlink{class_j_g___game___main_ae827327aa2c6e58cee824a6f5010f5fe}{Add\-Ball\-To\-Screen} ()
+\item 
+\hypertarget{class_j_g___game___main_abbbc10c904cdcba09260c925c36d0f22}{void {\bfseries Temp\-Add\-Ball} (float time)}\label{class_j_g___game___main_abbbc10c904cdcba09260c925c36d0f22}
+
+\item 
+\hypertarget{class_j_g___game___main_aebbaadf23d5bdeed3b34b59d8b4a4fd2}{void {\bfseries Remove\-Fruit\-From\-Screen} (\hyperlink{class_j_g___fruit}{J\-G\-\_\-\-Fruit} $\ast$fruit)}\label{class_j_g___game___main_aebbaadf23d5bdeed3b34b59d8b4a4fd2}
+
+\item 
+\hypertarget{class_j_g___game___main_a34558ac00d2f694351f4a4008fc542db}{void {\bfseries Remove\-All\-Fruits\-From\-Screen} ()}\label{class_j_g___game___main_a34558ac00d2f694351f4a4008fc542db}
+
+\item 
+\hypertarget{class_j_g___game___main_ad1ab733cda6f1462d6fd788eef5fc1a4}{void {\bfseries Remove\-All\-Enemies\-From\-Screen} ()}\label{class_j_g___game___main_ad1ab733cda6f1462d6fd788eef5fc1a4}
+
+\item 
+\hypertarget{class_j_g___game___main_a6a7675634a2549d82cd45791580b9be9}{void {\bfseries Remove\-Enemy\-From\-Screen} (\hyperlink{class_j_g___enemy___base}{J\-G\-\_\-\-Enemy\-\_\-\-Base} $\ast$enemy)}\label{class_j_g___game___main_a6a7675634a2549d82cd45791580b9be9}
+
+\item 
+\hypertarget{class_j_g___game___main_ae3958d0acca40af88f7dbd5b3ace721b}{void {\bfseries Add\-Fruit\-To\-Screen} ()}\label{class_j_g___game___main_ae3958d0acca40af88f7dbd5b3ace721b}
+
+\item 
+\hypertarget{class_j_g___game___main_aaa275770c267d1d447afde3c0d015595}{void {\bfseries Temp\-Add\-Fruit\-To\-Screen} (float time)}\label{class_j_g___game___main_aaa275770c267d1d447afde3c0d015595}
+
+\item 
+\hypertarget{class_j_g___game___main_a7ced3e6ecebc1c0b6f14fc8f79c7f0b4}{void {\bfseries Check\-Ball\-Collision\-With\-Hand} ()}\label{class_j_g___game___main_a7ced3e6ecebc1c0b6f14fc8f79c7f0b4}
+
+\item 
+\hypertarget{class_j_g___game___main_ad94a26b81515a717556314a3a8c65b31}{{\bfseries C\-R\-E\-A\-T\-E\-\_\-\-F\-U\-N\-C} (\hyperlink{class_j_g___game___main}{J\-G\-\_\-\-Game\-\_\-\-Main})}\label{class_j_g___game___main_ad94a26b81515a717556314a3a8c65b31}
+
+\item 
+\hypertarget{class_j_g___game___main_a42558255c3477748cfadf9d501a02b56}{void {\bfseries menu\-Close\-Callback} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_a42558255c3477748cfadf9d501a02b56}
+
+\item 
+\hypertarget{class_j_g___game___main_a2e2740b51a8e5ac7b981078dbd7bbd70}{void {\bfseries menu\-Pause\-Call\-Back} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_a2e2740b51a8e5ac7b981078dbd7bbd70}
+
+\item 
+virtual void \hyperlink{class_j_g___game___main_a9c8aac91fd97b7a88da7819b8ead4206}{cc\-Touches\-Began} (C\-C\-Set $\ast$p\-Touches, C\-C\-Event $\ast$event)
+\item 
+virtual void \hyperlink{class_j_g___game___main_ad3ecad4bd190ff37f5b6ba1da9fbe16c}{cc\-Touches\-Moved} (C\-C\-Set $\ast$p\-Touches, C\-C\-Event $\ast$event)
+\item 
+virtual void \hyperlink{class_j_g___game___main_a0bc1f108b8a56226cfe84ce9d28d56b4}{cc\-Touches\-Ended} (C\-C\-Set $\ast$p\-Touches, C\-C\-Event $\ast$event)
+\item 
+void \hyperlink{class_j_g___game___main_aea78b9aef2cf228b6945fa88bf741c3a}{update} (float dt)
+\item 
+\hypertarget{class_j_g___game___main_a73e825c414b65020ebd84ddaebcaef80}{void {\bfseries draw} ()}\label{class_j_g___game___main_a73e825c414b65020ebd84ddaebcaef80}
+
+\item 
+void \hyperlink{class_j_g___game___main_afe6f0284267c514ca1c81673d015ad91}{Ball\-Touch\-Handler\-\_\-\-Init} (C\-C\-Touch $\ast$touch)
+\item 
+void \hyperlink{class_j_g___game___main_aa0d9b99e2acd78c8763557d1c0e8a244}{Ball\-Touch\-Handler\-\_\-\-Check\-Direction} (unsigned int index)
+\item 
+void \hyperlink{class_j_g___game___main_af02d329a7f3a6ac86d8b233dd9ff0741}{Ball\-Touch\-Handler\-\_\-\-End} (unsigned int index)
+\item 
+void \hyperlink{class_j_g___game___main_a4accf9781acdb8a94450eca925574902}{Ball\-Touch\-Handler\-\_\-\-Check\-Time} (float dt)
+\item 
+bool \hyperlink{class_j_g___game___main_a0fab6585f29f1324aea00bdade4e01f4}{Set\-Touch\-Direction\-For\-Ball} (int index)
+\item 
+int \hyperlink{class_j_g___game___main_a4af4d54f9da2a785f7c1965dfd5630ec}{Get\-Touch\-Info\-Index\-By\-Ball} (\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)
+\item 
+void \hyperlink{class_j_g___game___main_abda6daf16a4bdfb1d197bcedce380f8e}{Set\-Touch\-Info} (C\-C\-Touch $\ast$touch, \hyperlink{class_j_g___hand}{J\-G\-\_\-\-Hand} $\ast$hand, \hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)
+\item 
+void \hyperlink{class_j_g___game___main_a24a120d001b984dc67f211cdb79ce811}{Reset\-Touch\-Info} (int index)
+\item 
+void \hyperlink{class_j_g___game___main_a2f8dd795fb006e6b052dbe29aef917cf}{Reset\-Touch\-Info\-By\-Ball} (\hyperlink{class_j_g___ball}{J\-G\-\_\-\-Ball} $\ast$ball)
+\item 
+void \hyperlink{class_j_g___game___main_ac44ff31e786844c793f1d0b78bb328b2}{Draw\-Throw\-Paths} ()
+\item 
+void \hyperlink{class_j_g___game___main_a2ffff5b2b2e4978e0e831cebb053d389}{Draw\-Throw\-Path\-By\-Power} (float \-\_\-power, bool must\-Highlight)
+\item 
+void \hyperlink{class_j_g___game___main_a329527c04ab8828daf10770823a4510f}{Update\-Hand\-Power\-Bar} ()
+\item 
+void \hyperlink{class_j_g___game___main_afdd489bafbd92fc662e1142bc14156f1}{Update\-Ball\-Throw\-Trace} ()
+\item 
+\hypertarget{class_j_g___game___main_a2d763a885097326f3bfce0ecd8c974fc}{int {\bfseries Get\-Path\-Level\-By\-Power} (float path\-Power)}\label{class_j_g___game___main_a2d763a885097326f3bfce0ecd8c974fc}
+
+\item 
+void \hyperlink{class_j_g___game___main_a9848c48c3f87873e28ccb045a5a8b6c0}{End\-Round} ()
+\item 
+void \hyperlink{class_j_g___game___main_a90e91fdd39573ce58381d40bb92165cc}{Pause\-Game} ()
+\item 
+void \hyperlink{class_j_g___game___main_abe85ef188133f97bd1b9304cf746fc61}{Exit\-Game} ()
+\item 
+void \hyperlink{class_j_g___game___main_ac1a2cc0e1e5c75686d474e8c1c6c98ac}{Exit\-To\-Main\-Menu} ()
+\item 
+void \hyperlink{class_j_g___game___main_a990a62610f857d670d7e127d790ae6a4}{Resume\-Game} ()
+\item 
+void \hyperlink{class_j_g___game___main_a0e68f6caed366333c956a6fd2ba5b6cc}{Reset\-Game} ()
+\item 
+\hypertarget{class_j_g___game___main_a5e1824d42413f19f1bbc9022a4fc3946}{void {\bfseries Handle\-Pause\-Game} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_a5e1824d42413f19f1bbc9022a4fc3946}
+
+\item 
+\hypertarget{class_j_g___game___main_a41b4f86b39119056afef1808734b9c05}{void {\bfseries Handle\-Exit\-Game} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_a41b4f86b39119056afef1808734b9c05}
+
+\item 
+\hypertarget{class_j_g___game___main_aa082f5d13e16c54600d0dc4eea1cd36e}{void {\bfseries Handle\-Exit\-To\-Main\-Menu} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_aa082f5d13e16c54600d0dc4eea1cd36e}
+
+\item 
+\hypertarget{class_j_g___game___main_a50281322bcdea1091765573f79499aaf}{void {\bfseries Handle\-Resume\-Game} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_a50281322bcdea1091765573f79499aaf}
+
+\item 
+\hypertarget{class_j_g___game___main_ae6fa0a45624b6b40fe10b1c46812f259}{void {\bfseries Handle\-Reset\-Game} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_ae6fa0a45624b6b40fe10b1c46812f259}
+
+\item 
+\hypertarget{class_j_g___game___main_ad67312c7ac18fd73066a2d2bc602c137}{void {\bfseries Handle\-End\-Round\-Screen\-Reset\-Game} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_ad67312c7ac18fd73066a2d2bc602c137}
+
+\item 
+\hypertarget{class_j_g___game___main_a2e3c9eb3caf2b4dd7d66e7b943a665e1}{void {\bfseries Handle\-End\-Round\-Screen\-Exit\-To\-Main\-Menu} (C\-C\-Object $\ast$p\-Sender)}\label{class_j_g___game___main_a2e3c9eb3caf2b4dd7d66e7b943a665e1}
+
+\item 
+\hypertarget{class_j_g___game___main_a12416f1f1f78abed18cf82cdeecb8126}{float {\bfseries Calculate\-Throw\-Power} (unsigned int index, bool b\-Is\-Demo=false)}\label{class_j_g___game___main_a12416f1f1f78abed18cf82cdeecb8126}
+
+\item 
+float \hyperlink{class_j_g___game___main_acb38337ccbd703df64be869986eaab62}{Get\-Max\-Throw\-Power} ()
+\item 
+float \hyperlink{class_j_g___game___main_a50c9a071fc59edf3e05868edf795726d}{Get\-Actual\-Min\-Power} ()
+\item 
+C\-C\-Array $\ast$ \hyperlink{class_j_g___game___main_a254fa6dd51aa695ae23d4f54b446b1b1}{Get\-Ball\-Array} ()
+\item 
+void \hyperlink{class_j_g___game___main_ad4691efc615e12254ea347a7b21cd167}{Test\-Single\-Touch} ()
+\item 
+void \hyperlink{class_j_g___game___main_a5ad7dc858f795f34d33c13b712880b43}{Test\-Multi\-Touch} ()
+\item 
+void \hyperlink{class_j_g___game___main_a104c8ad94eb551ad2ba292aa46c0298c}{Test\-Multi\-Touch\-\_\-\-Initi\-Touch\-Gen} (float dt=0)
+\item 
+void \hyperlink{class_j_g___game___main_ae410c7d1cc74a9e7bf6bc51b525f889e}{Test\-Multi\-Touch\-\_\-\-Movement\-Touch\-Gen} (float dt=0)
+\item 
+void \hyperlink{class_j_g___game___main_ab2d7fb8240de8466d624a2f187d5eadf}{Test\-Multi\-Touch\-\_\-\-End\-Gen} (float dt=0)
+\item 
+void \hyperlink{class_j_g___game___main_ab9f2f9db5c2a165d1830f9c7f4d5dcb4}{Draw\-Throw\-Path\-By\-Power} (float \-\_\-power, int level)
+\item 
+bool \hyperlink{class_j_g___game___main_a2123df0b4798405fe04b44f570f90a41}{check\-Curves\-Life} (float power)
+\item 
+void \hyperlink{class_j_g___game___main_a6ecf499fd1416de502ea62cf09b06d48}{Check\-Balls\-Throw\-Path} ()
+\item 
+\hypertarget{class_j_g___game___main_aa386bd7cdada1f23b0b32526e67cc2b0}{float {\bfseries get\-Sign} (float num)}\label{class_j_g___game___main_aa386bd7cdada1f23b0b32526e67cc2b0}
+
+\item 
+\hypertarget{class_j_g___game___main_ab4d277338225ddaf13f1df7cf8ec8c73}{void {\bfseries Check\-Lose\-Condition} ()}\label{class_j_g___game___main_ab4d277338225ddaf13f1df7cf8ec8c73}
+
+\item 
+\hypertarget{class_j_g___game___main_ae99608380db3726b27ed84f03f7a809c}{void {\bfseries Init\-Game\-\_\-difficulty\-Control} ()}\label{class_j_g___game___main_ae99608380db3726b27ed84f03f7a809c}
+
+\item 
+\hypertarget{class_j_g___game___main_a195d9194aaaecc789301378dfba5b7cb}{int {\bfseries get\-Attack\-Wave\-Type} ()}\label{class_j_g___game___main_a195d9194aaaecc789301378dfba5b7cb}
+
+\item 
+\hypertarget{class_j_g___game___main_a98b942f2b6d6d00e1b63429995e093dd}{void {\bfseries Manage\-Difficulty} ()}\label{class_j_g___game___main_a98b942f2b6d6d00e1b63429995e093dd}
+
+\item 
+\hypertarget{class_j_g___game___main_a6b18717c7c69d09d41f7bf284167e635}{void {\bfseries initial\-New\-Attack\-Wave} (float dt)}\label{class_j_g___game___main_a6b18717c7c69d09d41f7bf284167e635}
+
+\item 
+\hypertarget{class_j_g___game___main_aac4ed99ed8cb5b2a5ff311c026208b22}{void {\bfseries on\-Attack\-Wave\-Finished} ()}\label{class_j_g___game___main_aac4ed99ed8cb5b2a5ff311c026208b22}
+
+\item 
+\hypertarget{class_j_g___game___main_a85d8df842ee08fe33a621f39dd0810e7}{int {\bfseries get\-Available\-Path\-Count} ()}\label{class_j_g___game___main_a85d8df842ee08fe33a621f39dd0810e7}
+
+\item 
+\hypertarget{class_j_g___game___main_a10d4371be042c8c143afdbf721631598}{void {\bfseries reset\-Difficulty} ()}\label{class_j_g___game___main_a10d4371be042c8c143afdbf721631598}
+
+\item 
+\hypertarget{class_j_g___game___main_a3feba49e74d5cbcf739684588d8a921f}{void {\bfseries manage\-Rewards} (float dt)}\label{class_j_g___game___main_a3feba49e74d5cbcf739684588d8a921f}
+
+\item 
+\hypertarget{class_j_g___game___main_ad0f4423280a909303c1d40695f088849}{void {\bfseries on\-Ball\-Rewarded} ()}\label{class_j_g___game___main_ad0f4423280a909303c1d40695f088849}
+
+\item 
+\hypertarget{class_j_g___game___main_af4127dc6ecb9f8b465b975be8bdc9a8a}{int {\bfseries get\-Balls\-To\-Reward\-Count} ()}\label{class_j_g___game___main_af4127dc6ecb9f8b465b975be8bdc9a8a}
+
+\item 
+\hypertarget{class_j_g___game___main_ac4010559c73152e4dcd42176b2b8b00c}{bool {\bfseries Is\-Player\-Get\-High\-Score} ()}\label{class_j_g___game___main_ac4010559c73152e4dcd42176b2b8b00c}
+
+\item 
+\hypertarget{class_j_g___game___main_aa1d4b5bfecb0c33a98ccb9c36026863e}{int {\bfseries Determine\-Player\-Rank} ()}\label{class_j_g___game___main_aa1d4b5bfecb0c33a98ccb9c36026863e}
+
+\item 
+\hypertarget{class_j_g___game___main_a82d8d93c069b1d3716e396faa65c8ca0}{void {\bfseries Insert\-Player\-High\-Score} ()}\label{class_j_g___game___main_a82d8d93c069b1d3716e396faa65c8ca0}
+
+\item 
+\hypertarget{class_j_g___game___main_a1f21c075f43477a87f529fee91a9159e}{void {\bfseries on\-Health\-Rewarded} ()}\label{class_j_g___game___main_a1f21c075f43477a87f529fee91a9159e}
+
+\item 
+\hypertarget{class_j_g___game___main_ac2a23c0fc00b5062ce70fad7f76ea7be}{int {\bfseries get\-Healths\-To\-Reward\-Count} ()}\label{class_j_g___game___main_ac2a23c0fc00b5062ce70fad7f76ea7be}
+
+\item 
+\hypertarget{class_j_g___game___main_a15160d941c207cfc71ade62d5a10698f}{std\-::vector$<$ \hyperlink{struct_s_enemy_types}{S\-Enemy\-Types} $>$ {\bfseries get\-Enemy\-Types} ()}\label{class_j_g___game___main_a15160d941c207cfc71ade62d5a10698f}
+
+\item 
+\hypertarget{class_j_g___game___main_af80fdebf8455aa63765c052d59ff0a13}{C\-C\-Array $\ast$ {\bfseries getpaths\-Array} ()}\label{class_j_g___game___main_af80fdebf8455aa63765c052d59ff0a13}
+
+\item 
+\hypertarget{class_j_g___game___main_ac73f4e5031b391acb54215c4d672a92d}{void {\bfseries add\-Enemy} (\hyperlink{class_j_g___enemy___base}{J\-G\-\_\-\-Enemy\-\_\-\-Base} $\ast$)}\label{class_j_g___game___main_ac73f4e5031b391acb54215c4d672a92d}
+
+\item 
+\hypertarget{class_j_g___game___main_aaf6a983dd4b3a9ca32bf53d4317ea6aa}{void {\bfseries play\-Music} (C\-C\-String backsound)}\label{class_j_g___game___main_aaf6a983dd4b3a9ca32bf53d4317ea6aa}
+
+\item 
+\hypertarget{class_j_g___game___main_ad7c2cf4f1fe68a18baf4f217520183b9}{void {\bfseries stop\-Music} ()}\label{class_j_g___game___main_ad7c2cf4f1fe68a18baf4f217520183b9}
+
+\item 
+\hypertarget{class_j_g___game___main_ad982334d650a1f53e0ba707ca3af715e}{void {\bfseries resume\-Music} ()}\label{class_j_g___game___main_ad982334d650a1f53e0ba707ca3af715e}
+
+\item 
+\hypertarget{class_j_g___game___main_aa27677a3be2463834027d18139021861}{void {\bfseries pause\-Music} ()}\label{class_j_g___game___main_aa27677a3be2463834027d18139021861}
+
+\item 
+\hypertarget{class_j_g___game___main_a5656a74c9c4b09329288a929b91fe3fe}{void {\bfseries play\-Sound\-Effect} (C\-C\-String effectsound)}\label{class_j_g___game___main_a5656a74c9c4b09329288a929b91fe3fe}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___game___main_ad8df9f7dc524c5e4096ba72ca3d225a0}{static cocos2d\-::\-C\-C\-Scene $\ast$ {\bfseries scene} ()}\label{class_j_g___game___main_ad8df9f7dc524c5e4096ba72ca3d225a0}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___game___main_aaf56905c2a044f2688dc25a50ac26744}{std\-::vector$<$ \hyperlink{struct_s_enemy_types}{S\-Enemy\-Types} $>$ {\bfseries enemy\-Types}}\label{class_j_g___game___main_aaf56905c2a044f2688dc25a50ac26744}
+
+\item 
+\hypertarget{class_j_g___game___main_aaed93c186f2749821d75404bfda728b4}{std\-::vector$<$ \hyperlink{class_j_g___factory___base}{J\-G\-\_\-\-Factory\-\_\-\-Base} $\ast$ $>$ {\bfseries attack\-Wave\-Types}}\label{class_j_g___game___main_aaed93c186f2749821d75404bfda728b4}
+
+\item 
+\hypertarget{class_j_g___game___main_ab6b2ebabd65b3edd6a9bfb4e8aa66e3f}{C\-C\-Array $\ast$ {\bfseries enemy\-Array}}\label{class_j_g___game___main_ab6b2ebabd65b3edd6a9bfb4e8aa66e3f}
+
+\item 
+\hypertarget{class_j_g___game___main_a1e098ec50a34f9d57ad1ce91e718b113}{C\-C\-Array $\ast$ {\bfseries paths\-Array}}\label{class_j_g___game___main_a1e098ec50a34f9d57ad1ce91e718b113}
+
+\item 
+\hypertarget{class_j_g___game___main_a8974bfdd52077060e4561210cabd193f}{C\-C\-Size {\bfseries screen\-Size}}\label{class_j_g___game___main_a8974bfdd52077060e4561210cabd193f}
+
+\item 
+\hypertarget{class_j_g___game___main_a90cc04d9d60809db0b6efa97dfd9008e}{\hyperlink{class_j_g___game___g_u_i}{J\-G\-\_\-\-Game\-\_\-\-G\-U\-I} $\ast$ {\bfseries game\-G\-U\-I}}\label{class_j_g___game___main_a90cc04d9d60809db0b6efa97dfd9008e}
+
+\item 
+\hypertarget{class_j_g___game___main_a6946a041c2d1e0e1af8f668df4eaef1d}{int {\bfseries life\-Count}}\label{class_j_g___game___main_a6946a041c2d1e0e1af8f668df4eaef1d}
+
+\item 
+\hypertarget{class_j_g___game___main_a092aed9f82afd093223436207aaf95ee}{int {\bfseries score}}\label{class_j_g___game___main_a092aed9f82afd093223436207aaf95ee}
+
+\item 
+\hypertarget{class_j_g___game___main_ac19d330847a26686cff9c8c75c017928}{int {\bfseries rank}}\label{class_j_g___game___main_ac19d330847a26686cff9c8c75c017928}
+
+\item 
+\hypertarget{class_j_g___game___main_afd9990102a04718ae2a4a11addb0b5b8}{int {\bfseries reserved\-Ball\-Count}}\label{class_j_g___game___main_afd9990102a04718ae2a4a11addb0b5b8}
+
+\item 
+C\-C\-Set $\ast$ \hyperlink{class_j_g___game___main_abf4ca18c92688188dcf7bf60c73fa3ae}{Test\-Multi\-Touches\-Set}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The main class for controlling the game 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_j_g___game___main_ae827327aa2c6e58cee824a6f5010f5fe}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Add\-Ball\-To\-Screen@{Add\-Ball\-To\-Screen}}
+\index{Add\-Ball\-To\-Screen@{Add\-Ball\-To\-Screen}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Add\-Ball\-To\-Screen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Add\-Ball\-To\-Screen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ae827327aa2c6e58cee824a6f5010f5fe}
+Adding new ball to screen \hypertarget{class_j_g___game___main_af1018c29931a8569a468b0b7495ca5cc}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Add\-Score@{Add\-Score}}
+\index{Add\-Score@{Add\-Score}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Add\-Score}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Add\-Score (
+\begin{DoxyParamCaption}
+\item[{int}]{amount}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_af1018c29931a8569a468b0b7495ca5cc}
+Add a value to player score \hypertarget{class_j_g___game___main_aa0d9b99e2acd78c8763557d1c0e8a244}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Ball\-Touch\-Handler\-\_\-\-Check\-Direction@{Ball\-Touch\-Handler\-\_\-\-Check\-Direction}}
+\index{Ball\-Touch\-Handler\-\_\-\-Check\-Direction@{Ball\-Touch\-Handler\-\_\-\-Check\-Direction}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Ball\-Touch\-Handler\-\_\-\-Check\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Ball\-Touch\-Handler\-\_\-\-Check\-Direction (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_aa0d9b99e2acd78c8763557d1c0e8a244}
+check direction of the ball \hypertarget{class_j_g___game___main_a4accf9781acdb8a94450eca925574902}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Ball\-Touch\-Handler\-\_\-\-Check\-Time@{Ball\-Touch\-Handler\-\_\-\-Check\-Time}}
+\index{Ball\-Touch\-Handler\-\_\-\-Check\-Time@{Ball\-Touch\-Handler\-\_\-\-Check\-Time}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Ball\-Touch\-Handler\-\_\-\-Check\-Time}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Ball\-Touch\-Handler\-\_\-\-Check\-Time (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a4accf9781acdb8a94450eca925574902}
+it handle the time player hold his touch on the screen \hypertarget{class_j_g___game___main_af02d329a7f3a6ac86d8b233dd9ff0741}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Ball\-Touch\-Handler\-\_\-\-End@{Ball\-Touch\-Handler\-\_\-\-End}}
+\index{Ball\-Touch\-Handler\-\_\-\-End@{Ball\-Touch\-Handler\-\_\-\-End}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Ball\-Touch\-Handler\-\_\-\-End}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Ball\-Touch\-Handler\-\_\-\-End (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{index}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_af02d329a7f3a6ac86d8b233dd9ff0741}
+handling the throwing of the ball \hypertarget{class_j_g___game___main_afe6f0284267c514ca1c81673d015ad91}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Ball\-Touch\-Handler\-\_\-\-Init@{Ball\-Touch\-Handler\-\_\-\-Init}}
+\index{Ball\-Touch\-Handler\-\_\-\-Init@{Ball\-Touch\-Handler\-\_\-\-Init}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Ball\-Touch\-Handler\-\_\-\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Ball\-Touch\-Handler\-\_\-\-Init (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Touch $\ast$}]{touch}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_afe6f0284267c514ca1c81673d015ad91}
+defined to handle initiation of touch \hypertarget{class_j_g___game___main_a9c8aac91fd97b7a88da7819b8ead4206}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!cc\-Touches\-Began@{cc\-Touches\-Began}}
+\index{cc\-Touches\-Began@{cc\-Touches\-Began}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{cc\-Touches\-Began}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::cc\-Touches\-Began (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Set $\ast$}]{p\-Touches, }
+\item[{C\-C\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___game___main_a9c8aac91fd97b7a88da7819b8ead4206}
+Handles the beginning of the touch \hypertarget{class_j_g___game___main_a0bc1f108b8a56226cfe84ce9d28d56b4}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!cc\-Touches\-Ended@{cc\-Touches\-Ended}}
+\index{cc\-Touches\-Ended@{cc\-Touches\-Ended}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{cc\-Touches\-Ended}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::cc\-Touches\-Ended (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Set $\ast$}]{p\-Touches, }
+\item[{C\-C\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___game___main_a0bc1f108b8a56226cfe84ce9d28d56b4}
+Handles the end of the touch \hypertarget{class_j_g___game___main_ad3ecad4bd190ff37f5b6ba1da9fbe16c}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!cc\-Touches\-Moved@{cc\-Touches\-Moved}}
+\index{cc\-Touches\-Moved@{cc\-Touches\-Moved}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{cc\-Touches\-Moved}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::cc\-Touches\-Moved (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Set $\ast$}]{p\-Touches, }
+\item[{C\-C\-Event $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___game___main_ad3ecad4bd190ff37f5b6ba1da9fbe16c}
+Handles the movement of the touch \hypertarget{class_j_g___game___main_a6ecf499fd1416de502ea62cf09b06d48}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Check\-Balls\-Throw\-Path@{Check\-Balls\-Throw\-Path}}
+\index{Check\-Balls\-Throw\-Path@{Check\-Balls\-Throw\-Path}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Check\-Balls\-Throw\-Path}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Check\-Balls\-Throw\-Path (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a6ecf499fd1416de502ea62cf09b06d48}
+checks throw path for each ball and activated them \hypertarget{class_j_g___game___main_a2123df0b4798405fe04b44f570f90a41}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!check\-Curves\-Life@{check\-Curves\-Life}}
+\index{check\-Curves\-Life@{check\-Curves\-Life}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{check\-Curves\-Life}]{\setlength{\rightskip}{0pt plus 5cm}bool J\-G\-\_\-\-Game\-\_\-\-Main\-::check\-Curves\-Life (
+\begin{DoxyParamCaption}
+\item[{float}]{power}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a2123df0b4798405fe04b44f570f90a41}
+check to see if a ball may be throw in this curve! \hypertarget{class_j_g___game___main_abffce98f5d7c28791aa13e4d081da6ec}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Decrement\-Life\-Count@{Decrement\-Life\-Count}}
+\index{Decrement\-Life\-Count@{Decrement\-Life\-Count}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Decrement\-Life\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Decrement\-Life\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_abffce98f5d7c28791aa13e4d081da6ec}
+Decrement the life count of player \hypertarget{class_j_g___game___main_a2ffff5b2b2e4978e0e831cebb053d389}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Draw\-Throw\-Path\-By\-Power@{Draw\-Throw\-Path\-By\-Power}}
+\index{Draw\-Throw\-Path\-By\-Power@{Draw\-Throw\-Path\-By\-Power}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Draw\-Throw\-Path\-By\-Power}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Draw\-Throw\-Path\-By\-Power (
+\begin{DoxyParamCaption}
+\item[{float}]{\-\_\-power, }
+\item[{bool}]{must\-Highlight}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a2ffff5b2b2e4978e0e831cebb053d389}
+draw throw path based on given power \hypertarget{class_j_g___game___main_ab9f2f9db5c2a165d1830f9c7f4d5dcb4}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Draw\-Throw\-Path\-By\-Power@{Draw\-Throw\-Path\-By\-Power}}
+\index{Draw\-Throw\-Path\-By\-Power@{Draw\-Throw\-Path\-By\-Power}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Draw\-Throw\-Path\-By\-Power}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Draw\-Throw\-Path\-By\-Power (
+\begin{DoxyParamCaption}
+\item[{float}]{\-\_\-power, }
+\item[{int}]{level}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ab9f2f9db5c2a165d1830f9c7f4d5dcb4}
+draw throw path based on given power \hypertarget{class_j_g___game___main_ac44ff31e786844c793f1d0b78bb328b2}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Draw\-Throw\-Paths@{Draw\-Throw\-Paths}}
+\index{Draw\-Throw\-Paths@{Draw\-Throw\-Paths}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Draw\-Throw\-Paths}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Draw\-Throw\-Paths (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ac44ff31e786844c793f1d0b78bb328b2}
+draw the availble paths for balls throwing \hypertarget{class_j_g___game___main_a9848c48c3f87873e28ccb045a5a8b6c0}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!End\-Round@{End\-Round}}
+\index{End\-Round@{End\-Round}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{End\-Round}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-End\-Round (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a9848c48c3f87873e28ccb045a5a8b6c0}
+End of the game \hypertarget{class_j_g___game___main_abe85ef188133f97bd1b9304cf746fc61}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Exit\-Game@{Exit\-Game}}
+\index{Exit\-Game@{Exit\-Game}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Exit\-Game}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Exit\-Game (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_abe85ef188133f97bd1b9304cf746fc61}
+Exit the game \hypertarget{class_j_g___game___main_ac1a2cc0e1e5c75686d474e8c1c6c98ac}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Exit\-To\-Main\-Menu@{Exit\-To\-Main\-Menu}}
+\index{Exit\-To\-Main\-Menu@{Exit\-To\-Main\-Menu}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Exit\-To\-Main\-Menu}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Exit\-To\-Main\-Menu (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ac1a2cc0e1e5c75686d474e8c1c6c98ac}
+Exit To Main Menu \hypertarget{class_j_g___game___main_a50f256169fed2e1ff3ebc56b6568db56}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Find\-Best\-Ball\-Matching@{Find\-Best\-Ball\-Matching}}
+\index{Find\-Best\-Ball\-Matching@{Find\-Best\-Ball\-Matching}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Find\-Best\-Ball\-Matching}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\-G\-\_\-\-Ball} $\ast$ J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Find\-Best\-Ball\-Matching (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Hand} $\ast$}]{hand}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a50f256169fed2e1ff3ebc56b6568db56}
+finds best ball in balls that are touched in a hand \hypertarget{class_j_g___game___main_a50c9a071fc59edf3e05868edf795726d}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Get\-Actual\-Min\-Power@{Get\-Actual\-Min\-Power}}
+\index{Get\-Actual\-Min\-Power@{Get\-Actual\-Min\-Power}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Get\-Actual\-Min\-Power}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Get\-Actual\-Min\-Power (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a50c9a071fc59edf3e05868edf795726d}
+returns actual min power \hypertarget{class_j_g___game___main_a254fa6dd51aa695ae23d4f54b446b1b1}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Get\-Ball\-Array@{Get\-Ball\-Array}}
+\index{Get\-Ball\-Array@{Get\-Ball\-Array}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Get\-Ball\-Array}]{\setlength{\rightskip}{0pt plus 5cm}C\-C\-Array $\ast$ J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Get\-Ball\-Array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a254fa6dd51aa695ae23d4f54b446b1b1}
+returns balls array \hypertarget{class_j_g___game___main_a666b141713d126df7e171fc68dd257a2}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Get\-Life\-Count@{Get\-Life\-Count}}
+\index{Get\-Life\-Count@{Get\-Life\-Count}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Get\-Life\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Get\-Life\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a666b141713d126df7e171fc68dd257a2}
+Return The life count of player \hypertarget{class_j_g___game___main_acb38337ccbd703df64be869986eaab62}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Get\-Max\-Throw\-Power@{Get\-Max\-Throw\-Power}}
+\index{Get\-Max\-Throw\-Power@{Get\-Max\-Throw\-Power}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Get\-Max\-Throw\-Power}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Get\-Max\-Throw\-Power (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_acb38337ccbd703df64be869986eaab62}
+returns max\-Throw Power \hypertarget{class_j_g___game___main_afa38293cf043c824ccfa4aebe1e1545f}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Get\-Score@{Get\-Score}}
+\index{Get\-Score@{Get\-Score}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Get\-Score}]{\setlength{\rightskip}{0pt plus 5cm}int J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Get\-Score (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_afa38293cf043c824ccfa4aebe1e1545f}
+Return player Score \hypertarget{class_j_g___game___main_a4af4d54f9da2a785f7c1965dfd5630ec}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Get\-Touch\-Info\-Index\-By\-Ball@{Get\-Touch\-Info\-Index\-By\-Ball}}
+\index{Get\-Touch\-Info\-Index\-By\-Ball@{Get\-Touch\-Info\-Index\-By\-Ball}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Get\-Touch\-Info\-Index\-By\-Ball}]{\setlength{\rightskip}{0pt plus 5cm}int J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Get\-Touch\-Info\-Index\-By\-Ball (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a4af4d54f9da2a785f7c1965dfd5630ec}
+search through touche\-Infos and return index for related ball \hypertarget{class_j_g___game___main_a529a8f577bb296cbbe9143f99ae26f1b}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Increment\-Life\-Count@{Increment\-Life\-Count}}
+\index{Increment\-Life\-Count@{Increment\-Life\-Count}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Increment\-Life\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Increment\-Life\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a529a8f577bb296cbbe9143f99ae26f1b}
+Increment the life count of player \hypertarget{class_j_g___game___main_a14c87e281755122878c191ffdb902db4}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Init\-Round@{Init\-Round}}
+\index{Init\-Round@{Init\-Round}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Init\-Round}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Init\-Round (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a14c87e281755122878c191ffdb902db4}
+Initial the round state \hypertarget{class_j_g___game___main_ab239739c2b97a9142033fb82663d7a06}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Manage\-Ball\-Combo\-Score@{Manage\-Ball\-Combo\-Score}}
+\index{Manage\-Ball\-Combo\-Score@{Manage\-Ball\-Combo\-Score}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Manage\-Ball\-Combo\-Score}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Manage\-Ball\-Combo\-Score (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ab239739c2b97a9142033fb82663d7a06}
+this event called when a ball is collided with an enemy \hypertarget{class_j_g___game___main_afa13ae21a568e417e32653ec985ff21a}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!On\-Ball\-Lost@{On\-Ball\-Lost}}
+\index{On\-Ball\-Lost@{On\-Ball\-Lost}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{On\-Ball\-Lost}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-On\-Ball\-Lost (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{lost\-Ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_afa13ae21a568e417e32653ec985ff21a}
+this event is called when a ball is lost ( for now when it is out of screen ) \hypertarget{class_j_g___game___main_a9fb58ac20271c53d749c5619e5cdf2fd}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!On\-Balls\-Collide@{On\-Balls\-Collide}}
+\index{On\-Balls\-Collide@{On\-Balls\-Collide}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{On\-Balls\-Collide}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-On\-Balls\-Collide (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball\-One, }
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball\-Two}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a9fb58ac20271c53d749c5619e5cdf2fd}
+this event is called when two balls are collided \hypertarget{class_j_g___game___main_a3f4638b76e1e77c65c09da991f650ba6}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!On\-Ball\-Throw@{On\-Ball\-Throw}}
+\index{On\-Ball\-Throw@{On\-Ball\-Throw}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{On\-Ball\-Throw}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-On\-Ball\-Throw (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a3f4638b76e1e77c65c09da991f650ba6}
+this event is called when ball is successfully throwed \hypertarget{class_j_g___game___main_af395f20fd9dfc307cfb2d3234cb2b301}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!On\-Fruit\-Hit@{On\-Fruit\-Hit}}
+\index{On\-Fruit\-Hit@{On\-Fruit\-Hit}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{On\-Fruit\-Hit}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-On\-Fruit\-Hit (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Fruit} $\ast$}]{fruit, }
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_af395f20fd9dfc307cfb2d3234cb2b301}
+this event is called when a ball is collided with a fruit \hypertarget{class_j_g___game___main_aa127943d6acddb67599f5f3c521036d4}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!On\-Fruit\-Lost@{On\-Fruit\-Lost}}
+\index{On\-Fruit\-Lost@{On\-Fruit\-Lost}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{On\-Fruit\-Lost}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-On\-Fruit\-Lost (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Fruit} $\ast$}]{fruit}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_aa127943d6acddb67599f5f3c521036d4}
+this event is called when fruit is out of screen \hypertarget{class_j_g___game___main_a90e91fdd39573ce58381d40bb92165cc}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Pause\-Game@{Pause\-Game}}
+\index{Pause\-Game@{Pause\-Game}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Pause\-Game}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Pause\-Game (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a90e91fdd39573ce58381d40bb92165cc}
+Pausing the game \hypertarget{class_j_g___game___main_a30a9fb93f7a2a61ce90ab1a77525c006}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Reduce\-Score@{Reduce\-Score}}
+\index{Reduce\-Score@{Reduce\-Score}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Reduce\-Score}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Reduce\-Score (
+\begin{DoxyParamCaption}
+\item[{int}]{amount}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a30a9fb93f7a2a61ce90ab1a77525c006}
+Reduce a value from player Score \hypertarget{class_j_g___game___main_a3b5871764fe94896c274e2a072c00dda}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Remove\-All\-Balls\-From\-Screen@{Remove\-All\-Balls\-From\-Screen}}
+\index{Remove\-All\-Balls\-From\-Screen@{Remove\-All\-Balls\-From\-Screen}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Remove\-All\-Balls\-From\-Screen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Remove\-All\-Balls\-From\-Screen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a3b5871764fe94896c274e2a072c00dda}
+Remove all balls from screen \hypertarget{class_j_g___game___main_adc1658ea07b4deb55bfe22df04b61aa2}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Remove\-Ball\-From\-Screen@{Remove\-Ball\-From\-Screen}}
+\index{Remove\-Ball\-From\-Screen@{Remove\-Ball\-From\-Screen}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Remove\-Ball\-From\-Screen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Remove\-Ball\-From\-Screen (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_adc1658ea07b4deb55bfe22df04b61aa2}
+handles ball removing \hypertarget{class_j_g___game___main_a0e68f6caed366333c956a6fd2ba5b6cc}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Reset\-Game@{Reset\-Game}}
+\index{Reset\-Game@{Reset\-Game}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Reset\-Game}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Reset\-Game (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a0e68f6caed366333c956a6fd2ba5b6cc}
+Reseting the game \hypertarget{class_j_g___game___main_a24a120d001b984dc67f211cdb79ce811}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Reset\-Touch\-Info@{Reset\-Touch\-Info}}
+\index{Reset\-Touch\-Info@{Reset\-Touch\-Info}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Reset\-Touch\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Reset\-Touch\-Info (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a24a120d001b984dc67f211cdb79ce811}
+Reset an touchinfo with the given index in touch\-Infos \hypertarget{class_j_g___game___main_a2f8dd795fb006e6b052dbe29aef917cf}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Reset\-Touch\-Info\-By\-Ball@{Reset\-Touch\-Info\-By\-Ball}}
+\index{Reset\-Touch\-Info\-By\-Ball@{Reset\-Touch\-Info\-By\-Ball}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Reset\-Touch\-Info\-By\-Ball}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Reset\-Touch\-Info\-By\-Ball (
+\begin{DoxyParamCaption}
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a2f8dd795fb006e6b052dbe29aef917cf}
+Reset an touchinfo with the given ball in touch\-Infos \hypertarget{class_j_g___game___main_a990a62610f857d670d7e127d790ae6a4}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Resume\-Game@{Resume\-Game}}
+\index{Resume\-Game@{Resume\-Game}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Resume\-Game}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Resume\-Game (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a990a62610f857d670d7e127d790ae6a4}
+Resuming the game \hypertarget{class_j_g___game___main_a80e74d397b65b98182fb5c2054632899}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Set\-Life\-Count@{Set\-Life\-Count}}
+\index{Set\-Life\-Count@{Set\-Life\-Count}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Set\-Life\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Set\-Life\-Count (
+\begin{DoxyParamCaption}
+\item[{int}]{new\-Life\-Count}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a80e74d397b65b98182fb5c2054632899}
+Set the life count of player \hypertarget{class_j_g___game___main_a565135339ab0e993ace77fbfc8b39ab2}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Set\-Score@{Set\-Score}}
+\index{Set\-Score@{Set\-Score}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Set\-Score}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Set\-Score (
+\begin{DoxyParamCaption}
+\item[{int}]{new\-Score}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a565135339ab0e993ace77fbfc8b39ab2}
+Set player Score to a new value \hypertarget{class_j_g___game___main_a0fab6585f29f1324aea00bdade4e01f4}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Set\-Touch\-Direction\-For\-Ball@{Set\-Touch\-Direction\-For\-Ball}}
+\index{Set\-Touch\-Direction\-For\-Ball@{Set\-Touch\-Direction\-For\-Ball}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Set\-Touch\-Direction\-For\-Ball}]{\setlength{\rightskip}{0pt plus 5cm}bool J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Set\-Touch\-Direction\-For\-Ball (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a0fab6585f29f1324aea00bdade4e01f4}
+to calculate the force of the touch
+
+Set Direction For Ball for the give index in touch\-Infos. \begin{DoxyReturn}{Returns}
+\-: whether direction was valid or not 
+\end{DoxyReturn}
+\hypertarget{class_j_g___game___main_abda6daf16a4bdfb1d197bcedce380f8e}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Set\-Touch\-Info@{Set\-Touch\-Info}}
+\index{Set\-Touch\-Info@{Set\-Touch\-Info}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Set\-Touch\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Set\-Touch\-Info (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Touch $\ast$}]{touch, }
+\item[{{\bf J\-G\-\_\-\-Hand} $\ast$}]{hand, }
+\item[{{\bf J\-G\-\_\-\-Ball} $\ast$}]{ball}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_abda6daf16a4bdfb1d197bcedce380f8e}
+Set an empty touchinfo with a new info \hypertarget{class_j_g___game___main_a5ad7dc858f795f34d33c13b712880b43}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Test\-Multi\-Touch@{Test\-Multi\-Touch}}
+\index{Test\-Multi\-Touch@{Test\-Multi\-Touch}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Test\-Multi\-Touch}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Test\-Multi\-Touch (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a5ad7dc858f795f34d33c13b712880b43}
+Testing Multi\-Touch Handling \hypertarget{class_j_g___game___main_ab2d7fb8240de8466d624a2f187d5eadf}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Test\-Multi\-Touch\-\_\-\-End\-Gen@{Test\-Multi\-Touch\-\_\-\-End\-Gen}}
+\index{Test\-Multi\-Touch\-\_\-\-End\-Gen@{Test\-Multi\-Touch\-\_\-\-End\-Gen}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Test\-Multi\-Touch\-\_\-\-End\-Gen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Test\-Multi\-Touch\-\_\-\-End\-Gen (
+\begin{DoxyParamCaption}
+\item[{float}]{dt = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ab2d7fb8240de8466d624a2f187d5eadf}
+End phase of multi touch testing \hypertarget{class_j_g___game___main_a104c8ad94eb551ad2ba292aa46c0298c}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Test\-Multi\-Touch\-\_\-\-Initi\-Touch\-Gen@{Test\-Multi\-Touch\-\_\-\-Initi\-Touch\-Gen}}
+\index{Test\-Multi\-Touch\-\_\-\-Initi\-Touch\-Gen@{Test\-Multi\-Touch\-\_\-\-Initi\-Touch\-Gen}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Test\-Multi\-Touch\-\_\-\-Initi\-Touch\-Gen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Test\-Multi\-Touch\-\_\-\-Initi\-Touch\-Gen (
+\begin{DoxyParamCaption}
+\item[{float}]{dt = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a104c8ad94eb551ad2ba292aa46c0298c}
+Initial phase of multi touch testing \hypertarget{class_j_g___game___main_ae410c7d1cc74a9e7bf6bc51b525f889e}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Test\-Multi\-Touch\-\_\-\-Movement\-Touch\-Gen@{Test\-Multi\-Touch\-\_\-\-Movement\-Touch\-Gen}}
+\index{Test\-Multi\-Touch\-\_\-\-Movement\-Touch\-Gen@{Test\-Multi\-Touch\-\_\-\-Movement\-Touch\-Gen}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Test\-Multi\-Touch\-\_\-\-Movement\-Touch\-Gen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Test\-Multi\-Touch\-\_\-\-Movement\-Touch\-Gen (
+\begin{DoxyParamCaption}
+\item[{float}]{dt = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ae410c7d1cc74a9e7bf6bc51b525f889e}
+Movement phase of multi touch testing \hypertarget{class_j_g___game___main_ad4691efc615e12254ea347a7b21cd167}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Test\-Single\-Touch@{Test\-Single\-Touch}}
+\index{Test\-Single\-Touch@{Test\-Single\-Touch}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Test\-Single\-Touch}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Test\-Single\-Touch (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_ad4691efc615e12254ea347a7b21cd167}
+returns max\-Throw\-Power
+
+a function to test single touch \hypertarget{class_j_g___game___main_aea78b9aef2cf228b6945fa88bf741c3a}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!update@{update}}
+\index{update@{update}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::update (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_aea78b9aef2cf228b6945fa88bf741c3a}
+update function \hypertarget{class_j_g___game___main_afdd489bafbd92fc662e1142bc14156f1}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Update\-Ball\-Throw\-Trace@{Update\-Ball\-Throw\-Trace}}
+\index{Update\-Ball\-Throw\-Trace@{Update\-Ball\-Throw\-Trace}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Update\-Ball\-Throw\-Trace}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Update\-Ball\-Throw\-Trace (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_afdd489bafbd92fc662e1142bc14156f1}
+Update Ball Throw Trace for all touched balls \hypertarget{class_j_g___game___main_a329527c04ab8828daf10770823a4510f}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Update\-Hand\-Power\-Bar@{Update\-Hand\-Power\-Bar}}
+\index{Update\-Hand\-Power\-Bar@{Update\-Hand\-Power\-Bar}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Update\-Hand\-Power\-Bar}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Update\-Hand\-Power\-Bar (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___game___main_a329527c04ab8828daf10770823a4510f}
+updates hands' power bars 
+
+\subsection{Member Data Documentation}
+\hypertarget{class_j_g___game___main_abf4ca18c92688188dcf7bf60c73fa3ae}{\index{J\-G\-\_\-\-Game\-\_\-\-Main@{J\-G\-\_\-\-Game\-\_\-\-Main}!Test\-Multi\-Touches\-Set@{Test\-Multi\-Touches\-Set}}
+\index{Test\-Multi\-Touches\-Set@{Test\-Multi\-Touches\-Set}!JG_Game_Main@{J\-G\-\_\-\-Game\-\_\-\-Main}}
+\subsubsection[{Test\-Multi\-Touches\-Set}]{\setlength{\rightskip}{0pt plus 5cm}C\-C\-Set$\ast$ J\-G\-\_\-\-Game\-\_\-\-Main\-::\-Test\-Multi\-Touches\-Set}}\label{class_j_g___game___main_abf4ca18c92688188dcf7bf60c73fa3ae}
+a function to test single touch 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+J\-G\-\_\-\-Game\-\_\-\-Main.\-h\item 
+J\-G\-\_\-\-Game\-\_\-\-Main.\-cpp\end{DoxyCompactItemize}

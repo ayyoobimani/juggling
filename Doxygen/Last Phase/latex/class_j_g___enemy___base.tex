@@ -1,0 +1,286 @@
+\hypertarget{class_j_g___enemy___base}{\section{J\-G\-\_\-\-Enemy\-\_\-\-Base Class Reference}
+\label{class_j_g___enemy___base}\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+}
+Inheritance diagram for J\-G\-\_\-\-Enemy\-\_\-\-Base\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_j_g___enemy___base}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_j_g___enemy___base_a0c32f5ce5ebd4d988ca7f2eb485634c5}{Move\-To} (float dt)
+\item 
+void \hyperlink{class_j_g___enemy___base_a9ec36f3012a3bc79f5f4da1efd0f5a17}{Set\-Destination\-Path} (C\-C\-Point destination\-Pos, \hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$new\-Target\-Path)
+\item 
+void \hyperlink{class_j_g___enemy___base_a44b421c3ab84dce24b4c59f3c5d94c5c}{Set\-Destination\-Position} (C\-C\-Point destinaion\-Pos)
+\item 
+void \hyperlink{class_j_g___enemy___base_a981f54e4d7f7fb1e10e57ce5ae0e7e6c}{Check\-Out\-Of\-Screen} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_af7d600c7327aa775fc3149b76b8d7050}{Set\-State} (E\-Enemy\-State state)
+\item 
+void \hyperlink{class_j_g___enemy___base_ae7d83ddaed626a47dda3d14c26c94f44}{Fall} (float dt)
+\item 
+virtual void \hyperlink{class_j_g___enemy___base_a8dacf683f1b41612faf87df7f144cf81}{Initial\-Enemy} (C\-C\-Point initial\-Position)
+\item 
+virtual void \hyperlink{class_j_g___enemy___base_acdfcfb221314eb5c3067aacb8aa4d34f}{Initial\-Enemy} (C\-C\-Point initial\-Position, E\-Enemy\-Bonus bonus)
+\item 
+void \hyperlink{class_j_g___enemy___base_a026d475d28ed59d88c00d55622ffb501}{update} (float dt)
+\item 
+void \hyperlink{class_j_g___enemy___base_a7b292e23ac507fe700721cbfb363c5ab}{Check\-Collision\-With\-Ball} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_aa3a97d79f8845764a9934696b4ab5303}{Process\-Move} (float dt)
+\item 
+void \hyperlink{class_j_g___enemy___base_a78e893ce15f84acd45b310d1d7f2d62c}{Handle\-Waiting\-To\-Attacking} (float time)
+\item 
+void \hyperlink{class_j_g___enemy___base_ab502e8bfc62c219a5a53fa64f73ceace}{Initial\-Intending\-Animation} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_a04f490f8d7d07bddba76ab7dd7dcc2a4}{Initial\-Attacking\-Animation} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_addc7dc8e7ee789b629a442b63a61f205}{Initial\-Waiting\-Animation} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_a6dd7be9c41d58787a6bb2b461b4fa343}{Initial\-Escaping\-Animation} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_a793996b953546bd76ab1483e8d62ed65}{Initial\-Dying\-Animation} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_a6754c7a2a6fc9f2877f57c6a868706d8}{Run\-Animation} (C\-C\-Animation $\ast$animation)
+\item 
+void \hyperlink{class_j_g___enemy___base_a4ab46247bd7d721286c3196f8fcdbf3a}{draw} ()
+\item 
+E\-Enemy\-Bonus \hyperlink{class_j_g___enemy___base_af71160543647fad96886e1f87b580896}{Get\-Enemy\-Bonus} ()
+\item 
+float \hyperlink{class_j_g___enemy___base_a3b1c2a3166cd9dbd3aefc79542f36d16}{Get\-Difficulty} ()
+\item 
+\hyperlink{class_j_g___path}{J\-G\-\_\-\-Path} $\ast$ \hyperlink{class_j_g___enemy___base_a8ce8d53876f32eea86ed76d6448d5791}{Get\-Target\-Path} ()
+\item 
+void \hyperlink{class_j_g___enemy___base_afd08277de6792e48a0c33edaada7ca42}{Set\-Enemy\-Bonus} (E\-Enemy\-Bonus bonus)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_j_g___enemy___base_aa9057195c83084f43facd26cd26c2bcc}{static void {\bfseries Set\-On\-Lost\-Function\-Pointer} (C\-C\-Object $\ast$rec, On\-Lost\-Handler)}\label{class_j_g___enemy___base_aa9057195c83084f43facd26cd26c2bcc}
+
+\item 
+\hypertarget{class_j_g___enemy___base_ac3fa895795c80fa6b5213bdb136bcb83}{static void {\bfseries Set\-On\-Hit\-Function\-Pointer} (C\-C\-Object $\ast$rec, On\-Hit\-Handler)}\label{class_j_g___enemy___base_ac3fa895795c80fa6b5213bdb136bcb83}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a1e3731cde597d162b35e2df1a57bbd45}{static void {\bfseries Set\-Get\-Balls\-Function\-Pointer} (C\-C\-Object $\ast$obj, Get\-Balls\-Handler)}\label{class_j_g___enemy___base_a1e3731cde597d162b35e2df1a57bbd45}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a6df960380bf013523c12062d91227bcd}{static void {\bfseries Set\-Damage\-Path\-Function\-Pointer} (C\-C\-Object $\ast$obj, Damage\-Path\-Handler)}\label{class_j_g___enemy___base_a6df960380bf013523c12062d91227bcd}
+
+\item 
+static \hyperlink{class_j_g___enemy___base}{J\-G\-\_\-\-Enemy\-\_\-\-Base} $\ast$ \hyperlink{class_j_g___enemy___base_a928a5124a9a1dbf000c7b1d6b357b960}{Create\-Enemy} (C\-C\-Point initial\-Position)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+C\-C\-Animation $\ast$ \hyperlink{class_j_g___enemy___base_abbee7e77ffc238b8ce725bf749d771a7}{intending\-Animation}
+\item 
+\hypertarget{class_j_g___enemy___base_aba40ca3bfdf2755f1e54d839765e3dc7}{C\-C\-Animation $\ast$ {\bfseries attacking\-Animation}}\label{class_j_g___enemy___base_aba40ca3bfdf2755f1e54d839765e3dc7}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a717c32a58a7d762f041613d75693a4c4}{C\-C\-Animation $\ast$ {\bfseries waiting\-Animation}}\label{class_j_g___enemy___base_a717c32a58a7d762f041613d75693a4c4}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a6a021809fe18be6659ec986a6566658a}{C\-C\-Animation $\ast$ {\bfseries escaping\-Animation}}\label{class_j_g___enemy___base_a6a021809fe18be6659ec986a6566658a}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a2a6b96de6f7d97b9bf6bf92fbdd0555f}{C\-C\-Animation $\ast$ {\bfseries dying\-Animation}}\label{class_j_g___enemy___base_a2a6b96de6f7d97b9bf6bf92fbdd0555f}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a7d27718a30d366cf8934c85c423c57fc}{C\-C\-Animate $\ast$ {\bfseries animation\-Action}}\label{class_j_g___enemy___base_a7d27718a30d366cf8934c85c423c57fc}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a433673314d91e149ab333347e9cc046d}{C\-C\-Texture2\-D $\ast$ {\bfseries ball\-Bonus\-Texture}}\label{class_j_g___enemy___base_a433673314d91e149ab333347e9cc046d}
+
+\item 
+\hypertarget{class_j_g___enemy___base_a3e59ea611043e0bfb426e4391cc070e7}{C\-C\-String {\bfseries sprite\-File\-Name}}\label{class_j_g___enemy___base_a3e59ea611043e0bfb426e4391cc070e7}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_j_g___enemy___base_a7b292e23ac507fe700721cbfb363c5ab}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Check\-Collision\-With\-Ball@{Check\-Collision\-With\-Ball}}
+\index{Check\-Collision\-With\-Ball@{Check\-Collision\-With\-Ball}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Check\-Collision\-With\-Ball}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Check\-Collision\-With\-Ball (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a7b292e23ac507fe700721cbfb363c5ab}
+Checking enemy collision with ball \hypertarget{class_j_g___enemy___base_a981f54e4d7f7fb1e10e57ce5ae0e7e6c}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Check\-Out\-Of\-Screen@{Check\-Out\-Of\-Screen}}
+\index{Check\-Out\-Of\-Screen@{Check\-Out\-Of\-Screen}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Check\-Out\-Of\-Screen}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Check\-Out\-Of\-Screen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a981f54e4d7f7fb1e10e57ce5ae0e7e6c}
+To check if the Enemy is out the screen \hypertarget{class_j_g___enemy___base_a928a5124a9a1dbf000c7b1d6b357b960}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Create\-Enemy@{Create\-Enemy}}
+\index{Create\-Enemy@{Create\-Enemy}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Create\-Enemy}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\-G\-\_\-\-Enemy\-\_\-\-Base} $\ast$ J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Create\-Enemy (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Point}]{initial\-Position}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_j_g___enemy___base_a928a5124a9a1dbf000c7b1d6b357b960}
+Creating the new enemy \hypertarget{class_j_g___enemy___base_a4ab46247bd7d721286c3196f8fcdbf3a}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!draw@{draw}}
+\index{draw@{draw}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a4ab46247bd7d721286c3196f8fcdbf3a}
+Draw the sprite \hypertarget{class_j_g___enemy___base_ae7d83ddaed626a47dda3d14c26c94f44}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Fall@{Fall}}
+\index{Fall@{Fall}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Fall}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Fall (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_ae7d83ddaed626a47dda3d14c26c94f44}
+Make the enemy to fall \hypertarget{class_j_g___enemy___base_a3b1c2a3166cd9dbd3aefc79542f36d16}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Get\-Difficulty@{Get\-Difficulty}}
+\index{Get\-Difficulty@{Get\-Difficulty}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Get\-Difficulty}]{\setlength{\rightskip}{0pt plus 5cm}float J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Get\-Difficulty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a3b1c2a3166cd9dbd3aefc79542f36d16}
+Get difficulty \hypertarget{class_j_g___enemy___base_af71160543647fad96886e1f87b580896}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Get\-Enemy\-Bonus@{Get\-Enemy\-Bonus}}
+\index{Get\-Enemy\-Bonus@{Get\-Enemy\-Bonus}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Get\-Enemy\-Bonus}]{\setlength{\rightskip}{0pt plus 5cm}E\-Enemy\-Bonus J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Get\-Enemy\-Bonus (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_af71160543647fad96886e1f87b580896}
+Getting the enemy bonus \hypertarget{class_j_g___enemy___base_a8ce8d53876f32eea86ed76d6448d5791}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Get\-Target\-Path@{Get\-Target\-Path}}
+\index{Get\-Target\-Path@{Get\-Target\-Path}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Get\-Target\-Path}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\-G\-\_\-\-Path} $\ast$ J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Get\-Target\-Path (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a8ce8d53876f32eea86ed76d6448d5791}
+Get target path \hypertarget{class_j_g___enemy___base_a78e893ce15f84acd45b310d1d7f2d62c}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Handle\-Waiting\-To\-Attacking@{Handle\-Waiting\-To\-Attacking}}
+\index{Handle\-Waiting\-To\-Attacking@{Handle\-Waiting\-To\-Attacking}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Handle\-Waiting\-To\-Attacking}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Handle\-Waiting\-To\-Attacking (
+\begin{DoxyParamCaption}
+\item[{float}]{time}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a78e893ce15f84acd45b310d1d7f2d62c}
+Interval time between waiting state and attacking state \hypertarget{class_j_g___enemy___base_a04f490f8d7d07bddba76ab7dd7dcc2a4}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Initial\-Attacking\-Animation@{Initial\-Attacking\-Animation}}
+\index{Initial\-Attacking\-Animation@{Initial\-Attacking\-Animation}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Initial\-Attacking\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Initial\-Attacking\-Animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a04f490f8d7d07bddba76ab7dd7dcc2a4}
+function to create animation \hypertarget{class_j_g___enemy___base_a793996b953546bd76ab1483e8d62ed65}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Initial\-Dying\-Animation@{Initial\-Dying\-Animation}}
+\index{Initial\-Dying\-Animation@{Initial\-Dying\-Animation}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Initial\-Dying\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Initial\-Dying\-Animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a793996b953546bd76ab1483e8d62ed65}
+function to create animation \hypertarget{class_j_g___enemy___base_a8dacf683f1b41612faf87df7f144cf81}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Initial\-Enemy@{Initial\-Enemy}}
+\index{Initial\-Enemy@{Initial\-Enemy}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Initial\-Enemy}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Initial\-Enemy (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Point}]{initial\-Position}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___enemy___base_a8dacf683f1b41612faf87df7f144cf81}
+initial the new enemy to the specified position \hypertarget{class_j_g___enemy___base_acdfcfb221314eb5c3067aacb8aa4d34f}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Initial\-Enemy@{Initial\-Enemy}}
+\index{Initial\-Enemy@{Initial\-Enemy}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Initial\-Enemy}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Initial\-Enemy (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Point}]{initial\-Position, }
+\item[{E\-Enemy\-Bonus}]{bonus}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_j_g___enemy___base_acdfcfb221314eb5c3067aacb8aa4d34f}
+initial the new enemy to the specified position along with bonus \hypertarget{class_j_g___enemy___base_a6dd7be9c41d58787a6bb2b461b4fa343}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Initial\-Escaping\-Animation@{Initial\-Escaping\-Animation}}
+\index{Initial\-Escaping\-Animation@{Initial\-Escaping\-Animation}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Initial\-Escaping\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Initial\-Escaping\-Animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a6dd7be9c41d58787a6bb2b461b4fa343}
+function to create animation \hypertarget{class_j_g___enemy___base_ab502e8bfc62c219a5a53fa64f73ceace}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Initial\-Intending\-Animation@{Initial\-Intending\-Animation}}
+\index{Initial\-Intending\-Animation@{Initial\-Intending\-Animation}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Initial\-Intending\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Initial\-Intending\-Animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_ab502e8bfc62c219a5a53fa64f73ceace}
+function to create animation \hypertarget{class_j_g___enemy___base_addc7dc8e7ee789b629a442b63a61f205}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Initial\-Waiting\-Animation@{Initial\-Waiting\-Animation}}
+\index{Initial\-Waiting\-Animation@{Initial\-Waiting\-Animation}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Initial\-Waiting\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Initial\-Waiting\-Animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_addc7dc8e7ee789b629a442b63a61f205}
+function to create animation \hypertarget{class_j_g___enemy___base_a0c32f5ce5ebd4d988ca7f2eb485634c5}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Move\-To@{Move\-To}}
+\index{Move\-To@{Move\-To}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Move\-To}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Move\-To (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a0c32f5ce5ebd4d988ca7f2eb485634c5}
+Move Enemy to Specified Position \hypertarget{class_j_g___enemy___base_aa3a97d79f8845764a9934696b4ab5303}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Process\-Move@{Process\-Move}}
+\index{Process\-Move@{Process\-Move}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Process\-Move}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Process\-Move (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_aa3a97d79f8845764a9934696b4ab5303}
+Moving the enemy \hypertarget{class_j_g___enemy___base_a6754c7a2a6fc9f2877f57c6a868706d8}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Run\-Animation@{Run\-Animation}}
+\index{Run\-Animation@{Run\-Animation}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Run\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Run\-Animation (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Animation $\ast$}]{animation}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a6754c7a2a6fc9f2877f57c6a868706d8}
+Run action based on the animations \hypertarget{class_j_g___enemy___base_a9ec36f3012a3bc79f5f4da1efd0f5a17}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Set\-Destination\-Path@{Set\-Destination\-Path}}
+\index{Set\-Destination\-Path@{Set\-Destination\-Path}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Set\-Destination\-Path}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Set\-Destination\-Path (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Point}]{destination\-Pos, }
+\item[{{\bf J\-G\-\_\-\-Path} $\ast$}]{new\-Target\-Path}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a9ec36f3012a3bc79f5f4da1efd0f5a17}
+Setting a Destinatoin Path \hypertarget{class_j_g___enemy___base_a44b421c3ab84dce24b4c59f3c5d94c5c}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Set\-Destination\-Position@{Set\-Destination\-Position}}
+\index{Set\-Destination\-Position@{Set\-Destination\-Position}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Set\-Destination\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Set\-Destination\-Position (
+\begin{DoxyParamCaption}
+\item[{C\-C\-Point}]{destinaion\-Pos}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a44b421c3ab84dce24b4c59f3c5d94c5c}
+Setting a Point on the Path \hypertarget{class_j_g___enemy___base_afd08277de6792e48a0c33edaada7ca42}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Set\-Enemy\-Bonus@{Set\-Enemy\-Bonus}}
+\index{Set\-Enemy\-Bonus@{Set\-Enemy\-Bonus}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Set\-Enemy\-Bonus}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Set\-Enemy\-Bonus (
+\begin{DoxyParamCaption}
+\item[{E\-Enemy\-Bonus}]{bonus}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_afd08277de6792e48a0c33edaada7ca42}
+Set enemy to special bonus \hypertarget{class_j_g___enemy___base_af7d600c7327aa775fc3149b76b8d7050}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!Set\-State@{Set\-State}}
+\index{Set\-State@{Set\-State}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{Set\-State}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::\-Set\-State (
+\begin{DoxyParamCaption}
+\item[{E\-Enemy\-State}]{state}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_af7d600c7327aa775fc3149b76b8d7050}
+Set Enemy's State \hypertarget{class_j_g___enemy___base_a026d475d28ed59d88c00d55622ffb501}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!update@{update}}
+\index{update@{update}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void J\-G\-\_\-\-Enemy\-\_\-\-Base\-::update (
+\begin{DoxyParamCaption}
+\item[{float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_j_g___enemy___base_a026d475d28ed59d88c00d55622ffb501}
+Update 
+
+\subsection{Member Data Documentation}
+\hypertarget{class_j_g___enemy___base_abbee7e77ffc238b8ce725bf749d771a7}{\index{J\-G\-\_\-\-Enemy\-\_\-\-Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}!intending\-Animation@{intending\-Animation}}
+\index{intending\-Animation@{intending\-Animation}!JG_Enemy_Base@{J\-G\-\_\-\-Enemy\-\_\-\-Base}}
+\subsubsection[{intending\-Animation}]{\setlength{\rightskip}{0pt plus 5cm}C\-C\-Animation$\ast$ J\-G\-\_\-\-Enemy\-\_\-\-Base\-::intending\-Animation}}\label{class_j_g___enemy___base_abbee7e77ffc238b8ce725bf749d771a7}
+animation controlling 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+J\-G\-\_\-\-Enemy\-\_\-\-Base.\-h\item 
+J\-G\-\_\-\-Enemy\-\_\-\-Base.\-cpp\end{DoxyCompactItemize}

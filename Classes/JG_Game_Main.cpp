@@ -74,7 +74,7 @@ bool JG_Game_Main::init()
 	
 	/**********************BackGroundSound***********************/
 	
-	playMusic("BackMusic.wav");
+	//playMusic("BackMusic.wav");
 
 
 	/*********************** Background **************************/
@@ -207,7 +207,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 
 void JG_Game_Main::InitRound()
 {
-
+	playMusic("BackMusic.wav");
 	scoreTable = scoreFileHandler->GetHighScoreTable();
 	gameGUI->SetHUDVisibility(true);
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
@@ -1335,7 +1335,7 @@ void JG_Game_Main::HandleResumeGame(CCObject* pSender)
 void JG_Game_Main::HandleResetGame(CCObject* pSender)
 {
 	ResetGame();
-	playSoundEffect("EffectSound2.wav");
+	playSoundEffect("EffectSound.wav");
 	resumeMusic();
 }
 

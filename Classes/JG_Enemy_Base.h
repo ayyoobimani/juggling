@@ -19,6 +19,7 @@ typedef void (CCObject::*OnLostHandler)(JG_Enemy_Base*);
 typedef void (CCObject::*OnHitHandler)(JG_Enemy_Base* , JG_Ball*);
 typedef void (CCObject::*DamagePathHandler)(JG_Path* , float );
 typedef float (CCObject::*GetBallRadiusHandler)(JG_Ball* );
+typedef void (CCObject::*PlayMusicHandler)(CCString);
 typedef CCArray* (CCObject::*GetBallsHandler)();
 
 #define OnHitSelector(_SELECTOR) (OnHitHandler)(&_SELECTOR)
@@ -51,6 +52,7 @@ private:
 	static GetBallsHandler getBallFunction;
 	static DamagePathHandler damagePathFunction;
 	static GetBallRadiusHandler getBallRadiusFunction;
+	static PlayMusicHandler playMusicFunction;
 	static CCObject* listenerObj;
 
 
@@ -116,7 +118,7 @@ public:
 	static void SetGetBallsFunctionPointer(CCObject* obj,GetBallsHandler);
 	static void SetDamagePathFunctionPointer(CCObject* obj,DamagePathHandler);
 	static void SetGetBallRadiusFunctionPointer(CCObject* obj,GetBallRadiusHandler);
-
+	static void SetPlayMusicFunctionPointer(CCObject* obj,PlayMusicHandler);
 
 	//move to  function
 	void MoveTo(float dt);

@@ -7,6 +7,7 @@ OnHitHandler JG_Enemy_Base::onHitFunction;
 GetBallsHandler JG_Enemy_Base::getBallFunction;
 DamagePathHandler JG_Enemy_Base::damagePathFunction;
 GetBallRadiusHandler JG_Enemy_Base::getBallRadiusFunction;
+PlayMusicHandler JG_Enemy_Base::playMusicFunction;
 
 CCObject* JG_Enemy_Base::listenerObj;
 
@@ -291,8 +292,10 @@ void JG_Enemy_Base::HandleAttackingToWaiting(float dt)
 
 void JG_Enemy_Base::Attack()
 {
-	if(targetPath!=NULL)
+	if(targetPath!=NULL){
 		CALL_MEMBER_FN(listenerObj,damagePathFunction)(targetPath, damagePerInterval);
+		CALL_MEMBER_FN(listenerObj,playMusicFunction)("jizz.wav");	
+	}
 	//targetPath->TakeDamage(damagePerInterval);
 }
 
@@ -541,5 +544,11 @@ void JG_Enemy_Base::SetDamagePathFunctionPointer(CCObject* obj,DamagePathHandler
 void JG_Enemy_Base::SetGetBallRadiusFunctionPointer(CCObject* obj,GetBallRadiusHandler handler)
 {
 	getBallRadiusFunction = handler;
+	listenerObj = obj;
+}
+
+void JG_Enemy_Base::SetPlayMusicFunctionPointer(CCObject* obj,PlayMusicHandler handler)
+{
+	playMusicFunction = handler;
 	listenerObj = obj;
 }

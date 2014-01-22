@@ -213,7 +213,7 @@ void JG_Ball::DrawThrowPath()
 		//tempSpeedX = tempSpeedX;
 		tracePoint.x = tempSpeedX * BALL_PATH_TRACE_INTERVALS + tracePoint.x;
 		tracePoint.y = tempSpeedY * BALL_PATH_TRACE_INTERVALS + tracePoint.y;
-		tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
+		tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint-tracePointTexture->getContentSize()/2));
 		//tracePointTexture->SetOr
 	}
 	bDrawThrowPath = false;

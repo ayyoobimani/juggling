@@ -498,6 +498,7 @@ void JG_Enemy_Base::DrawBonusTexture()
 	if(bonusTexture!=NULL)
 	{
 		CCPoint drawPoint = (getTexture()->getContentSize()-bonusTexture->getContentSize())/2;
+		drawPoint = drawPoint+ ccp(0,-5);
 		bonusTexture->drawAtPoint(drawPoint);
 	}
 }

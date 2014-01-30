@@ -36,10 +36,37 @@ bool JG_Menu_Main::init()
 
 void JG_Menu_Main::InitMainMenu()
 {
+	bIsLeaderBoardCached = false;
+	background = "MenuBackground.png";
 	screenSize = CCDirector::sharedDirector()->getWinSize();
-	menuGUI = JG_Menu_GUI::CreateMenuGUI(this);
+	InitMenuGUI();
+	
+	InitBackground();
 	this->addChild(menuGUI,100);
 
+}
+
+void JG_Menu_Main::InitMenuGUI()
+{
+	menuGUI = JG_Menu_GUI::CreateMenuGUI();
+	menuGUI->SetCallBackTarget(this);
+	menuGUI->SetStartGameCallBack(menu_selector(JG_Menu_Main::StartGame));
+	menuGUI->SetExitCallBack(menu_selector(JG_Menu_Main::ExitGame));
+	menuGUI->SetShowHighScoresCallBack(menu_selector(JG_Menu_Main::ShowHighScores));
+	menuGUI->SetOptionCallBack(menu_selector(JG_Menu_Main::ShowOption));
+
+	menuGUI->CreateMenuButtons();
+	menuGUI->HideGUIScreens();
+	menuGUI->SetMainMenuScreenVisibility(true);
+}
+void JG_Menu_Main::InitBackground()
+{	
+	CCSprite* backgroundSprit = CCSprite::create(background.getCString());
+
+	ScaleSpriteToDesignSize(backgroundSprit);
+
+	backgroundSprit->setPosition(ccp(screenSize.width/2,screenSize.height/2));
+	this->addChild(backgroundSprit,-200);
 }
 
 void JG_Menu_Main::StartGame(CCObject* pSender)
@@ -57,12 +84,16 @@ void JG_Menu_Main::ShowOption(CCObject* pSender)
 
 void JG_Menu_Main::ShowHighScores(CCObject* pSender)
 {
-	JG_Score_Handler* scoreHandler;
-	//vector<ScoreTableRecord>* table = scoreHandler->GetHighScoreTable();
-	/*for(int i = 0 ; i<table->size(); i++)
-		menuGUI->InsertHighScore(playerName,*/
-
-
+	if(!bIsLeaderBoardCached)
+	{
+		JG_Score_Handler scoreHandler;
+		vector<ScoreTableRecord>* table = scoreHandler.GetHighScoreTable();
+		for(int i = 0 ; i<table->size(); i++)
+			menuGUI->InsertHighScore(table->at(i).rank,table->at(i).name,table->at(i).score);
+		bIsLeaderBoardCached = true;
+	}
+	menuGUI->HideGUIScreens();
+	menuGUI->SetLeaderBoardScreenVisibility(true);
 }
 
 void JG_Menu_Main::ExitGame(CCObject* pSender)

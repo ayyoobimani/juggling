@@ -5,6 +5,7 @@
 #include "JG_Menu_GUI.h"
 #include "JG_Game_Main.h"
 #include "JG_Score_Handler.h"
+#include "Defines.h"
 
 class JG_Game_Main;
 class JG_Menu_GUI;
@@ -12,10 +13,16 @@ class JG_Menu_GUI;
 using namespace cocos2d;
 class JG_Menu_Main : public cocos2d::CCLayer
 {
-
+	bool bIsLeaderBoardCached;
 	JG_Menu_GUI* menuGUI;
 
 	void InitMainMenu();
+	void InitMenuGUI();
+
+	CCString background;
+
+	void InitBackground();
+
 
 public:
 

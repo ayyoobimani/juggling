@@ -33,5 +33,8 @@ public:
 	ScoreTableRecord InitializingRecord(int rank,string nameWithScore);
 	void SplitBySpace(string input,string& firstPart,int& SecondPart);
 
+	virtual std::string getWritablePath();
+    virtual bool isFileExist(const std::string& strFilePath);
+
 };
 

@@ -75,4 +75,12 @@ void JG_Score_Handler::SplitBySpace(string input,string& firstPart,int& SecondPa
 	SecondPart=temp.intValue();
 }
 
+std::string  JG_Score_Handler::getWritablePath()
+{
+	return "";
+}
 
+bool JG_Score_Handler::isFileExist(const std::string& strFilePath)
+{
+	return false;
+}

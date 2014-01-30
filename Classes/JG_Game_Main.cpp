@@ -38,6 +38,7 @@ bool JG_Game_Main::init()
 	JG_Enemy_Base::SetGetBallsFunctionPointer(this,GetBallsHandler(&JG_Game_Main::GetBallArray));
 	JG_Enemy_Base::SetDamagePathFunctionPointer(this,DamagePathHandler(&JG_Game_Main::DamagePath));
 	JG_Enemy_Base::SetGetBallRadiusFunctionPointer(this,GetBallRadiusHandler(&JG_Game_Main::GetBallRadius));
+	JG_Enemy_Base::SetPlayMusicFunctionPointer(this,PlayMusicHandler(&JG_Game_Main::playSoundEffect));
 
 	JG_AttackWave_Base::SetGetEnemyTypesFunctionPointer(this,GetEnemyTypesHandler(&JG_Game_Main::getEnemyTypes));
 	JG_AttackWave_Base::SetGetBallsToRewardFunctionPointer(this,GetBallsToRewardCountHandler(&JG_Game_Main::getBallsToRewardCount));
@@ -1044,6 +1045,7 @@ void JG_Game_Main::ReleaseBall(CCObject* pSender)
 	if(reservedBallCount>0)
 	{
 		AddBallToScreen();
+		playSoundEffect("releaseball.wav");
 		DecrementReservedBallCount();
 	}
 }

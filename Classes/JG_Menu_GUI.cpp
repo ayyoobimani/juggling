@@ -125,7 +125,7 @@ void JG_Menu_GUI::InsertHighScore(int rank,std::string playerName, int score)
 	CCLabelBMFont* label = CCLabelBMFont::create ("0", "fonts/arial16.fnt", screenSize.height * 0.3f);
 	
 	SetHighScoreLabelPosition(label);
-	
+
 	label->setString(CCString::createWithFormat("%i: %s  %i", rank,playerName.c_str(),score)->getCString());
 
 	leaderBoardLabels->push_back(label);

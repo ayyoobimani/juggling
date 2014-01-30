@@ -6,11 +6,23 @@ JG_Enemy_QuickAttakc::JG_Enemy_QuickAttakc(void)
 	spriteFileName = "Enemies/UFO2/UFO.png";
 
 	attackingAnimationFolder = "Enemies/UFO2/Attacking/";
+	attackingAnimationName = "UFO_2_Attack";
+
 	dyingAnimationFolder = "Enemies/UFO2/Dying/";
+	dyingAnimationName = "UFO_2_Die";
+
 	escapingAnimationFolder = "Enemies/UFO2/Escaping/";
+	escapingAnimationName = "UFO_2_Escape";
+
 	intendingAnimationFolder = "Enemies/UFO2/Intending/";
+	intendingAnimationName = "UFO_2_Intend";
+
 	landingAnimationFolder = "Enemies/UFO2/Landing/";
+	landingAnimationName = "UFO_2_Land";
+
 	waitingAnimationFolder = "Enemies/UFO2/Waiting/";
+	waitingAnimationName = "UFO_2_Wait";
+
 	speed = 500;
 	landingTime = 0.5;
 	

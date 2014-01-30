@@ -374,83 +374,82 @@ void JG_Enemy_Base::CheckOutOfScreen()
 	Here we make animations and we attack files to them*/
 void JG_Enemy_Base::InitialIntendingAnimation()
 {
-	intendingAnimation=CCAnimation::create();
+	intendingAnimation = LoadAnimation(intendingAnimationFolder, intendingAnimationName);
 	intendingAnimation->setLoops(-1);
 	intendingAnimation->retain();
-
-	AddSpritesForAnimation(intendingAnimation,intendingAnimationFolder);
-
 	intendingAnimation->setDelayPerUnit(1.0f/intendingAnimation->getFrames()->count());
 }
 
 void JG_Enemy_Base::InitialAttackingAnimation()
 {
-	attackingAnimation=CCAnimation::create();
+	attackingAnimation = LoadAnimation(attackingAnimationFolder,attackingAnimationName);
 	attackingAnimation->setRestoreOriginalFrame(true);
 	attackingAnimation->retain();
-
-	AddSpritesForAnimation(attackingAnimation,attackingAnimationFolder);
-
 	attackingAnimation->setDelayPerUnit(1.0f/attackingAnimation->getFrames()->count());
 }
 
 void JG_Enemy_Base::InitialWaitingAnimation()
 {
-	waitingAnimation=CCAnimation::create();
+	waitingAnimation = LoadAnimation(waitingAnimationFolder,waitingAnimationName);
 	waitingAnimation->setLoops(-1);
 	waitingAnimation->retain();
-
-	AddSpritesForAnimation(waitingAnimation,waitingAnimationFolder);
-
 	waitingAnimation->setDelayPerUnit(1.0f/waitingAnimation->getFrames()->count());
 }
 
 void JG_Enemy_Base::InitialEscapingAnimation()
 {
-	escapingAnimation=CCAnimation::create();
+	escapingAnimation =  LoadAnimation(escapingAnimationFolder,escapingAnimationName);
 	escapingAnimation->setLoops(-1);
 	escapingAnimation->retain();
-
-	AddSpritesForAnimation(escapingAnimation,escapingAnimationFolder);
-
 	escapingAnimation->setDelayPerUnit(1.0f/escapingAnimation->getFrames()->count());
 }
 
 void JG_Enemy_Base::InitialDyingAnimation()
 {
-	dyingAnimation=CCAnimation::create();
+	dyingAnimation = LoadAnimation(dyingAnimationFolder,dyingAnimationName);
 	dyingAnimation->setLoops(-1);
 	dyingAnimation->retain();
-
-	AddSpritesForAnimation(dyingAnimation,dyingAnimationFolder);
-
 	dyingAnimation->setDelayPerUnit(1.0f/dyingAnimation->getFrames()->count());
 }
 
 void JG_Enemy_Base::InitialLandingAnimation()
 {
-	landingAnimation=CCAnimation::create();
+	landingAnimation= LoadAnimation(landingAnimationFolder,landingAnimationName);
 	landingAnimation->retain();
-
-	AddSpritesForAnimation(landingAnimation,landingAnimationFolder);
-
 	landingAnimation->setDelayPerUnit(landingTime/landingAnimation->getFrames()->count());
 }
 
-
-void JG_Enemy_Base::AddSpritesForAnimation(CCAnimation* animation, CCString folder)
+CCAnimation* JG_Enemy_Base::LoadAnimation(CCString animationFolder, CCString animationName)
 {
-	if( folder.getCString() == "")
-		return;
+	CCAnimation* animation;
+	CCAnimationCache *cache = CCAnimationCache::sharedAnimationCache();
+	animation = cache->animationByName(animationName.getCString());
+
+	if(animation!=NULL)
+		return animation;
+	else
+	{
+		animation = LoadAnimationFromFolder(animationFolder);
+		cache->addAnimation(animation,animationName.getCString());
+		return animation;
+	}
+}
+
+CCAnimation* JG_Enemy_Base::LoadAnimationFromFolder( CCString animationFolder)
+{
+	CCAnimation* animation = CCAnimation::create();
+	if( animationFolder.getCString() == "")
+		return NULL;
 	//TODO: change it to do while
 	int i=1;
-	CCString spriteAddress = GetSpriteAddress(folder,i);
+	CCString spriteAddress = GetSpriteAddress(animationFolder,i);
 	while (CCFileUtils::sharedFileUtils()->isFileExist(spriteAddress.getCString()))
 	{
 		animation->addSpriteFrameWithFileName(spriteAddress.getCString());
 		i++;
-		spriteAddress = GetSpriteAddress(folder,i);
+		spriteAddress = GetSpriteAddress(animationFolder,i);
 	}
+	return animation;
 }
 
 CCString JG_Enemy_Base::GetSpriteAddress(CCString folder,int spriteIndex)

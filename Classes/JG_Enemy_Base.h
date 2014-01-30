@@ -88,7 +88,8 @@ private:
 	void GotoState_Dying();
 	void GotoState_Landing();
 
-	void AddSpritesForAnimation(CCAnimation* animation, CCString folder);
+	CCAnimation* LoadAnimation(CCString animationFolder, CCString animationName);
+	CCAnimation* LoadAnimationFromFolder(CCString animationFolder);
 
 	CCString GetSpriteAddress(CCString folder,int spriteIndex);
 
@@ -107,6 +108,14 @@ protected:
 	CCString escapingAnimationFolder;
 	CCString dyingAnimationFolder;
 	CCString landingAnimationFolder;
+
+	CCString intendingAnimationName;
+	CCString attackingAnimationName;
+	CCString waitingAnimationName;
+	CCString escapingAnimationName;
+	CCString dyingAnimationName;
+	CCString landingAnimationName;
+
 	
 
 public:

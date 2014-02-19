@@ -82,6 +82,7 @@ bool JG_Game_Main::init()
 	CCSprite * backGround = CCSprite::create("background2.png");
 
 	backGround->setPosition(ccp(screenSize.width/2,screenSize.height/2));
+	ScaleSpriteToDesignSize(backGround);
 	this->addChild(backGround,-100);
 	/************************* /Background *************************/
 	

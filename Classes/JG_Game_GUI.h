@@ -71,8 +71,9 @@ public:
 
 
 
-
-
+	/*************tutorial******************/
+	CCMenuItemSprite* nexTutorialPageButton;
+	void initialTutorialItems();
 	
 
 		

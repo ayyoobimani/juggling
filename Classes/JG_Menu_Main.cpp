@@ -1,4 +1,5 @@
 #include "JG_Menu_Main.h"
+#include "JG_Tutorial_Handler.h"
 
 USING_NS_CC;
 
@@ -71,8 +72,16 @@ void JG_Menu_Main::InitBackground()
 
 void JG_Menu_Main::StartGame(CCObject* pSender)
 {
-	CCLOG("----------- Menu: StartGame -------------");
-	CCDirector::sharedDirector()->replaceScene(JG_Game_Main::scene());
+	if(JG_Tutorial_Handler::mustPlayTutorial())
+	{
+		CCLOG("----------- Menu: paly-tutorial -------------");
+		CCDirector::sharedDirector()->replaceScene(JG_Tutorial_Handler::scene());
+	}
+	else
+	{
+		CCLOG("----------- Menu: StartGame -------------");
+		CCDirector::sharedDirector()->replaceScene(JG_Game_Main::scene());
+	}
 
 }
 

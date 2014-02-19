@@ -141,6 +141,10 @@ bool JG_Game_Main::init()
 	/************************* Enemy Factories ********************/
 	enemyTypes.push_back(CreateEnemyType<JG_Enemy_QuickAttakc>(3,3));
 	enemyTypes.push_back(CreateEnemyType<JG_Enemy_Crow>(6,2));
+
+
+	//must be after enemyAdds
+	LoadContents();
 	
 
 	/************************* /Enemy Factories ********************/
@@ -261,13 +265,13 @@ void JG_Game_Main::InitRound()
 
 
 	////************************* Delete This Later **************/
-	tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
-	tempEnemy->InitialEnemy(ccp(100,100),EnemyBonus_ExtraBall);
-	this->addChild((CCNode*) tempEnemy,20);
-	CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
-	tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
-	//((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
-	enemyArray->addObject(tempEnemy);
+	//tempEnemy = (JG_Enemy_Base*) enemyTypes[0].factory->Create();
+	//tempEnemy->InitialEnemy(ccp(100,100),EnemyBonus_ExtraBall);
+	//this->addChild((CCNode*) tempEnemy,20);
+	//CCPoint tempPosition=((JG_Path*)pathsArray->objectAtIndex(2))->GetPositionForLengthRatio(0.8);
+	//tempEnemy->SetDestinationPath(tempPosition,(JG_Path*)pathsArray->objectAtIndex(2));
+	////((JG_Path*)pathsArray->objectAtIndex(1))->TakeDamage(101);
+	//enemyArray->addObject(tempEnemy);
 	
 	////************************* /Delete This Later **************/
 }
@@ -1834,4 +1838,19 @@ void JG_Game_Main::TestOutOfRangeRankForHighScore()
 			exit(-1);
 	}
 	exit(0);
+}
+
+void JG_Game_Main::LoadContents()
+{
+	LoadEnemysContents();
+}
+
+void JG_Game_Main::LoadEnemysContents()
+{
+	JG_Enemy_Base * e;
+	for(int i  = 0 ; i<enemyTypes.size(); i++)
+	{
+		e = (JG_Enemy_Base*) enemyTypes.at(i).factory->Create();
+		e->InitialEnemy(ccp(screenSize.width-100,0));
+	}
 }

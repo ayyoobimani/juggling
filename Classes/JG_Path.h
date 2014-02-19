@@ -19,7 +19,8 @@ class JG_Game_Main;
 
 struct PathHealthStatesForEachLevel
 {
-	std::vector<CCTexture2D*> healthStateTextures;
+	CCTexture2D* fullTexture;
+	CCTexture2D* destroyedTexture;
 };
 
 
@@ -66,6 +67,7 @@ class JG_Path :
 
 	
 	void SetScoringEnable(bool bEnable);
+	void UpdatePathTextureStatus();
 	
 
 	void DrawPath();
@@ -94,7 +96,7 @@ public:
 	void SetPathEnable(bool enable);
 	bool IsPathEnabled();
 
-	void UpdatePathHealthStateTexture();
+	
 
 	
 

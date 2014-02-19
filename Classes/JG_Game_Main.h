@@ -142,6 +142,9 @@ class JG_Game_Main : public cocos2d::CCLayer
 	/*! return proper discrete value */
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
 
+	void LoadContents();
+	void LoadEnemysContents();
+
 
 
 	int ballCounter;

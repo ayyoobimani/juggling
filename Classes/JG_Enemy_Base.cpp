@@ -37,6 +37,11 @@ JG_Enemy_Base::JG_Enemy_Base(void)
 JG_Enemy_Base::~JG_Enemy_Base(void)
 {
 	CC_SAFE_RELEASE(intendingAnimation);
+	CC_SAFE_RELEASE(attackingAnimation);
+	CC_SAFE_RELEASE(waitingAnimation);
+	CC_SAFE_RELEASE(escapingAnimation);
+	CC_SAFE_RELEASE(dyingAnimation);
+	CC_SAFE_RELEASE(landingAnimation);
 	
 }
 

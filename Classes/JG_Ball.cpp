@@ -61,6 +61,7 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 
 		//ball->InitialAnimation();
 
+
 		return ball;
 	}
 	CC_SAFE_DELETE(ball);

@@ -365,13 +365,13 @@ public:
 
 	/*! draw the availble paths for balls throwing */
 	//NOTE: shall it be here or there must be in another class ? 
-	void DrawThrowPaths();
+	//void DrawThrowPaths();
 	/*! draw throw path based on given power */
-	void DrawThrowPathByPower(float _power , bool mustHighlight);
+	//void DrawThrowPathByPower(float _power , bool mustHighlight);
 	/*! updates hands' power bars */ 
-	void UpdateHandPowerBar();
+	//void UpdateHandPowerBar();
 	/*! Update Ball Throw Trace for all touched balls */
-	void UpdateBallThrowTrace();
+	//void UpdateBallThrowTrace();
 	
 	int GetPathLevelByPower(float pathPower);
 	

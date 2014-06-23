@@ -434,7 +434,7 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 	JG_Ball* tempBall;
 	JG_Ball* criticalBall = NULL ;
 	//find the most critical ball (if exists) colliding with the ball
-	//most critical ball is the ball witch will be lost befor other balls
+	//most critical ball is the ball witch will be lost before other balls
 	for (int k=0 ; k<ballsArray->count() ; k++)
 	{
 		tempBall=(JG_Ball *) ballsArray->objectAtIndex(k);
@@ -478,7 +478,7 @@ JG_Ball* JG_Game_Main::FindBestBallMatching(JG_Hand * currentHand )
 				}
 
 			}
-		}// end of ball collision cheking
+		}// end of ball collision checking
 	}// end of ball looping
 
 	return criticalBall;
@@ -627,23 +627,11 @@ float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bI
 
 
 	rawInput-=actualMinPower;
-	//CCLOG("max value %f", GetMaxThrowPower());
-	//CCLOG("min value %f", actualMinPower);
-	//CCLOG("discrete value %f", (floor(rawInput/powerRange)*powerRange));
+
 	float powerLevel=floor(rawInput/powerRange);
 
 
 	discretedValue=powerLevel*powerRange;
-
-	//CCLOG("power level : %f",powerLevel);
-
-	// set ball level only when it is thrown up
-	//if(!bIsDemo)
-	//{
-	//if(ball->GetBallDirection()== Dir_LeftHandToRight
-	//	|| ball->GetBallDirection() ==Dir_RighHandtToLeft)
-	//	ball->SetBallLevel(powerLevel);
-	//}
 	return discretedValue;
 
 }
@@ -1096,40 +1084,7 @@ void JG_Game_Main::TempAddFruitToScreen(float time)
 }
 
 
-void JG_Game_Main::UpdateHandPowerBar()
-{
-	((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale(0);
-	((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale(0);
-	for (int i=0;i<TOUCH_COUNT;i++)
-	{
-		if(touchInfos[i].touch!=NULL)
-		{
-			if(handsArray->objectAtIndex(0)==touchInfos[i].hand)
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(0))->SetBarScale((CalculateThrowPower(i)+actualMinPower)*2);
-			else
-				((JG_GUI_Bar*)handsPowerBarArray->objectAtIndex(1))->SetBarScale((CalculateThrowPower(i)+actualMinPower)*2);
-		}
 
-	}
-}
-
-void JG_Game_Main::UpdateBallThrowTrace()
-{
-	for (int i=0;i<TOUCH_COUNT;i++)
-	{
-		if(touchInfos[i].touch!=NULL && touchInfos[i].bIsDirValid
-			&& touchInfos[i].ball->moveMode==Move_Straight)
-		{
-			//CCLog("WTTTTTTTTTTTTTTTF");
-			if(touchInfos[i].hand== rightHand)
-				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),rightHand->getPosition(),leftHand->getPosition());
-			else
-				touchInfos[i].ball->SetThrowPathInfo(CalculateThrowPower(i),leftHand->getPosition(),rightHand->getPosition());
-		}
-
-	}
-
-}
 
 
 void JG_Game_Main::InitialThrowPowerVariables()
@@ -1154,54 +1109,7 @@ void JG_Game_Main::draw()
 	//DrawThrowPaths();
 }
 
-void JG_Game_Main::DrawThrowPaths()
-{
-	float power;
-	for(int i = 0 ; i<DISCRETE_PARTS_COUNT; i++)
-	{
-		power = i*powerRange;
-		DrawThrowPathByPower(power,checkCurvesLife(power));
 
-
-	}
-}
-
-//TODO: clean up this shit
-void JG_Game_Main::DrawThrowPathByPower(float _power, bool mustHighlight)
-{
-
-	//CCLOG(CCString::createWithFormat("chosen:%f",_power)->getCString());
-	float tempSpeed =  JG_Ball::minSpeed + JG_Ball::minSpeed * _power;
-
-	float tempSpeedX,tempSpeedY;
-	CCPoint tracePoint;
-
-	float tempCurveRad;
-	tempCurveRad = JG_Ball::CalculateCurveRad(tempSpeed,rightHand->getPosition(),leftHand->getPosition());
-
-
-	tracePoint = rightHand->getPosition();
-	tempSpeedX= tempSpeed * cos(tempCurveRad);
-	tempSpeedY = tempSpeed * sin(tempCurveRad);
-	float tempInterval = 0.07;
-	//for( int i = 0 ; i< 50 ; i++)
-	while(tracePoint.y >= rightHand->getPositionY())
-	{
-		tempSpeedY = -GRAVITY* tempInterval  + tempSpeedY;
-		//tempSpeedX = tempSpeedX;
-		tracePoint.x = tempSpeedX * tempInterval + tracePoint.x;
-		tracePoint.y = tempSpeedY * tempInterval + tracePoint.y;
-
-		if(mustHighlight)
-			traceLivePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
-		else
-			tracePointTexture->drawAtPoint(convertToNodeSpace(tracePoint));
-
-		//tracePointTexture->SetOr
-	}
-
-
-}
 
 
 

@@ -55,6 +55,7 @@ void JG_Menu_Main::InitMenuGUI()
 	menuGUI->SetExitCallBack(menu_selector(JG_Menu_Main::ExitGame));
 	menuGUI->SetShowHighScoresCallBack(menu_selector(JG_Menu_Main::ShowHighScores));
 	menuGUI->SetOptionCallBack(menu_selector(JG_Menu_Main::ShowOption));
+	menuGUI->SetPlayTutorialCallBack(menu_selector(JG_Menu_Main::PlayTutorial));
 
 	menuGUI->CreateMenuButtons();
 	menuGUI->HideGUIScreens();
@@ -75,7 +76,7 @@ void JG_Menu_Main::StartGame(CCObject* pSender)
 	if(JG_Tutorial_Handler::mustPlayTutorial())
 	{
 		CCLOG("----------- Menu: paly-tutorial -------------");
-		CCDirector::sharedDirector()->replaceScene(JG_Tutorial_Handler::scene());
+		CCDirector::sharedDirector()->replaceScene(JG_Tutorial_Handler::scene(true));
 	}
 	else
 	{
@@ -83,6 +84,12 @@ void JG_Menu_Main::StartGame(CCObject* pSender)
 		CCDirector::sharedDirector()->replaceScene(JG_Game_Main::scene());
 	}
 
+}
+
+void JG_Menu_Main::PlayTutorial(CCObject* pSender)
+{
+	CCLOG("----------- Menu: paly-tutorial -------------");
+	CCDirector::sharedDirector()->replaceScene(JG_Tutorial_Handler::scene(false));
 }
 
 void JG_Menu_Main::ShowOption(CCObject* pSender)

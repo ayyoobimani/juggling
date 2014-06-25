@@ -11,6 +11,7 @@ class JG_Tutorial_Handler: public cocos2d::CCLayer
 	int currentShowingPictureNumber;
 	bool  bIsPlayingForFirstTime;
 	CCSprite* currentBackGround;
+	bool bMustStartGameAtEnd;
 
 	CCMenuItemSprite* backButton;
 	CCMenuItemSprite* nextButton;
@@ -27,17 +28,17 @@ class JG_Tutorial_Handler: public cocos2d::CCLayer
 	
 public:
 	
-	JG_Tutorial_Handler(void);
+	JG_Tutorial_Handler(bool mustStartGame);
 	~JG_Tutorial_Handler(void);
 
 	void playTutorial();
-	static CCScene* scene();
+	static CCScene* scene(bool mustStartGame);
 
 	static bool mustPlayTutorial();
 	void showNextPage(CCObject* pSender);
 	void showPrevPage(CCObject* pSender);
 
-	void toggleNextToPlayButton(bool bMustToggle);
+	void toggleNextToPlayButton(bool btoggletoPlay);
 	void goBackToMainMenue(CCObject* pSender);
 	
 };

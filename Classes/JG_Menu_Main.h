@@ -40,6 +40,7 @@ public:
 	void ShowOption(CCObject* pSender);
 	void ShowHighScores(CCObject* pSender);
 	void ExitGame(CCObject* pSender);
+	void PlayTutorial(CCObject* psender);
     
     // a selector callback
     void menuCloseCallback(CCObject* pSender);

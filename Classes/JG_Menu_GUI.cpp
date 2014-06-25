@@ -73,6 +73,12 @@ void JG_Menu_GUI::CreateMenuButtons()
 		, this
 		, menu_selector(JG_Menu_GUI::ReturnToMainMenu)
 		, ccp(0.5,0.2));
+
+	howToPlayButton = CreateButton("Buttons/Menu/Button_How_To_Play_Normal.png"
+		, "Buttons/Menu/Button_How_To_Play_Selected.png"
+		, callBackTarget
+		, playTutorialCallBack
+		, ccp(0.2,0.1));
 }
 
 
@@ -101,6 +107,7 @@ void JG_Menu_GUI::SetMainMenuScreenVisibility(bool bVisible)
 	ShowOptionButton->setVisible(bVisible);
 	ShowHighScoresButton->setVisible(bVisible);
 	ExitGameButton->setVisible(bVisible);
+	howToPlayButton->setVisible(bVisible);
 }
 
 void JG_Menu_GUI::SetLeaderBoardScreenVisibility(bool bVisible)
@@ -169,8 +176,15 @@ void JG_Menu_GUI::SetExitCallBack(SEL_MenuHandler selector)
 	exitCallBack = selector;
 }
 
+void JG_Menu_GUI::SetPlayTutorialCallBack(SEL_MenuHandler selector)
+{
+	playTutorialCallBack = selector;
+}
+										   
+
 void JG_Menu_GUI::ReturnToMainMenu(CCObject* pSender)
 {
 	HideGUIScreens();
 	SetMainMenuScreenVisibility(true);
 }
+

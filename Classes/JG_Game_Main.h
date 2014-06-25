@@ -138,7 +138,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float discretedValue;
 	float actualMinPower;
 	/*! calculate and initials some variables for calculating throw power */
-	void InitialThrowPowerVariables();
+	void InitialBallVariablesVariables();
 	/*! return proper discrete value */
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
 
@@ -184,8 +184,7 @@ public:
 	 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
 
-    /*! Initial the round state */
-	void InitRound();
+
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::CCScene* scene();
@@ -202,7 +201,7 @@ public:
 	//TODO: move them to private
 	/**************** game rule members *************/
 	int lifeCount;
-	int score;
+	int playerScore;
 	int rank;
 	int reservedBallCount;
 	/**************** /game rule members *************/
@@ -365,13 +364,13 @@ public:
 
 	/*! draw the availble paths for balls throwing */
 	//NOTE: shall it be here or there must be in another class ? 
-	void DrawThrowPaths();
+	//void DrawThrowPaths();
 	/*! draw throw path based on given power */
-	void DrawThrowPathByPower(float _power , bool mustHighlight);
+	//void DrawThrowPathByPower(float _power , bool mustHighlight);
 	/*! updates hands' power bars */ 
-	void UpdateHandPowerBar();
+	//void UpdateHandPowerBar();
 	/*! Update Ball Throw Trace for all touched balls */
-	void UpdateBallThrowTrace();
+	//void UpdateBallThrowTrace();
 	
 	int GetPathLevelByPower(float pathPower);
 	
@@ -415,15 +414,6 @@ public:
 	/*! returns balls array */
 	CCArray* GetBallArray();
 	/*! returns maxThrowPower */ 
-
-
-
-	
-
-
-
-
-
 
 	/*! a function to test single touch */
 	void TestSingleTouch();
@@ -514,7 +504,28 @@ public:
 
 	void TestOutOfRangeRankForHighScore();
 
-	
+private:
+	void InitialLoadingScreen();
+	void InitialGameTimer(float dt);
+
+	void InitialGame();
+
+	void CreateHands();
+
+	void CreateBackGround();
+
+	void CreateGUI();
+
+	void InitialCallBacks();
+
+	void InitialPaths();
+
+	void InitialEnemies();
+
+	/*! Initial the round state */
+	void InitRound();
+
+	void CreateBalls();
 
 };
 

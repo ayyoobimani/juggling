@@ -141,9 +141,6 @@ void JG_Game_GUI::InitPauseMenuItems()
 	exitGameButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.2));
 
 	
-
-	
-	
 	gameMenu->addChild(pauseButton);
 	gameMenu->addChild(resumeButton);
 	gameMenu->addChild(resetButton);
@@ -151,7 +148,6 @@ void JG_Game_GUI::InitPauseMenuItems()
 	gameMenu->addChild(exitToMainMenuButton);
 	
 	
-
 }
 
 void JG_Game_GUI::InitEndRoundMenuItems()
@@ -176,7 +172,7 @@ void JG_Game_GUI::InitEndRoundMenuItems()
 
 	endRound_ExitToMenuButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png"),CCSprite::create("Buttons/Game/ExitToMainMenu_Selected.png")
 		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandleEndRoundScreenResetGame));
+		 ,menu_selector(JG_Game_Main::HandleEndRoundScreenExitToMainMenu));
 	endRound_ExitToMenuButton->retain();
 	endRound_ExitToMenuButton->setPosition(ccp(screenSize.width * 0.15 ,screenSize.height * 0.2));
 	gameMenu->addChild(endRound_ExitToMenuButton);

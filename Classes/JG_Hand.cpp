@@ -29,8 +29,7 @@ JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char 
 }
 
 void JG_Hand::draw()
-{
-	
+{	
 	CCSprite::draw();
 
 	if(bMustDrawArea)

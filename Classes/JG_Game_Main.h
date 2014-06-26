@@ -138,7 +138,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float discretedValue;
 	float actualMinPower;
 	/*! calculate and initials some variables for calculating throw power */
-	void InitialThrowPowerVariables();
+	void InitialBallVariablesVariables();
 	/*! return proper discrete value */
 	float DiscretedPowerValueGen(float input,JG_Ball* ball, bool bIsDemo = false);
 
@@ -184,8 +184,7 @@ public:
 	 // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();  
 
-    /*! Initial the round state */
-	void InitRound();
+
 
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::CCScene* scene();
@@ -416,15 +415,6 @@ public:
 	CCArray* GetBallArray();
 	/*! returns maxThrowPower */ 
 
-
-
-	
-
-
-
-
-
-
 	/*! a function to test single touch */
 	void TestSingleTouch();
 	/*! a function to test single touch */
@@ -514,7 +504,28 @@ public:
 
 	void TestOutOfRangeRankForHighScore();
 
-	
+private:
+	void InitialLoadingScreen();
+	void InitialGameTimer(float dt);
+
+	void InitialGame();
+
+	void CreateHands();
+
+	void CreateBackGround();
+
+	void CreateGUI();
+
+	void InitialCallBacks();
+
+	void InitialPaths();
+
+	void InitialEnemies();
+
+	/*! Initial the round state */
+	void InitRound();
+
+	void CreateBalls();
 
 };
 

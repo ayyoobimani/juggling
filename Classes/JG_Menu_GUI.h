@@ -15,11 +15,13 @@ class JG_Menu_GUI :
 	CCMenuItemSprite* ShowOptionButton;
 	CCMenuItemSprite* ShowHighScoresButton;
 	CCMenuItemSprite* ReturnToMainMenuButton;
+	CCMenuItemSprite* howToPlayButton;
 
 	SEL_MenuHandler startGameCallBack;
 	SEL_MenuHandler exitCallBack;
 	SEL_MenuHandler optionsCallBack;
 	SEL_MenuHandler showHighScoresCallBack;
+	SEL_MenuHandler playTutorialCallBack;
 
 	CCObject* callBackTarget;
 	  
@@ -40,6 +42,7 @@ class JG_Menu_GUI :
 	void SetLeaderBoardHeaderVisibility(bool bVisible);
 	void SetLeaderBoardHighScoresVisibility(bool bVisible);
 	void ReturnToMainMenu(CCObject* pSender);
+	
 
 	void SetHighScoreLabelPosition(CCLabelBMFont* label);
 
@@ -61,6 +64,7 @@ public:
 	void SetOptionCallBack( SEL_MenuHandler selector);
 	void SetShowHighScoresCallBack(SEL_MenuHandler selector);
 	void SetExitCallBack(SEL_MenuHandler selector);
+	void SetPlayTutorialCallBack(SEL_MenuHandler selector);
 	void CreateMenuButtons();
 	void HideGUIScreens();
 };

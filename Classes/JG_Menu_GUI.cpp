@@ -1,6 +1,7 @@
 #include "JG_Menu_GUI.h"
 
 
+
 JG_Menu_GUI::JG_Menu_GUI(void)
 {
 }
@@ -122,7 +123,7 @@ void JG_Menu_GUI::SetLeaderBoardHighScoresVisibility(bool bVisible)
 
 void JG_Menu_GUI::InsertHighScore(int rank,std::string playerName, int score)
 {
-	CCLabelBMFont* label = CCLabelBMFont::create ("0", "fonts/arial16.fnt", screenSize.height * 0.3f);
+	CCLabelBMFont* label = CCLabelBMFont::create ("0", "fonts/test.fnt", screenSize.width * 3.0f);
 	
 	SetHighScoreLabelPosition(label);
 

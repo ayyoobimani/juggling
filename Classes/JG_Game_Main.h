@@ -202,7 +202,7 @@ public:
 	//TODO: move them to private
 	/**************** game rule members *************/
 	int lifeCount;
-	int score;
+	int playerScore;
 	int rank;
 	int reservedBallCount;
 	/**************** /game rule members *************/

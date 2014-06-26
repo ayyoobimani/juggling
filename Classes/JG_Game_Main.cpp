@@ -280,13 +280,14 @@ void JG_Game_Main::InitRound()
 
 void JG_Game_Main::update(float dt)
 {
+	CheckBallsThrowPath();
 	BallTouchHandler_CheckTime(dt);
 	//UpdateHandPowerBar();
 	//UpdateBallThrowTrace(); 
 
 	//TestSingleTouch();
 	CheckBallCollisionWithHand();
-	CheckBallsThrowPath();
+	
 
 }
 
@@ -605,6 +606,7 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 
 
 	touchInfos[index].ball->Throw(throwPower,destHand->getPosition());
+	CheckBallsThrowPath();
 
 	//AddScore(touchInfos[index].ball->GetBallScore());
 	//ManageBallComboScore(touchInfos[index].ball);
@@ -614,7 +616,6 @@ void JG_Game_Main::BallTouchHandler_End(unsigned int index)
 
 float JG_Game_Main::CalculateThrowPower(unsigned int index, bool bIsDemo)
 {
-
 	float touchLenght=JG_abs(touchInfos[index].hand->getPositionY()-touchInfos[index].touch->getLocation().y);
 	float currentRawPower=(touchLenght/maxTouchLenght)*maxThrowPower;
 
@@ -625,15 +626,12 @@ float JG_Game_Main::DiscretedPowerValueGen(float rawInput,JG_Ball* ball, bool bI
 {
 	rawInput = clampf(rawInput,actualMinPower,maxThrowPower);
 
-
 	rawInput-=actualMinPower;
 
 	float powerLevel=floor(rawInput/powerRange);
 
-
 	discretedValue=powerLevel*powerRange;
 	return discretedValue;
-
 }
 
 float JG_Game_Main::GetActualMinPower()
@@ -859,28 +857,28 @@ bool JG_Game_Main::IsThereAnyPathLeft()
 
 int JG_Game_Main::GetScore()
 {
-	return score;
+	return playerScore;
 }
 
 void JG_Game_Main::SetScore( int newScore)
 {
-	score = newScore;
-	gameGUI->SetPlayerScore(score);
+	playerScore = newScore;
+	gameGUI->SetPlayerScore(playerScore);
 
 }
 
 void JG_Game_Main::AddScore(int amount)
 {
 
-	score+= amount;
-	gameGUI->SetPlayerScore(score);
+	playerScore+= amount;
+	gameGUI->SetPlayerScore(playerScore);
 
 }
 
 void JG_Game_Main::ReduceScore(int amount)
 {
-	score-= amount;
-	gameGUI->SetPlayerScore(score);
+	playerScore-= amount;
+	gameGUI->SetPlayerScore(playerScore);
 }
 
 int JG_Game_Main::GetLifeCount()
@@ -1264,7 +1262,7 @@ void JG_Game_Main::HandleEndRoundScreenResetGame(CCObject* pSender)
 {
 	InsertPlayerHighScore(gameGUI->GetPlayerName()
 		,rank
-		,score);
+		,playerScore);
 	ResetGame();
 }
 
@@ -1272,7 +1270,7 @@ void JG_Game_Main::HandleEndRoundScreenExitToMainMenu(CCObject* pSender)
 {
 	InsertPlayerHighScore(gameGUI->GetPlayerName()
 		,rank
-		,score);
+		,playerScore);
 	ExitToMainMenu();
 }
 
@@ -1281,8 +1279,8 @@ void JG_Game_Main::HandleEndRoundScreenExitToMainMenu(CCObject* pSender)
 
 void JG_Game_Main::EndRound()
 {
-	//********************** Temporary ****************/
-	gameGUI->SetEndRoundScreenInfos(score,5000,"iman");
+	ScoreTableRecord firstRank = scoreTable->at(0);
+	gameGUI->SetEndRoundScreenInfos(playerScore,firstRank.score,firstRank.name);
 	gameGUI->SetEndRoundScreenVisibility(true);
 	if(IsPlayerGetHighScore())
 	{
@@ -1292,20 +1290,20 @@ void JG_Game_Main::EndRound()
 	}
 	
 	PauseGame();
-	//********************** /Temporary ****************/
 }
 
 bool JG_Game_Main::IsPlayerGetHighScore()
 {
 	//TODO: this code is not comprehensible
-	return score >= scoreTable->at(scoreTable->size()-1).score;
+	auto leastScore = scoreTable->at(scoreTable->size()-1).score;
+	return playerScore >= leastScore;
 }
 
 int JG_Game_Main::DeterminePlayerRank()
 {
 	for(int i = 0 ; i < scoreTable->size(); i++)
 	{
-		if( score >= scoreTable->at(i).score)
+		if( playerScore >= scoreTable->at(i).score)
 			return i+1;
 	}
 	return -1;

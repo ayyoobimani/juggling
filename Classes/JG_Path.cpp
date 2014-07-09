@@ -144,11 +144,17 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 	CCPoint localPosition;
 	CCPoint globalPosition;
 	lenghtRatio = clampf(lenghtRatio,0,1);
-
+	
 	localPosition.x=JG_abs(destinationPoint.x-originPoint.x)*lenghtRatio;
 	localPosition.y=(localPosition.x*tan(pathThrowRadian))-(0.5*GRAVITY*pow(localPosition.x,2)/pow(pathThrowSpeed*cos(pathThrowRadian),2));
 
 	globalPosition=originPoint+localPosition;
+
+	//if the point is so high ( causes the enemy to be out of screen) move it lower
+	if(globalPosition.y > mainGame->screenSize.height){
+		globalPosition.y -= 0.1 * mainGame->screenSize.height;
+	}
+
 	return globalPosition;
 
 }

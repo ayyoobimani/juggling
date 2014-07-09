@@ -166,7 +166,7 @@ class JG_Game_Main : public cocos2d::CCLayer
 	float initialTotalHealth;
 	int healthsToRewardCounter;
 	int totalhealthsRewarded;
-	JG_AttackWave_Base* currentAttackWave;
+	JG_AttackWave_Base* currentAttackWave  ;
 
 public:
 

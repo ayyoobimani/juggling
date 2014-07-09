@@ -34,6 +34,7 @@ CCScene* JG_Game_Main::scene()
 // on "init" you need to initialize your instance
 bool JG_Game_Main::init()
 {
+	currentAttackWave = NULL;
 	prevballCounter =0 ;
 	
 	if ( !CCLayer::init() )

@@ -48,19 +48,19 @@ void JG_Menu_GUI::CreateMenuButtons()
 		, "Buttons/Menu/Button_StartGame_Selected.png"
 		, callBackTarget
 		, startGameCallBack
-		, ccp(0.5,0.8));
+		, ccp(0.9,0.15));
 
 	ShowHighScoresButton = CreateButton("Buttons/Menu/Button_HighScores_Normal.png"
 		, "Buttons/Menu/Button_HighScores_Selected.png"
 		, callBackTarget
 		, showHighScoresCallBack
-		, ccp(0.5,0.6));
+		, ccp(0.1,0.65));
 
 	ShowOptionButton = CreateButton("Buttons/Menu/Button_Option_Normal.png"
 		, "Buttons/Menu/Button_Option_Selected.png"
 		, callBackTarget
 		, optionsCallBack
-		, ccp(0.5,0.4));
+		, ccp(0.1,0.15));
 
 	ExitGameButton = CreateButton("Buttons/Menu/Button_ExitGame_Normal.png"
 		, "Buttons/Menu/Button_ExitGame_Selected.png"
@@ -78,7 +78,7 @@ void JG_Menu_GUI::CreateMenuButtons()
 		, "Buttons/Menu/Button_How_To_Play_Selected.png"
 		, callBackTarget
 		, playTutorialCallBack
-		, ccp(0.2,0.1));
+		, ccp(0.1,0.40));
 }
 
 

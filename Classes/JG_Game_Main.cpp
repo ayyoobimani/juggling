@@ -668,34 +668,6 @@ void JG_Game_Main::ResetTouchInfoByBall(JG_Ball* ball)
 	}
 }
 
-
-
-void JG_Game_Main::ManageBallComboScore(JG_Ball * ball)
-{
-	//NOTE: for better performance instead of dynamicaly searching for ball Levels we can store it someWhere
-	JG_Ball * tempBall;
-	int scoreMuliplier= 0;
-	for( int i = 0 ; i< ballsArray->count(); i++)
-	{
-		if(((JG_Ball*)ballsArray->objectAtIndex(i))->GetBallLevel()== ball->GetBallLevel())
-			scoreMuliplier++;
-	}
-	AddScore(ball->GetBallScore() *scoreMuliplier);
-
-}
-
-void JG_Game_Main::ManageFruitScore(JG_Fruit* fruit, JG_Ball* ball)
-{
-
-	AddScore( ball->IncrementAndGetComboChain() *fruit->GetScore());
-
-	JG_ScorePopup * fruitScore = JG_ScorePopup::CreateScorePopup(this 
-		, fruit->GetScore() 
-		, ball->GetComboChain()
-		, fruit->getPosition());
-
-}
-
 void JG_Game_Main::ManagePathScore(JG_Path* path)
 {
 	AddScore(path->GetScore());
@@ -727,12 +699,6 @@ void JG_Game_Main::OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo)
 	//AddBallToScreen();
 }
 
-//collision of the ball and fruit
-void JG_Game_Main::OnFruitHit(JG_Fruit* fruit, JG_Ball* ball)
-{
-	ManageFruitScore(fruit,ball);
-	RemoveFruitFromScreen(fruit);
-}
 void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 {
 	//maybe score for hitting enemy
@@ -766,10 +732,6 @@ void JG_Game_Main::OnBallLost(JG_Ball* ball)
 	CheckLoseCondition();
 }
 
-void JG_Game_Main::OnFruitLost(JG_Fruit* fruit)
-{
-	RemoveFruitFromScreen(fruit);
-}
 
 void JG_Game_Main::OnPathLost(JG_Path* path)
 {
@@ -795,7 +757,6 @@ void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
 
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
 {
-	ball->ResetComboChain();
 	playSoundEffect("Throwing.wav");
 }
 
@@ -954,23 +915,6 @@ void JG_Game_Main::RemoveBallFromScreen(JG_Ball* ball)
 	CC_SAFE_RELEASE(ball);
 }
 
-void JG_Game_Main::RemoveAllFruitsFromScreen()
-{
-	JG_Fruit* tempFruit;
-	int temp = fruitsArray->count();
-
-	while(fruitsArray->count()>0)
-	{
-		RemoveFruitFromScreen((JG_Fruit*)fruitsArray->randomObject());
-	}
-}
-
-void JG_Game_Main::RemoveFruitFromScreen(JG_Fruit* fruit)
-{
-	fruitsArray->removeObject(fruit,false);
-	removeChild(fruit,true);
-	CC_SAFE_RELEASE(fruit);
-}
 
 void JG_Game_Main::RemovePathFromScreen(JG_Path* path)
 {
@@ -1029,32 +973,6 @@ void JG_Game_Main::TempAddBall(float dt)
 	AddBallToScreen();
 
 }
-
-void JG_Game_Main::AddFruitToScreen()
-{
-	float tempX=CCRANDOM_0_1()*rightHand->getPosition().getDistance(leftHand->getPosition())+leftHand->getPositionX();
-	float tempY=screenSize.height;
-	CCPoint tempPoint;
-	tempPoint.x=tempX;
-	tempPoint.y=tempY;
-	JG_Fruit* newFruit = JG_Fruit::CreateFruit(this,tempPoint,(-1)*(CCRANDOM_0_1()*10+15));
-
-	this->addChild(newFruit);
-	fruitsArray->addObject(newFruit);
-
-}
-
-void JG_Game_Main::TempAddFruitToScreen(float time)
-{
-
-	AddFruitToScreen();
-	this->unschedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen));
-	this->schedule(schedule_selector(JG_Game_Main::TempAddFruitToScreen),CCRANDOM_0_1()*5);
-}
-
-
-
-
 
 void JG_Game_Main::InitialBallVariablesVariables()
 {
@@ -1187,7 +1105,6 @@ void JG_Game_Main::ResumeGame()
 void JG_Game_Main::ResetGame()
 {
 	RemoveAllBallsFromScreen();
-	RemoveAllFruitsFromScreen();
 	RemoveAllEnemiesFromScreen();
 	//RemoveAllEnemiesFromScreen();
 	InitRound();

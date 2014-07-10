@@ -11,7 +11,7 @@ class JG_Game_Main;
 
 
 
-#define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(75))
+#define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(73))
 #define BALL_SCALE 1.0
 
 // Step counts for tracking Path of the Ball
@@ -20,8 +20,6 @@ class JG_Game_Main;
 #define BALL_PATH_TRACE_INTERVALS 0.07 
 
 #define BALL_PATH_TRACE_FADE_DELAY 1
-
-#define MAX_BALL_LEVELS 6
 
 enum EThrowDirection
 {
@@ -37,12 +35,6 @@ enum EMoveMode
 class JG_Ball :
 	public CCSprite
 {
-	/*!  ball Scores for each level */
-	static int ballScoreByLevel[MAX_BALL_LEVELS];
-	/*! ball Texture Names for each level */
-	static CCString ballTextureNamesByLevel[MAX_BALL_LEVELS];
-	/*! ball Textures for each level */
-	static CCTexture2D* ballTexturesByLevel[MAX_BALL_LEVELS];
 
 	int ballLevel;
 
@@ -154,16 +146,6 @@ public:
 	//functions for minspeed and max speed
 	static float GetMaxSpeed();
 	static float GetMinSpeed();
-
-	void SetBallLevel(int newLevel);
-	int GetBallLevel(){return ballLevel;}
-
-	int GetBallScore();
-
-	void IncrementComboChain();
-	int IncrementAndGetComboChain();
-	void ResetComboChain();
-	int GetComboChain();
 
 	//collision of balls checking
 	void CheckCollisionWithBall();

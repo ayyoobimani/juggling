@@ -25,7 +25,7 @@ void JG_Path::InitialPathHealthStatesForEachLevel()
 	pathHealthStatesForEachLevel.push_back(PathHealthStatesForEachLevel());
 
 	pathHealthStatesForEachLevel[0].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/1-1.png");
-	pathHealthStatesForEachLevel[0].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/1-2.png");
+	pathHealthStatesForEachLevel[0].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/1-1.png");
 
 	pathHealthStatesForEachLevel[1].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/2-1.png");
 	pathHealthStatesForEachLevel[1].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/2-2.png");
@@ -83,24 +83,7 @@ void JG_Path::InitialPath(JG_Game_Main* game,float power,CCPoint origin , CCPoin
 
 void JG_Path::UpdatePathTextureStatus()
 {
-	if(pathHealth<=0)
-	{
-		if(getTexture()->getName() != pathHealthStatesForEachLevel[pathLevel].destroyedTexture->getName())
-		{
-			initWithTexture(pathHealthStatesForEachLevel[pathLevel].destroyedTexture);
-			setOpacity(255);
-			setAnchorPoint(ccp(0,0));
-		}
-	}
-	else
-	{
-		if(getTexture()->getName() != pathHealthStatesForEachLevel[pathLevel].fullTexture->getName())
-		{
-			initWithTexture(pathHealthStatesForEachLevel[pathLevel].fullTexture);
-			setAnchorPoint(ccp(0,0));
-		}
-		setOpacity(pathHealth/MAX_HEALTH*255);
-	}
+	setOpacity(pathHealth/MAX_HEALTH*255);
 }
 
 void JG_Path::draw()
@@ -206,7 +189,8 @@ float JG_Path::GetHealth()
 
 void JG_Path::SetHealth(float newHealth)
 {
-	pathHealth=newHealth;
+	pathHealth=max(0,newHealth);
+
 	UpdatePathTextureStatus();
 	//UpdatePathHealthStateTexture();
 }

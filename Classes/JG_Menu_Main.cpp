@@ -63,20 +63,12 @@ void JG_Menu_Main::InitMenuGUI()
 }
 void JG_Menu_Main::InitBackground()
 {	
-	CCSprite* backgroundSprite = CCSprite::create(background.getCString());
+	CCSprite* backgroundSprit = CCSprite::create(background.getCString());
 
+	ScaleSpriteToDesignSize(backgroundSprit);
 
-
-	
-	
-	backgroundSprite->getTexture()->generateMipmap();
-	backgroundSprite->getTexture()->setAntiAliasTexParameters();
-
-	ScaleSpriteToDesignSize(backgroundSprite);
-	
-
-	backgroundSprite->setPosition(ccp(screenSize.width/2,screenSize.height/2));
-	this->addChild(backgroundSprite,-200);
+	backgroundSprit->setPosition(ccp(screenSize.width/2,screenSize.height/2));
+	this->addChild(backgroundSprit,-200);
 }
 
 void JG_Menu_Main::StartGame(CCObject* pSender)

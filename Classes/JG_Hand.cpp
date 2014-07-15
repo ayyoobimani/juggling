@@ -2,7 +2,7 @@
 
 JG_Hand::JG_Hand()
 {
-
+	touchLayer = NULL;
 }
 
 JG_Hand::~JG_Hand()
@@ -10,18 +10,23 @@ JG_Hand::~JG_Hand()
 
 }
 
-JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char * handSprite)
+JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char * handSprite, const char * touchSprite)
 {
 	JG_Hand * hand = new JG_Hand();
+
 	if (hand && hand->initWithFile(handSprite))
-	{
+	{	
 		hand->throwPower =-1;
 		hand->autorelease();
 		hand->setPosition(initialPos);
 		hand->mainGame = game;
 		hand->radius = game->screenSize.height * RADIUS_RATIO;
 		hand->setScale(GAME_SCALE * HAND_SCALE);
+		hand->setAnchorPoint(CCPointMake(0.5,0.5));
+
+		hand->initTouchLayer(initialPos, touchSprite);
 		return hand;
+
 	}
 	CC_SAFE_DELETE(hand);
 	return NULL;
@@ -34,18 +39,21 @@ void JG_Hand::draw()
 
 	if(bMustDrawArea)
 	{
+	
 		glLineWidth(10*mainGame->screenSize.height/320);
 		ccDrawColor4B(0, 186, 60, 60); 
 		ccDrawCircle( convertToNodeSpace(this->getPosition()), radius , 360 , 32 , false);
-
+		
 	}
-
 }
 
 void JG_Hand::SetAreaVisibility(bool newVisibility)
 {
 	bMustDrawArea = newVisibility;
+
 }
+
+
 
 void JG_Hand::setThrowPower(float _power)
 {
@@ -61,4 +69,28 @@ void JG_Hand::resetThrowPower(float dt)
 float JG_Hand::getThrowPower()
 {
 	return throwPower;
+}
+
+void JG_Hand::initTouchLayer(CCPoint initialPos, const char * touchSprit)
+{
+	touchLayer = new CCSprite();
+	if(touchLayer && touchLayer->initWithFile(touchSprit))
+	{
+		touchLayer->setVisible(false);
+		touchLayer->autorelease();
+		touchLayer->setScale(GAME_SCALE*HAND_SCALE);
+		touchLayer->setAnchorPoint(CCPointMake(0.5,0.5));
+		touchLayer->setPosition(CCPoint(0,0));
+
+
+		this->addChild(touchLayer);
+	}
+	
+}
+
+void JG_Hand::showTouchLayer(bool mustShow)
+{
+	
+	if(touchLayer)
+		touchLayer->setVisible(mustShow);
 }

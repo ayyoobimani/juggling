@@ -159,8 +159,8 @@ void JG_Game_Main::CreateBackGround()
 
 void JG_Game_Main::CreateHands()
 {
-	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"RightHand.png");
-	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"LeftHand.png");
+	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"RightHand.png", "touchLayer.png");
+	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"LeftHand.png", "touchLayer.png");
 
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
@@ -176,6 +176,7 @@ void JG_Game_Main::CreateHands()
 		this->addChild((CCNode*)handsArray->objectAtIndex(i),5);
 		this->addChild((CCNode*)handsPowerBarArray->objectAtIndex(i),2);
 	}
+
 }
 
 
@@ -288,6 +289,8 @@ void JG_Game_Main::CheckBallsThrowPath()
 	}
 }
 
+
+
 void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 {
 	CCSetIterator i;
@@ -305,7 +308,7 @@ void JG_Game_Main::ccTouchesBegan(CCSet* pTouches, CCEvent* event)
 		}
 		if(touch) 
 		{
-			BallTouchHandler_Init(touch);
+			touchBeginHandler(touch);
 
 			/*********** Sorry for this shit *******************/
 			if(gameGUI->IsPlayerNameTextBoxVisible())
@@ -357,8 +360,13 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 					BallTouchHandler_End(j);
 					break;
 				}
+
+
+				
 			}
 		}
+
+		touchEndHandler(touch);
 	}
 	//gameGUI->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
 	//gameGUI->prevballcount->setString(CCString::createWithFormat("%d",prevballCounter)->getCString());
@@ -366,15 +374,10 @@ void JG_Game_Main::ccTouchesEnded(CCSet* pTouches, CCEvent* event)
 
 }
 
-/* This function first iterate through touches to find with wich hand they are colliding.
-Then for each hand that is touch, finds wich ball is colliding with it.
-*/
-//TODO: clean up 
-void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
+void JG_Game_Main::touchBeginHandler(CCTouch *touch)
 {
-	CCPoint tap = touch->getLocation();
 	JG_Hand* currentHand;
-	JG_Ball* criticalBall;
+	CCPoint tap = touch->getLocation();
 
 	for(int j = 0 ; j< handsArray->count();j++)
 	{
@@ -382,16 +385,49 @@ void JG_Game_Main::BallTouchHandler_Init(CCTouch* touch)
 		//Checking if tap is colliding with any of hands
 		if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
 		{
-			criticalBall = FindBestBallMatching(currentHand);
-			if(criticalBall != NULL)	
-			{
+			currentHand->showTouchLayer(true);
+			BallTouchHandler_Init(currentHand, touch);
+		}
+	}
+}
 
-				SetTouchInfo(touch,currentHand,criticalBall);
-			}
+void JG_Game_Main::touchEndHandler(CCTouch* touch)
+{
+	JG_Hand* currentHand;
+	CCPoint tap = touch->getStartLocation();
+
+	for(int j = 0 ; j< handsArray->count();j++)
+	{
+		currentHand = (JG_Hand*)handsArray->objectAtIndex(j);
+		//Checking if tap is colliding with any of hands
+		if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
+		{
+			currentHand->showTouchLayer(false);
+			
+		}
+	}
+}
+
+/* This function first iterate through touches to find with wich hand they are colliding.
+Then for each hand that is touch, finds wich ball is colliding with it.
+*/
+//TODO: clean up 
+void JG_Game_Main::BallTouchHandler_Init(JG_Hand *hand, CCTouch *touch)
+{
+	
+	
+	JG_Ball* criticalBall;
+
+	
+	criticalBall = FindBestBallMatching(hand);
+	if(criticalBall != NULL)	
+	{
+
+		SetTouchInfo(touch,hand,criticalBall);
+	}
 
 			//gameGUI->handdepict->setString(CCString::createWithFormat("%d",ballCounter)->getCString());
-		}// end of hand collision checking
-	}// end of hand looping	
+		
 
 }
 

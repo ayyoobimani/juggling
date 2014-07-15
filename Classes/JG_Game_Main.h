@@ -322,6 +322,9 @@ public:
 	/*! Handles the end of the touch */
 	virtual void ccTouchesEnded(CCSet* pTouches, CCEvent* event);
 
+	void touchBeginHandler(CCTouch* touch);
+	void touchEndHandler(CCTouch* touch);
+
 	/*! update function */
 	void update(float dt);
 	void draw();
@@ -333,7 +336,7 @@ public:
 	/*********************** Ball Touch handlers *******************/
 
 	/*! defined to handle initiation of touch */
-	void BallTouchHandler_Init(CCTouch* touch);
+	void BallTouchHandler_Init(JG_Hand* hand, CCTouch* touch);
 	/*! check direction of the ball */
 	void BallTouchHandler_CheckDirection(unsigned int index);
 	/*! handling the throwing of the ball */

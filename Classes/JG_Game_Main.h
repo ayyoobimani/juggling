@@ -483,10 +483,10 @@ public:
 
 
 	//Sound Setting Function
-	void playMusic(CCString backsound);
+	/*void playMusic(CCString backsound);
 	void stopMusic();
 	void resumeMusic();
-	void pauseMusic();
+	void pauseMusic();*/
 	void playSoundEffect(CCString effectsound);
 
 	void TestOutOfRangeRankForHighScore();

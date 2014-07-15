@@ -4,18 +4,19 @@
 #include "textures\CCTexture2D.h"
 #include "textures\CCTextureCache.h"
 #include "label_nodes\CCLabelBMFont.h"
+#include "JG_Button.h"
 
 
 using namespace cocos2d;
 class JG_Menu_GUI :
 	public CCNode
 {
-	CCMenuItemSprite* StartGameButton;
-	CCMenuItemSprite* ExitGameButton;
-	CCMenuItemSprite* ShowOptionButton;
-	CCMenuItemSprite* ShowHighScoresButton;
-	CCMenuItemSprite* ReturnToMainMenuButton;
-	CCMenuItemSprite* howToPlayButton;
+	JG_Button* StartGameButton;
+	JG_Button* ExitGameButton;
+	JG_Button* ShowOptionButton;
+	JG_Button* ShowHighScoresButton;
+	JG_Button* ReturnToMainMenuButton;
+	JG_Button* howToPlayButton;
 
 	SEL_MenuHandler startGameCallBack;
 	SEL_MenuHandler exitCallBack;
@@ -47,7 +48,7 @@ class JG_Menu_GUI :
 	void SetHighScoreLabelPosition(CCLabelBMFont* label);
 
 	
-	CCMenuItemSprite* CreateButton(CCString normalImage,CCString selectedImage, CCObject* target, SEL_MenuHandler selector, CCPoint positionRatio);
+	JG_Button* CreateButton(CCString normalImage,CCString selectedImage, CCObject* target, SEL_MenuHandler selector, CCPoint positionRatio, CCString soundEffect);
 
 public:
 	JG_Menu_GUI(void);

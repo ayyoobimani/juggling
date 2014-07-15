@@ -1,6 +1,7 @@
 #include "JG_Game_Main.h"
-#include "SimpleAudioEngine.h"
+
 #include "pthread/pthread.h"
+#include "JG_SoundEngine.h"
 
 
 
@@ -207,7 +208,7 @@ void JG_Game_Main::InitGame_difficultyControl()
 
 void JG_Game_Main::InitRound()
 {
-	playMusic("BackMusic.wav");
+	JG_SoundEngine::playMusic("BackMusic.wav");
 	scoreTable = scoreFileHandler->GetHighScoreTable();
 	gameGUI->SetHUDVisibility(true);
 	tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
@@ -706,7 +707,7 @@ void JG_Game_Main::OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball)
 	//CCLog("!!!!OnEnemyHit!!!!!!");
 	enemy->SetState(EnemyS_Dying);
 	ManageEnemyBonus(enemy->GetEnemyBonus());
-	playSoundEffect("hitSound.wav");
+	JG_SoundEngine::playSoundEffect("hitSound.wav");
 
 }
 
@@ -757,7 +758,7 @@ void JG_Game_Main::OnEnemyLost(JG_Enemy_Base* enemy)
 
 void JG_Game_Main::OnBallThrow(JG_Ball* ball)
 {
-	playSoundEffect("Throwing.wav");
+	JG_SoundEngine::playSoundEffect("Throwing.wav");
 }
 
 void JG_Game_Main::DamagePath(JG_Path* path,float damage)
@@ -951,7 +952,7 @@ void JG_Game_Main::ReleaseBall(CCObject* pSender)
 	if(reservedBallCount>0)
 	{
 		AddBallToScreen();
-		playSoundEffect("releaseball.wav");
+		JG_SoundEngine::playSoundEffect("releaseball.wav");
 		DecrementReservedBallCount();
 	}
 }
@@ -1117,8 +1118,8 @@ void JG_Game_Main::HandlePauseGame(CCObject* pSender)
 {
 	gameGUI->SetPauseScreenVisibility(true);
 	PauseGame();
-	pauseMusic();
-	playSoundEffect("EffectSound.wav");
+	JG_SoundEngine::pauseMusic();
+	JG_SoundEngine::playSoundEffect("EffectSound.wav");
 }
 
 void JG_Game_Main::HandleExitGame(CCObject* pSender)
@@ -1137,15 +1138,15 @@ void JG_Game_Main::HandleExitToMainMenu(CCObject* pSender)
 void JG_Game_Main::HandleResumeGame(CCObject* pSender)
 {
 	ResumeGame();
-	playSoundEffect("EffectSound.wav");
-	resumeMusic();
+	JG_SoundEngine::playSoundEffect("EffectSound.wav");
+	JG_SoundEngine::resumeMusic();
 }
 
 void JG_Game_Main::HandleResetGame(CCObject* pSender)
 {
 	ResetGame();
-	playSoundEffect("EffectSound.wav");
-	resumeMusic();
+	JG_SoundEngine::playSoundEffect("EffectSound.wav");
+	JG_SoundEngine::resumeMusic();
 }
 
 void JG_Game_Main::HandleEndRoundScreenResetGame(CCObject* pSender)
@@ -1598,30 +1599,11 @@ void JG_Game_Main::onHealthRewarded()
 	healthsToRewardCounter -= 1;
 }
 
-void JG_Game_Main::playMusic(CCString backsound)
-{
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(backsound.getCString(),true);
-}
-
-void JG_Game_Main::stopMusic()
-{
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
-}
-
-void JG_Game_Main::resumeMusic()
-{
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-}
-
-void JG_Game_Main::pauseMusic()
-{
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-}
-
 void JG_Game_Main::playSoundEffect(CCString effectsound)
 {
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(effectsound.getCString());
+	JG_SoundEngine::playSoundEffect(effectsound.getCString());
 }
+
 
 void JG_Game_Main::TestOutOfRangeRankForHighScore()
 {

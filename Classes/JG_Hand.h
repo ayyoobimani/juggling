@@ -16,11 +16,14 @@ class JG_Hand : public CCSprite//adding a comment
 	bool bMustDrawArea;
 
 	float throwPower;
+
+	CCSprite *touchLayer;
+	
 public:
 	JG_Hand(void);
 	virtual ~JG_Hand(void);
 
-	static JG_Hand* CreateHand(JG_Game_Main* game, CCPoint initialPos, const char * handSprite);
+	static JG_Hand* CreateHand(JG_Game_Main* game, CCPoint initialPos, const char * handSprite, const char * touchSprite);
 
 	JG_Game_Main* mainGame;
 
@@ -46,6 +49,8 @@ public:
 	 void resetThrowPower (float dt);
 	 /*return the last power this hand has thrown a ball upward*/
 	 float getThrowPower();
+	 void initTouchLayer(CCPoint initialPos, const char * touchSprit);
+	 void showTouchLayer(bool mustShow);
 	 
 };
 

@@ -11,7 +11,6 @@
 
 #include "JG_Hand.h"
 #include "JG_Ball.h"
-#include "JG_Fruit.h"
 
 #include "JG_ScorePopup.h"
 #include "JG_Path.h"
@@ -219,7 +218,6 @@ public:
 	/*! this event is called when two balls are collided */
 	void OnBallsCollide(JG_Ball* ballOne,JG_Ball* ballTwo);
 	/*! this event is called when a ball is collided with a fruit*/
-	void OnFruitHit(JG_Fruit* fruit, JG_Ball* ball);
 	//when a ball hit an enemy
 	void OnEnemyHit(JG_Enemy_Base* enemy, JG_Ball* ball);
 
@@ -228,9 +226,6 @@ public:
 	float GetBallRadius(JG_Ball* ball);
 	
 	
-	
-	/*! this event is called when fruit is out of screen */
-	void OnFruitLost(JG_Fruit* fruit);
 	/*! this event is called when ball is successfully throwed*/
 	void OnBallThrow(JG_Ball* ball);
 
@@ -238,8 +233,6 @@ public:
 	//void OnEnemyHit(JG_E
 
 	/* ! Manages Ball Score for combos */
-	void ManageBallComboScore(JG_Ball* ball);
-	void ManageFruitScore(JG_Fruit * fruit,JG_Ball * ball);
 	void ManagePathScore(JG_Path* path);
 	void ManageEnemyBonus(EEnemyBonus bonus);
 
@@ -287,15 +280,9 @@ public:
 	void TempAddBall(float time);
 
 
-	void RemoveFruitFromScreen(JG_Fruit* fruit);
-	void RemoveAllFruitsFromScreen();
-
 	void RemoveAllEnemiesFromScreen();
 
 	void RemoveEnemyFromScreen(JG_Enemy_Base* enemy);
-
-	void AddFruitToScreen();
-	void TempAddFruitToScreen(float time);
 
 	void CheckBallCollisionWithHand();
 	
@@ -499,10 +486,10 @@ public:
 
 
 	//Sound Setting Function
-	void playMusic(CCString backsound);
+	/*void playMusic(CCString backsound);
 	void stopMusic();
 	void resumeMusic();
-	void pauseMusic();
+	void pauseMusic();*/
 	void playSoundEffect(CCString effectsound);
 
 	void TestOutOfRangeRankForHighScore();

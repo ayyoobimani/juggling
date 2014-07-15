@@ -43,56 +43,63 @@ void JG_Menu_GUI::CreateCCMenu()
 }
 void JG_Menu_GUI::CreateMenuButtons()
 {
-
+	CCString soundEffect = "Sounds/ButtonSelected.mp3";
 	StartGameButton = CreateButton("Buttons/Menu/Button_StartGame_Normal.png"
 		, "Buttons/Menu/Button_StartGame_Selected.png"
 		, callBackTarget
 		, startGameCallBack
-		, ccp(0.5,0.8));
+		, ccp(0.9,0.15)
+		, soundEffect);
 
 	ShowHighScoresButton = CreateButton("Buttons/Menu/Button_HighScores_Normal.png"
 		, "Buttons/Menu/Button_HighScores_Selected.png"
 		, callBackTarget
 		, showHighScoresCallBack
-		, ccp(0.5,0.6));
+		, ccp(0.1,0.65)
+		, soundEffect);
 
 	ShowOptionButton = CreateButton("Buttons/Menu/Button_Option_Normal.png"
 		, "Buttons/Menu/Button_Option_Selected.png"
 		, callBackTarget
 		, optionsCallBack
-		, ccp(0.5,0.4));
+		, ccp(0.1,0.15)
+		, soundEffect);
 
 	ExitGameButton = CreateButton("Buttons/Menu/Button_ExitGame_Normal.png"
 		, "Buttons/Menu/Button_ExitGame_Selected.png"
 		, callBackTarget
 		, exitCallBack
-		, ccp(0.5,0.2));
+		, ccp(0.5,0.2)
+		, soundEffect);
 
 	ReturnToMainMenuButton = CreateButton("Buttons/Menu/Button_ExitGame_Normal.png"
 		, "Buttons/Menu/Button_ExitGame_Selected.png"
 		, this
 		, menu_selector(JG_Menu_GUI::ReturnToMainMenu)
-		, ccp(0.5,0.2));
+		, ccp(0.5,0.2)
+		,soundEffect);
 
 	howToPlayButton = CreateButton("Buttons/Menu/Button_How_To_Play_Normal.png"
 		, "Buttons/Menu/Button_How_To_Play_Selected.png"
 		, callBackTarget
 		, playTutorialCallBack
-		, ccp(0.2,0.1));
+		, ccp(0.1,0.40)
+		, soundEffect);
 }
 
 
-CCMenuItemSprite* JG_Menu_GUI::CreateButton(CCString normalImage,CCString selectedImage, CCObject* target, SEL_MenuHandler selector, CCPoint positionRatio)
+JG_Button* JG_Menu_GUI::CreateButton(CCString normalImage,CCString selectedImage, CCObject* target, SEL_MenuHandler selector, CCPoint positionRatio, CCString soundEffect)
 {
-	CCMenuItemSprite * menuItem;
-	menuItem = CCMenuItemSprite::create(CCSprite::create(normalImage.getCString())
+	JG_Button * button;
+	button = JG_Button::Create(CCSprite::create(normalImage.getCString())
 		,CCSprite::create(selectedImage.getCString())
 		,target
-		,selector);
-	menuItem->setPosition(ccp(screenSize.width * positionRatio.x ,screenSize.height * positionRatio.y));
+		,selector
+		,soundEffect);
+	button->setPosition(ccp(screenSize.width * positionRatio.x ,screenSize.height * positionRatio.y));
 
-	ccMenu->addChild(menuItem);
-	return menuItem;
+	ccMenu->addChild(button);
+	return button;
 }
 
 void JG_Menu_GUI::HideGUIScreens()

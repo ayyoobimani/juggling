@@ -123,7 +123,6 @@ void JG_Path::DrawPath()
 
 CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 {
-	//TODO: implement this
 	CCPoint localPosition;
 	CCPoint globalPosition;
 	lenghtRatio = clampf(lenghtRatio,0,1);
@@ -133,13 +132,7 @@ CCPoint JG_Path::GetPositionForLengthRatio(float lenghtRatio)
 
 	globalPosition=originPoint+localPosition;
 
-	//if the point is so high ( causes the enemy to be out of screen) move it lower
-	if(globalPosition.y > (mainGame-> screenSize.height* 0.97) ){
-		globalPosition.y -= 0.09 * mainGame->screenSize.height;
-	}
-
 	return globalPosition;
-
 }
 
 void JG_Path::TakeDamage(float damage)

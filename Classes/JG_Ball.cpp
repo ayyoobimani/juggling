@@ -4,11 +4,6 @@
 float JG_Ball::minSpeed;
 float JG_Ball::maxSpeed;
 
-int JG_Ball::ballScoreByLevel[MAX_BALL_LEVELS];
-
-CCString JG_Ball::ballTextureNamesByLevel[MAX_BALL_LEVELS];
-
-CCTexture2D* JG_Ball::ballTexturesByLevel[MAX_BALL_LEVELS];
 
 JG_Ball::JG_Ball(void)
 {
@@ -46,8 +41,6 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		ball->ballThrowDirection = initialDirection;
 		ball->ballLevel = initialBallLevel;
 		ball->mainGame = game;
-
-		ball->ResetComboChain();
 
 		/********** temporary store the initial state for tempReset function *********/
 		ball->tempInitialThrowDirection = initialDirection;
@@ -326,9 +319,7 @@ void JG_Ball::CheckOutOfScreen()
 {
 
 	if( getPositionY() < -20 || getPositionX() < -20 || getPositionX() > mainGame->screenSize.width + 20)
-	{
-		//NOTE: temporary
-		ResetComboChain();
+	{;
 		mainGame->OnBallLost(this);
 	}
 }
@@ -391,37 +382,6 @@ float JG_Ball::GetMaxSpeed()
 float JG_Ball::GetMinSpeed()
 {
 	return minSpeed;
-}
-
-void JG_Ball::SetBallLevel(int newLevel)
-{
-	ballLevel = newLevel;
-	//setTexture(ballTexturesByLevel[ballLevel]);
-}
-
-int JG_Ball::GetBallScore()
-{
-	return ballScoreByLevel[ballLevel];
-}
-
-void JG_Ball::IncrementComboChain()
-{
-	++comboChain;
-}
-
-int JG_Ball::IncrementAndGetComboChain()
-{
-	IncrementComboChain();
-	return GetComboChain();
-}
-
-void JG_Ball::ResetComboChain()
-{
-	comboChain = 0;
-}
-int JG_Ball::GetComboChain()
-{
-	return comboChain;
 }
 
 

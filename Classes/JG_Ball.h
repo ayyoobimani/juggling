@@ -68,7 +68,7 @@ class JG_Ball :
 	
 	void CheckOutOfScreen();
 
-	void AdjustTextureRotation();
+	void AdjustRotation();
 	float GetRotationBasedOnDirection();
 
 public:
@@ -97,9 +97,7 @@ public:
 
 	CCString ballTexture;
 
-	/*! temporary storing Initial state for TempReset function */
-	CCPoint tempInitialPosition;
-	EThrowDirection tempInitialThrowDirection;
+
 
 	/*! temporary rotation action */
 	CCRepeatForever* action_Rotate;
@@ -130,17 +128,13 @@ public:
 	/*! Calculate Curve Radian By the given Speed, Origin Position and destination position */
 	static float CalculateCurveRad(float speed,CCPoint originPosition,CCPoint destPosition);
 
-	void draw();
-	/*! draws ball texture based on current ball level */
-	void DrawBallTexture();
+
 	void DrawThrowPath();
 	/*! Show the Throw Path before being actually thrown by the given power, originPosition and destination position */
 	void SetThrowPathInfo(float force,CCPoint originPosition, CCPoint destPosition);
 
 	void ResetThrowPathInfo(float dt);
 
-	/*! temporary reset the ball to it's initial postion when it is out of view */
-	void TempReset(); 
 
 
 	//functions for minspeed and max speed

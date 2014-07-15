@@ -24,7 +24,7 @@ JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char 
 		hand->setScale(GAME_SCALE * HAND_SCALE);
 		hand->setAnchorPoint(CCPointMake(0.5,0.5));
 
-		hand->initTouchLayer(initialPos, touchSprite);
+		hand->initTouchLayer(touchSprite);
 		return hand;
 
 	}
@@ -71,24 +71,23 @@ float JG_Hand::getThrowPower()
 	return throwPower;
 }
 
-void JG_Hand::initTouchLayer(CCPoint initialPos, const char * touchSprit)
+void JG_Hand::initTouchLayer(const char * touchSprite)
 {
 	touchLayer = new CCSprite();
-	if(touchLayer && touchLayer->initWithFile(touchSprit))
+	if(touchLayer && touchLayer->initWithFile(touchSprite))
 	{
-		touchLayer->setVisible(false);
+		touchLayer->setPosition(CCPoint(this->getContentSize().width/2
+			,this->getContentSize().height/2));
+
+		SetTouchLayerVisible(false);
+
 		touchLayer->autorelease();
-		touchLayer->setScale(GAME_SCALE*HAND_SCALE);
-		touchLayer->setAnchorPoint(CCPointMake(0.5,0.5));
-		touchLayer->setPosition(CCPoint(0,0));
-
-
 		this->addChild(touchLayer);
 	}
 	
 }
 
-void JG_Hand::showTouchLayer(bool mustShow)
+void JG_Hand::SetTouchLayerVisible(bool mustShow)
 {
 	
 	if(touchLayer)

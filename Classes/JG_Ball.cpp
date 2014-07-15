@@ -41,11 +41,8 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		ball->ballThrowDirection = initialDirection;
 		ball->ballLevel = initialBallLevel;
 		ball->mainGame = game;
+		ball->setAnchorPoint(CCPoint(0.5,0.5));
 
-		/********** temporary store the initial state for tempReset function *********/
-		ball->tempInitialThrowDirection = initialDirection;
-		ball->tempInitialPosition = initialPos;
-		/*****************************************************************************/
 		ball->setScale(GAME_SCALE * BALL_SCALE);
 		
 		// activating update function 
@@ -59,30 +56,6 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 	}
 	CC_SAFE_DELETE(ball);
 	return NULL;
-}
-
-void JG_Ball::InitialAnimation()
-{
-	animation = new CCAnimation();
-	animation->retain();
-
-	animation->addSpriteFrameWithFileName("Ball/1.png");
-	animation->addSpriteFrameWithFileName("Ball/2.png");
-	animation->addSpriteFrameWithFileName("Ball/3.png");
-	animation->addSpriteFrameWithFileName("Ball/4.png");
-	animation->addSpriteFrameWithFileName("Ball/5.png");
-	animation->addSpriteFrameWithFileName("Ball/6.png");
-	animation->addSpriteFrameWithFileName("Ball/7.png");
-	animation->addSpriteFrameWithFileName("Ball/8.png");
-	animation->addSpriteFrameWithFileName("Ball/9.png");
-	animation->addSpriteFrameWithFileName("Ball/10.png");
-	animation->addSpriteFrameWithFileName("Ball/11.png");
-	animation->addSpriteFrameWithFileName("Ball/12.png");
-
-	animation->setLoops(-1);
-	CCAnimate* animationAction=CCAnimate::create(animation);
-	runAction(animationAction);
-	setScale(0.2);
 }
 
 void JG_Ball::CalculateSpeedBoundriesBaseOnLength(float deltaX)
@@ -137,32 +110,15 @@ float JG_Ball::CalculateCurveRad(float speed,CCPoint originPosition, CCPoint des
 	//CCLog(" curve rad is %f",CC_RADIANS_TO_DEGREES(tempCurveRad));
 
 	return tempCurveRad;
-	//curveRadian = CC_DEGREES_TO_RADIANS(135);
-	//mainGame->gameHUD->debugLabel->setString("");
-	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f", CC_RADIANS_TO_DEGREES(curveRadian))->getCString());
 }
 
 float JG_Ball::GetNewSpeedByForce(float force)
 {
-	
-	//force -= mainGame->GetActualMinPower();
-	//CCLOG("GetNewSpeedByForce actual min is  is %f", (MIN_TOUCH_LENGTH_FACTOR) * mainGame->GetMaxThrowPower());
-	//mainGame->gameHUD->debugLabel->setString("");
-	//mainGame->gameHUD->debugLabel->setString(CCString::createWithFormat("RAD: %f",force)->getCString());	
 
 	if(moveMode == Move_Straight)
 		return minSpeed ;
 	else 
-	{
-		
-		
 		return clampf( minSpeed + minSpeed * force,minSpeed,maxSpeed);
-	}
-
-	// for test on andorid
-	//CCLOG("min speed is %f" , minSpeed);
-	//CCLog("speed is %f", currentSpeed);
-
 }
 
 EThrowDirection JG_Ball::GetNewThrowDirection(EThrowDirection preDir)
@@ -202,11 +158,7 @@ void JG_Ball::ResetThrowPathInfo(float dt)
 	bDrawThrowPath= false;
 }
 
-void JG_Ball::DrawBallTexture()
-{
-	//setTexture(
-	//ballTexturesByLevel[ballLevel]->drawAtPoint(ccp(0,0));
-}
+
 
 void JG_Ball::DrawThrowPath()
 {
@@ -214,8 +166,6 @@ void JG_Ball::DrawThrowPath()
 	moveMode = Move_Curve;
 	//CCLog("throw Force %f", throwPath_Force);
 	float tempSpeed = GetNewSpeedByForce(throwPath_Force);
-	//CCLog("tempForce %f" , throwPath_Force);
-//	CCLog("tempSpeed %f" , tempSpeed);
 	float tempSpeedX,tempSpeedY;
 	CCPoint tracePoint;
 
@@ -238,26 +188,6 @@ void JG_Ball::DrawThrowPath()
 	}
 	bDrawThrowPath = false;
 	moveMode = tempMoveMode;
-	//this->scheduleOnce(schedule_selector(JG_Ball::ResetThrowPathInfo),BALL_PATH_TRACE_FADE_DELAY);
-}
-
-void JG_Ball::draw()
-{
-	CCSprite::draw();
-	//DrawBallTexture();
-	//if(bDrawThrowPath)
-		//DrawThrowPath();
-
-	/*if(this->bMustShine)
-	{
-		setColor(ccRED);
-	}
-
-	else
-	{
-		setColor(ccWHITE);
-	}
-	*/
 }
 
 
@@ -266,7 +196,7 @@ void JG_Ball::update(float dt)
 	ProcessMove(dt);
 	CheckCollisionWithBall();
 	CheckOutOfScreen();
-	AdjustTextureRotation(); 
+	AdjustRotation(); 
 }
 
 
@@ -324,9 +254,8 @@ void JG_Ball::CheckOutOfScreen()
 	}
 }
 
-void JG_Ball::AdjustTextureRotation()
+void JG_Ball::AdjustRotation()
 {
-
 	setRotation(GetRotationBasedOnDirection());
 }
 
@@ -334,10 +263,19 @@ void JG_Ball::AdjustTextureRotation()
 float JG_Ball::GetRotationBasedOnDirection()
 {
 	if(moveMode==Move_Straight)
+	{
+		if(getScaleY()<0)
+			setScaleY(getScaleY()*-1);
+
 		return (90-90* MoveDirX);
+	}
 	else
 	{
-		return 360-CC_RADIANS_TO_DEGREES(curveRadian);
+		if(getScaleY()>0)
+			setScaleY(getScaleY()*-1);
+	
+		return -CC_RADIANS_TO_DEGREES(curveRadian);
+		
 	}	
 }
 //

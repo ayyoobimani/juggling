@@ -165,18 +165,9 @@ void JG_Game_Main::CreateHands()
 
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
-	//bar setting
-
-	handsPowerBarArray=CCArray::create(JG_GUI_Bar::CreateBar(rightHand->getPosition()+ CCPointMake(0,0),100)
-		,JG_GUI_Bar::CreateBar(leftHand->getPosition()+ CCPointMake(-10,10),100)
-		,NULL);
-	handsPowerBarArray->retain();
 
 	for( int i = 0 ; i<handsArray->count();i++)
-	{
 		this->addChild((CCNode*)handsArray->objectAtIndex(i),5);
-		this->addChild((CCNode*)handsPowerBarArray->objectAtIndex(i),2);
-	}
 
 }
 
@@ -386,7 +377,7 @@ void JG_Game_Main::touchBeginHandler(CCTouch *touch)
 		//Checking if tap is colliding with any of hands
 		if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
 		{
-			currentHand->showTouchLayer(true);
+			currentHand->SetTouchLayerVisible(true);
 			BallTouchHandler_Init(currentHand, touch);
 		}
 	}
@@ -403,7 +394,7 @@ void JG_Game_Main::touchEndHandler(CCTouch* touch)
 		//Checking if tap is colliding with any of hands
 		if(ArePointsColliding(tap,currentHand->getPosition(),currentHand->GetRadius()))
 		{
-			currentHand->showTouchLayer(false);
+			currentHand->SetTouchLayerVisible(false);
 			
 		}
 	}

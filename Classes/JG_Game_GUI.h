@@ -36,6 +36,8 @@ class JG_Game_GUI :
 
 	void DrawLife();
 
+	JG_Button* CreateButton(CCString normalImage,CCString selectedImage, CCObject* target, SEL_MenuHandler selector, CCPoint positionRatio, CCString soundEffect);
+
 	
 	
 
@@ -67,12 +69,9 @@ public:
 	CCTextFieldTTF* playerNameTextBox;
 
 
-	CCLabelBMFont* debugLabel;
-
-
 
 	/*************tutorial******************/
-	CCMenuItemSprite* nexTutorialPageButton;
+	CCMenuItemSprite* nextTutorialPageButton;
 	void initialTutorialItems();
 	
 
@@ -106,7 +105,6 @@ public:
 	
 	void HideGUIScreens();
 	
-	void SetDebugLabelInfo(std::string debug);
 	void ResetInfos();
 	
 	void draw();

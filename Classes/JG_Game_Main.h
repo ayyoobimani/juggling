@@ -107,7 +107,6 @@ class JG_Game_Main : public cocos2d::CCLayer
 	JG_Hand* leftHand;
 	JG_Hand* rightHand;
 	CCArray* handsArray;
-	CCArray* handsPowerBarArray;
 
 	CCArray* ballsArray;
 

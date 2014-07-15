@@ -49,8 +49,8 @@ public:
 	 void resetThrowPower (float dt);
 	 /*return the last power this hand has thrown a ball upward*/
 	 float getThrowPower();
-	 void initTouchLayer(CCPoint initialPos, const char * touchSprit);
-	 void showTouchLayer(bool mustShow);
+	 void initTouchLayer(const char * touchSprite);
+	 void SetTouchLayerVisible(bool mustShow);
 	 
 };
 

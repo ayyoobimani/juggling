@@ -51,10 +51,6 @@ bool JG_Game_GUI::init(JG_Game_Main* game)
 
 	HideGUIScreens();
 
-	debugLabel = CCLabelBMFont::create ("0", "fonts/arial16.fnt", screenSize.height * 0.3f);
-	debugLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.10) );
-	this->addChild(debugLabel);
-
 	return true;
 }
 void JG_Game_GUI::ResetInfos()
@@ -95,97 +91,94 @@ void JG_Game_GUI::InitHUDItems()
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
 	ScoreGainAnimation->retain();
 
-	ballAddButton = CCMenuItemSprite::create(CCSprite::create("Cannon2.png"),CCSprite::create("Cannon2.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::ReleaseBall));
-	//ballAddButton->setOpacity(170);
-	ballAddButton->retain();
-	ballAddButton->setPosition(ccp(screenSize.width * 0.1 ,screenSize.height * 0.8));
-	gameMenu->addChild(ballAddButton);
 
+	ballAddButton = CreateButton("Cannon2.png", "Cannon2.png"
+		, mainGame, menu_selector(JG_Game_Main::ReleaseBall)
+		,CCPoint(0.1,0.8), "" );
 }
 
 
 void JG_Game_GUI::InitPauseMenuItems()
 {		
 	
+	pauseButton = CreateButton("Buttons/Game/Pause_Normal.png"
+		, "Buttons/Game/Pause_Selected.png" 
+		, mainGame
+		, menu_selector(JG_Game_Main::HandlePauseGame)
+		, ccp(0.85, 0.9)
+		, "");
 
-	pauseButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Pause_Normal.png"),CCSprite::create("Buttons/Game/Pause_Selected.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandlePauseGame));
-	pauseButton->retain();
-	pauseButton->setPosition(ccp(screenSize.width * 0.85 ,screenSize.height * 0.90) );
+	resumeButton = CreateButton("Buttons/Game/Resume_Normal.png"
+		, "Buttons/Game/Resume_Selected.png"
+		, mainGame
+		, menu_selector(JG_Game_Main::HandleResumeGame)
+		, ccp(0.5, 0.8)
+		, "");
 
-	resumeButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Resume_Normal.png"),CCSprite::create("Buttons/Game/Resume_Selected.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandleResumeGame));
-	resumeButton->retain();
-	resumeButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.8));
+	resetButton = CreateButton("Buttons/Game/Reset_Normal.png"
+		, "Buttons/Game/Reset_Selected.png"
+		, mainGame
+		, menu_selector(JG_Game_Main::HandleResetGame)
+		, ccp(0.5, 0.6)
+		, "");
 
-	resetButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Reset_Normal.png"),CCSprite::create("Buttons/Game/Reset_Selected.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandleResetGame));
-	resetButton->retain();
-	resetButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.6));
+	exitToMainMenuButton = CreateButton("Buttons/Game/ExitToMainMenu_Normal.png"
+		, "Buttons/Game/ExitToMainMenu_Normal.png"
+		, mainGame
+		, menu_selector(JG_Game_Main::HandleExitToMainMenu)
+		, ccp(0.5, 0.4)
+		, "");
 
-	exitToMainMenuButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png"),CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandleExitToMainMenu));
-	exitToMainMenuButton->retain();
-	exitToMainMenuButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.4));
+	exitGameButton = CreateButton("Buttons/Game/ExitGame_Normal.png"
+		, "Buttons/Game/ExitGame_Selected.png"
+		, mainGame
+		, menu_selector(JG_Game_Main::HandleExitGame)
+		, ccp(0.5, 0.2)
+		, "");
 
-	exitGameButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitGame_Normal.png"),CCSprite::create("Buttons/Game/ExitGame_Selected.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandleExitGame));
-	exitGameButton->retain();
-	exitGameButton->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.2));
-
-	
-	gameMenu->addChild(pauseButton);
-	gameMenu->addChild(resumeButton);
-	gameMenu->addChild(resetButton);
-	gameMenu->addChild(exitGameButton);
-	gameMenu->addChild(exitToMainMenuButton);
-	
-	
 }
 
 void JG_Game_GUI::InitEndRoundMenuItems()
 {
-	highestScoreLabel =CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.height * 0.3f);
+	highestScoreLabel =CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.width * 0.8f);
+
+	highestScoreLabel->setColor(ccBLUE);
+	highestScoreLabel->setScale(1.5);
+
 	highestScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.90) );
 	highestScoreLabel->setAnchorPoint(ccp(0.5,0.5));
 	highestScoreLabel->setAlignment(kCCTextAlignmentCenter);
 	this->addChild(highestScoreLabel);
 
-	playerFinalScoreLabel = CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.height * 0.3f);
+	playerFinalScoreLabel = CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.width * 0.8f);
 	playerFinalScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.70) );
-	highestScoreLabel->setAnchorPoint(ccp(0.5,0.5));
+	playerFinalScoreLabel->setColor(ccBLUE);
+	playerFinalScoreLabel->setScale(1.5);
+	playerFinalScoreLabel->setAnchorPoint(ccp(0.5,0.5));
 	this->addChild(playerFinalScoreLabel);
 
-	endRound_RetryButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/Reset_Normal.png"),CCSprite::create("Buttons/Game/Reset_Selected.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandleEndRoundScreenResetGame));
-	endRound_RetryButton->retain();
-	endRound_RetryButton->setPosition(ccp(screenSize.width * 0.75 ,screenSize.height * 0.2));
-	gameMenu->addChild(endRound_RetryButton);
+	endRound_RetryButton = CreateButton("Buttons/Game/Reset_Normal.png"
+		, "Buttons/Game/Reset_Selected.png"
+		, mainGame
+		, menu_selector(JG_Game_Main::HandleEndRoundScreenResetGame)
+		, ccp(0.75, 0.2)
+		, "");
 
-	endRound_ExitToMenuButton = CCMenuItemSprite::create(CCSprite::create("Buttons/Game/ExitToMainMenu_Normal.png"),CCSprite::create("Buttons/Game/ExitToMainMenu_Selected.png")
-		 ,mainGame
-		 ,menu_selector(JG_Game_Main::HandleEndRoundScreenExitToMainMenu));
-	endRound_ExitToMenuButton->retain();
-	endRound_ExitToMenuButton->setPosition(ccp(screenSize.width * 0.15 ,screenSize.height * 0.2));
-	gameMenu->addChild(endRound_ExitToMenuButton);
-
-
-
+	endRound_ExitToMenuButton = CreateButton("Buttons/Game/ExitToMainMenu_Normal.png"
+		, "Buttons/Game/ExitToMainMenu_Selected.png"
+		, mainGame
+		, menu_selector(JG_Game_Main::HandleEndRoundScreenExitToMainMenu)
+		, ccp( 0.15, 0.2)
+		, "");
 
 }
 
 void JG_Game_GUI::InitHighScoreMenuItems()
 {
-	playerRankLabel  = CCLabelBMFont::create ("", "fonts/arial16.fnt", screenSize.height * 0.3f);
+	playerRankLabel  = CCLabelBMFont::create ("", "fonts/arial16.fnt", screenSize.width * 0.8f);
 	playerRankLabel->setPosition(ccp(screenSize.width * 0.4 ,screenSize.height * 0.5) );
+	playerFinalScoreLabel->setColor(ccBLUE);
+	playerFinalScoreLabel->setScale(1.5);
 	this->addChild(playerRankLabel);
 
 	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "", screenSize.height * 0.05f);
@@ -204,7 +197,7 @@ void JG_Game_GUI::SetHUDVisibility(bool bVisible)
 }
 void JG_Game_GUI::SetPauseScreenVisibility(bool bVisible)
 {
-	//TODO: wtf is this shit heare ?!!pauseButton->setVisible(!bVisible);
+	//TODO: wtf is this shit here ?!!pauseButton->setVisible(!bVisible);
 	pauseButton->setVisible(!bVisible);
 	resumeButton->setVisible(bVisible);
 	resetButton->setVisible(bVisible);
@@ -214,7 +207,7 @@ void JG_Game_GUI::SetPauseScreenVisibility(bool bVisible)
 
 void JG_Game_GUI::SetEndRoundScreenVisibility(bool bVisible)
 {
-	//TODO: wtf is this shit heare ?!!pauseButton->setVisible(!bVisible);
+	//TODO: wtf is this shit here ?!!pauseButton->setVisible(!bVisible);
 	pauseButton->setVisible(!bVisible);
 	endRound_ExitToMenuButton->setVisible(bVisible);
 	endRound_RetryButton->setVisible(bVisible);	
@@ -318,12 +311,6 @@ void JG_Game_GUI::UpdatePlayerReservedBall()
 
 }
 
-void JG_Game_GUI::SetDebugLabelInfo(string debug)
-{
-	debugLabel->setString(debug.c_str());
-	debugLabel->setVisible(true);
-}
-
 
 
 bool JG_Game_GUI::IsPlayerNameTextBoxVisible()
@@ -342,4 +329,19 @@ std::string JG_Game_GUI::GetPlayerName()
 {
 	std::string temp =  playerNameTextBox->getString();
 	return playerNameTextBox->getString();
+}
+
+
+JG_Button* JG_Game_GUI::CreateButton(CCString normalImage,CCString selectedImage, CCObject* target, SEL_MenuHandler selector, CCPoint positionRatio, CCString soundEffect)
+{
+	JG_Button * button;
+	button = JG_Button::Create(CCSprite::create(normalImage.getCString())
+		,CCSprite::create(selectedImage.getCString())
+		,target
+		,selector
+		,soundEffect);
+	button->setPosition(ccp(screenSize.width * positionRatio.x ,screenSize.height * positionRatio.y));
+
+	gameMenu->addChild(button);
+	return button;
 }

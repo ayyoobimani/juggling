@@ -95,10 +95,10 @@ void JG_Game_GUI::InitHUDItems()
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
 	ScoreGainAnimation->retain();
 
-	ballAddButton = CCMenuItemSprite::create(CCSprite::create("BallAdder_Normal.png"),CCSprite::create("BallAdder_Selected.png")
+	ballAddButton = CCMenuItemSprite::create(CCSprite::create("Cannon2.png"),CCSprite::create("Cannon2.png")
 		 ,mainGame
 		 ,menu_selector(JG_Game_Main::ReleaseBall));
-	ballAddButton->setOpacity(170);
+	//ballAddButton->setOpacity(170);
 	ballAddButton->retain();
 	ballAddButton->setPosition(ccp(screenSize.width * 0.1 ,screenSize.height * 0.8));
 	gameMenu->addChild(ballAddButton);

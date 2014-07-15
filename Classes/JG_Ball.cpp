@@ -8,7 +8,7 @@ float JG_Ball::maxSpeed;
 JG_Ball::JG_Ball(void)
 {
 	radius=(CCDirector::sharedDirector()->getWinSize().height* 20/320) ;
-	ballTexture = "comet.png";
+	ballTexture = "coment1.png";
 	//setTexture(CCTextureCache::sharedTextureCache()->addImage("deadStar.png"));
 	//tracePointTexture = CCTextureCache::sharedTextureCache()->addImage("deadStar.png");
 

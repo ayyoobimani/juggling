@@ -152,7 +152,7 @@ void JG_Game_Main::CreateGUI()
 
 void JG_Game_Main::CreateBackGround()
 {
-	CCSprite * backGround = CCSprite::create("background2.png");
+	CCSprite * backGround = CCSprite::create("background4.png");
 	backGround->setPosition(ccp(screenSize.width/2,screenSize.height/2));
 	ScaleSpriteToDesignSize(backGround);
 	this->addChild(backGround,-100);

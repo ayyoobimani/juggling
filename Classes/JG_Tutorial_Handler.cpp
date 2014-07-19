@@ -172,6 +172,7 @@ void JG_Tutorial_Handler::toggleNextToPlayButton(bool btoggletoPlay)
 	else{
 		nextButton->setNormalImage(CCSprite::create("Buttons/Tutorial/next1.png"));
 		nextButton->setSelectedImage(CCSprite::create("Buttons/Tutorial/next2.png"));
+		nextButton->setVisible(true);
 	}
 	
 }

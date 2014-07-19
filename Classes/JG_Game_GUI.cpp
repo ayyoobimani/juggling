@@ -1,5 +1,5 @@
-#include "JG_Game_GUI.h"
-
+﻿#include "JG_Game_GUI.h"
+#include <locale.h>
 
 using namespace cocos2d;
 
@@ -124,18 +124,18 @@ void JG_Game_GUI::InitPauseMenuItems()
 void JG_Game_GUI::InitEndRoundMenuItems()
 {
 	highestScoreLabel = CreateLabel(""
-		, "fonts/arial16.fnt"
+		, "fonts/font2.fnt"
 		, 0.8
 		, ccp(0.5, 0.9)
-		, ccYELLOW
-		, 1.5);
+		, ccWHITE
+		, 0.6);
 
 	playerFinalScoreLabel = CreateLabel(" "
-		, "fonts/arial16.fnt"
+		, "fonts/font2.fnt"
 		, 0.8
 		, ccp(0.5, 0.7)
-		, ccORANGE
-		, 1.5);
+		, ccWHITE
+		, 0.6);
 
 	endRound_RetryButton = CreateButton("Buttons/Game/Reset_Normal.png"
 		, "Buttons/Game/Reset_Selected.png"
@@ -156,15 +156,19 @@ void JG_Game_GUI::InitEndRoundMenuItems()
 void JG_Game_GUI::InitHighScoreMenuItems()
 {
 	playerRankLabel = CreateLabel(""
-		, "fonts/arial16.fnt"
+		, "fonts/font2.fnt"
 		, 0.8
 		, ccp(0.4, 0.5)
-		, ccBLUE
-		, 1.5);
+		, ccWHITE
+		, 0.6);
+	
 
-	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "", screenSize.height * 0.05f);
+	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "fonts/font2.fnt", screenSize.height * 0.07f);
 
 	playerNameTextBox->setString("Player");
+	
+	
+	playerNameTextBox->setColor(ccYELLOW);
 	playerNameTextBox->setPosition(ccp(screenSize.width*0.5,screenSize.height*0.5));
 	
 	this->addChild(playerNameTextBox,100);

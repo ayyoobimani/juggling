@@ -1066,10 +1066,10 @@ void JG_Game_Main:: CheckBallCollisionWithHand()
 	JG_Ball *currentBall;
 	JG_Hand * currentHand;
 
-	for(int i=0 ; i<handsArray->count() ; i++)
+	/*for(int i=0 ; i<handsArray->count() ; i++)
 	{
 		( (JG_Hand*) (handsArray->objectAtIndex(i)) ) ->SetAreaVisibility(false);
-	}
+	}*/
 
 	for(int i=0; i<ballsArray->count() ; i++)
 	{
@@ -1082,7 +1082,7 @@ void JG_Game_Main:: CheckBallCollisionWithHand()
 
 			if(ArePointsColliding(currentBall->getPosition() ,currentHand->getPosition() , currentHand->GetRadius()))
 			{
-				currentHand->SetAreaVisibility(true);
+				//currentHand->SetAreaVisibility(true);
 				currentBall->SetShineVisibility(true);			
 			}
 		}

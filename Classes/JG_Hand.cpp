@@ -3,6 +3,7 @@
 JG_Hand::JG_Hand()
 {
 	touchLayer = NULL;
+	bMustDrawArea = false;
 }
 
 JG_Hand::~JG_Hand()

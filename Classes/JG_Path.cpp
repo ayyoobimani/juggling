@@ -188,7 +188,7 @@ float JG_Path::GetHealth()
 
 void JG_Path::SetHealth(float newHealth)
 {
-	pathHealth=max(0,newHealth);
+	pathHealth=max(0,int(newHealth));
 
 	UpdatePathTextureStatus();
 	//UpdatePathHealthStateTexture();

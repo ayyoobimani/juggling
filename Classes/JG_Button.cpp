@@ -6,7 +6,7 @@ JG_Button * JG_Button::Create(CCNode* normalSprite, CCNode* selectedSprite, CCOb
 {
 	JG_Button * button = new JG_Button();
 
-	button->initWithNormalSprite(normalSprite, selectedSprite, nullptr, target, selector); 
+	button->initWithNormalSprite(normalSprite, selectedSprite, NULL, target, selector); 
 	button->SetSoundEffect(soundEffect);
 
 	button->autorelease();

@@ -43,7 +43,7 @@ int JG_AttackWave_Base::selectEnemyType()
 		chanceSum += enemyTypes[i].currentChance ;
 			if (randomNumber <= (chanceSum / coefficintSum))
 		{
-			CCLOG(CCString::createWithFormat("enemy type: %d",i)->getCString());
+			//CCLOG(CCString::createWithFormat("enemy type: %d",i)->getCString());
 			return i;
 		}
 	}

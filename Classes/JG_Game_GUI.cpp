@@ -82,7 +82,7 @@ void JG_Game_GUI::InitHUDItems()
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
 	ScoreGainAnimation->retain();
 
-	ballAddButton = CreateButton("Cannon2.png", "Cannon2.png"
+	ballAddButton = CreateButton("Cannon.png", "Cannon.png"
 		, mainGame, menu_selector(JG_Game_Main::ReleaseBall)
 		,CCPoint(0.1,0.8), "" );
 }
@@ -163,6 +163,7 @@ void JG_Game_GUI::InitHighScoreMenuItems()
 		, 1.5);
 
 	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "", screenSize.height * 0.05f);
+
 	playerNameTextBox->setString("Player");
 	playerNameTextBox->setPosition(ccp(screenSize.width*0.5,screenSize.height*0.5));
 	

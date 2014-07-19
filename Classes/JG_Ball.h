@@ -12,7 +12,6 @@ class JG_Game_Main;
 
 
 #define MAX_THROW_RAD (CC_DEGREES_TO_RADIANS(73))
-#define BALL_SCALE 1.0
 
 // Step counts for tracking Path of the Ball
 #define BALL_PATH_TRACE_STEPS 30

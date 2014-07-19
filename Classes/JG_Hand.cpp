@@ -21,7 +21,6 @@ JG_Hand* JG_Hand::CreateHand(JG_Game_Main* game, CCPoint initialPos, const char 
 		hand->setPosition(initialPos);
 		hand->mainGame = game;
 		hand->radius = game->screenSize.height * RADIUS_RATIO;
-		hand->setScale(GAME_SCALE * HAND_SCALE);
 		hand->setAnchorPoint(CCPointMake(0.5,0.5));
 
 		hand->initTouchLayer(touchSprite);

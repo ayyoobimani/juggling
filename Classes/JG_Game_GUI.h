@@ -34,9 +34,10 @@ class JG_Game_GUI :
 	void UpdatePlayerScore();
 	void UpdatePlayerReservedBall();
 
-	void DrawLife();
 
 	JG_Button* CreateButton(CCString normalImage,CCString selectedImage, CCObject* target, SEL_MenuHandler selector, CCPoint positionRatio, CCString soundEffect);
+
+	CCLabelBMFont* CreateLabel(const char* text, const char* font, float widthRatio, CCPoint positionRatio, const ccColor3B& color = ccWHITE , float scale = 1);
 
 	
 	
@@ -52,7 +53,6 @@ public:
 	CCMenuItemSprite* pauseButton;
 	CCMenuItemSprite* resetButton;
 	CCMenuItemSprite* resumeButton;
-	CCMenuItemSprite* exitGameButton;
 	CCMenuItemSprite* exitToMainMenuButton;
 	CCMenuItemSprite* ballAddButton;
 
@@ -74,15 +74,6 @@ public:
 	CCMenuItemSprite* nextTutorialPageButton;
 	void initialTutorialItems();
 	
-
-		
-	CCPoint lifeDrawPosition;
-	int lifeDrawPacing;
-	CCTexture2D* lifeTexture_Active;
-	CCTexture2D* lifeTexture_Diactive;
-		
-
-
 
 	CCFiniteTimeAction* ScoreGainAnimation;
 

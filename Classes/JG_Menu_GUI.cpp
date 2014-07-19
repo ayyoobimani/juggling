@@ -44,35 +44,28 @@ void JG_Menu_GUI::CreateCCMenu()
 void JG_Menu_GUI::CreateMenuButtons()
 {
 	CCString soundEffect = "Sounds/ButtonSelected.mp3";
-	StartGameButton = CreateButton("Buttons/Menu/Button_StartGame_Normal.png"
+	startGameButton = CreateButton("Buttons/Menu/Button_StartGame_Normal.png"
 		, "Buttons/Menu/Button_StartGame_Selected.png"
 		, callBackTarget
 		, startGameCallBack
 		, ccp(0.9,0.15)
 		, soundEffect);
 
-	ShowHighScoresButton = CreateButton("Buttons/Menu/Button_HighScores_Normal.png"
+	showHighScoresButton = CreateButton("Buttons/Menu/Plain2.png"
 		, "Buttons/Menu/Button_HighScores_Selected.png"
 		, callBackTarget
 		, showHighScoresCallBack
 		, ccp(0.1,0.65)
 		, soundEffect);
 
-	ShowOptionButton = CreateButton("Buttons/Menu/Button_Option_Normal.png"
+	showOptionButton = CreateButton("Buttons/Menu/Plain.png"
 		, "Buttons/Menu/Button_Option_Selected.png"
 		, callBackTarget
 		, optionsCallBack
 		, ccp(0.1,0.15)
 		, soundEffect);
 
-	ExitGameButton = CreateButton("Buttons/Menu/Button_ExitGame_Normal.png"
-		, "Buttons/Menu/Button_ExitGame_Selected.png"
-		, callBackTarget
-		, exitCallBack
-		, ccp(0.5,0.2)
-		, soundEffect);
-
-	ReturnToMainMenuButton = CreateButton("Buttons/Menu/Button_ExitGame_Normal.png"
+	returnToMainMenuButton = CreateButton("Buttons/Menu/Button_ExitGame_Normal.png"
 		, "Buttons/Menu/Button_ExitGame_Selected.png"
 		, this
 		, menu_selector(JG_Menu_GUI::ReturnToMainMenu)
@@ -110,23 +103,19 @@ void JG_Menu_GUI::HideGUIScreens()
 
 void JG_Menu_GUI::SetMainMenuScreenVisibility(bool bVisible)
 {
-	StartGameButton->setVisible(bVisible);
-	ShowOptionButton->setVisible(bVisible);
-	ShowHighScoresButton->setVisible(bVisible);
-	ExitGameButton->setVisible(bVisible);
+	startGameButton->setVisible(bVisible);
+	showOptionButton->setVisible(bVisible);
+	showHighScoresButton->setVisible(bVisible);
 	howToPlayButton->setVisible(bVisible);
 }
 
 void JG_Menu_GUI::SetLeaderBoardScreenVisibility(bool bVisible)
 {
-	SetLeaderBoardHeaderVisibility(bVisible);
 	SetLeaderBoardHighScoresVisibility(bVisible);
+
+	returnToMainMenuButton->setVisible(bVisible);
 }
 
-void JG_Menu_GUI::SetLeaderBoardHeaderVisibility(bool bVisible)
-{
-
-}
 
 void JG_Menu_GUI::SetLeaderBoardHighScoresVisibility(bool bVisible)
 {

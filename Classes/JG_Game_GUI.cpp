@@ -67,30 +67,20 @@ void JG_Game_GUI::ResetInfos()
 
 void JG_Game_GUI::InitHUDItems()
 {
-	lifeTexture_Active =CCTextureCache::sharedTextureCache()->addImage("heart_active.png");
-	lifeTexture_Active->retain();
+	scoreLabel = CreateLabel("0"
+		, "fonts/font.fnt"
+		, 0.3f
+		, ccp(0.85, 0.8));
 
-	lifeTexture_Diactive = CCTextureCache::sharedTextureCache()->addImage("heart_deactive.png");
-	lifeTexture_Diactive->retain();
-
-	lifeDrawPosition = ccp(screenSize.width * 0.05
-		,screenSize.height-(lifeTexture_Active->getContentSizeInPixels().height * 1.1 ));
-
-	lifeDrawPacing = lifeTexture_Active->getContentSizeInPixels().width + 2;
-
-	scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt", screenSize.height * 0.3f);
-	scoreLabel->setPosition(ccp(screenSize.width * 0.85 ,screenSize.height * 0.80) );
-	this->addChild(scoreLabel);
-
-	reservedBallLabel =CCLabelBMFont::create ("0", "fonts/font.fnt", screenSize.height * 0.3f);
-	reservedBallLabel->setPosition(ccp(screenSize.width * 0.2 ,screenSize.height * 0.80));
-	this->addChild(reservedBallLabel);
+	reservedBallLabel = CreateLabel("0"
+		, "fonts/font.fnt"
+		, 0.3f
+		, ccp(0.2, 0.8));
 
 	ScoreGainAnimation = CCSequence::create(
 		CCEaseInOut::create(CCScaleTo::create(0.3,2,2),0.5)
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
 	ScoreGainAnimation->retain();
-
 
 	ballAddButton = CreateButton("Cannon2.png", "Cannon2.png"
 		, mainGame, menu_selector(JG_Game_Main::ReleaseBall)
@@ -129,33 +119,23 @@ void JG_Game_GUI::InitPauseMenuItems()
 		, ccp(0.5, 0.4)
 		, "");
 
-	exitGameButton = CreateButton("Buttons/Game/ExitGame_Normal.png"
-		, "Buttons/Game/ExitGame_Selected.png"
-		, mainGame
-		, menu_selector(JG_Game_Main::HandleExitGame)
-		, ccp(0.5, 0.2)
-		, "");
-
 }
 
 void JG_Game_GUI::InitEndRoundMenuItems()
 {
-	highestScoreLabel =CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.width * 0.8f);
+	highestScoreLabel = CreateLabel(""
+		, "fonts/arial16.fnt"
+		, 0.8
+		, ccp(0.5, 0.9)
+		, ccYELLOW
+		, 1.5);
 
-	highestScoreLabel->setColor(ccBLUE);
-	highestScoreLabel->setScale(1.5);
-
-	highestScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.90) );
-	highestScoreLabel->setAnchorPoint(ccp(0.5,0.5));
-	highestScoreLabel->setAlignment(kCCTextAlignmentCenter);
-	this->addChild(highestScoreLabel);
-
-	playerFinalScoreLabel = CCLabelBMFont::create (" ", "fonts/arial16.fnt", screenSize.width * 0.8f);
-	playerFinalScoreLabel->setPosition(ccp(screenSize.width * 0.5 ,screenSize.height * 0.70) );
-	playerFinalScoreLabel->setColor(ccBLUE);
-	playerFinalScoreLabel->setScale(1.5);
-	playerFinalScoreLabel->setAnchorPoint(ccp(0.5,0.5));
-	this->addChild(playerFinalScoreLabel);
+	playerFinalScoreLabel = CreateLabel(" "
+		, "fonts/arial16.fnt"
+		, 0.8
+		, ccp(0.5, 0.7)
+		, ccORANGE
+		, 1.5);
 
 	endRound_RetryButton = CreateButton("Buttons/Game/Reset_Normal.png"
 		, "Buttons/Game/Reset_Selected.png"
@@ -175,11 +155,12 @@ void JG_Game_GUI::InitEndRoundMenuItems()
 
 void JG_Game_GUI::InitHighScoreMenuItems()
 {
-	playerRankLabel  = CCLabelBMFont::create ("", "fonts/arial16.fnt", screenSize.width * 0.8f);
-	playerRankLabel->setPosition(ccp(screenSize.width * 0.4 ,screenSize.height * 0.5) );
-	playerFinalScoreLabel->setColor(ccBLUE);
-	playerFinalScoreLabel->setScale(1.5);
-	this->addChild(playerRankLabel);
+	playerRankLabel = CreateLabel(""
+		, "fonts/arial16.fnt"
+		, 0.8
+		, ccp(0.4, 0.5)
+		, ccBLUE
+		, 1.5);
 
 	playerNameTextBox = CCTextFieldTTF::textFieldWithPlaceHolder("", "", screenSize.height * 0.05f);
 	playerNameTextBox->setString("Player");
@@ -202,7 +183,6 @@ void JG_Game_GUI::SetPauseScreenVisibility(bool bVisible)
 	resumeButton->setVisible(bVisible);
 	resetButton->setVisible(bVisible);
 	exitToMainMenuButton->setVisible(bVisible);
-	exitGameButton->setVisible(bVisible);	
 }
 
 void JG_Game_GUI::SetEndRoundScreenVisibility(bool bVisible)
@@ -245,19 +225,6 @@ void JG_Game_GUI::draw()
 }
 
 
-void JG_Game_GUI::DrawLife()
-{
-	int i;
-	for(i = 0 ; i< playerLifeCount ; ++i)
-	{
-		lifeTexture_Active->drawAtPoint(lifeDrawPosition+ ccp(i*lifeDrawPacing,0));
-	}
-	for( i ; i<MAX_LIFE_COUNT; ++i)
-	{
-		lifeTexture_Diactive->drawAtPoint(lifeDrawPosition+ ccp(i*lifeDrawPacing,0));
-	}
-	
-}
 
 void JG_Game_GUI::SetEndRoundScreenInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName)
 {
@@ -344,4 +311,19 @@ JG_Button* JG_Game_GUI::CreateButton(CCString normalImage,CCString selectedImage
 
 	gameMenu->addChild(button);
 	return button;
+}
+
+CCLabelBMFont* JG_Game_GUI::CreateLabel(const char* text,const char* font, float widthRatio, CCPoint positionRatio, const ccColor3B& color, float scale)
+{
+	CCLabelBMFont* label  = CCLabelBMFont::create (text, font, screenSize.width * widthRatio);
+	label->setColor(color);
+	label->setScale(scale);
+
+	label->setPosition(ccp(screenSize.width * positionRatio.x ,screenSize.height * positionRatio.y));
+
+	label->setAnchorPoint(ccp(0.5,0.5));
+	label->setAlignment(kCCTextAlignmentCenter);
+	this->addChild(label);
+
+	return label;
 }

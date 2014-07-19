@@ -73,8 +73,6 @@ class JG_AttackWave_AllLinesSequential;
 //factor for minimum touch lenght tolerance
 #define MIN_TOUCH_LENGTH_FACTOR 0.3
 
-#define GAME_SCALE 0.6
-
 #define DISCRETE_PARTS_COUNT 4
 
 #define INIT_BALL_COUNT 5

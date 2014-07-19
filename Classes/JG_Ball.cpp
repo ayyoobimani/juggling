@@ -42,9 +42,7 @@ JG_Ball* JG_Ball::CreateBall(JG_Game_Main* game,CCPoint initialPos, EThrowDirect
 		ball->ballLevel = initialBallLevel;
 		ball->mainGame = game;
 		ball->setAnchorPoint(CCPoint(0.5,0.5));
-
-		ball->setScale(GAME_SCALE * BALL_SCALE);
-		
+	
 		// activating update function 
 		//ball->schedule(schedule_selector(JG_Ball::update));
 		ball->scheduleUpdate();

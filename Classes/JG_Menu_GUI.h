@@ -11,11 +11,10 @@ using namespace cocos2d;
 class JG_Menu_GUI :
 	public CCNode
 {
-	JG_Button* StartGameButton;
-	JG_Button* ExitGameButton;
-	JG_Button* ShowOptionButton;
-	JG_Button* ShowHighScoresButton;
-	JG_Button* ReturnToMainMenuButton;
+	JG_Button* startGameButton;
+	JG_Button* showOptionButton;
+	JG_Button* showHighScoresButton;
+	JG_Button* returnToMainMenuButton;
 	JG_Button* howToPlayButton;
 
 	SEL_MenuHandler startGameCallBack;
@@ -38,9 +37,7 @@ class JG_Menu_GUI :
 	void InitMenuGUI();
 	void CreateCCMenu();
 
-	
 
-	void SetLeaderBoardHeaderVisibility(bool bVisible);
 	void SetLeaderBoardHighScoresVisibility(bool bVisible);
 	void ReturnToMainMenu(CCObject* pSender);
 	

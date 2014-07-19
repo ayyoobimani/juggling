@@ -8,8 +8,6 @@ using namespace cocos2d;
 
 #define RADIUS_RATIO 0.5
 
-#define HAND_SCALE 1.0
-
 class JG_Hand : public CCSprite//adding a comment
 {
 

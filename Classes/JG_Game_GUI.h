@@ -8,6 +8,9 @@
 #include "text_input_node\CCTextFieldTTF.h"
 #include <string>
 
+#define BUTTON_SOUND_EFFECT "Sounds/ButtonSelected.mp3"
+
+
 using namespace cocos2d;
 
 
@@ -98,7 +101,6 @@ public:
 	
 	void ResetInfos();
 	
-	void draw();
 	
 	//TODO: find a better categories for When Player reach a high score and when not
 	void SetEndRoundScreenInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName);

@@ -43,41 +43,40 @@ void JG_Menu_GUI::CreateCCMenu()
 }
 void JG_Menu_GUI::CreateMenuButtons()
 {
-	CCString soundEffect = "Sounds/ButtonSelected.mp3";
 	startGameButton = CreateButton("Buttons/Menu/Button_StartGame_Normal.png"
 		, "Buttons/Menu/Button_StartGame_Selected.png"
 		, callBackTarget
 		, startGameCallBack
-		, ccp(0.9,0.15)
-		, soundEffect);
+		, ccp(0.8,0.1)
+		, BUTTON_SOUND_EFFECT);
 
-	showHighScoresButton = CreateButton("Buttons/Menu/Plain2.png"
+	showHighScoresButton = CreateButton("Buttons/Menu/Button_HighScores_Normal.png"
 		, "Buttons/Menu/Button_HighScores_Selected.png"
 		, callBackTarget
 		, showHighScoresCallBack
-		, ccp(0.1,0.65)
-		, soundEffect);
+		, ccp(0.6,0.1)
+		, BUTTON_SOUND_EFFECT);
 
-	showOptionButton = CreateButton("Buttons/Menu/Plain.png"
+	showOptionButton = CreateButton("Buttons/Menu/Button_Option_Normal.png"
 		, "Buttons/Menu/Button_Option_Selected.png"
 		, callBackTarget
 		, optionsCallBack
-		, ccp(0.1,0.15)
-		, soundEffect);
+		, ccp(0.4,0.1)
+		, BUTTON_SOUND_EFFECT);
 
 	returnToMainMenuButton = CreateButton("Buttons/Menu/Button_ExitGame_Normal.png"
 		, "Buttons/Menu/Button_ExitGame_Selected.png"
 		, this
 		, menu_selector(JG_Menu_GUI::ReturnToMainMenu)
 		, ccp(0.5,0.2)
-		,soundEffect);
+		,BUTTON_SOUND_EFFECT);
 
 	howToPlayButton = CreateButton("Buttons/Menu/Button_How_To_Play_Normal.png"
 		, "Buttons/Menu/Button_How_To_Play_Selected.png"
 		, callBackTarget
 		, playTutorialCallBack
-		, ccp(0.1,0.40)
-		, soundEffect);
+		, ccp(0.2,0.1)
+		, BUTTON_SOUND_EFFECT);
 }
 
 

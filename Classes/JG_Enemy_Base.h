@@ -1,11 +1,11 @@
 #ifndef __Enemy_Base_H__
 #define __Enemy_Base_H__
 
-#include "sprite_nodes\CCSprite.h"
+#include "sprite_nodes/CCSprite.h"
 #include "cocos2d.h"
 #include "JG_Enums.h"
 #include "Defines.h"
-#include "actions\CCAction.h"
+#include "actions/CCAction.h"
 
 
 using namespace cocos2d;

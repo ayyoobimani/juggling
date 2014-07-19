@@ -1,5 +1,5 @@
 #pragma once
-#include "sprite_nodes\CCSprite.h"
+#include "sprite_nodes/CCSprite.h"
 #include "JG_Game_Main.h"
 
 

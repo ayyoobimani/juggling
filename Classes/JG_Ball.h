@@ -1,7 +1,7 @@
 #pragma once
-#include "sprite_nodes\CCSprite.h"
+#include "sprite_nodes/CCSprite.h"
 #include "JG_Game_Main.h"
-#include "actions\CCActionInterval.h"
+#include "actions/CCActionInterval.h"
 #include "cocos2d.h"
 
 

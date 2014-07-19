@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cocos2d.h"
-#include "sprite_nodes\CCSprite.h"
+#include "sprite_nodes/CCSprite.h"
 
 
 class JG_Enemy_Base;

@@ -1,6 +1,5 @@
 #include "JG_Game_Main.h"
 
-#include "pthread/pthread.h"
 #include "JG_SoundEngine.h"
 
 
@@ -1213,7 +1212,7 @@ void JG_Game_Main::EndRound()
 bool JG_Game_Main::IsPlayerGetHighScore()
 {
 	//TODO: this code is not comprehensible
-	auto leastScore = scoreTable->at(scoreTable->size()-1).score;
+	int leastScore = scoreTable->at(scoreTable->size()-1).score;
 	return playerScore >= leastScore;
 }
 

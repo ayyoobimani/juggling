@@ -1,11 +1,11 @@
 #pragma once
 #include "cocos2d.h"
 #include "JG_Game_Main.h"
-#include "base_nodes\CCNode.h"
-#include "textures\CCTexture2D.h"
-#include "textures\CCTextureCache.h"
-#include "label_nodes\CCLabelBMFont.h"
-#include "text_input_node\CCTextFieldTTF.h"
+#include "base_nodes/CCNode.h"
+#include "textures/CCTexture2D.h"
+#include "textures/CCTextureCache.h"
+#include "label_nodes/CCLabelBMFont.h"
+#include "text_input_node/CCTextFieldTTF.h"
 #include <string>
 
 #define BUTTON_SOUND_EFFECT "Sounds/ButtonSelected.mp3"

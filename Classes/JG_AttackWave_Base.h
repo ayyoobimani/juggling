@@ -1,5 +1,5 @@
 #pragma once
-#include "sprite_nodes\CCSprite.h"
+#include "sprite_nodes/CCSprite.h"
 #include "cocos2d.h"
 #include "JG_Factory_Base.h"
 

@@ -1,6 +1,5 @@
 #include "JG_Game_Main.h"
 
-#include "pthread/pthread.h"
 #include "JG_SoundEngine.h"
 
 
@@ -160,8 +159,8 @@ void JG_Game_Main::CreateBackGround()
 
 void JG_Game_Main::CreateHands()
 {
-	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"RightHand.png", "touchLayer.png");
-	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"LeftHand.png", "touchLayer.png");
+	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"Hands/RightHand.png", "Hands/touchLayer.png");
+	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"Hands/LeftHand.png", "Hands/touchLayer.png");
 
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
@@ -1213,7 +1212,7 @@ void JG_Game_Main::EndRound()
 bool JG_Game_Main::IsPlayerGetHighScore()
 {
 	//TODO: this code is not comprehensible
-	auto leastScore = scoreTable->at(scoreTable->size()-1).score;
+	int leastScore = scoreTable->at(scoreTable->size()-1).score;
 	return playerScore >= leastScore;
 }
 

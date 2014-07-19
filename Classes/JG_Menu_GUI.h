@@ -1,11 +1,12 @@
 #pragma once
 #include "cocos2d.h"
-#include "base_nodes\CCNode.h"
-#include "textures\CCTexture2D.h"
-#include "textures\CCTextureCache.h"
-#include "label_nodes\CCLabelBMFont.h"
+#include "base_nodes/CCNode.h"
+#include "textures/CCTexture2D.h"
+#include "textures/CCTextureCache.h"
+#include "label_nodes/CCLabelBMFont.h"
 #include "JG_Button.h"
 
+#define BUTTON_SOUND_EFFECT "Sounds/ButtonSelected.mp3"
 
 using namespace cocos2d;
 class JG_Menu_GUI :

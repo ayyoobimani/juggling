@@ -1,6 +1,6 @@
 #pragma once
 #include "SimpleAudioEngine.h"
-#include "cocoa\CCString.h"
+#include "cocoa/CCString.h"
 
 using namespace cocos2d;
 class JG_SoundEngine

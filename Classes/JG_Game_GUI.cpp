@@ -70,7 +70,7 @@ void JG_Game_GUI::InitHUDItems()
 	scoreLabel = CreateLabel("0"
 		, "fonts/font.fnt"
 		, 0.3f
-		, ccp(0.85, 0.8));
+		, ccp(0.85, 0.7));
 
 	reservedBallLabel = CreateLabel("0"
 		, "fonts/font.fnt"
@@ -96,28 +96,28 @@ void JG_Game_GUI::InitPauseMenuItems()
 		, mainGame
 		, menu_selector(JG_Game_Main::HandlePauseGame)
 		, ccp(0.85, 0.9)
-		, "");
+		, BUTTON_SOUND_EFFECT);
 
 	resumeButton = CreateButton("Buttons/Game/Resume_Normal.png"
 		, "Buttons/Game/Resume_Selected.png"
 		, mainGame
 		, menu_selector(JG_Game_Main::HandleResumeGame)
 		, ccp(0.5, 0.8)
-		, "");
+		, BUTTON_SOUND_EFFECT);
 
 	resetButton = CreateButton("Buttons/Game/Reset_Normal.png"
 		, "Buttons/Game/Reset_Selected.png"
 		, mainGame
 		, menu_selector(JG_Game_Main::HandleResetGame)
-		, ccp(0.5, 0.6)
-		, "");
+		, ccp(0.5, 0.55)
+		, BUTTON_SOUND_EFFECT);
 
 	exitToMainMenuButton = CreateButton("Buttons/Game/ExitToMainMenu_Normal.png"
 		, "Buttons/Game/ExitToMainMenu_Normal.png"
 		, mainGame
 		, menu_selector(JG_Game_Main::HandleExitToMainMenu)
-		, ccp(0.5, 0.4)
-		, "");
+		, ccp(0.5, 0.3)
+		, BUTTON_SOUND_EFFECT);
 
 }
 
@@ -142,14 +142,14 @@ void JG_Game_GUI::InitEndRoundMenuItems()
 		, mainGame
 		, menu_selector(JG_Game_Main::HandleEndRoundScreenResetGame)
 		, ccp(0.75, 0.2)
-		, "");
+		, BUTTON_SOUND_EFFECT);
 
 	endRound_ExitToMenuButton = CreateButton("Buttons/Game/ExitToMainMenu_Normal.png"
 		, "Buttons/Game/ExitToMainMenu_Selected.png"
 		, mainGame
 		, menu_selector(JG_Game_Main::HandleEndRoundScreenExitToMainMenu)
 		, ccp( 0.15, 0.2)
-		, "");
+		, BUTTON_SOUND_EFFECT);
 
 }
 
@@ -218,18 +218,6 @@ void JG_Game_GUI::HideGUIScreens()
 	SetEndRoundScreenVisibility(false);
 	SetHighScoreScreenVisibility(false);
 }
-
-
-
-void JG_Game_GUI::draw()
-{
-	if(mainGame!=NULL)
-	{
-		//DrawLife();
-	}
-}
-
-
 
 void JG_Game_GUI::SetEndRoundScreenInfos(int _playerScore,int _highestScore, CCString _highestScorePlayerName)
 {

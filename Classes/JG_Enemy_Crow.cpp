@@ -4,7 +4,7 @@
 JG_Enemy_Crow::JG_Enemy_Crow(void) 
 	: JG_Enemy_Base()
 {
-	spriteFileName = "Enemies/UFO/UFO.png";
+	spriteFileName = "Enemies/Triangle/triangle.png";
 
 	attackingAnimationFolder = "Enemies/UFO/Attacking/";
 	attackingAnimationName = "UFO_1_Attack";

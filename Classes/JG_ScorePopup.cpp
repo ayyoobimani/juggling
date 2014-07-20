@@ -21,7 +21,8 @@ JG_ScorePopup* JG_ScorePopup::CreateScorePopup(JG_Game_Main* game, int score , i
 		scorePopup->mainGame = game;
 		scorePopup->mainGame->addChild(scorePopup,100);
 		scorePopup->retain();
-		scorePopup->scoreLabel =CCLabelBMFont::create ("0", "fonts/font.fnt",  CCDirector::sharedDirector()->getWinSize().height * 0.1f);
+		scorePopup->scoreLabel =CCLabelBMFont::create ("0", "fonts/font3.fnt",  CCDirector::sharedDirector()->getWinSize().height * 0.1f);
+		scorePopup->scoreLabel->setColor(ccGRAY);
 		scorePopup->setScale(0.5);
 		scorePopup->addChild(scorePopup->scoreLabel,1);
 

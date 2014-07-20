@@ -24,17 +24,17 @@ void JG_Path::InitialPathHealthStatesForEachLevel()
 	pathHealthStatesForEachLevel.push_back(PathHealthStatesForEachLevel());
 	pathHealthStatesForEachLevel.push_back(PathHealthStatesForEachLevel());
 
-	pathHealthStatesForEachLevel[0].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/1-1.png");
-	pathHealthStatesForEachLevel[0].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/1-1.png");
+	pathHealthStatesForEachLevel[0].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path1.png");
+	pathHealthStatesForEachLevel[0].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path1.png");
 
-	pathHealthStatesForEachLevel[1].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/2-1.png");
-	pathHealthStatesForEachLevel[1].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/2-2.png");
+	pathHealthStatesForEachLevel[1].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path2.png");
+	pathHealthStatesForEachLevel[1].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path2.png");
 
-	pathHealthStatesForEachLevel[2].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/3-1.png");
-	pathHealthStatesForEachLevel[2].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/3-2.png");
+	pathHealthStatesForEachLevel[2].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path3.png");
+	pathHealthStatesForEachLevel[2].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path3.png");
 
-	pathHealthStatesForEachLevel[3].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/4-1.png");
-	pathHealthStatesForEachLevel[3].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/4-2.png");
+	pathHealthStatesForEachLevel[3].fullTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path4.png");
+	pathHealthStatesForEachLevel[3].destroyedTexture= CCTextureCache::sharedTextureCache()->addImage("Paths/Path4.png");
 
 
 }

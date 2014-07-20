@@ -3,7 +3,7 @@
 
 JG_Enemy_QuickAttakc::JG_Enemy_QuickAttakc(void)
 {
-	spriteFileName = "Enemies/UFO2/UFO.png";
+	spriteFileName = "Enemies/3Star/mainSprite.png";
 
 	attackingAnimationFolder = "Enemies/UFO2/Attacking/";
 	attackingAnimationName = "UFO_2_Attack";

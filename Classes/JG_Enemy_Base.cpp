@@ -180,7 +180,8 @@ void JG_Enemy_Base::update(float dt)
 		Fall(dt);
 
 }
-//nonesense
+
+
 void JG_Enemy_Base::SetState(EEnemyState newState)
 {
 
@@ -224,14 +225,14 @@ void JG_Enemy_Base::SetState(EEnemyState newState)
 void JG_Enemy_Base::GotoState_Intending()
 {
 	//CCLog("In state Intending");
-	RunAnimation(intendingAnimation);
+	//RunAnimation(intendingAnimation);
 	
 	
 }
 void JG_Enemy_Base::GotoState_Attacking()
 {
 	//CCLog("In state Attacking");
-	RunAnimation(attackingAnimation);
+	//RunAnimation(attackingAnimation);
 
 	this->schedule(schedule_selector(JG_Enemy_Base::HandleAttackingToWaiting)
 		,0
@@ -251,7 +252,7 @@ void JG_Enemy_Base::GotoState_Waiting()
 	if(targetPath!=NULL)
 		this->schedule(schedule_selector(JG_Enemy_Base::HandleWaitingToAttacking),0,0,attackInterval);
 	
-	RunAnimation(waitingAnimation);
+	//RunAnimation(waitingAnimation);
 }
 void JG_Enemy_Base::GotoState_Escaping()
 {
@@ -263,7 +264,7 @@ void JG_Enemy_Base::GotoState_Escaping()
 	targetPath = NULL;
 
 
-	RunAnimation(escapingAnimation);
+	//RunAnimation(escapingAnimation);
 	
 }
 void JG_Enemy_Base::GotoState_Dying()
@@ -271,12 +272,12 @@ void JG_Enemy_Base::GotoState_Dying()
 	//CCLog("In state dying");
 	//it is falling so the initial speed is zero
 	speed=0;
-	RunAnimation(dyingAnimation);
+	//RunAnimation(dyingAnimation);
 }
 
 void JG_Enemy_Base::GotoState_Landing()
 {
-	RunAnimation(landingAnimation);
+	//RunAnimation(landingAnimation);
 	this->schedule(schedule_selector(JG_Enemy_Base::HandleLandingToWaiting)
 		,0
 		,0

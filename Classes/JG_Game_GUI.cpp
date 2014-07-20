@@ -68,31 +68,33 @@ void JG_Game_GUI::ResetInfos()
 void JG_Game_GUI::InitHUDItems()
 {
 	scoreLabel = CreateLabel("0"
-		, "fonts/font.fnt"
+		, "fonts/font3.fnt"
 		, 0.3f
-		, ccp(0.85, 0.7));
+		, ccp(0.85, 0.7)
+		, ccBLACK);
 
 	reservedBallLabel = CreateLabel("0"
-		, "fonts/font.fnt"
+		, "fonts/font3.fnt"
 		, 0.3f
-		, ccp(0.2, 0.8));
+		, ccp(0.25, 0.8)
+		, ccBLACK);
 
 	ScoreGainAnimation = CCSequence::create(
 		CCEaseInOut::create(CCScaleTo::create(0.3,2,2),0.5)
 		,CCEaseInOut::create(CCScaleTo::create(0.3,1,1),0.5),NULL);
 	ScoreGainAnimation->retain();
 
-	ballAddButton = CreateButton("Cannon.png", "Cannon.png"
+	ballAddButton = CreateButton("ballAdder.png", "ballAdder.png"
 		, mainGame, menu_selector(JG_Game_Main::ReleaseBall)
-		,CCPoint(0.1,0.8), "" );
+		,CCPoint(0.15,0.8), "" );
 }
 
 
 void JG_Game_GUI::InitPauseMenuItems()
 {		
 	
-	pauseButton = CreateButton("Buttons/Game/Pause_Normal.png"
-		, "Buttons/Game/Pause_Selected.png" 
+	pauseButton = CreateButton("Buttons/Game/pause.png"
+		, "Buttons/Game/pause.png" 
 		, mainGame
 		, menu_selector(JG_Game_Main::HandlePauseGame)
 		, ccp(0.85, 0.9)

@@ -151,7 +151,7 @@ void JG_Game_Main::CreateGUI()
 
 void JG_Game_Main::CreateBackGround()
 {
-	CCSprite * backGround = CCSprite::create("background4.png");
+	CCSprite * backGround = CCSprite::create("background5.png");
 	backGround->setPosition(ccp(screenSize.width/2,screenSize.height/2));
 	ScaleSpriteToDesignSize(backGround);
 	this->addChild(backGround,-100);
@@ -159,14 +159,14 @@ void JG_Game_Main::CreateBackGround()
 
 void JG_Game_Main::CreateHands()
 {
-	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.85 ,screenSize.height * 0.15),"Hands/RightHand.png", "Hands/touchLayer.png");
+	rightHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.86 ,screenSize.height * 0.15),"Hands/RightHand.png", "Hands/touchLayer.png");
 	leftHand = JG_Hand::CreateHand(this,ccp(screenSize.width * 0.15,screenSize.height * 0.15),"Hands/LeftHand.png", "Hands/touchLayer.png");
 
 	handsArray= CCArray::create(rightHand,leftHand,NULL);
 	handsArray->retain();
 
 	for( int i = 0 ; i<handsArray->count();i++)
-		this->addChild((CCNode*)handsArray->objectAtIndex(i),5);
+		this->addChild((CCNode*)handsArray->objectAtIndex(i),20);
 
 }
 
